@@ -25,6 +25,9 @@
         </ul>
     </ul>
     {{/capabilities}}
+    {{^capabilities}}
+        No capabilities!
+    {{/capabilities}}
     </script>
     <script id="criteria_template" type="x-tmpl-mustache">
     {{#criteria}}
@@ -44,7 +47,12 @@
 <body>
 
 <h1>OpenStack DefCore Tracked Capabilities</h1>
-
+<input id="only_core" name="only_core" type="checkbox" onclick="create_caps()" />
+<label for="only_core">Show only core tests</label>
+<br>
+<input id="only_admin" name="only_admin" type="checkbox" onclick="create_caps()" />
+<label for="only_admin">Show only tests, which require admin rights</label>
+<br>
 <ul id="capabilities"></ul>
 
 <h1>Criterion descriptions</h1>

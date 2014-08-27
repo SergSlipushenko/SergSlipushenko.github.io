@@ -1,29 +1,36 @@
+function has_upper_case(str) {
+    return (/[A-Z]/.test(str));
+}
 function code_url(text, render){
     return render( '<a href="javascript:void(get_code_url(\'' +
             text + '\'));"> [github] </a>' );
 }
 function get_code_url (test_id) {
-    var arr = test_id.split('/');
-    arr[0] = arr[0].replace(/\s+/g, '');
-    var path_array = arr[0].split('.');
-    var path = '';
-    for(var i in path_array){
-        path = path.concat('/', path_array[i]);
-
+    var id = test_id.split('/').join('.');
+    var parts = id.split('.');
+    var path_array = [];
+    for (var i in parts){
+        if (has_upper_case(parts[i])) { break }
+        path_array.push(parts[i])
     }
-    var test = arr[1].split('.').slice(-1)[0] + '(';
+    path_array.pop();
+    var path = path_array.join('/');
+    var test = parts.slice(-1)[0] + '(';
     test = test.replace(/\s+/g, '');
+    path = path.replace(/\s+/g, '');
     var url = 'https://api.github.com/search/code?q=' + test +
             ' repo:openstack/tempest extension:py path:' + path;
+    console.log(url);
     $.when($.ajax({type: 'GET', url: url, dataType: 'json'})).done(
             function (data, status, xhr) {
                 if (data['items'].length < 1) {
                     alert('No test found !')
                 }
                 var html_url = data['items'][0]['html_url'];
+                console.log(data['items'][0]['git_url']);
                 $.when($.ajax({type: 'GET', url: data['items'][0]['git_url'], dataType: 'json'})).done(
                         function (data, status, xhr) {
-                            var content = window.atob(data['content']).split('\n');
+                            var content = window.atob(data['content'].replace(/\s+/g, '')).split('\n');
                             for (var i in content) {
                                 if (content[i].indexOf(test) > -1) {
                                     var line = parseInt(i) + 1;
@@ -37,11 +44,13 @@ function get_code_url (test_id) {
             });
 
 }
-function render_caps(data){
+function render_caps(only_core, only_admin, data){
     var template = $('#capabilities_template').html();
     var caps = {'capabilities': []};
     for(var name in data['capabilities']){
-        var capability = data["capabilities"][name];
+        var capability = data['capabilities'][name];
+        if (only_core == true && (capability['core'] !== true)) {continue}
+        if (only_admin == true && (capability['admin'] !== true)) {continue}
         capability['code_url'] = function(){
             return code_url
         };
@@ -66,12 +75,21 @@ function render_criteria(data){
 }
 
 function create_caps() {
+
+    if (document.getElementById('only_core')){
+        only_core = document.getElementById('only_core').checked
+    }
+    else only_core = false;
+    if (document.getElementById('only_admin')){
+        only_admin = document.getElementById('only_admin').checked
+    }
+    else only_admin = false;
     $.ajax({
         type: "GET",
         dataType: 'json',
-        url: 'havanacore.json',
+        url: 'drafts/havanacore.json',
         success: function(data, status, xhr) {
-            render_caps(data);
+            render_caps(only_core, only_admin, data);
             render_criteria(data);
         }
     });
