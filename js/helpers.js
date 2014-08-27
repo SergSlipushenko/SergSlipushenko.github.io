@@ -87,7 +87,7 @@ function create_caps() {
     $.ajax({
         type: "GET",
         dataType: 'json',
-        url: 'drafts/havanacore.json',
+        url: 'havanacore.json',
         success: function(data, status, xhr) {
             render_caps(only_core, only_admin, data);
             render_criteria(data);
