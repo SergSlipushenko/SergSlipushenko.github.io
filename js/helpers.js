@@ -46,17 +46,32 @@ function get_code_url (test_id) {
 }
 function render_caps(only_core, only_admin, data){
     var template = $('#capabilities_template').html();
-    var caps = {'capabilities': []};
+    var caps_dict = {'capabilities': {}};
     for(var name in data['capabilities']){
         var capability = data['capabilities'][name];
         if (only_core == true && (capability['core'] !== true)) {continue}
         if (only_admin == true && (capability['admin'] !== true)) {continue}
+        capability['class'] = capability['name'].split('-')[0];
+        capability['name'] = capability['name'];//.split('-').slice(1).join('-');
         capability['code_url'] = function(){
             return code_url
         };
-        caps['capabilities'].push(capability);
+        if (!(capability['class'] in caps_dict['capabilities'])){
+             caps_dict['capabilities'][capability['class']] = []
+        }
+        caps_dict['capabilities'][capability['class']].push(capability)
     }
-    var rendered = Mustache.render(template, caps);
+    var caps_list={'capabilities': []};
+    for (var cls in caps_dict['capabilities']){
+        caps_list['capabilities'].push({
+            'class': cls,
+            'items': caps_dict['capabilities'][cls],
+            'count': caps_dict['capabilities'][cls].length
+        })
+    }
+
+    console.log(caps_list);
+    var rendered = Mustache.render(template, caps_list);
 
     $("ul#capabilities").html(rendered);
 }
@@ -87,7 +102,7 @@ function create_caps() {
     $.ajax({
         type: "GET",
         dataType: 'json',
-        url: 'havanacore.json',
+        url: 'drafts/havanacore.json',
         success: function(data, status, xhr) {
             render_caps(only_core, only_admin, data);
             render_criteria(data);

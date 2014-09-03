@@ -8,21 +8,30 @@
     <script id="capabilities_template" type="x-tmpl-mustache">
     {{#capabilities}}
     <ul>
-        <li><strong> {{name}} </strong></li>
+        <li> <a onclick="$('#{{class}}_tests').toggle(500);return false;" href="#"> {{class}} capabilities ({{count}}) </a>
+        <div id="{{class}}_tests" style="display:none;">
+        {{#items}}
         <ul>
-            <li>Description: {{description}}</li>
-            <li>Achivements: {{#achievements}} <a href="#{{.}}">#{{.}}</a> {{/achievements}}
-            {{#admin}}<li><strong>Admin: true </strong></li>{{/admin}}
-            {{#core}}<li><strong>Core: true </strong></li>{{/core}}</li>
-            <li> <a onclick="$('#{{name}}').toggle(500);return false;" href="#"> Tests </a>
-            <div id="{{name}}" style="display:none;">
+            <li>
+            {{name}}
             <ul>
-                {{#tests}} <li> {{.}} {{#code_url}} {{.}} {{/code_url}} </li> {{/tests}}
+                <li>Description: {{description}}</li>
+                <li>Achivements: {{#achievements}} <a href="#{{.}}">#{{.}}</a> {{/achievements}}
+                {{#admin}}<li><strong>Admin: true </strong></li>{{/admin}}
+                {{#core}}<li><strong>Core: true </strong></li>{{/core}}</li>
+                <li> <a onclick="$('#{{name}}').toggle(500);return false;" href="#"> Tests </a>
+                <div id="{{name}}" style="display:none;">
+                <ul>
+                    {{#tests}} <li> {{.}} {{#code_url}} {{.}} {{/code_url}} </li> {{/tests}}
+                </ul>
+                <div>
+                </li>
             </ul>
-            <div>
             </li>
-
         </ul>
+        {{/items}}
+        </div>
+        </li>
     </ul>
     {{/capabilities}}
     {{^capabilities}}
