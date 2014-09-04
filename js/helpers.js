@@ -1,10 +1,16 @@
 function has_upper_case(str) {
     return (/[A-Z]/.test(str));
 }
+
+function capitaliseFirstLetter(string){
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 function code_url(text, render){
     return render( '<a href="javascript:void(get_code_url(\'' +
             text + '\'));"> [github] </a>' );
 }
+
 function get_code_url (test_id) {
     var id = test_id.split('/').join('.');
     var parts = id.split('.');
@@ -44,36 +50,57 @@ function get_code_url (test_id) {
             });
 
 }
-function render_caps(only_core, only_admin, data){
+function render_header(data){
+    var template = $('#header_template').html();
+    data["release"] = capitaliseFirstLetter(data["release"]);
+    var rendered = Mustache.render(template, data);
+    $("div#header").html(rendered);
+}
+
+function render_caps(only_core, admin_filter, data){
     var template = $('#capabilities_template').html();
+    var criteria_count = Object.keys(data['criteria']).length;
     var caps_dict = {'capabilities': {}};
-    for(var name in data['capabilities']){
-        var capability = data['capabilities'][name];
+    var capabilities_count = 0;
+    for(var id in data['capabilities']){
+        var capability = data['capabilities'][id];
+        capability['class'] = id.split('-')[0];
+        capability['id'] = id;
+        if (!(capability['class'] in caps_dict['capabilities'])){
+             caps_dict['capabilities'][capability['class']] = {
+                 'items': [],
+                 'total': 0
+             }
+        }
+        caps_dict['capabilities'][capability['class']]['total'] += 1;
         if (only_core == true && (capability['core'] !== true)) {continue}
-        if (only_admin == true && (capability['admin'] !== true)) {continue}
-        capability['class'] = capability['name'].split('-')[0];
-        capability['name'] = capability['name'];//.split('-').slice(1).join('-');
+        if (admin_filter == 'Tests require admin rights' && (capability['admin'] !== true)) {continue}
+        if (admin_filter == "Tests don't require admin rights" && (capability['admin'] == true)) {continue}
         capability['code_url'] = function(){
             return code_url
         };
-        if (!(capability['class'] in caps_dict['capabilities'])){
-             caps_dict['capabilities'][capability['class']] = []
-        }
-        caps_dict['capabilities'][capability['class']].push(capability)
+        capability['achievements_count'] = capability['achievements'].length;
+        capability['tests_count'] = capability['tests'].length;
+        caps_dict['capabilities'][capability['class']]['items'].push(capability)
     }
-    var caps_list={'capabilities': []};
+    var caps_list={
+        'capabilities': [],
+        'criteria_count': criteria_count
+    };
     for (var cls in caps_dict['capabilities']){
+        if (caps_dict['capabilities'][cls]['items'].length == 0) {
+            continue
+        }
         caps_list['capabilities'].push({
             'class': cls,
-            'items': caps_dict['capabilities'][cls],
-            'count': caps_dict['capabilities'][cls].length
+            'items': caps_dict['capabilities'][cls]['items'],
+            'count': caps_dict['capabilities'][cls]['items'].length,
+            'total': caps_dict['capabilities'][cls]['total']
         })
     }
-
-    console.log(caps_list);
     var rendered = Mustache.render(template, caps_list);
 
-    $("ul#capabilities").html(rendered);
+    $("div#capabilities").html(rendered);
 }
 
 function render_criteria(data){
@@ -94,18 +121,19 @@ function create_caps() {
     if (document.getElementById('only_core')){
         only_core = document.getElementById('only_core').checked
     }
-    else only_core = false;
-    if (document.getElementById('only_admin')){
-        only_admin = document.getElementById('only_admin').checked
+    else only_core = true;
+    if (document.getElementById('admin')){
+        admin_filter = document.getElementById('admin').value
     }
-    else only_admin = false;
+    else admin_filter = 'All tests';
     $.ajax({
         type: "GET",
         dataType: 'json',
         url: 'havanacore.json',
         success: function(data, status, xhr) {
-            render_caps(only_core, only_admin, data);
+            render_caps(only_core, admin_filter, data);
             render_criteria(data);
+            render_header(data)
         }
     });
 }
