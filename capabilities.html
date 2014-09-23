@@ -13,7 +13,7 @@
 
     {{#capabilities}}
     <ul>
-        <li> <a onclick="$('#{{class}}_tests').toggle(500);return false;" href="#"> {{class}} capabilities ({{count}} of {{total}}) </a>
+        <li> <a onclick="$('#{{class}}_tests').toggle(500);return false;" href="#"> {{class}} capabilities ({{count}} of {{total}} total) </a>
         <div id="{{class}}_tests" style="display:none;">
         {{#items}}
         <ul>
@@ -22,7 +22,7 @@
             <ul>
                 <li>ID: {{id}}</li>
                 <li>Description: {{description}}</li>
-                <li>Achivements (met {{achievements_count}} of {{criteria_count}}): {{#achievements}} <a href="#{{.}}">{{.}}</a> {{/achievements}}
+                <li>Achievements (met {{achievements_count}} of {{criteria_count}} total): {{#achievements}} <a href="#{{.}}">{{.}}</a> {{/achievements}}
                 {{#admin}}<li>Admin rights required</li>{{/admin}}
                 {{#core}}<li>Core test</li>{{/core}}</li>
                 <li> <a onclick="$('#{{name}}').toggle(500);return false;" href="#"> Tests ({{tests_count}}) </a>
