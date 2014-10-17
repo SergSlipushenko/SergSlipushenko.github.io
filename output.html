@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/refstack.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
+    <script type="application/json" id="passed_tests">
+    {
+        "cpid": "3ER23FVG2",
+        "duration_seconds": 42,
+        "results": [
+            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors",
+            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors_with_detail",
+            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_get_flavor",
+            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_get_non_existant_flavor",
+            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors_limit_results",
+            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_get_flavor_details_for_invalid_flavor_id",
+            "tempest.api.compute.test_authorization.PublicObjectTest.test_get_metadata_of_alt_account_server_fails",
+            "tempest.api.compute.servers/test_servers_negative.PublicObjectTest.test_delete_server_pass_id_exceeding_length_limit",
+            "tempest.api.compute.admin/test_availalbility_zone.PublicObjectTest.test_get_availability_zone_list_detail",
+            "tempest.api.compute.admin/test_availalbility_zone.PublicObjectTest.test_get_availability_zone_list_detail_with_non_admin_user"
+        ]
+    }
+    </script>
+    <script id="test_result_template" type="x-tmpl-mustache">
+    {{#capabilities}}
+    <ul>
+        <li> <a onclick="$('#{{class}}_tests').toggle(500);return false;" href="#"> {{class}} capabilities ({{count}} of {{total}} total) </a>
+        <div id="{{class}}_tests" style="display:none;">
+        {{#items}}
+        <ul>
+            <li>
+            {{name}}
+            <ul>
+                <li>ID: {{id}}</li>
+                <li>Description: {{description}}</li>
+                <li>Achievements (met {{achievements_count}} of {{criteria_count}} total): {{#achievements}} <a href="#{{.}}">{{.}}</a> {{/achievements}}
+                {{#admin}}<li>Admin rights required</li>{{/admin}}
+                {{#core}}<li>Core test</li>{{/core}}</li>
+                <li>
+                    Tests result : Successfully passed {{passed_count}} of  {{tests_count}} [<a onclick="$('#{{name}}_chart').toggle(500); $('#{{name}}_detail').toggle(500);  return false;" href="#"> details </a>]
+                    <div id="{{name}}_chart">
+                    <ul id="test_chart">
+                        {{#test_chart}}
+                        {{#chart_bullets}} {{.}} {{/chart_bullets}}
+                        {{/test_chart}}
+                    </ul>
+                    </div>
+                    <div id="{{name}}_detail" style="display:none;">
+                        <ul id=test_results class="fa-ul">
+                            {{#passed_tests}}
+                                <li class="fa fa-check-square-o passed">
+                                    <span class="passed">
+                                        {{.}} <a href="javascript:void(get_code_url('{{.}}'));"> [github] </a>
+                                    </span>
+                                </li>
+                            {{/passed_tests}}
+                        </ul>
+                        <ul id=test_results class="fa-ul">
+                            {{#failed_tests}}
+                                <li class="fa fa-times failed">
+                                    <span class="failed">
+                                        {{.}} <a href="javascript:void(get_code_url('{{.}}'));"> [github] </a>
+                                    </span>
+                                </li>
+                            {{/failed_tests}}
+                        </ul>
+                    <div>
+                </li>
+            </ul>
+            </li>
+        </ul>
+        {{/items}}
+        </div>
+        </li>
+    </ul>
+    {{/capabilities}}
+    {{^capabilities}}
+        No capabilities!
+    {{/capabilities}}
+    </script>
+    <script src="/js/helpers.js"></script>
+    <script src="/js/refstack.js"></script>
+    <script>
+        function render(){render_page(render_result_page)}
+        $(document).ready(render)
+    </script>
+</head>
+<body>
+<div id="header"></div>
+<input id="only_core" name="only_core" type="checkbox" checked onclick="render()" />
+<label for="only_core">Show only core tests</label>
+<br>
+<select id="admin" onclick="render()">
+    <option>All tests</option>
+    <option>Tests require admin rights</option>
+    <option>Tests don't require admin rights</option>
+</select>
+<div id="results"></div>
+
+<h2>Criterion descriptions</h2>
+
+<ul id="criteria"></ul>
+
+<div>Copyright OpenStack Foundation, 2014.  Apache 2 License.</div>
+</body>
+</html>

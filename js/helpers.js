@@ -57,8 +57,7 @@ function render_header(data){
     $("div#header").html(rendered);
 }
 
-function render_caps(only_core, admin_filter, data){
-    var template = $('#capabilities_template').html();
+function build_caps_list(data) {
     var criteria_count = Object.keys(data['criteria']).length;
     var caps_dict = {'capabilities': {}};
     var capabilities_count = 0;
@@ -73,9 +72,9 @@ function render_caps(only_core, admin_filter, data){
              }
         }
         caps_dict['capabilities'][capability['class']]['total'] += 1;
-        if (only_core == true && (capability['core'] !== true)) {continue}
-        if (admin_filter == 'Tests require admin rights' && (capability['admin'] !== true)) {continue}
-        if (admin_filter == "Tests don't require admin rights" && (capability['admin'] == true)) {continue}
+        if (window.only_core == true && (capability['core'] !== true)) {continue}
+        if (window.admin_filter == 'Tests require admin rights' && (capability['admin'] !== true)) {continue}
+        if (window.admin_filter == "Tests don't require admin rights" && (capability['admin'] == true)) {continue}
         capability['code_url'] = function(){
             return code_url
         };
@@ -98,6 +97,12 @@ function render_caps(only_core, admin_filter, data){
             'total': caps_dict['capabilities'][cls]['total']
         })
     }
+    return caps_list
+}
+
+function render_caps(only_core, admin_filter, data){
+    var template = $('#capabilities_template').html();
+    var caps_list = build_caps_list(data);
     var rendered = Mustache.render(template, caps_list);
 
     $("div#capabilities").html(rendered);
@@ -116,25 +121,34 @@ function render_criteria(data){
     $("ul#criteria").html(rendered);
 }
 
-function create_caps() {
+function render_page(render_func) {
 
     if (document.getElementById('only_core')){
-        only_core = document.getElementById('only_core').checked
+        window.only_core = document.getElementById('only_core').checked
     }
-    else only_core = true;
+    else window.only_core = true;
     if (document.getElementById('admin')){
-        admin_filter = document.getElementById('admin').value
+        window.admin_filter = document.getElementById('admin').value
     }
-    else admin_filter = 'All tests';
-    $.ajax({
-        type: "GET",
-        dataType: 'json',
-        url: 'havanacore.json',
-        success: function(data, status, xhr) {
-            render_caps(only_core, admin_filter, data);
-            render_criteria(data);
-            render_header(data)
-        }
-    });
+    else window.admin_filter = 'All tests';
+    if (window.hasOwnProperty('capabilities_data')){
+        render_func(window.capabilities_data);
+    }
+    else{
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: 'havanacore.json',
+            success: function(data, status, xhr){
+                window.capabilities_data = data;
+                render_func(data)
+            }
+        })
+    }
 }
-window.onload = create_caps();
+
+function render_capabilities_page(data){
+    render_caps(only_core, admin_filter, data);
+    render_criteria(data);
+    render_header(data)
+}
