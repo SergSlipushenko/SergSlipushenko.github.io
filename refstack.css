@@ -217,23 +217,27 @@ ul.checklist li:before {
  padding-right: 0.5em;
 }
 
-ul#test_results li.passed {
+ul.test_results li.passed {
     color: green;
+    list-style-type: none;
+    display: block;
 }
 
-ul#test_results li.failed {
+ul.test_results li.part_passed {
+    color: yellow;
+    list-style-type: none;
+    display: block;
+}
+
+ul.test_results li.failed {
     color: red;
+    list-style-type: none;
+    display: block;
 }
 
-ul#test_results li span.passed {
+ul.test_results li span {
     color: black;
-}
-
-ul#test_results li span.failed {
-    color: black;
-    /*display: inline-block;*/
-    /*border-bottom: 1px solid red;*/
-    /*line-height: .7em;*/
+    list-style-type: none;
 }
 
 ul#test_chart li.passed {

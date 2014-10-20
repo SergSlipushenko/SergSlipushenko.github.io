@@ -19,68 +19,41 @@
             "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_get_flavor_details_for_invalid_flavor_id",
             "tempest.api.compute.test_authorization.PublicObjectTest.test_get_metadata_of_alt_account_server_fails",
             "tempest.api.compute.servers/test_servers_negative.PublicObjectTest.test_delete_server_pass_id_exceeding_length_limit",
+            "tempest.api.compute.admin/test_availalbility_zone.PublicObjectTest.test_get_availability_zone_list",
             "tempest.api.compute.admin/test_availalbility_zone.PublicObjectTest.test_get_availability_zone_list_detail",
-            "tempest.api.compute.admin/test_availalbility_zone.PublicObjectTest.test_get_availability_zone_list_detail_with_non_admin_user"
+            "tempest.api.compute.admin/test_availalbility_zone.PublicObjectTest.test_get_availability_zone_list_with_non_admin_user",
+            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors_detailed_limit_results",
+            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors_using_marker",
+            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors_detailed_using_marker",
+            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors_detailed_filter_by_min_disk",
+            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors_detailed_filter_by_min_ram",
+            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors_filter_by_min_disk",
+            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors_filter_by_min_ram",
+            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_invalid_minRam_filter",
+            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_invalid_minDisk_filter",
+            "tempest.api.compute.images/test_image_metadata.PublicObjectTest.test_set_image_metadata_item",
+            "tempest.api.compute.images/test_image_metadata.PublicObjectTest.test_delete_image_metadata_item",
+            "tempest.api.compute.images/test_image_metadata.PublicObjectTest.test_list_nonexistant_image_metadata",
+            "tempest.api.compute.images/test_image_metadata.PublicObjectTest.test_update_nonexistant_image_metadata",
+            "tempest.api.compute.images/test_image_metadata.PublicObjectTest.test_get_nonexistant_image_metadata_item"
         ]
     }
     </script>
-    <script id="test_result_template" type="x-tmpl-mustache">
-    {{#capabilities}}
+    <script id="criteria_template" type="x-tmpl-mustache">
+    {{#criteria}}
     <ul>
-        <li> <a onclick="$('#{{class}}_tests').toggle(500);return false;" href="#"> {{class}} capabilities ({{count}} of {{total}} total) </a>
-        <div id="{{class}}_tests" style="display:none;">
-        {{#items}}
+        <li><a id="{{tag}}" onclick="$('#{{tag}}_ach').toggle(500);return false;" href="#"> {{name}} (tag : {{tag}}) </a> </li>
+        <div id="{{tag}}_ach" style="display:none;">
         <ul>
-            <li>
-            {{name}}
-            <ul>
-                <li>ID: {{id}}</li>
-                <li>Description: {{description}}</li>
-                <li>Achievements (met {{achievements_count}} of {{criteria_count}} total): {{#achievements}} <a href="#{{.}}">{{.}}</a> {{/achievements}}
-                {{#admin}}<li>Admin rights required</li>{{/admin}}
-                {{#core}}<li>Core test</li>{{/core}}</li>
-                <li>
-                    Tests result : Successfully passed {{passed_count}} of  {{tests_count}} [<a onclick="$('#{{name}}_chart').toggle(500); $('#{{name}}_detail').toggle(500);  return false;" href="#"> details </a>]
-                    <div id="{{name}}_chart">
-                    <ul id="test_chart">
-                        {{#test_chart}}
-                        {{#chart_bullets}} {{.}} {{/chart_bullets}}
-                        {{/test_chart}}
-                    </ul>
-                    </div>
-                    <div id="{{name}}_detail" style="display:none;">
-                        <ul id=test_results class="fa-ul">
-                            {{#passed_tests}}
-                                <li class="fa fa-check-square-o passed">
-                                    <span class="passed">
-                                        {{.}} <a href="javascript:void(get_code_url('{{.}}'));"> [github] </a>
-                                    </span>
-                                </li>
-                            {{/passed_tests}}
-                        </ul>
-                        <ul id=test_results class="fa-ul">
-                            {{#failed_tests}}
-                                <li class="fa fa-times failed">
-                                    <span class="failed">
-                                        {{.}} <a href="javascript:void(get_code_url('{{.}}'));"> [github] </a>
-                                    </span>
-                                </li>
-                            {{/failed_tests}}
-                        </ul>
-                    <div>
-                </li>
-            </ul>
-            </li>
+            <li>Description: {{Description}} </li>
+            <li>Weight: {{weight}} </li>
         </ul>
-        {{/items}}
         </div>
-        </li>
     </ul>
-    {{/capabilities}}
-    {{^capabilities}}
-        No capabilities!
-    {{/capabilities}}
+    {{/criteria}}
     </script>
+    <script src="/js/helpers.js"></script>
+    <script> $(document).ready(function(){render_page(render_capabilities_page)}); </script>
     <script src="/js/helpers.js"></script>
     <script src="/js/refstack.js"></script>
     <script>
@@ -90,14 +63,18 @@
 </head>
 <body>
 <div id="header"></div>
-<input id="only_core" name="only_core" type="checkbox" checked onclick="render()" />
-<label for="only_core">Show only core tests</label>
-<br>
-<select id="admin" onclick="render()">
-    <option>All tests</option>
-    <option>Tests require admin rights</option>
-    <option>Tests don't require admin rights</option>
-</select>
+<h3> Defcore tests </h3>
+<div>
+    <input id="only_core" name="only_core" type="checkbox" checked onclick="render()" />
+    <label for="only_core">Show only core tests</label>
+    <br>
+    <select id="admin" onclick="render()">
+        <option>All tests</option>
+        <option>Tests require admin rights</option>
+        <option>Tests don't require admin rights</option>
+    </select>
+    <label for="admin">Filter for "Admin rights required"</label>
+</div>
 <div id="results"></div>
 
 <h2>Criterion descriptions</h2>

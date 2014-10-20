@@ -1,0 +1,94 @@
+{{#defcore_tests}}
+    <div>
+        Total passed defcore tests: {{total_passed_count}} <a onclick="$('#defcore_tests_list').toggle(500);return false;" href="#"> [plain list] </a>
+    </div>
+    <ul id=defcore_tests_list style="display:none;" class="fa-ul test_results">
+    {{#list}}
+        <li class="fa fa-check-square-o passed"> <span class="passed"> {{.}} </span>  </li>
+    {{/list}}
+    {{^list}}
+        No defcore tests passed!
+    {{/list}}
+    </ul>
+    {{#capabilities}}
+    <ul>
+        <li>
+            {{class}} capabilities. Selected {{count}} from {{total}} total
+            <a onclick="$('#{{class}}_details').toggle(500); $('#{{class}}_brief').toggle(500); return false;" href="#">
+                [details]
+            </a>
+                <ul id="{{class}}_brief" class="fa-ul test_results">
+                    <li class="fa fa-check-square-o passed"><span> Fully supported: {{full_support_count}} </span></li>
+                    <li class="fa fa-square part_passed"><span> Particularly supported: {{particular_support_count}} </span></li>
+                    <li class="fa fa-times failed"><span> Totally unsupported: {{full_unsupport_count}} </span></li>
+
+                </ul>
+            <div id="{{class}}_details" style="display:none;">
+                {{#items}}
+                <ul class="fa-ul test_results">
+                    {{#caps_support}}
+                    {{name}}
+                    <ul>
+                        <li>ID: {{id}}</li>
+                        <li>Description: {{description}}</li>
+                        <li>
+                            Achievements (met {{achievements_count}} of {{criteria_count}} total):
+                            {{#achievements}} <a href="#{{.}}">{{.}}</a> {{/achievements}}
+                        </li>
+                        {{#admin}}<li>Admin rights required</li>{{/admin}}
+                        {{#core}}<li>Core test</li>{{/core}}
+                        <li>
+                            Tests result : Successfully passed {{passed_count}} of  {{tests_count}}
+                            [<a onclick="$('#{{name}}_chart').toggle(500); $('#{{name}}_detail').toggle(500);  return false;" href="#"> details </a>]
+                            <div id="{{name}}_chart">
+                            <ul id="test_chart">
+                                {{#test_chart}}
+                                {{#chart_bullets}} {{.}} {{/chart_bullets}}
+                                {{/test_chart}}
+                            </ul>
+                            </div>
+                            <div id="{{name}}_detail" style="display:none;">
+                                <ul class="fa-ul test_results">
+                                    {{#passed_tests}}
+                                        <li class="fa fa-check-square-o passed">
+                                            <span>
+                                                {{.}} <a href="javascript:void(get_code_url('{{.}}'));"> [github] </a>
+                                            </span>
+                                        </li>
+                                    {{/passed_tests}}
+                                </ul>
+                                <ul class="fa-ul test_results">
+                                    {{#failed_tests}}
+                                        <li class="fa fa-times failed">
+                                            <span>
+                                                {{.}} <a href="javascript:void(get_code_url('{{.}}'));"> [github] </a>
+                                            </span>
+                                        </li>
+                                    {{/failed_tests}}
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                    {{/caps_support}}
+                </ul>
+                {{/items}}
+            </div>
+        </li>
+    </ul>
+    {{/capabilities}}
+    {{^capabilities}}
+        <div> No capabilities!</div>
+    {{/capabilities}}
+{{/defcore_tests}}
+{{#other_tests}}
+<h3> Other tests </h3>
+Total pased other tests :{{count}}  <a onclick="$('#other_tests_list').toggle(500);return false;" href="#"> [plain list] </a>
+<ul id=other_tests_list style="display:none;" class="fa-ul test_results">
+{{#list}}
+    <li class="fa fa-check-square-o passed"> <span class="passed"> {{.}} </span>  </li>
+{{/list}}
+{{^list}}
+    No other tests!
+{{/list}}
+</ul>
+{{/other_tests}}
