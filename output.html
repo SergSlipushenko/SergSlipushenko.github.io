@@ -7,50 +7,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
     <script type="application/json" id="passed_tests">
-    {
-        "cpid": "3ER23FVG2",
-        "duration_seconds": 42,
-        "results": [
-            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors",
-            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors_with_detail",
-            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_get_flavor",
-            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_get_non_existant_flavor",
-            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors_limit_results",
-            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_get_flavor_details_for_invalid_flavor_id",
-            "tempest.api.compute.test_authorization.PublicObjectTest.test_get_metadata_of_alt_account_server_fails",
-            "tempest.api.compute.servers/test_servers_negative.PublicObjectTest.test_delete_server_pass_id_exceeding_length_limit",
-            "tempest.api.compute.admin/test_availalbility_zone.PublicObjectTest.test_get_availability_zone_list",
-            "tempest.api.compute.admin/test_availalbility_zone.PublicObjectTest.test_get_availability_zone_list_detail",
-            "tempest.api.compute.admin/test_availalbility_zone.PublicObjectTest.test_get_availability_zone_list_with_non_admin_user",
-            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors_detailed_limit_results",
-            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors_using_marker",
-            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors_detailed_using_marker",
-            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors_detailed_filter_by_min_disk",
-            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors_detailed_filter_by_min_ram",
-            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors_filter_by_min_disk",
-            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_list_flavors_filter_by_min_ram",
-            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_invalid_minRam_filter",
-            "tempest.api.compute.flavors/test_flavors.PublicObjectTest.test_invalid_minDisk_filter",
-            "tempest.api.compute.images/test_image_metadata.PublicObjectTest.test_set_image_metadata_item",
-            "tempest.api.compute.images/test_image_metadata.PublicObjectTest.test_delete_image_metadata_item",
-            "tempest.api.compute.images/test_image_metadata.PublicObjectTest.test_list_nonexistant_image_metadata",
-            "tempest.api.compute.images/test_image_metadata.PublicObjectTest.test_update_nonexistant_image_metadata",
-            "tempest.api.compute.images/test_image_metadata.PublicObjectTest.test_get_nonexistant_image_metadata_item"
-        ]
-    }
-    </script>
-    <script id="criteria_template" type="x-tmpl-mustache">
-    {{#criteria}}
-    <ul>
-        <li><a id="{{tag}}" onclick="$('#{{tag}}_ach').toggle(500);return false;" href="#"> {{name}} (tag : {{tag}}) </a> </li>
-        <div id="{{tag}}_ach" style="display:none;">
-        <ul>
-            <li>Description: {{Description}} </li>
-            <li>Weight: {{weight}} </li>
-        </ul>
-        </div>
-    </ul>
-    {{/criteria}}
+    {{result_json | safe}}
     </script>
     <script src="/js/helpers.js"></script>
     <script> $(document).ready(function(){render_page(render_capabilities_page)}); </script>
@@ -76,8 +33,6 @@
     <label for="admin">Filter for "Admin rights required"</label>
 </div>
 <div id="results"></div>
-
-<h2>Criterion descriptions</h2>
 
 <ul id="criteria"></ul>
 

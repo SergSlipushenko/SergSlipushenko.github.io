@@ -1,21 +1,21 @@
 function chart_bullets(text, render){
     if (this == 1){
-        return render('<li class="fa fa-check-square-o passed"> </li>')
+        return render('<li class="fa fa-check passed"></li>')
     }
     else {
-        return render('<li class="fa fa-times failed"> </li>')
+        return render('<li class="fa fa-times failed"></li>')
     }
 }
 
 function caps_support(text, render){
     if (this.fully_supported) {
-        return render('<li class="fa fa-check-square-o passed"><span>' + text+ '</span></li>')
+        return render('<li class="fa fa-check cap_passed caps_names_list">' + text+ '</li>')
     }
-    else if (this.particulary_supported) {
-        return render('<li class="fa fa-square part_passed"><span>' + text+ '</span></li>')
+    else if (this.partial_supported) {
+        return render('<li class="fa fa-question-circle cap_part_passed caps_names_list"><span>' + text+ '</span></li>')
     }
     else {
-        return render('<li class="fa fa-times failed"><span>' + text+ '</span></li>')
+        return render('<li class="fa fa-times cap_failed caps_names_list"><span>' + text+ '</span></li>')
     }
 }
 
@@ -30,18 +30,18 @@ function build_result(caps_list){
     }};
     for (var cap_class in result.defcore_tests.capabilities){
         result.defcore_tests.capabilities[cap_class].full_support_count = 0;
-        result.defcore_tests.capabilities[cap_class].particular_support_count = 0;
+        result.defcore_tests.capabilities[cap_class].partial_support_count = 0;
         for (var cap in result.defcore_tests.capabilities[cap_class].items){
             var capability = result.defcore_tests.capabilities[cap_class].items[cap];
             capability.passed_tests = [];
             capability.failed_tests = [];
             capability.test_chart = [];
             capability.fully_supported = true;
-            capability.particulary_supported = false;
+            capability.partial_supported = false;
             for (var test in capability.tests){
                 var passed = test_result.results.indexOf(capability.tests[test]) >= 0;
                 if (passed) {
-                    capability.particulary_supported = true;
+                    capability.partial_supported = true;
                     capability.passed_tests.push(capability.tests[test]);
                     capability.test_chart.push(1);
                     var test_index = other_tests.indexOf(capability.tests[test]);
@@ -57,7 +57,7 @@ function build_result(caps_list){
                 }
             }
             if (capability.fully_supported) {
-                capability.particulary_supported = false
+                capability.partial_supported = false
             }
             capability.passed_count = capability.passed_tests.length;
             capability.failed_count = capability.failed_tests.length;
@@ -67,11 +67,11 @@ function build_result(caps_list){
             if (capability.fully_supported) {
                 result.defcore_tests.capabilities[cap_class].full_support_count++
             }
-            if (capability.particulary_supported){
-                result.defcore_tests.capabilities[cap_class].particular_support_count++
+            if (capability.partial_supported){
+                result.defcore_tests.capabilities[cap_class].partial_support_count++
             }
         }
-        result.defcore_tests.capabilities[cap_class].full_unsupport_count = result.defcore_tests.capabilities[cap_class].count - result.defcore_tests.capabilities[cap_class].particular_support_count
+        result.defcore_tests.capabilities[cap_class].full_unsupport_count = result.defcore_tests.capabilities[cap_class].count - result.defcore_tests.capabilities[cap_class].partial_support_count
     }
     result.defcore_tests.total_passed_count = test_result.results.length - other_tests.length;
 
@@ -97,6 +97,5 @@ function render_result(data){
 }
 
 function render_result_page(data, status, xhr){
-    render_criteria(data);
     render_result(data);
 }

@@ -217,14 +217,13 @@ ul.checklist li:before {
  padding-right: 0.5em;
 }
 
-ul.test_results li.passed {
-    color: green;
+ul.test_results li.caps {
     list-style-type: none;
     display: block;
 }
 
-ul.test_results li.part_passed {
-    color: yellow;
+ul.test_results li.passed {
+    color: green;
     list-style-type: none;
     display: block;
 }
@@ -250,4 +249,8 @@ ul#test_chart li.failed {
     color: red;
     display: inline;
     list-style-type: none;
+}
+
+li.caps_names_list{
+    width: 80%;
 }
