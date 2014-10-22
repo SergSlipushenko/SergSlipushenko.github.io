@@ -22,12 +22,14 @@ function caps_support(text, render){
 function build_result(caps_list){
     var test_result = $.parseJSON($('#passed_tests').html());
     var other_tests = test_result.results.slice(0);
-    var result = {'defcore_tests': {
-        'capabilities': caps_list.capabilities,
-        'list': [],
+    var result = {
         'cpid': test_result.cpid,
-        'duration_seconds': test_result.duration_seconds
-    }};
+        'duration_seconds': test_result.duration_seconds,
+        'defcore_tests': {
+            'capabilities': caps_list.capabilities,
+            'list': []
+        }
+    };
     for (var cap_class in result.defcore_tests.capabilities){
         result.defcore_tests.capabilities[cap_class].full_support_count = 0;
         result.defcore_tests.capabilities[cap_class].partial_support_count = 0;

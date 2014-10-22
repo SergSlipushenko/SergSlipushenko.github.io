@@ -1,3 +1,5 @@
+
+
 {{#defcore_tests}}
     <div>
         Total passed defcore tests: {{total_passed_count}} <a onclick="$('#defcore_tests_list').toggle(500);return false;" href="#"> [plain list] </a>
@@ -28,7 +30,7 @@
                     {{#caps_support}}
                     <div style="width: 700px; display: inline-table;">
                         <div style="display: table-row">
-                            <div style="width: 300px; display: table-cell;"> <a onclick="$('#{{name}}_detail').toggle(500);  return false;" href="#"> {{name}} </a> </div>
+                            <div style="width: 300px; display: table-cell;"> <a onclick="$('#{{name}}_detail').toggle(500);  return false;" href="#" title="{{description}}"> {{name}} </a> </div>
                             <div style="display: table-cell;">
                                 <ul id="test_chart" style="padding: 0; display: inline">
                                     {{#test_chart}}
@@ -81,3 +83,9 @@ Total pased other tests :{{count}}  <a onclick="$('#other_tests_list').toggle(50
 {{/list}}
 </ul>
 {{/other_tests}}
+<p></p>
+<div>
+    Tests time to run : {{duration_seconds}} s <br>
+    Cloud id : {{cpid}}
+</div>
+<p></p>
