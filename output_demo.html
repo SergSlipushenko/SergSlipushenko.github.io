@@ -40,12 +40,8 @@
     </script>
     <script>
         $.get('output.html', function(data, status, xhr){
-                console.log(data);
-                wdata = data;
                 var test_result = $.parseJSON($('#passed_tests').html());
-                console.log(test_result);
                 var rendered = swig.render(data, {locals : {result_json: JSON.stringify(test_result)}});
-                console.log(rendered);
                 $("div#rendered").html(rendered);
             }
         )

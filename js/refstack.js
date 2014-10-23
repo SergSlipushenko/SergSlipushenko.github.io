@@ -1,103 +1,129 @@
-function chart_bullets(text, render){
-    if (this == 1){
-        return render('<li class="fa fa-check passed"></li>')
-    }
-    else {
-        return render('<li class="fa fa-times failed"></li>')
-    }
-}
+/*global $:false */
+/*global Mustache:false */
+/*jslint devel: true*/
+/* jshint -W097 */
+/*jslint node: true */
 
-function caps_support(text, render){
+'use strict';
+
+var pretty_time_format = function (time) {
+    var hours = Math.floor(time / 3600),
+        minutes = Math.floor((time - (hours * 3600)) / 60),
+        seconds = time - (hours * 3600) - (minutes * 60),
+        result;
+    if (hours < 10) {hours = '0' + hours; }
+    if (minutes < 10) {minutes = '0' + minutes; }
+    if (seconds < 10) {seconds = '0' + seconds; }
+    result = minutes + 'm ' + seconds + 's';
+    if (hours > 0) {
+        return hours + 'h ' + result;
+    }
+    return result;
+};
+
+var chart_bullets = function (text, render) {
+    if (this === 1) {
+        return render('<li class="fa fa-check passed"></li>');
+    }
+    return render('<li class="fa fa-times failed"></li>');
+};
+
+var caps_support = function (text, render) {
     if (this.fully_supported) {
-        return render('<li class="fa fa-check cap_passed caps_names_list">' + text+ '</li>')
+        return render('<li class="fa fa-check cap-passed caps-names-list"><span>' + text + '</span></li>');
     }
-    else if (this.partial_supported) {
-        return render('<li class="fa fa-question-circle cap_part_passed caps_names_list"><span>' + text+ '</span></li>')
+    if (this.partial_supported) {
+        return render('<li class="fa fa-question-circle cap-part-passed caps-names-list"><span>' + text + '</span></li>');
     }
-    else {
-        return render('<li class="fa fa-times cap_failed caps_names_list"><span>' + text+ '</span></li>')
-    }
-}
+    return render('<li class="fa fa-times cap-failed caps-names-list"><span>' + text + '</span></li>');
+};
 
-function build_result(caps_list){
-    var test_result = $.parseJSON($('#passed_tests').html());
-    var other_tests = test_result.results.slice(0);
-    var result = {
-        'cpid': test_result.cpid,
-        'duration_seconds': test_result.duration_seconds,
-        'defcore_tests': {
-            'capabilities': caps_list.capabilities,
-            'list': []
-        }
-    };
-    for (var cap_class in result.defcore_tests.capabilities){
-        result.defcore_tests.capabilities[cap_class].full_support_count = 0;
-        result.defcore_tests.capabilities[cap_class].partial_support_count = 0;
-        for (var cap in result.defcore_tests.capabilities[cap_class].items){
-            var capability = result.defcore_tests.capabilities[cap_class].items[cap];
+var build_result = function (caps_list) {
+    var test_result = $.parseJSON($('#passed_tests').html()),
+        other_tests = test_result.results.slice(0),
+        result = {
+            'cpid': test_result.cpid,
+            'duration_seconds': pretty_time_format(test_result.duration_seconds),
+            'defcore_tests': {
+                'capabilities': caps_list.capabilities,
+                'list': []
+            }
+        };
+    result.defcore_tests.capabilities = result.defcore_tests.capabilities.map(function (capability_class) {
+        capability_class.full_support_count = 0;
+        capability_class.partial_support_count = 0;
+        capability_class.items = capability_class.items.map(function (capability) {
             capability.passed_tests = [];
             capability.failed_tests = [];
             capability.test_chart = [];
             capability.fully_supported = true;
             capability.partial_supported = false;
-            for (var test in capability.tests){
-                var passed = test_result.results.indexOf(capability.tests[test]) >= 0;
+            capability.tests.forEach(function (test) {
+                var passed = test_result.results.indexOf(test) >= 0,
+                    test_index = other_tests.indexOf(test);
                 if (passed) {
                     capability.partial_supported = true;
-                    capability.passed_tests.push(capability.tests[test]);
+                    capability.passed_tests.push(test);
                     capability.test_chart.push(1);
-                    var test_index = other_tests.indexOf(capability.tests[test]);
-                    if (test_index>=0) {
+                    if (test_index >= 0) {
                         other_tests.splice(test_index, 1);
-                        result.defcore_tests.list.push(capability.tests[test])
+                        result.defcore_tests.list.push(test);
                     }
-                }
-                else {
+                } else {
                     capability.fully_supported = false;
-                    capability.failed_tests.push(capability.tests[test]);
-                    capability.test_chart.push(-1)
+                    capability.failed_tests.push(test);
+                    capability.test_chart.push(-1);
                 }
-            }
+            });
             if (capability.fully_supported) {
-                capability.partial_supported = false
+                capability.partial_supported = false;
             }
             capability.passed_count = capability.passed_tests.length;
             capability.failed_count = capability.failed_tests.length;
-            capability.chart_bullets = function() {return chart_bullets};
-            capability.caps_support = function() {return caps_support};
-            result.defcore_tests.capabilities[cap_class].items[cap] = capability;
+            capability.chart_bullets = function () {return chart_bullets; };
+            capability.caps_support = function () {return caps_support; };
             if (capability.fully_supported) {
-                result.defcore_tests.capabilities[cap_class].full_support_count++
+                capability_class.full_support_count += 1;
             }
-            if (capability.partial_supported){
-                result.defcore_tests.capabilities[cap_class].partial_support_count++
+            if (capability.partial_supported) {
+                capability_class.partial_support_count += 1;
             }
-        }
-        result.defcore_tests.capabilities[cap_class].full_unsupport_count = result.defcore_tests.capabilities[cap_class].count - result.defcore_tests.capabilities[cap_class].partial_support_count
-    }
+            return capability;
+        });
+        capability_class.full_unsupport_count = capability_class.count - (capability_class.partial_support_count + capability_class.full_support_count);
+        return capability_class;
+    });
     result.defcore_tests.total_passed_count = test_result.results.length - other_tests.length;
 
     result.other_tests =  {
         'list': other_tests,
         'count': other_tests.length
     };
-    return result
-}
+    return result;
+};
+window.build_result = build_result;
 
-function render_result(data){
-    var caps_list = build_caps_list(data);
-    var result = build_result(caps_list);
-    function render_result_callback(result){
-        var stored_result = result;
-        return function(template){
-            console.log(stored_result);
-            var rendered = Mustache.render(template, stored_result);
-            $("div#results").html(rendered);
-        }
-    }
-    $.get('detailed_test_result_template.mst', render_result_callback(result))
-}
+var render_result = function (data) {
+    var caps_list = window.build_caps_list(data),
+        result = build_result(caps_list),
+        render_result_callback = function (result) {
+            var stored_result = result;
+            return function (template) {
+                $("div#test_results").html(Mustache.render(template, stored_result));
+            };
+        },
+        render_props_callback = function (result) {
+            var stored_result = result;
+            return function (template) {
+                $("div#test_props").html(Mustache.render(template, stored_result));
+            };
+        };
+    $.get('test_props.mst', render_props_callback(result));
+    $.get('test_result.mst', render_result_callback(result));
+};
+window.render_result = render_result;
 
-function render_result_page(data, status, xhr){
+var render_result_page = function (data, status, xhr) {
     render_result(data);
-}
+};
+window.render_result_page = render_result_page;

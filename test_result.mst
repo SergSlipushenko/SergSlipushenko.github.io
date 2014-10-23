@@ -1,0 +1,83 @@
+{{#defcore_tests}}
+    <div>
+        Total passed defcore tests: {{total_passed_count}} <a onclick="$('#defcore_tests_list').toggle(500);return false;" href="#"> [plain list] </a>
+    </div>
+    <ul id=defcore_tests_list style="display:none;" class="fa-ul test_results">
+    {{#list}}
+        <li class="fa fa-check passed"> <span class="passed"> {{.}} </span>  </li>
+    {{/list}}
+    {{^list}}
+        No defcore tests passed!
+    {{/list}}
+    </ul>
+    {{#capabilities}}
+    <ul>
+        <li>
+            <a onclick="$('#{{class}}_details').toggle(500); $('#{{class}}_brief').toggle(500); return false;" href="#">
+                {{class}} capabilities ({{count}})
+            </a>
+            <ul id="{{class}}_brief" class="fa-ul test_results">
+                <li class="fa fa-check cap-passed"><span> Fully supported capabilities: {{full_support_count}} </span></li>
+                <li class="fa fa-question-circle cap-part-passed"><span> Partial supported capabilities: {{partial_support_count}}  </span></li>
+                <li class="fa fa-times cap-failed"><span> Totally unsupported capabilities: {{full_unsupport_count}}  </span></li>
+
+            </ul>
+            <div id="{{class}}_details" style="display:none;">
+                {{#items}}
+                <ul class="fa-ul test_results">
+                    {{#caps_support}}
+                    <div style="width: 700px; display: inline-table;">
+                        <div style="display: table-row">
+                            <div style="width: 300px; display: table-cell;"> <a onclick="$('#{{name}}_detail').toggle(500);  return false;" href="#" title="{{description}}"> {{name}} </a> </div>
+                            <div style="display: table-cell;">
+                                <ul id="test_chart" style="padding: 0; display: inline">
+                                    {{#test_chart}}
+                                    {{#chart_bullets}} {{.}} {{/chart_bullets}}
+                                    {{/test_chart}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="{{name}}_detail" style="display:none;">
+                        <ul class="fa-ul test_results">
+                            {{#passed_tests}}
+                                <li class="fa fa-check passed">
+                                    <span>
+                                        {{.}} <a href="javascript:void(get_code_url('{{.}}'));"> [github] </a>
+                                    </span>
+                                </li>
+                            {{/passed_tests}}
+                        </ul>
+                        <ul class="fa-ul test_results">
+                            {{#failed_tests}}
+                                <li class="fa fa-times failed">
+                                    <span>
+                                        {{.}} <a href="javascript:void(get_code_url('{{.}}'));"> [github] </a>
+                                    </span>
+                                </li>
+                            {{/failed_tests}}
+                        </ul>
+                    </div>
+                    {{/caps_support}}
+                </ul>
+                {{/items}}
+            </div>
+        </li>
+    </ul>
+    {{/capabilities}}
+    {{^capabilities}}
+        <div> No capabilities!</div>
+    {{/capabilities}}
+{{/defcore_tests}}
+{{#other_tests}}
+<h3> Other tests </h3>
+Total pased other tests :{{count}}  <a onclick="$('#other_tests_list').toggle(500);return false;" href="#"> [plain list] </a>
+<ul id=other_tests_list style="display:none;" class="fa-ul test_results">
+{{#list}}
+    <li class="fa fa-check passed"> <span class="passed"> {{.}} </span>  </li>
+{{/list}}
+{{^list}}
+    No other tests!
+{{/list}}
+</ul>
+{{/other_tests}}

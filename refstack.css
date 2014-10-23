@@ -217,10 +217,24 @@ ul.checklist li:before {
  padding-right: 0.5em;
 }
 
-ul.test_results li.caps {
+ul.test_results li.cap-passed {
+    color: green;
     list-style-type: none;
     display: block;
 }
+
+ul.test_results li.cap-part-passed {
+    color: gold;
+    list-style-type: none;
+    display: block;
+}
+
+ul.test_results li.cap-failed {
+    color: red;
+    list-style-type: none;
+    display: block;
+}
+
 
 ul.test_results li.passed {
     color: green;

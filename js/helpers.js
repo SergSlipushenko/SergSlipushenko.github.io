@@ -1,20 +1,28 @@
-function has_upper_case(str) {
+/*global $:false */
+/*global Mustache:false */
+/*jslint devel: true*/
+/* jshint -W097 */
+/*jslint node: true */
+
+'use strict';
+
+var has_upper_case = function (str) {
     return (/[A-Z]/.test(str));
-}
+};
 
-function capitaliseFirstLetter(string){
+var capitaliseFirstLetter = function (string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
-}
+};
 
-function code_url(text, render){
-    return render( '<a href="javascript:void(get_code_url(\'' +
-            text + '\'));"> [github] </a>' );
-}
+var code_url = function (text, render) {
+    return render('<a href="javascript:void(get_code_url(\'' +
+            text + '\'));"> [github] </a>');
+};
 
-function get_code_url (test_id) {
-    var id = test_id.split('/').join('.');
-    var parts = id.split('.');
-    var path_array = [];
+var get_code_url = function (test_id) {
+    var id = test_id.split('/').join('.'),
+        parts = id.split('.'),
+        path_array = [];
     for (var i in parts){
         if (has_upper_case(parts[i])) { break }
         path_array.push(parts[i])
@@ -49,15 +57,16 @@ function get_code_url (test_id) {
                 )
             });
 
-}
-function render_header(data){
+};
+
+var render_header = function (data){
     var template = $('#header_template').html();
     data["release"] = capitaliseFirstLetter(data["release"]);
     var rendered = Mustache.render(template, data);
     $("div#header").html(rendered);
-}
+};
 
-function build_caps_list(data) {
+var build_caps_list = function (data){
     var criteria_count = Object.keys(data['criteria']).length;
     var caps_dict = {'capabilities': {}};
     var capabilities_count = 0;
@@ -98,17 +107,18 @@ function build_caps_list(data) {
         })
     }
     return caps_list
-}
+};
+window.build_caps_list = build_caps_list;
 
-function render_caps(only_core, admin_filter, data){
+var render_caps = function (only_core, admin_filter, data){
     var template = $('#capabilities_template').html();
     var caps_list = build_caps_list(data);
     var rendered = Mustache.render(template, caps_list);
 
     $("div#capabilities").html(rendered);
-}
+};
 
-function render_criteria(data){
+var render_criteria = function(data){
     var template = $('#criteria_template').html();
     var crits = {'criteria': []};
     for(var tag in data['criteria']){
@@ -119,9 +129,9 @@ function render_criteria(data){
     var rendered = Mustache.render(template, crits);
 
     $("ul#criteria").html(rendered);
-}
+};
 
-function render_page(render_func) {
+var render_page = function(render_func){
 
     if (document.getElementById('only_core')){
         window.only_core = document.getElementById('only_core').checked
@@ -145,10 +155,12 @@ function render_page(render_func) {
             }
         })
     }
-}
+};
+window.render_page = render_page;
 
-function render_capabilities_page(data){
+var render_capabilities_page = function(data){
     render_caps(only_core, admin_filter, data);
     render_criteria(data);
     render_header(data)
-}
+};
+window.render_capabilities_page = render_capabilities_page;

@@ -4,13 +4,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/refstack.css">
+    <link rel="script" id="ext" type="x-tmpl-mustache" href="/test_props.mst">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
     <script type="application/json" id="passed_tests">
     {{result_json | safe}}
     </script>
-    <script src="/js/helpers.js"></script>
-    <script> $(document).ready(function(){render_page(render_capabilities_page)}); </script>
     <script src="/js/helpers.js"></script>
     <script src="/js/refstack.js"></script>
     <script>
@@ -19,21 +18,27 @@
     </script>
 </head>
 <body>
-<h1>Test report</h1>
+<h1>Defcore test report</h1>
 <p></p>
-<h3> Defcore tests </h3>
+<p></p>
+<div id="test_props">
+</div>
+<p></p>
+<h3> Defcore tests result </h3>
 <div>
+    <label for="only_core">Show only core tests : </label>
     <input id="only_core" name="only_core" type="checkbox" checked onclick="render()" />
-    <label for="only_core">Show only core tests</label>
     <br>
+    <label for="admin">Admin filter : </label>
     <select id="admin" onclick="render()">
         <option>All tests</option>
         <option>Tests require admin rights</option>
         <option>Tests don't require admin rights</option>
     </select>
-    <label for="admin">Filter for "Admin rights required"</label>
 </div>
-<div id="results"></div>
+<p></p>
+<div id="test_results"></div>
+<p></p>
 <div>Copyright OpenStack Foundation, 2014.  Apache 2 License.</div>
 </body>
 </html>
