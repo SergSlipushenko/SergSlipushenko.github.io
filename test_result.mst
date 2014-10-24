@@ -85,7 +85,7 @@
 {{/defcore_tests}}
 {{#other_tests}}
 <h3> Other tests </h3>
-Total pased other tests :{{count}}  <a onclick="$('#other_tests_list').toggle(500);return false;" href="#"> [plain list] </a>
+Total passed other tests: {{count}}  <a onclick="$('#other_tests_list').toggle(500);return false;" href="#"> [plain list] </a>
 <ul id=other_tests_list style="display:none;" class="fa-ul test_results">
 {{#list}}
     <li class="fa fa-check passed"> <span class="passed"> {{.}} </span>  </li>
