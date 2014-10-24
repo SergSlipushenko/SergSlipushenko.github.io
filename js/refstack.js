@@ -1,5 +1,6 @@
 /*global $:false */
 /*global Mustache:false */
+/*global window:false */
 /*jslint devel: true*/
 /* jshint -W097 */
 /*jslint node: true */
@@ -42,13 +43,22 @@ var build_result = function (caps_list) {
     var test_result = $.parseJSON($('#passed_tests').html()),
         other_tests = test_result.results.slice(0),
         result = {
+            'only_core': window.only_core,
+            'all': window.admin_filter === 'all',
+            'admin': window.admin_filter === 'admin',
+            'noadmin': window.admin_filter === 'noadmin',
             'cpid': test_result.cpid,
             'duration_seconds': pretty_time_format(test_result.duration_seconds),
             'defcore_tests': {
                 'capabilities': caps_list.capabilities,
-                'list': []
+                'list': $.each(test_result.results, function (test) {
+                    if (caps_list.global_test_list.indexOf(test) >= 0) {
+                        return test;
+                    }
+                })
             }
         };
+    result.defcore_tests.count = result.defcore_tests.list.length;
     result.defcore_tests.capabilities = result.defcore_tests.capabilities.map(function (capability_class) {
         capability_class.full_support_count = 0;
         capability_class.partial_support_count = 0;
@@ -67,7 +77,6 @@ var build_result = function (caps_list) {
                     capability.test_chart.push(1);
                     if (test_index >= 0) {
                         other_tests.splice(test_index, 1);
-                        result.defcore_tests.list.push(test);
                     }
                 } else {
                     capability.fully_supported = false;
@@ -78,8 +87,6 @@ var build_result = function (caps_list) {
             if (capability.fully_supported) {
                 capability.partial_supported = false;
             }
-            capability.passed_count = capability.passed_tests.length;
-            capability.failed_count = capability.failed_tests.length;
             capability.chart_bullets = function () {return chart_bullets; };
             capability.caps_support = function () {return caps_support; };
             if (capability.fully_supported) {

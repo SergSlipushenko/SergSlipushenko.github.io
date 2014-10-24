@@ -1,7 +1,21 @@
+<h3> DefCore test results </h3>
+<div>
+    Total passed defcore tests: {{defcore_tests.count}} <a onclick="$('#defcore_tests_list').toggle(500);return false;" href="#"> [plain list] </a>
+</div>
+<p></p>
+<div>
+    <label for="only_core">Show only core tests: </label>
+    <input id="only_core" name="only_core" type="checkbox" {{#only_core}}checked{{/only_core}} onclick="render()" />
+    <br>
+    <label for="admin">Admin filter: </label>
+    <select id="admin" onclick="render()">
+        <option {{#all}}selected="selected"{{/all}} value="all" >All tests</option>
+        <option {{#admin}}selected="selected"{{/admin}} value="admin" >Tests requiring admin rights</option>
+        <option {{#noadmin}}selected="selected"{{/noadmin}} value="noadmin">Tests not requiring admin rights</option>
+    </select>
+</div>
+<p></p>
 {{#defcore_tests}}
-    <div>
-        Total passed defcore tests: {{total_passed_count}} <a onclick="$('#defcore_tests_list').toggle(500);return false;" href="#"> [plain list] </a>
-    </div>
     <ul id=defcore_tests_list style="display:none;" class="fa-ul test_results">
     {{#list}}
         <li class="fa fa-check passed"> <span class="passed"> {{.}} </span>  </li>
@@ -18,15 +32,15 @@
             </a>
             <ul id="{{class}}_brief" class="fa-ul test_results">
                 <li class="fa fa-check cap-passed"><span> Fully supported capabilities: {{full_support_count}} </span></li>
-                <li class="fa fa-question-circle cap-part-passed"><span> Partial supported capabilities: {{partial_support_count}}  </span></li>
-                <li class="fa fa-times cap-failed"><span> Totally unsupported capabilities: {{full_unsupport_count}}  </span></li>
+                <li class="fa fa-question-circle cap-part-passed"><span> Partially supported capabilities: {{partial_support_count}}  </span></li>
+                <li class="fa fa-times cap-failed"><span> Unsupported capabilities: {{full_unsupport_count}}  </span></li>
 
             </ul>
             <div id="{{class}}_details" style="display:none;">
                 {{#items}}
                 <ul class="fa-ul test_results">
                     {{#caps_support}}
-                    <div style="width: 700px; display: inline-table;">
+                    <div style="width: 550px; display: inline-table;">
                         <div style="display: table-row">
                             <div style="width: 300px; display: table-cell;"> <a onclick="$('#{{name}}_detail').toggle(500);  return false;" href="#" title="{{description}}"> {{name}} </a> </div>
                             <div style="display: table-cell;">

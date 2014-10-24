@@ -26,7 +26,7 @@
                 <li> <a onclick="$('#{{name}}').toggle(500);return false;" href="#"> Tests ({{tests_count}}) </a>
                 <div id="{{name}}" style="display:none;">
                 <ul>
-                    {{#tests}} <li> {{.}} {{#code_url}} {{.}} {{/code_url}} </li> {{/tests}}
+                    {{#tests}} <li> {{.}} <a href="javascript:void(get_code_url('{{.}}'));"> [github] </a> </li> {{/tests}}
                 </ul>
                 <div>
                 </li>
@@ -66,10 +66,10 @@
 <input id="only_core" name="only_core" type="checkbox" checked onclick="create_caps()" />
 <label for="only_core">Show only core tests</label>
 <br>
-<select id="admin" onclick="create_caps()">
-    <option>All tests</option>
-    <option>Tests require admin rights</option>
-    <option>Tests don't require admin rights</option>
+<select id="admin" onclick="render()">
+    <option value="all" >All tests</option>
+    <option value="admin" >Tests require admin rights</option>
+    <option value="noadmin">Tests don't require admin rights</option>
 </select>
 <div id="capabilities"></div>
 

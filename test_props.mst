@@ -1,3 +1,3 @@
-Cloud ID : {{cpid}} <br>
-Cloud Version : Havana <br>
-Tests time to run : {{duration_seconds}} <br>
+Cloud ID: {{cpid}} <br>
+OpenStack Version: Havana <br>
+Test exectution time: {{duration_seconds}} <br>
