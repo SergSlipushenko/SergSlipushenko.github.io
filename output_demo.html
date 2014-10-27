@@ -39,10 +39,11 @@
     }
     </script>
     <script>
-        $.get('output.html', function(data, status, xhr){
-                var test_result = $.parseJSON($('#passed_tests').html());
+        window.$$ = jQuery.noConflict(true);
+        window.$$.get('output.html', function(data, status, xhr){
+                var test_result = window.$$.parseJSON(window.$$('#passed_tests').html());
                 var rendered = swig.render(data, {locals : {result_json: JSON.stringify(test_result)}});
-                $("div#rendered").html(rendered);
+                window.$$("div#rendered").html(rendered);
             }
         )
     </script>

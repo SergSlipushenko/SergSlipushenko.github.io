@@ -215,19 +215,19 @@ ul.checklist li:before {
  padding-right: 0.5em;
 }
 
-ul.test_results li.cap-passed {
+.cap-passed {
     color: green;
     list-style-type: none;
     display: block;
 }
 
-ul.test_results li.cap-part-passed {
+.cap-part-passed {
     color: gold;
     list-style-type: none;
     display: block;
 }
 
-ul.test_results li.cap-failed {
+.cap-failed {
     color: red;
     list-style-type: none;
     display: block;
@@ -265,4 +265,34 @@ ul#test_chart li.failed {
 
 li.caps_names_list{
     width: 80%;
+}
+
+div.caps_summary{
+    display: inline;
+    width: 80%;
+}
+
+span.caps_summary{
+    display: inline;
+    width: 340px !important;
+}
+
+div.caps_summary_table{
+    width: 35em;
+    display: table;
+}
+
+div.caps_summary_col_1{
+    width: 2em;
+    display: table-cell;
+}
+
+div.caps_summary_col_2{
+    width: 20em;
+    display: table-cell;
+}
+
+div.caps_summary_col_3{
+    width: 3em;
+    display: table-cell;
 }

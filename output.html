@@ -4,8 +4,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/refstack.css">
-    <link rel="script" id="ext" type="x-tmpl-mustache" href="/test_props.mst">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
+    <script src="/js/jquery-1.11.1.js" ></script>
+    <script src="/js/jquery.cookie.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
     <script type="application/json" id="passed_tests">
     {{result_json | safe}}
@@ -13,7 +13,7 @@
     <script src="/js/helpers.js"></script>
     <script src="/js/refstack.js"></script>
     <script>
-        function render(){render_page(render_result_page)}
+        window.render = function(){render_page(render_result)};
         $(document).ready(render)
     </script>
 </head>

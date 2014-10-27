@@ -23,10 +23,10 @@ var pretty_time_format = function (time) {
 };
 
 var chart_bullets = function (text, render) {
-    if (this === 1) {
-        return render('<li class="fa fa-check passed"></li>');
+    if (this.result === 1) {
+        return render('<li class="fa fa-check passed" title="' + this.test_id + '"></li>');
     }
-    return render('<li class="fa fa-times failed"></li>');
+    return render('<li class="fa fa-times failed" title="' + this.test_id + '"></li>');
 };
 
 var caps_support = function (text, render) {
@@ -43,10 +43,10 @@ var build_result = function (caps_list) {
     var test_result = $.parseJSON($('#passed_tests').html()),
         other_tests = test_result.results.slice(0),
         result = {
-            'only_core': window.only_core,
-            'all': window.admin_filter === 'all',
-            'admin': window.admin_filter === 'admin',
-            'noadmin': window.admin_filter === 'noadmin',
+            'only_core': $.cookie('only_core_flag') === 'true',
+            'all': $.cookie('admin_filter_flag') === 'all',
+            'admin': $.cookie('admin_filter_flag') === 'admin',
+            'noadmin': $.cookie('admin_filter_flag') === 'noadmin',
             'cpid': test_result.cpid,
             'duration_seconds': pretty_time_format(test_result.duration_seconds),
             'defcore_tests': {
@@ -74,14 +74,14 @@ var build_result = function (caps_list) {
                 if (passed) {
                     capability.partial_supported = true;
                     capability.passed_tests.push(test);
-                    capability.test_chart.push(1);
+                    capability.test_chart.push({test_id: test.split('/').join('.').split('.').slice(-1)[0], result: 1});
                     if (test_index >= 0) {
                         other_tests.splice(test_index, 1);
                     }
                 } else {
                     capability.fully_supported = false;
                     capability.failed_tests.push(test);
-                    capability.test_chart.push(-1);
+                    capability.test_chart.push({test_id: test.split('/').join('.').split('.').slice(-1)[0], result: -1});
                 }
             });
             if (capability.fully_supported) {
@@ -110,6 +110,33 @@ var build_result = function (caps_list) {
 };
 window.build_result = build_result;
 
+var render_page = function (render_func) {
+    if ($('input#only_core').length > 0) {
+        $.cookie('only_core_flag', $('#only_core')[0].checked);
+    } else {
+        if (!$.cookie('only_core_flag')) {$.cookie('only_core_flag', 'true'); }
+    }
+    if ($('select#admin').length > 0) {
+        $.cookie('admin_filter_flag', $('select#admin')[0].value);
+    } else {
+        if (!$.cookie('admin_filter_flag')) {$.cookie('admin_filter_flag', 'all'); }
+    }
+    if (window.hasOwnProperty('capabilities_data')) {
+        render_func(window.capabilities_data);
+    } else {
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: 'havanacore.json',
+            success: function (data, status, xhr) {
+                window.capabilities_data = data;
+                render_func(data);
+            }
+        });
+    }
+};
+window.render_page = render_page;
+
 var render_result = function (data) {
     var caps_list = window.build_caps_list(data),
         result = build_result(caps_list),
@@ -129,8 +156,3 @@ var render_result = function (data) {
     $.get('test_result.mst', render_result_callback(result));
 };
 window.render_result = render_result;
-
-var render_result_page = function (data, status, xhr) {
-    render_result(data);
-};
-window.render_result_page = render_result_page;

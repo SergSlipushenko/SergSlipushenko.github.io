@@ -56,7 +56,10 @@
     {{/criteria}}
     </script>
     <script src="/js/helpers.js"></script>
-    <script> $(document).ready(function(){render_page(render_capabilities_page)}); </script>
+    <script>
+        window.render = function(){render_page(render_capabilities_page)};
+        $(document).ready(window.render);
+    </script>
 </head>
 
 <body>

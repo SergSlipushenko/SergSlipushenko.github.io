@@ -34,7 +34,6 @@ var get_code_url = function (test_id) {
     path = path.replace(/\s+/g, '');
     url = 'https://api.github.com/search/code?q=' + test +
             ' repo:openstack/tempest extension:py path:' + path;
-    console.log(url);
     $.when($.ajax({type: 'GET', url: url, dataType: 'json'})).done(
         function (data, status, xhr) {
             if (data.items.length < 1) {
@@ -45,7 +44,7 @@ var get_code_url = function (test_id) {
             $.when($.ajax({type: 'GET', url: data.items[0].git_url, dataType: 'json'})).done(
                 function (data, status, xhr) {
                     var content = window.atob(data.content.replace(/\s+/g, '')).split('\n');
-                    content.each(function (line, i) {
+                    content.forEach(function (line, i) {
                         if (line.indexOf(test) > -1) {
                             var github_url = html_url + '#L' + i.toString(),
                                 win = window.open(github_url, '_blank');
@@ -57,6 +56,7 @@ var get_code_url = function (test_id) {
         }
     );
 };
+window.get_code_url = get_code_url;
 
 var render_header = function (data) {
     var template = $('#header_template').html();
