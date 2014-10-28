@@ -106,11 +106,12 @@ var build_result = function (caps_list) {
         'list': other_tests,
         'count': other_tests.length
     };
+    console.log(result);
     return result;
 };
 window.build_result = build_result;
 
-var render_page = function (render_func) {
+var upd_filters_cookie = function () {
     if ($('input#only_core').length > 0) {
         $.cookie('only_core_flag', $('#only_core')[0].checked);
     } else {
@@ -121,24 +122,12 @@ var render_page = function (render_func) {
     } else {
         if (!$.cookie('admin_filter_flag')) {$.cookie('admin_filter_flag', 'all'); }
     }
-    if (window.hasOwnProperty('capabilities_data')) {
-        render_func(window.capabilities_data);
-    } else {
-        $.ajax({
-            type: "GET",
-            dataType: 'json',
-            url: 'havanacore.json',
-            success: function (data, status, xhr) {
-                window.capabilities_data = data;
-                render_func(data);
-            }
-        });
-    }
+    return {only_core: $.cookie('only_core_flag') === 'true', admin_filter: $.cookie('admin_filter_flag')};
 };
-window.render_page = render_page;
 
 var render_result = function (data) {
-    var caps_list = window.build_caps_list(data),
+    var filters = upd_filters_cookie(),
+        caps_list = window.build_caps_list(data, filters.only_core, filters.admin_filter),
         result = build_result(caps_list),
         render_result_callback = function (result) {
             var stored_result = result;

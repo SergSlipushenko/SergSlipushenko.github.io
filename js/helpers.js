@@ -64,7 +64,7 @@ var render_header = function (data) {
     $("div#header").html(Mustache.render(template, data));
 };
 
-var build_caps_list = function (data) {
+var build_caps_list = function (data, only_core, admin_filter) {
     var criteria_count = Object.keys(data.criteria).length,
         caps_dict = {'capabilities': {}},
         caps_list = {
@@ -87,9 +87,9 @@ var build_caps_list = function (data) {
             }
         });
         caps_dict.capabilities[capability.class].total += 1;
-        if (window.only_core === true && (capability.core !== true)) {return; }
-        if (window.admin_filter === 'admin' && (capability.admin !== true)) {return; }
-        if (window.admin_filter === 'noadmin' && (capability.admin === true)) {return; }
+        if (only_core === true && (capability.core !== true)) {return; }
+        if (admin_filter === 'admin' && (capability.admin !== true)) {return; }
+        if (admin_filter === 'noadmin' && (capability.admin === true)) {return; }
         capability.achievements_count = capability.achievements.length;
         capability.tests_count = capability.tests.length;
         caps_dict.capabilities[capability.class].items.push(capability);
@@ -107,11 +107,25 @@ var build_caps_list = function (data) {
 };
 window.build_caps_list = build_caps_list;
 
-var render_caps = function (only_core, admin_filter, data) {
-    var template = $('#capabilities_template').html(),
-        caps_list = build_caps_list(data),
-        rendered = Mustache.render(template, caps_list);
+var upd_filters_local = function () {
+    if (document.getElementById('only_core')) {
+        window.only_core = document.getElementById('only_core').checked;
+    } else {
+        window.only_core = true;
+    }
+    if (document.getElementById('admin')) {
+        window.admin_filter = document.getElementById('admin').value;
+    } else {
+        window.admin_filter = 'all';
+    }
+    return {only_core: window.only_core, admin_filter: window.admin_filter};
+};
 
+var render_caps = function (data) {
+    var filters = upd_filters_local(),
+        template = $('#capabilities_template').html(),
+        caps_list = build_caps_list(data, filters.only_core, filters.admin_filter),
+        rendered = Mustache.render(template, caps_list);
     $("div#capabilities").html(rendered);
 };
 
@@ -127,17 +141,6 @@ var render_criteria = function (data) {
 };
 
 var render_page = function (render_func) {
-
-    if (document.getElementById('only_core')) {
-        window.only_core = document.getElementById('only_core').checked;
-    } else {
-        window.only_core = true;
-    }
-    if (document.getElementById('admin')) {
-        window.admin_filter = document.getElementById('admin').value;
-    } else {
-        window.admin_filter = 'all';
-    }
     if (window.hasOwnProperty('capabilities_data')) {
         render_func(window.capabilities_data);
     } else {
@@ -155,7 +158,7 @@ var render_page = function (render_func) {
 window.render_page = render_page;
 
 var render_capabilities_page = function (data) {
-    render_caps(window.only_core, window.admin_filter, data);
+    render_caps(data);
     render_criteria(data);
     render_header(data);
 };

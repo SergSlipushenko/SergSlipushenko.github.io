@@ -8,7 +8,7 @@
     <input id="only_core" name="only_core" type="checkbox" {{#only_core}}checked{{/only_core}} onclick="render()" />
     <br>
     <label for="admin">Admin filter: </label>
-    <select id="admin" onclick="render()">
+    <select id="admin" onchange="render()">
         <option {{#all}}selected="selected"{{/all}} value="all" >All tests</option>
         <option {{#admin}}selected="selected"{{/admin}} value="admin" >Tests requiring admin rights</option>
         <option {{#noadmin}}selected="selected"{{/noadmin}} value="noadmin">Tests not requiring admin rights</option>
