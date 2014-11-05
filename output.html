@@ -6,15 +6,16 @@
     <link rel="stylesheet" type="text/css" href="/refstack.css">
     <script src="/js/jquery-1.11.1.js" ></script>
     <script src="/js/jquery.cookie.js"></script>
+    <script src="/js/spin.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
-    <script type="application/json" id="passed_tests">
-    {{result_json | safe}}
-    </script>
     <script src="/js/helpers.js"></script>
     <script src="/js/refstack.js"></script>
     <script>
-        window.render = function(){render_page(render_result)};
-        $(document).ready(render)
+        window.render_page = function(){render_defcore_report_page()};
+        $(document).ready(function() {
+            window.loading_spin();
+            window.render_page();
+        })
     </script>
 </head>
 <body>

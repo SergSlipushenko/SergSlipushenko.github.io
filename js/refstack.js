@@ -24,9 +24,9 @@ var pretty_time_format = function (time) {
 
 var chart_bullets = function (text, render) {
     if (this.result === 1) {
-        return render('<li class="fa fa-check passed" title="' + this.test_id + '"></li>');
+        return render('<span style="width: 1em; display: inline-block;" class="fa fa-check passed" title="' + this.test_id + '"></span>');
     }
-    return render('<li class="fa fa-times failed" title="' + this.test_id + '"></li>');
+    return render('<span style="width: 1em; display: inline-block;" class="fa fa-times failed" title="' + this.test_id + '"></span>');
 };
 
 var caps_support = function (text, render) {
@@ -39,9 +39,8 @@ var caps_support = function (text, render) {
     return render('<li class="fa fa-times cap-failed caps-names-list"><span>' + text + '</span></li>');
 };
 
-var build_result = function (caps_list) {
-    var test_result = $.parseJSON($('#passed_tests').html()),
-        other_tests = test_result.results.slice(0),
+var build_report = function (caps_list, test_result) {
+    var other_tests = test_result.results.slice(0),
         result = {
             'only_core': $.cookie('only_core_flag') === 'true',
             'all': $.cookie('admin_filter_flag') === 'all',
@@ -49,6 +48,7 @@ var build_result = function (caps_list) {
             'noadmin': $.cookie('admin_filter_flag') === 'noadmin',
             'cpid': test_result.cpid,
             'duration_seconds': pretty_time_format(test_result.duration_seconds),
+            'release': caps_list.release,
             'defcore_tests': {
                 'capabilities': caps_list.capabilities,
                 'list': $.each(test_result.results, function (test) {
@@ -109,7 +109,7 @@ var build_result = function (caps_list) {
     console.log(result);
     return result;
 };
-window.build_result = build_result;
+window.build_report = build_report;
 
 var upd_filters_cookie = function () {
     if ($('input#only_core').length > 0) {
@@ -125,23 +125,47 @@ var upd_filters_cookie = function () {
     return {only_core: $.cookie('only_core_flag') === 'true', admin_filter: $.cookie('admin_filter_flag')};
 };
 
-var render_result = function (data) {
-    var filters = upd_filters_cookie(),
-        caps_list = window.build_caps_list(data, filters.only_core, filters.admin_filter),
-        result = build_result(caps_list),
-        render_result_callback = function (result) {
-            var stored_result = result;
-            return function (template) {
-                $("div#test_results").html(Mustache.render(template, stored_result));
-            };
-        },
-        render_props_callback = function (result) {
-            var stored_result = result;
-            return function (template) {
-                $("div#test_props").html(Mustache.render(template, stored_result));
-            };
-        };
-    $.get('test_props.mst', render_props_callback(result));
-    $.get('test_result.mst', render_result_callback(result));
+var loading_spin = function () {
+    var opts = {
+        lines: 17, // The number of lines to draw
+        length: 40, // The length of each line
+        width: 11, // The line thickness
+        radius: 32, // The radius of the inner circle
+        corners: 1, // Corner roundness (0..1)
+        rotate: 0, // The rotation offset
+        direction: 1, // 1: clockwise, -1: counterclockwise
+        color: '#000', // #rgb or #rrggbb or array of colors
+        speed: 1, // Rounds per second
+        trail: 33, // Afterglow percentage
+        shadow: false, // Whether to render a shadow
+        hwaccel: false, // Whether to use hardware acceleration
+        className: 'spinner', // The CSS class to assign to the spinner
+        zIndex: 2e9, // The z-index (defaults to 2000000000)
+        top: '50%', // Top position relative to parent
+        left: '50%' // Left position relative to parent
+    },
+        target = document.getElementById('test_results'),
+        spinner = new Spinner(opts).spin(target);
 };
-window.render_result = render_result;
+window.loading_spin = loading_spin;
+
+var render_defcore_report_page = function () {
+    var filters = upd_filters_cookie();
+
+    $.when(
+        $.get('test_result.mst', undefined, undefined, 'html'),
+        $.get('icehouse.auto.json', undefined, undefined, 'json'),
+        $.get('sample_test_result.json', undefined, undefined, 'json')
+    ).done(function (template, schema, test_result) {
+        var caps_list = window.build_caps_list(schema[0], filters),
+            report = build_report(caps_list, test_result[0]);
+        $("div#test_results").html(Mustache.render(template[0], report));
+        post_processing();
+    });
+};
+window.render_defcore_report_page = render_defcore_report_page;
+
+var post_processing = function () {
+    $('ul.caps-list li div.caps_line:odd').addClass('zebra_odd');
+    $('ul.caps-list li div.caps_line:even').addClass('zebra_even');
+};

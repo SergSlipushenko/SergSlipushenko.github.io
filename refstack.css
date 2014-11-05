@@ -251,13 +251,13 @@ ul.test_results li span {
     list-style-type: none;
 }
 
-ul#test_chart li.passed {
+span.passed {
     color: green;
     display: inline;
     list-style-type: none;
 }
 
-ul#test_chart li.failed {
+span.failed {
     color: red;
     display: inline;
     list-style-type: none;
@@ -296,3 +296,12 @@ div.caps_summary_col_3{
     width: 3em;
     display: table-cell;
 }
+
+.zebra_odd {
+    width: auto;
+		background-color: #FDFFF5;
+	}
+.zebra_even {
+    width: auto;
+		background-color: #F7F5FF;
+	}

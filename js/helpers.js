@@ -64,10 +64,11 @@ var render_header = function (data) {
     $("div#header").html(Mustache.render(template, data));
 };
 
-var build_caps_list = function (data, only_core, admin_filter) {
+var build_caps_list = function (data, filters) {
     var criteria_count = Object.keys(data.criteria).length,
         caps_dict = {'capabilities': {}},
         caps_list = {
+            'release': data.release,
             'capabilities': [],
             'criteria_count': criteria_count,
             'global_test_list': []
@@ -87,9 +88,9 @@ var build_caps_list = function (data, only_core, admin_filter) {
             }
         });
         caps_dict.capabilities[capability.class].total += 1;
-        if (only_core === true && (capability.core !== true)) {return; }
-        if (admin_filter === 'admin' && (capability.admin !== true)) {return; }
-        if (admin_filter === 'noadmin' && (capability.admin === true)) {return; }
+        if (filters.only_core === true && (capability.core !== true)) {return; }
+        if (filters.admin_filter === 'admin' && (capability.admin !== true)) {return; }
+        if (filters.admin_filter === 'noadmin' && (capability.admin === true)) {return; }
         capability.achievements_count = capability.achievements.length;
         capability.tests_count = capability.tests.length;
         caps_dict.capabilities[capability.class].items.push(capability);
@@ -124,7 +125,7 @@ var upd_filters_local = function () {
 var render_caps = function (data) {
     var filters = upd_filters_local(),
         template = $('#capabilities_template').html(),
-        caps_list = build_caps_list(data, filters.only_core, filters.admin_filter),
+        caps_list = build_caps_list(data, filters),
         rendered = Mustache.render(template, caps_list);
     $("div#capabilities").html(rendered);
 };
@@ -140,26 +141,11 @@ var render_criteria = function (data) {
     $("ul#criteria").html(Mustache.render(template, crits));
 };
 
-var render_page = function (render_func) {
-    if (window.hasOwnProperty('capabilities_data')) {
-        render_func(window.capabilities_data);
-    } else {
-        $.ajax({
-            type: "GET",
-            dataType: 'json',
-            url: 'havanacore.json',
-            success: function (data, status, xhr) {
-                window.capabilities_data = data;
-                render_func(data);
-            }
-        });
-    }
-};
-window.render_page = render_page;
-
-var render_capabilities_page = function (data) {
-    render_caps(data);
-    render_criteria(data);
-    render_header(data);
+var render_capabilities_page = function () {
+    $.get('havanacore.json').done(function (data) {
+        render_caps(data);
+        render_criteria(data);
+        render_header(data);
+    });
 };
 window.render_capabilities_page = render_capabilities_page;

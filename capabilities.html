@@ -57,8 +57,8 @@
     </script>
     <script src="/js/helpers.js"></script>
     <script>
-        window.render = function(){render_page(render_capabilities_page)};
-        $(document).ready(window.render);
+        window.render_page = function(){render_capabilities_page()};
+        $(document).ready(window.render_page);
     </script>
 </head>
 
@@ -66,10 +66,10 @@
 
 <div id="header"></div>
 
-<input id="only_core" name="only_core" type="checkbox" checked onclick="render()" />
+<input id="only_core" name="only_core" type="checkbox" checked onclick="render_page()" />
 <label for="only_core">Show only core tests</label>
 <br>
-<select id="admin" onchange="render()">
+<select id="admin" onchange="render_page()">
     <option value="all" >All tests</option>
     <option value="admin" >Tests require admin rights</option>
     <option value="noadmin">Tests don't require admin rights</option>

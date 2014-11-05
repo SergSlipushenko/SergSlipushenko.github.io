@@ -1,29 +1,33 @@
+Cloud ID: {{cpid}} <br>
+OpenStack release: {{release}} <br>
+Test execution time: {{duration_seconds}} <br>
+<p></p>
 <h3> DefCore test results </h3>
+{{#defcore_tests}}
 <div>
     Total passed DefCore tests: {{defcore_tests.count}} <a onclick="$('#defcore_tests_list').toggle(500);return false;" href="#"> [plain list] </a>
 </div>
+<ul id=defcore_tests_list style="display:none;" class="fa-ul test_results">
+{{#list}}
+    <li class="fa fa-check passed"> <span class="passed"> {{.}} </span>  </li>
+{{/list}}
+{{^list}}
+    No DefCore tests passed!
+{{/list}}
+</ul>
 <p></p>
 <div>
     <label for="only_core">Show only core tests: </label>
-    <input id="only_core" name="only_core" type="checkbox" {{#only_core}}checked{{/only_core}} onclick="render()" />
+    <input id="only_core" name="only_core" type="checkbox" {{#only_core}}checked{{/only_core}} onclick="window.render_page()" />
     <br>
     <label for="admin">Admin filter: </label>
-    <select id="admin" onchange="render()">
+    <select id="admin" onchange="window.render_page()">
         <option {{#all}}selected="selected"{{/all}} value="all" >All tests</option>
         <option {{#admin}}selected="selected"{{/admin}} value="admin" >Tests requiring admin rights</option>
         <option {{#noadmin}}selected="selected"{{/noadmin}} value="noadmin">Tests not requiring admin rights</option>
     </select>
 </div>
 <p></p>
-{{#defcore_tests}}
-    <ul id=defcore_tests_list style="display:none;" class="fa-ul test_results">
-    {{#list}}
-        <li class="fa fa-check passed"> <span class="passed"> {{.}} </span>  </li>
-    {{/list}}
-    {{^list}}
-        No DefCore tests passed!
-    {{/list}}
-    </ul>
     {{#capabilities}}
     <ul>
         <li>
@@ -49,30 +53,19 @@
             </div>
             <div id="{{class}}_details" style="display:none;">
                 {{#items}}
-                <ul class="fa-ul test_results">
+                <ul class="fa-ul caps-list">
                     {{#caps_support}}
-                    <div style="width: 550px; display: inline-table;">
-                        <div style="display: table-row">
-                            <div style="width: 300px; display: table-cell;"> <a onclick="$('#{{name}}_detail').slideToggle();  return false;" href="#" title="{{description}}"> {{name}} </a> </div>
+                    <div style="width: 50em; display: inline-table;">
+                        <div class="caps_line" style="display: table-row">
+                            <div style="width: 30em; display: table-cell;"> <a onclick="$('#{{name}}_detail').slideToggle();  return false;" href="#" title="{{description}}"> {{name}} </a> </div>
                             <div style="display: table-cell;">
-                                <ul id="test_chart" style="padding: 0; display: inline">
                                     {{#test_chart}}
                                     {{#chart_bullets}} {{.}} {{/chart_bullets}}
                                     {{/test_chart}}
-                                </ul>
                             </div>
                         </div>
                     </div>
                     <div id="{{name}}_detail" style="display:none;">
-                        <ul class="fa-ul test_results">
-                            {{#passed_tests}}
-                                <li class="fa fa-check passed">
-                                    <span>
-                                        {{.}} <a href="javascript:void(window.get_code_url('{{.}}'));"> [github] </a>
-                                    </span>
-                                </li>
-                            {{/passed_tests}}
-                        </ul>
                         <ul class="fa-ul test_results">
                             {{#failed_tests}}
                                 <li class="fa fa-times failed">
@@ -81,6 +74,15 @@
                                     </span>
                                 </li>
                             {{/failed_tests}}
+                        </ul>
+                        <ul class="fa-ul test_results">
+                            {{#passed_tests}}
+                                <li class="fa fa-check passed">
+                                    <span>
+                                        {{.}} <a href="javascript:void(window.get_code_url('{{.}}'));"> [github] </a>
+                                    </span>
+                                </li>
+                            {{/passed_tests}}
                         </ul>
                     </div>
                     {{/caps_support}}
