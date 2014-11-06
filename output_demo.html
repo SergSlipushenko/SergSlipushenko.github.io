@@ -2,23 +2,34 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
-    <script src="http://paularmstrong.github.io/swig/js/swig.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/refstack.css">
+    <script src="/js/jquery-1.11.1.js" ></script>
+    <script src="/js/jquery.cookie.js"></script>
+    <script src="/js/spin.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
-    <script type="application/json" id="passed_tests">
-
-    </script>
     <script>
-        window.$$ = jQuery.noConflict(true);
-        window.$$.get('output.html', function(data, status, xhr){
-                var test_result = window.$$.parseJSON(window.$$('#passed_tests').html());
-                var rendered = swig.render(data, {locals : {result_json: JSON.stringify(test_result)}});
-                window.$$("div#rendered").html(rendered);
-            }
-        )
+        window.result_source = '{{result_source}}';
+    </script>
+    <script src="/js/helpers.js"></script>
+    <script src="/js/refstack.js"></script>
+    <script>
+        window.render_page = function(){render_defcore_report_page()};
+        $(document).ready(function() {
+            window.loading_spin();
+            window.render_page();
+        })
     </script>
 </head>
 <body>
-<div id="rendered"></div>
+<h1>DefCore test report</h1>
+<p></p>
+<p></p>
+<div id="test_props">
+</div>
+<p></p>
+<div id="test_results"></div>
+<p></p>
+<div>Copyright OpenStack Foundation, 2014.  Apache 2.0 License.</div>
 </body>
 </html>

@@ -263,8 +263,8 @@ span.failed {
     list-style-type: none;
 }
 
-li.caps_names_list{
-    width: 80%;
+div.caps_names_list{
+    display: table-row;
 }
 
 div.caps_summary{
@@ -295,6 +295,18 @@ div.caps_summary_col_2{
 div.caps_summary_col_3{
     width: 3em;
     display: table-cell;
+}
+
+div.cap_short{
+    width: 50em;
+    display: inline-table;
+}
+div.cap_item{
+    display: table-row;
+}
+
+div.caps_details_table{
+    display: table;
 }
 
 .zebra_odd {

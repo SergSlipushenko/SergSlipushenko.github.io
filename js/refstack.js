@@ -31,12 +31,12 @@ var chart_bullets = function (text, render) {
 
 var caps_support = function (text, render) {
     if (this.fully_supported) {
-        return render('<li class="fa fa-check cap-passed caps-names-list"><span>' + text + '</span></li>');
+        return render('<span class="fa fa-check cap-passed"></span>');
     }
     if (this.partial_supported) {
-        return render('<li class="fa fa-question-circle cap-part-passed caps-names-list"><span>' + text + '</span></li>');
+        return render('<span class="fa fa-question-circle cap-part-passed"></span>');
     }
-    return render('<li class="fa fa-times cap-failed caps-names-list"><span>' + text + '</span></li>');
+    return render('<span class="fa fa-times cap-failed"></span>');
 };
 
 var build_report = function (caps_list, test_result) {
@@ -151,10 +151,12 @@ window.loading_spin = loading_spin;
 
 var render_defcore_report_page = function () {
     var filters = upd_filters_cookie();
-
+    if (window.result_source === '{{result_source}}') {
+        window.result_source = 'icehouse.auto.json';
+    }
     $.when(
         $.get('test_result.mst', undefined, undefined, 'html'),
-        $.get('icehouse.auto.json', undefined, undefined, 'json'),
+        $.get(window.result_source, undefined, undefined, 'json'),
         $.get('sample_test_result.json', undefined, undefined, 'json')
     ).done(function (template, schema, test_result) {
         var caps_list = window.build_caps_list(schema[0], filters),
@@ -166,6 +168,6 @@ var render_defcore_report_page = function () {
 window.render_defcore_report_page = render_defcore_report_page;
 
 var post_processing = function () {
-    $('ul.caps-list li div.caps_line:odd').addClass('zebra_odd');
-    $('ul.caps-list li div.caps_line:even').addClass('zebra_even');
+    $('div.cap_shot:odd').addClass('zebra_odd');
+    $('div.cap_shot:even').addClass('zebra_even');
 };
