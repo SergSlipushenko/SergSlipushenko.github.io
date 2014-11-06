@@ -97,6 +97,13 @@ var build_report = function (caps_list, test_result) {
             }
             return capability;
         });
+        capability_class.items.sort(function (a, b) {
+            var ai = 0,
+                bi = 0;
+            if (a.fully_supported) {ai = 0; } else if (a.partial_supported) {ai = 1; } else {ai = 2; }
+            if (b.fully_supported) {bi = 0; } else if (b.partial_supported) {bi = 1; } else {bi = 2; }
+            return ((ai > bi) ? -1 : ((ai < bi) ? 1 : 0));
+        });
         capability_class.full_unsupport_count = capability_class.count - (capability_class.partial_support_count + capability_class.full_support_count);
         return capability_class;
     });
