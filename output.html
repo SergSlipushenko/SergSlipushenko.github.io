@@ -24,6 +24,12 @@
 <body>
 <h1>DefCore test report</h1>
 <p></p>
+<label for="schema_selector">Capabilities schema: </label>
+<select id="schema_selector" onchange="window.render_page()">
+    <option selected="selected" value="havanacore.json" >Havana core capabilties</option>
+    <option value="icehouse.auto.json" >Icehouse auto generated capabilties</option>
+</select>
+<p></p>
 <div id="test_props">
 </div>
 <p></p>

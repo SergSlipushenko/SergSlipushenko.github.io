@@ -2,13 +2,6 @@ Cloud ID: {{cpid}} <br>
 OpenStack release: {{release}} <br>
 Test execution time: {{duration_seconds}} <br>
 <p></p>
-<label for="schema_selector">Admin filter: </label>
-<select id="schema_selector" onchange="window.render_page()">
-    <option {{#all}}selected="selected"{{/all}} value="all" >All tests</option>
-    <option {{#admin}}selected="selected"{{/admin}} value="admin" >Tests requiring admin rights</option>
-    <option {{#noadmin}}selected="selected"{{/noadmin}} value="noadmin">Tests not requiring admin rights</option>
-</select>
-<p></p>
 <h3> DefCore test results </h3>
 {{#defcore_tests}}
 <div>

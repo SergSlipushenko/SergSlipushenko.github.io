@@ -157,13 +157,21 @@ var loading_spin = function () {
 window.loading_spin = loading_spin;
 
 var render_defcore_report_page = function () {
-    var filters = upd_filters_cookie();
+    var filters = upd_filters_cookie(),
+        schema = '';
+
     if (window.result_source === '{{result_source}}') {
         window.result_source = 'sample_test_result.json';
     }
+    if ($('select#schema_selector').length === 0) {
+        schema = 'havanacore.json';
+    } else {
+        schema = $('select#schema_selector')[0].value;
+    }
+    console.log(schema);
     $.when(
         $.get('test_result.mst', undefined, undefined, 'html'),
-        $.get('capabilities/icehouse.auto.json', undefined, undefined, 'json'),
+        $.get('capabilities/' + schema, undefined, undefined, 'json'),
         $.get(window.result_source, undefined, undefined, 'json')
     ).done(function (template, schema, test_result) {
         var caps_list = window.build_caps_list(schema[0], filters),
