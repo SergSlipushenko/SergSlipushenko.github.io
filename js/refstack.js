@@ -31,12 +31,12 @@ var chart_bullets = function (text, render) {
 
 var caps_support = function (text, render) {
     if (this.fully_supported) {
-        return render('<span class="fa fa-check cap-passed"></span>');
+        return render('<span class="fa fa-check cap-passed" title="Fully supported"></span>');
     }
     if (this.partial_supported) {
-        return render('<span class="fa fa-question-circle cap-part-passed"></span>');
+        return render('<span class="fa fa-question-circle cap-part-passed" title="Partial supported"></span>');
     }
-    return render('<span class="fa fa-times cap-failed"></span>');
+    return render('<span class="fa fa-times cap-failed" title="Unsupported"></span>');
 };
 
 var build_report = function (caps_list, test_result) {

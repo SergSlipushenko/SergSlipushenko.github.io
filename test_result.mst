@@ -57,10 +57,10 @@ Test execution time: {{duration_seconds}} <br>
                     <div class="cap_shot">
                         <div style="width: 2em; display: table-cell;"> {{#caps_support}}{{/caps_support}} </div>
                         <div style="width: 30em; display: table-cell;">
-                            <a onclick="$('#{{name}}_brief').slideToggle();  return false;" title="Description: {{description}} href="#" > {{name}}  </a>
+                            <a onclick="$('#{{name}}_detail').slideToggle();  return false;" title="Description: {{description}} href="#" > {{name}}  </a>
                         </div>
                         <div style="width: 5em; display: table-cell;">
-                            <a onclick="$('#{{name}}_detail').slideToggle();  return false;" href="#" > Detail </a>
+                            <a onclick="$('#{{name}}_brief').slideToggle();  return false;" href="#" > <span class="fa fa-angle-double-right"></span> </a>
                         </div>
                         <div style="width: 20em; display: table-cell;">
                             <div id="{{name}}_brief" style="display: none;">
