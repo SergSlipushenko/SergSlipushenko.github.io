@@ -159,12 +159,12 @@ window.loading_spin = loading_spin;
 var render_defcore_report_page = function () {
     var filters = upd_filters_cookie();
     if (window.result_source === '{{result_source}}') {
-        window.result_source = 'icehouse.auto.json';
+        window.result_source = 'sample_test_result.json';
     }
     $.when(
         $.get('test_result.mst', undefined, undefined, 'html'),
-        $.get(window.result_source, undefined, undefined, 'json'),
-        $.get('sample_test_result.json', undefined, undefined, 'json')
+        $.get('capabilities/icehouse.auto.json', undefined, undefined, 'json'),
+        $.get(window.result_source, undefined, undefined, 'json')
     ).done(function (template, schema, test_result) {
         var caps_list = window.build_caps_list(schema[0], filters),
             report = build_report(caps_list, test_result[0]);
