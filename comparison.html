@@ -10,11 +10,12 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
     <script>
         window.result_source = '{{result_source}}';
+        window.compared_result_source = '{{compared_result_source}}';
     </script>
     <script src="/js/helpers.js"></script>
     <script src="/js/refstack.js"></script>
     <script>
-        window.render_page = function(){render_defcore_report_page()};
+        window.render_page = function(){render_defcore_diff_report_page()};
         $(document).ready(function() {
             window.loading_spin();
             window.render_page();

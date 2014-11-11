@@ -142,7 +142,7 @@ var render_criteria = function (data) {
 };
 
 var render_capabilities_page = function () {
-    $.get('havanacore.json').done(function (data) {
+    $.get('capabilities/havanacore.json').done(function (data) {
         render_caps(data);
         render_criteria(data);
         render_header(data);

@@ -48,7 +48,6 @@ var build_report = function (caps_list, test_result) {
             'noadmin': $.cookie('admin_filter_flag') === 'noadmin',
             'cpid': test_result.cpid,
             'duration_seconds': pretty_time_format(test_result.duration_seconds),
-            'release': caps_list.release,
             'defcore_tests': {
                 'capabilities': caps_list.capabilities,
                 'list': $.each(test_result.results, function (test) {
@@ -84,6 +83,8 @@ var build_report = function (caps_list, test_result) {
                     capability.test_chart.push({test_id: test.split('/').join('.').split('.').slice(-1)[0], result: -1});
                 }
             });
+            capability.passed_count = capability.passed_tests.length;
+            capability.failed_count = capability.failed_tests.length;
             if (capability.fully_supported) {
                 capability.partial_supported = false;
             }
@@ -116,7 +117,92 @@ var build_report = function (caps_list, test_result) {
     console.log(result);
     return result;
 };
-window.build_report = build_report;
+
+var build_diff_report = function (report, test_result) {
+    var result = $.extend({}, report),
+        other_tests = test_result.results.slice(0);
+    result.defcore_tests.capabilities = report.defcore_tests.capabilities.map(function (capability_class) {
+//        capability_class.full_support_count = 0;
+//        capability_class.partial_support_count = 0;
+        capability_class.items = capability_class.items.map(function (capability) {
+            capability.fixed_tests = [];
+            capability.broken_tests = [];
+//            capability.passed_count = 0;
+//            capability.failed_count = 0;
+//            capability.fully_supported = true;
+//            capability.partial_supported = false;
+            capability.tests.forEach(function (test) {
+                var passed = test_result.results.indexOf(test) >= 0,
+                    test_index = other_tests.indexOf(test),
+                    failed_index = 0,
+                    passed_index = 0;
+                if (passed) {
+//                    capability.partial_supported = true;
+//                    capability.passed_count += 1;
+                    if (capability.passed_tests.indexOf(test) < 0) {
+                        capability.broken_tests.push(test);
+                        failed_index = capability.failed_tests.indexOf(test);
+                        if (failed_index < 0) {
+                            alert('Comparison is incorrect!');
+                            throw new Error('Comparison is incorrect!');
+                        }
+                        capability.failed_tests.splice(failed_index, 1);
+                    }
+                    if (test_index >= 0) {
+                        other_tests.splice(test_index, 1);
+                    }
+                } else {
+//                    capability.fully_supported = false;
+//                    capability.failed_count += 1;
+                    console.log(test);
+                    console.log(capability.failed_tests.indexOf(test));
+                    if (capability.failed_tests.indexOf(test) < 0) {
+                        capability.fixed_tests.push(test);
+                        console.log(test);
+                        passed_index = capability.passed_tests.indexOf(test);
+                        if (passed_index < 0) {
+                            alert('Comparison is incorrect!');
+                            throw new Error('Comparison is incorrect!');
+                        }
+                        capability.passed_tests.splice(passed_index, 1);
+                    }
+                }
+            });
+            capability.broken_count = capability.broken_tests.length;
+            capability.fixed_count = capability.fixed_tests.length;
+//            if (capability.fully_supported) {
+//                capability.partial_supported = false;
+//            }
+//            capability.chart_bullets = function () {return chart_bullets; };
+//            capability.caps_support = function () {return caps_support; };
+//            if (capability.fully_supported) {
+//                capability_class.full_support_count += 1;
+//            }
+//            if (capability.partial_supported) {
+//                capability_class.partial_support_count += 1;
+//            }
+            return capability;
+        });
+//        capability_class.items.sort(function (a, b) {
+//            var ai = 0,
+//                bi = 0;
+//            if (a.fully_supported) {ai = 0; } else if (a.partial_supported) {ai = 1; } else {ai = 2; }
+//            if (b.fully_supported) {bi = 0; } else if (b.partial_supported) {bi = 1; } else {bi = 2; }
+//            return ((ai > bi) ? -1 : ((ai < bi) ? 1 : 0));
+//        });
+//        capability_class.full_unsupport_count = capability_class.count - (capability_class.partial_support_count + capability_class.full_support_count);
+        return capability_class;
+    });
+//    result.defcore_tests.total_passed_count = test_result.results.length - other_tests.length;
+//
+//    result.other_tests =  {
+//        'list': other_tests,
+//        'count': other_tests.length
+//    };
+//    console.log(result);
+    return result;
+};
+
 
 var upd_filters_cookie = function () {
     if ($('input#only_core').length > 0) {
@@ -151,38 +237,81 @@ var loading_spin = function () {
         top: '50%', // Top position relative to parent
         left: '50%' // Left position relative to parent
     },
-        target = document.getElementById('test_results'),
-        spinner = new Spinner(opts).spin(target);
+        target = document.getElementById('test_results');
+    new Spinner(opts).spin(target);
 };
-window.loading_spin = loading_spin;
+
+var post_processing = function post_processing() {
+    $('div.cap_shot:odd').addClass('zebra_odd');
+    $('div.cap_shot:even').addClass('zebra_even');
+};
 
 var render_defcore_report_page = function () {
     var filters = upd_filters_cookie(),
-        schema = '';
+        schema = '',
+        schema_selector = $('select#schema_selector');
 
     if (window.result_source === '{{result_source}}') {
         window.result_source = 'sample_test_result.json';
     }
-    if ($('select#schema_selector').length === 0) {
+    if (schema_selector.length === 0) {
         schema = 'havanacore.json';
     } else {
-        schema = $('select#schema_selector')[0].value;
+        schema = schema_selector[0].value;
     }
     console.log(schema);
     $.when(
-        $.get('test_result.mst', undefined, undefined, 'html'),
+        $.get('mustache/report_base.mst', undefined, undefined, 'html'),
+        $.get('mustache/single_test_result.mst', undefined, undefined, 'html'),
         $.get('capabilities/' + schema, undefined, undefined, 'json'),
         $.get(window.result_source, undefined, undefined, 'json')
-    ).done(function (template, schema, test_result) {
+    ).done(function (base_template, caps_template, schema, test_result) {
         var caps_list = window.build_caps_list(schema[0], filters),
             report = build_report(caps_list, test_result[0]);
-        $("div#test_results").html(Mustache.render(template[0], report));
+        $("div#test_results").html(Mustache.render(base_template[0], report, {
+            caps_details: caps_template[0]
+        }));
         post_processing();
     });
 };
-window.render_defcore_report_page = render_defcore_report_page;
 
-var post_processing = function () {
-    $('div.cap_shot:odd').addClass('zebra_odd');
-    $('div.cap_shot:even').addClass('zebra_even');
+var render_defcore_diff_report_page = function () {
+    var filters = upd_filters_cookie(),
+        schema = '',
+        schema_selector = $('select#schema_selector');
+
+    if (window.result_source === '{{result_source}}') {
+        window.result_source = 'sample_test_result.json';
+    }
+    if (window.compared_result_source === '{{compared_result_source}}') {
+        window.compared_result_source = 'other_test_result.json';
+    }
+    if (schema_selector.length === 0) {
+        schema = 'havanacore.json';
+    } else {
+        schema = schema_selector[0].value;
+    }
+    console.log(schema);
+    $.when(
+        $.get('mustache/report_base.mst', undefined, undefined, 'html'),
+        $.get('mustache/diff_test_result.mst', undefined, undefined, 'html'),
+        $.get('capabilities/' + schema, undefined, undefined, 'json'),
+        $.get(window.result_source, undefined, undefined, 'json'),
+        $.get(window.compared_result_source, undefined, undefined, 'json')
+    ).done(function (base_template, caps_template, schema,
+                     test_result, compared_result) {
+        var caps_list = window.build_caps_list(schema[0], filters),
+            report = build_report(caps_list, test_result[0]),
+            diff_report = build_diff_report(report, compared_result[0]);
+
+        $("div#test_results").html(Mustache.render(base_template[0], diff_report, {
+            caps_details: caps_template[0]
+        }));
+        post_processing();
+    });
+};
+
+var toggle_one_item = function (klass, id, postfix) {
+    $('div.' + klass + '_' + postfix + ':not(div#' + id + '_' + postfix + ')').slideUp();
+    $('div#' + id + '_' + postfix).slideToggle();
 };
