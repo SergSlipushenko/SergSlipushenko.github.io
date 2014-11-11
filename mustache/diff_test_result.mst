@@ -20,6 +20,15 @@
         </div>
         <div id="{{id}}_detailed_results" class="{{class}}_detailed_results" style="display:none;">
             <ul class="fa-ul test_results">
+                {{#broken_tests}}
+                    <li class="fa fa-exclamation-circle failed">
+                        <span>
+                            {{.}} <a href="javascript:void(window.get_code_url('{{.}}'));"> [github] </a>
+                        </span>
+                    </li>
+                {{/broken_tests}}
+            </ul>
+            <ul class="fa-ul test_results">
                 {{#fixed_tests}}
                     <li class="fa fa-wrench passed">
                         <span>
@@ -27,15 +36,6 @@
                         </span>
                     </li>
                 {{/fixed_tests}}
-            </ul>
-            <ul class="fa-ul test_results">
-                {{#broken_tests}}
-                    <li class="fa fa-exclamation-triangle failed">
-                        <span>
-                            {{.}} <a href="javascript:void(window.get_code_url('{{.}}'));"> [github] </a>
-                        </span>
-                    </li>
-                {{/broken_tests}}
             </ul>
             <ul class="fa-ul test_results">
                 {{#failed_tests}}
