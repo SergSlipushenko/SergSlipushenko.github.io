@@ -23,8 +23,8 @@
                 <li>Achievements (met {{achievements_count}} of {{criteria_count}} total): {{#achievements}} <a href="#{{.}}">{{.}}</a> {{/achievements}}
                 {{#admin}}<li>Admin rights required</li>{{/admin}}
                 {{#core}}<li>Core test</li>{{/core}}</li>
-                <li> <a onclick="$('#{{name}}').toggle(500);return false;" href="#"> Tests ({{tests_count}}) </a>
-                <div id="{{name}}" style="display:none;">
+                <li> <a onclick="toggle_one_item('{{class}}', '{{id}}', 'tests_list');return false;" href="#"> Tests ({{tests_count}}) </a>
+                <div id="{{id}}_tests_list" class="{{class}}_tests_list" style="display:none;">
                 <ul>
                     {{#tests}} <li> {{.}} <a href="javascript:void(get_code_url('{{.}}'));"> [github] </a> </li> {{/tests}}
                 </ul>

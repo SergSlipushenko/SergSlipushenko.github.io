@@ -297,6 +297,25 @@ div.caps_summary_col_3{
     display: table-cell;
 }
 
+div.overall_summary_table{
+    display: table;
+}
+
+div.overall_summary_col_1{
+    width: 2em;
+    display: table-cell;
+}
+
+div.overall_summary_col_2{
+    width: 30em;
+    display: table-cell;
+}
+
+div.overall_summary_col_3{
+    width: 3em;
+    display: table-cell;
+}
+
 div.cap_short{
     width: 50em;
     display: inline-table;

@@ -56,7 +56,6 @@ var get_code_url = function (test_id) {
         }
     );
 };
-window.get_code_url = get_code_url;
 
 var render_header = function (data) {
     var template = $('#header_template').html();
@@ -71,7 +70,8 @@ var build_caps_list = function (data, filters) {
             'release': data.release,
             'capabilities': [],
             'criteria_count': criteria_count,
-            'global_test_list': []
+            'global_test_list': [],
+            'scope_test_list': []
         };
     $.each(data.capabilities, function (id, capability) {
         capability.class = id.split('-')[0];
@@ -91,6 +91,11 @@ var build_caps_list = function (data, filters) {
         if (filters.only_core === true && (capability.core !== true)) {return; }
         if (filters.admin_filter === 'admin' && (capability.admin !== true)) {return; }
         if (filters.admin_filter === 'noadmin' && (capability.admin === true)) {return; }
+        capability.tests.forEach(function (test) {
+            if (caps_list.scope_test_list.indexOf(test) < 0) {
+                caps_list.scope_test_list.push(test);
+            }
+        });
         capability.achievements_count = capability.achievements.length;
         capability.tests_count = capability.tests.length;
         caps_dict.capabilities[capability.class].items.push(capability);
@@ -106,7 +111,6 @@ var build_caps_list = function (data, filters) {
     });
     return caps_list;
 };
-window.build_caps_list = build_caps_list;
 
 var upd_filters_local = function () {
     if (document.getElementById('only_core')) {
@@ -148,4 +152,8 @@ var render_capabilities_page = function () {
         render_header(data);
     });
 };
-window.render_capabilities_page = render_capabilities_page;
+
+var toggle_one_item = function (klass, id, postfix) {
+    $('div.' + klass + '_' + postfix + ':not(div#' + id + '_' + postfix + ')').slideUp();
+    $('div#' + id + '_' + postfix).slideToggle();
+};

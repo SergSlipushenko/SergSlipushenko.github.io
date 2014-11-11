@@ -49,19 +49,38 @@ var build_report = function (caps_list, test_result) {
             'cpid': test_result.cpid,
             'duration_seconds': pretty_time_format(test_result.duration_seconds),
             'defcore_tests': {
-                'capabilities': caps_list.capabilities,
-                'list': $.each(test_result.results, function (test) {
-                    if (caps_list.global_test_list.indexOf(test) >= 0) {
-                        return test;
-                    }
+                capabilities: caps_list.capabilities,
+                list: test_result.results.filter(function (test) {
+                    return caps_list.global_test_list.indexOf(test) >= 0;
+                }),
+                passed_list: test_result.results.filter(function (test) {
+                    return caps_list.scope_test_list.indexOf(test) >= 0;
+                }),
+                failed_list: caps_list.scope_test_list.filter(function (test) {
+                    return test_result.results.indexOf(test) < 0;
                 })
             }
         };
     result.defcore_tests.count = result.defcore_tests.list.length;
-    result.defcore_tests.capabilities = result.defcore_tests.capabilities.map(function (capability_class) {
-        capability_class.full_support_count = 0;
-        capability_class.partial_support_count = 0;
-        capability_class.items = capability_class.items.map(function (capability) {
+    result.defcore_tests.capabilities = caps_list.capabilities.map(function (capability_class) {
+        var ext_capability_class = {
+            class: capability_class.class,
+            count: capability_class.count,
+            items : capability_class.items.map(function (capability) {
+                return {
+                    class: capability.class,
+                    description: capability.description,
+                    id: capability.id,
+                    name: capability.name,
+                    tests: capability.tests,
+                    tests_count: capability.tests_count
+                };
+            })
+
+        };
+        ext_capability_class.full_support_count = 0;
+        ext_capability_class.partial_support_count = 0;
+        ext_capability_class.items = ext_capability_class.items.map(function (capability) {
             capability.passed_tests = [];
             capability.failed_tests = [];
             capability.test_chart = [];
@@ -73,14 +92,13 @@ var build_report = function (caps_list, test_result) {
                 if (passed) {
                     capability.partial_supported = true;
                     capability.passed_tests.push(test);
-                    capability.test_chart.push({test_id: test.split('/').join('.').split('.').slice(-1)[0], result: 1});
                     if (test_index >= 0) {
                         other_tests.splice(test_index, 1);
                     }
                 } else {
                     capability.fully_supported = false;
                     capability.failed_tests.push(test);
-                    capability.test_chart.push({test_id: test.split('/').join('.').split('.').slice(-1)[0], result: -1});
+
                 }
             });
             capability.passed_count = capability.passed_tests.length;
@@ -91,25 +109,25 @@ var build_report = function (caps_list, test_result) {
             capability.chart_bullets = function () {return chart_bullets; };
             capability.caps_support = function () {return caps_support; };
             if (capability.fully_supported) {
-                capability_class.full_support_count += 1;
+                ext_capability_class.full_support_count += 1;
             }
             if (capability.partial_supported) {
-                capability_class.partial_support_count += 1;
+                ext_capability_class.partial_support_count += 1;
             }
             return capability;
         });
-        capability_class.items.sort(function (a, b) {
+        ext_capability_class.items.sort(function (a, b) {
             var ai = 0,
                 bi = 0;
             if (a.fully_supported) {ai = 0; } else if (a.partial_supported) {ai = 1; } else {ai = 2; }
             if (b.fully_supported) {bi = 0; } else if (b.partial_supported) {bi = 1; } else {bi = 2; }
             return ((ai > bi) ? -1 : ((ai < bi) ? 1 : 0));
         });
-        capability_class.full_unsupport_count = capability_class.count - (capability_class.partial_support_count + capability_class.full_support_count);
-        return capability_class;
+        ext_capability_class.full_unsupport_count = ext_capability_class.count - (ext_capability_class.partial_support_count + ext_capability_class.full_support_count);
+        return ext_capability_class;
     });
-    result.defcore_tests.total_passed_count = test_result.results.length - other_tests.length;
-
+    result.defcore_tests.total_passed_count = result.defcore_tests.passed_list.length;
+    result.defcore_tests.total_failed_count = result.defcore_tests.failed_list.length;
     result.other_tests =  {
         'list': other_tests,
         'count': other_tests.length
@@ -121,6 +139,8 @@ var build_report = function (caps_list, test_result) {
 var build_diff_report = function (report, test_result) {
     var result = $.extend({}, report),
         other_tests = test_result.results.slice(0);
+    result.defcore_tests.fixed_tests = [];
+    result.defcore_tests.broken_tests = [];
     result.defcore_tests.capabilities = report.defcore_tests.capabilities.map(function (capability_class) {
 //        capability_class.full_support_count = 0;
 //        capability_class.partial_support_count = 0;
@@ -141,6 +161,9 @@ var build_diff_report = function (report, test_result) {
 //                    capability.passed_count += 1;
                     if (capability.passed_tests.indexOf(test) < 0) {
                         capability.broken_tests.push(test);
+                        if (result.defcore_tests.broken_tests.indexOf(test) < 0) {
+                            result.defcore_tests.broken_tests.push(test);
+                        }
                         failed_index = capability.failed_tests.indexOf(test);
                         if (failed_index < 0) {
                             alert('Comparison is incorrect!');
@@ -154,11 +177,11 @@ var build_diff_report = function (report, test_result) {
                 } else {
 //                    capability.fully_supported = false;
 //                    capability.failed_count += 1;
-                    console.log(test);
-                    console.log(capability.failed_tests.indexOf(test));
                     if (capability.failed_tests.indexOf(test) < 0) {
                         capability.fixed_tests.push(test);
-                        console.log(test);
+                        if (result.defcore_tests.fixed_tests.indexOf(test) < 0) {
+                            result.defcore_tests.fixed_tests.push(test);
+                        }
                         passed_index = capability.passed_tests.indexOf(test);
                         if (passed_index < 0) {
                             alert('Comparison is incorrect!');
@@ -200,6 +223,8 @@ var build_diff_report = function (report, test_result) {
 //        'count': other_tests.length
 //    };
 //    console.log(result);
+    result.defcore_tests.total_fixed_count = result.defcore_tests.fixed_tests.length;
+    result.defcore_tests.total_broken_count = result.defcore_tests.broken_tests.length;
     return result;
 };
 
@@ -283,8 +308,8 @@ var render_defcore_diff_report_page = function () {
     if (window.result_source === '{{result_source}}') {
         window.result_source = 'sample_test_result.json';
     }
-    if (window.compared_result_source === '{{compared_result_source}}') {
-        window.compared_result_source = 'other_test_result.json';
+    if (window.prev_result_source === '{{prev_result_source}}') {
+        window.prev_result_source = 'other_test_result.json';
     }
     if (schema_selector.length === 0) {
         schema = 'havanacore.json';
@@ -297,21 +322,16 @@ var render_defcore_diff_report_page = function () {
         $.get('mustache/diff_test_result.mst', undefined, undefined, 'html'),
         $.get('capabilities/' + schema, undefined, undefined, 'json'),
         $.get(window.result_source, undefined, undefined, 'json'),
-        $.get(window.compared_result_source, undefined, undefined, 'json')
+        $.get(window.prev_result_source, undefined, undefined, 'json')
     ).done(function (base_template, caps_template, schema,
-                     test_result, compared_result) {
+                     test_result, prev_result) {
         var caps_list = window.build_caps_list(schema[0], filters),
             report = build_report(caps_list, test_result[0]),
-            diff_report = build_diff_report(report, compared_result[0]);
+            diff_report = build_diff_report(report, prev_result[0]);
 
         $("div#test_results").html(Mustache.render(base_template[0], diff_report, {
             caps_details: caps_template[0]
         }));
         post_processing();
     });
-};
-
-var toggle_one_item = function (klass, id, postfix) {
-    $('div.' + klass + '_' + postfix + ':not(div#' + id + '_' + postfix + ')').slideUp();
-    $('div#' + id + '_' + postfix).slideToggle();
 };

@@ -28,42 +28,88 @@ Test execution time: {{duration_seconds}} <br>
     </select>
 </div>
 <p></p>
-Total passed tests in scope: {{total_passed_count}}
-    {{#capabilities}}
-    <ul>
-        <li>
-            <a onclick="toggle_one_item('all', '{{class}}', 'detailed_caps'); return false;" href="#">
-                {{class}} capabilities ({{count}})
-            </a>
-            <div id="{{class}}_brief" class="caps_summary_table">
-                <div style="display: table-col">
-                    <div class="caps_summary_col_1"> <span class="fa fa-check cap-passed"></span> </div>
-                    <div class="caps_summary_col_2"> Fully supported capabilities:  </div>
-                    <div class="caps_summary_col_3"> {{full_support_count}}  </div>
-                </div>
-                <div style="display: table-col">
-                    <div class="caps_summary_col_1"> <span class="fa fa-question-circle cap-part-passed"></span> </div>
-                    <div class="caps_summary_col_2"> Partially supported capabilities:  </div>
-                    <div class="caps_summary_col_3"> {{partial_support_count}}  </div>
-                </div>
-                <div style="display: table-col">
-                    <div class="caps_summary_col_1"> <span class="fa fa-times cap-failed"></span> </div>
-                    <div class="caps_summary_col_2"> Unsupported capabilities:  </div>
-                    <div class="caps_summary_col_3"> {{full_unsupport_count}}  </div>
-                </div>
+<div id="{{class}}_brief" class="overall_summary_table">
+    {{#total_fixed_count}}
+    <div style="display: table-row">
+        <div class="overall_summary_col_1"> <span class="fa fa-wrench cap-passed"></span> </div>
+        <div class="overall_summary_col_2"> Fixed tests in scope in comparison with previous run:  </div>
+        <div class="overall_summary_col_3"> {{total_fixed_count}}  </div>
+    </div>
+    {{/total_fixed_count}}
+    {{#total_broken_count}}
+    <div style="display: table-row">
+        <div class="overall_summary_col_1"> <span class="fa  fa-exclamation-circle cap-failed"></span> </div>
+        <div class="overall_summary_col_2"> Broken tests in scope in comparison with previous run:  </div>
+        <div class="overall_summary_col_3"> {{total_broken_count}}  </div>
+    </div>
+    {{/total_broken_count}}
+    <div style="display: table-row">
+        <div class="overall_summary_col_1"> <span class="fa fa-check cap-passed"></span> </div>
+        <div class="overall_summary_col_2"> Passed tests in scope:  </div>
+        <div class="overall_summary_col_3"> {{total_passed_count}}  </div>
+    </div>
+    <div style="display: table-row">
+        <div class="overall_summary_col_1"> <span class="fa fa-times cap-failed"></span> </div>
+        <div class="overall_summary_col_2"> Not passed tests in scope:  </div>
+        <div class="overall_summary_col_3"> {{total_failed_count}}  </div>
+    </div>
+</div>
+<p></p>
+<div>
+    DefCore tests in scope <a onclick="$('#defcore_scope_tests_list').slideToggle(500);return false;" href="#"> [plain list] </a>
+</div>
+<ul id=defcore_scope_tests_list style="display:none;" class="fa-ul test_results">
+{{#fixed_tests}}
+    <li class="fa fa-wrench passed"> <span class="passed"> {{.}} </span>  </li>
+{{/fixed_tests}}
+{{#broken_tests}}
+    <li class="fa fa-exclamation-circle failed"> <span class="failed"> {{.}} </span>  </li>
+{{/broken_tests}}
+{{#passed_list}}
+    <li class="fa fa-check passed"> <span class="passed"> {{.}} </span>  </li>
+{{/passed_list  }}
+{{#failed_list}}
+    <li class="fa fa-times failed"> <span class="failed"> {{.}} </span>  </li>
+{{/failed_list}}
+{{^list}}
+    No DefCore tests passed!
+{{/list}}
+</ul>
+{{#capabilities}}
+<ul>
+    <li>
+        <a onclick="toggle_one_item('all', '{{class}}', 'detailed_caps'); return false;" href="#">
+            {{class}} capabilities ({{count}})
+        </a>
+        <div id="{{class}}_brief" class="caps_summary_table">
+            <div style="display: table-col">
+                <div class="caps_summary_col_1"> <span class="fa fa-check cap-passed"></span> </div>
+                <div class="caps_summary_col_2"> Fully supported capabilities:  </div>
+                <div class="caps_summary_col_3"> {{full_support_count}}  </div>
             </div>
-            <div id="{{class}}_detailed_caps" style="position: relative; left: 1em; display:none;" class="all_detailed_caps">
-                {{>caps_details}}
+            <div style="display: table-col">
+                <div class="caps_summary_col_1"> <span class="fa fa-question-circle cap-part-passed"></span> </div>
+                <div class="caps_summary_col_2"> Partially supported capabilities:  </div>
+                <div class="caps_summary_col_3"> {{partial_support_count}}  </div>
             </div>
-        </li>
-    </ul>
-    {{/capabilities}}
-    {{^capabilities}}
-        <div> No capabilities!</div>
-    {{/capabilities}}
+            <div style="display: table-col">
+                <div class="caps_summary_col_1"> <span class="fa fa-times cap-failed"></span> </div>
+                <div class="caps_summary_col_2"> Unsupported capabilities:  </div>
+                <div class="caps_summary_col_3"> {{full_unsupport_count}}  </div>
+            </div>
+        </div>
+        <div id="{{class}}_detailed_caps" style="position: relative; left: 1em; display:none;" class="all_detailed_caps">
+            {{>caps_details}}
+        </div>
+    </li>
+</ul>
+{{/capabilities}}
+{{^capabilities}}
+    <div> No capabilities!</div>
+{{/capabilities}}
 {{/defcore_tests}}
 {{#other_tests}}
-<h3> Tests out of scope </h3>
+<h3> Passed tests out of scope </h3>
 Total passed tests tests out of scope: {{count}}  <a onclick="$('#other_tests_list').slideToggle();return false;" href="#"> [plain list] </a>
 <ul id=other_tests_list style="display:none;" class="fa-ul test_results">
 {{#list}}
