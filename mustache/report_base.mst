@@ -17,66 +17,97 @@ Test execution time: {{duration_seconds}} <br>
 <p></p>
 <div>
     <h3>Scope filter</h3>
-    <label for="only_core">Show only core tests: </label>
-    <input id="only_core" name="only_core" type="checkbox" {{#only_core}}checked{{/only_core}} onclick="window.render_page()" />
+
+    <div id="core_filter">
+        <input type="radio" id="core_filter_off" name="false" {{^only_core}}checked="checked"{{/only_core}} onchange="core_filter_update(this)">
+        <label for="core_filter_off">Don't apply core filter</label>
+        <input type="radio" id="core_filter_on" name="true" {{#only_core}}checked="checked"{{/only_core}} onchange="core_filter_update(this)">
+        <label for="core_filter_on">Show only core tests</label>
+    </div>
     <br>
-    <label for="admin">Admin filter: </label>
-    <select id="admin" onchange="window.render_page()">
-        <option {{#all}}selected="selected"{{/all}} value="all" >All tests</option>
-        <option {{#admin}}selected="selected"{{/admin}} value="admin" >Tests requiring admin rights</option>
-        <option {{#noadmin}}selected="selected"{{/noadmin}} value="noadmin">Tests not requiring admin rights</option>
-    </select>
+    <div id="admin_filter" >
+        <input type="radio" id="admin_filter_opt1" name="all" {{#all}}checked="checked"{{/all}} onchange="admin_filter_update(this)" >
+        <label for="admin_filter_opt1">Don't apply admin filter</label>
+        <input type="radio" id="admin_filter_opt2" name="admin" {{#admin}}checked="checked"{{/admin}} onchange="admin_filter_update(this)">
+        <label for="admin_filter_opt2">Tests requiring admin rights</label>
+        <input type="radio" id="admin_filter_opt3" name="noadmin" {{#noadmin}}checked="checked"{{/noadmin}} onchange="admin_filter_update(this)">
+        <label for="admin_filter_opt3">Tests not requiring admin rights</label>
+    </div>
 </div>
 <p></p>
 <div id="{{class}}_brief" class="overall_summary_table">
+    <div style="display: table-row">
+        <div>
+            <div class="overall_summary_col_1"> <span class="fa fa-info-circle"></span> </div>
+            <div class="overall_summary_col_2"> Total tests in scope  </div>
+            <div class="overall_summary_col_3"> {{scope_tests_count}}  </div>
+        </div>
+    </div>
     {{#total_fixed_count}}
     <div style="display: table-row">
-        <div class="overall_summary_col_1"> <span class="fa fa-wrench cap-passed"></span> </div>
-        <div class="overall_summary_col_2"> Fixed tests in scope in comparison with previous run:  </div>
-        <div class="overall_summary_col_3"> {{total_fixed_count}}  </div>
+        <div>
+            <div class="overall_summary_col_1"> <span class="fa fa-wrench cap-passed"></span> </div>
+            <div class="overall_summary_col_2"> <a onclick="toggle_one_item('all','fixed', 'scope_test_list') ;return false;" href="#"> Fixed tests in scope compared to previous run </a>  </div>
+            <div class="overall_summary_col_3"> {{total_fixed_count}}  </div>
+        </div>
+        <div id="fixed_scope_test_list" style="display: none;" class="all_scope_test_list">
+            <ul class="fa-ul test_results">
+                {{#fixed_tests}}
+                    <li class="fa fa-wrench passed"> <span class="passed"> {{.}} </span>  </li>
+                {{/fixed_tests}}
+            </ul>
+        </div>
     </div>
     {{/total_fixed_count}}
     {{#total_broken_count}}
     <div style="display: table-row">
-        <div class="overall_summary_col_1"> <span class="fa  fa-exclamation-circle cap-failed"></span> </div>
-        <div class="overall_summary_col_2"> Broken tests in scope in comparison with previous run:  </div>
-        <div class="overall_summary_col_3"> {{total_broken_count}}  </div>
+        <div>
+            <div class="overall_summary_col_1"> <span class="fa  fa-exclamation-circle cap-failed"></span> </div>
+            <div class="overall_summary_col_2"> <a onclick="toggle_one_item('all','broken', 'scope_test_list') ;return false;" href="#"> Broken tests in scope compared to previous run </a> </div>
+            <div class="overall_summary_col_3"> {{total_broken_count}}  </div>
+        </div>
+        <div id="broken_scope_test_list" style="display: none;" class="all_scope_test_list">
+            <ul class="fa-ul  test_results">
+                {{#broken_tests}}
+                    <li class="fa fa-exclamation-circle failed"> <span class="failed"> {{.}} </span>  </li>
+                {{/broken_tests}}
+            </ul>
+        </div>
     </div>
     {{/total_broken_count}}
     <div style="display: table-row">
-        <div class="overall_summary_col_1"> <span class="fa fa-check cap-passed"></span> </div>
-        <div class="overall_summary_col_2"> Passed tests in scope:  </div>
-        <div class="overall_summary_col_3"> {{total_passed_count}}  </div>
+        <div>
+            <div class="overall_summary_col_1"> <span class="fa fa-check cap-passed"></span> </div>
+            <div class="overall_summary_col_2"> <a onclick="toggle_one_item('all','passed', 'scope_test_list') ;return false;" href="#"> Passed tests in scope  </a>  </div>
+            <div class="overall_summary_col_3"> {{total_passed_count}}  </div>
+        </div>
+        <div id="passed_scope_test_list" style="display: none;" class="all_scope_test_list">
+            <ul class="fa-ul test_results">
+                {{#passed_tests}}
+                    <li class="fa fa-check passed"> <span class="passed"> {{.}} </span>  </li>
+                {{/passed_tests}}
+            </ul>
+        </div>
     </div>
     <div style="display: table-row">
-        <div class="overall_summary_col_1"> <span class="fa fa-times cap-failed"></span> </div>
-        <div class="overall_summary_col_2"> Not passed tests in scope:  </div>
-        <div class="overall_summary_col_3"> {{total_failed_count}}  </div>
+        <div>
+            <div class="overall_summary_col_1"> <span class="fa fa-times cap-failed"></span> </div>
+            <div class="overall_summary_col_2"> <a onclick="toggle_one_item('all','failed', 'scope_test_list') ;return false;" href="#"> Not passed tests in scope </a>  </div>
+            <div class="overall_summary_col_3"> {{total_failed_count}}  </div>
+        </div>
+        <div id="failed_scope_test_list" style="display: none;" class="all_scope_test_list">
+            <ul class="fa-ul test_results">
+                {{#failed_tests}}
+                    <li class="fa fa-times failed"> <span class="failed"> {{.}} </span>  </li>
+                {{/failed_tests}}
+            </ul>
+        </div>
     </div>
 </div>
 <p></p>
-<div>
-    DefCore tests in scope <a onclick="$('#defcore_scope_tests_list').slideToggle(500);return false;" href="#"> [plain list] </a>
-</div>
-<ul id=defcore_scope_tests_list style="display:none;" class="fa-ul test_results">
-{{#fixed_tests}}
-    <li class="fa fa-wrench passed"> <span class="passed"> {{.}} </span>  </li>
-{{/fixed_tests}}
-{{#broken_tests}}
-    <li class="fa fa-exclamation-circle failed"> <span class="failed"> {{.}} </span>  </li>
-{{/broken_tests}}
-{{#passed_list}}
-    <li class="fa fa-check passed"> <span class="passed"> {{.}} </span>  </li>
-{{/passed_list  }}
-{{#failed_list}}
-    <li class="fa fa-times failed"> <span class="failed"> {{.}} </span>  </li>
-{{/failed_list}}
-{{^list}}
-    No DefCore tests passed!
-{{/list}}
-</ul>
-{{#capabilities}}
+<h3>Capabilities status</h3>
 <ul>
+{{#capabilities}}
     <li>
         <a onclick="toggle_one_item('all', '{{class}}', 'detailed_caps'); return false;" href="#">
             {{class}} capabilities ({{count}})
@@ -102,8 +133,8 @@ Test execution time: {{duration_seconds}} <br>
             {{>caps_details}}
         </div>
     </li>
-</ul>
 {{/capabilities}}
+</ul>
 {{^capabilities}}
     <div> No capabilities!</div>
 {{/capabilities}}

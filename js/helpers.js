@@ -71,7 +71,7 @@ var build_caps_list = function (data, filters) {
             'capabilities': [],
             'criteria_count': criteria_count,
             'global_test_list': [],
-            'scope_test_list': []
+            "scope_tests_list": []
         };
     $.each(data.capabilities, function (id, capability) {
         capability.class = id.split('-')[0];
@@ -92,10 +92,11 @@ var build_caps_list = function (data, filters) {
         if (filters.admin_filter === 'admin' && (capability.admin !== true)) {return; }
         if (filters.admin_filter === 'noadmin' && (capability.admin === true)) {return; }
         capability.tests.forEach(function (test) {
-            if (caps_list.scope_test_list.indexOf(test) < 0) {
-                caps_list.scope_test_list.push(test);
+            if (caps_list.scope_tests_list.indexOf(test) < 0) {
+                caps_list.scope_tests_list.push(test);
             }
         });
+        caps_list.scope_tests_count = caps_list.scope_tests_list.length;
         capability.achievements_count = capability.achievements.length;
         capability.tests_count = capability.tests.length;
         caps_dict.capabilities[capability.class].items.push(capability);
