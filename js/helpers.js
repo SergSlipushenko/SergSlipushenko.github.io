@@ -96,11 +96,11 @@ var build_caps_list = function (data, filters) {
                 caps_list.scope_tests_list.push(test);
             }
         });
-        caps_list.scope_tests_count = caps_list.scope_tests_list.length;
         capability.achievements_count = capability.achievements.length;
         capability.tests_count = capability.tests.length;
         caps_dict.capabilities[capability.class].items.push(capability);
     });
+    caps_list.scope_tests_count = caps_list.scope_tests_list.length;
     $.each(caps_dict.capabilities, function (class_id, cap_class) {
         if (cap_class.items.length === 0) {return; }
         caps_list.capabilities.push({

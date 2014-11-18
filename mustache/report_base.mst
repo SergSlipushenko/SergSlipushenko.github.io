@@ -1,6 +1,4 @@
-Cloud ID: {{cpid}} <br>
-Test execution time: {{duration_seconds}} <br>
-<p></p>
+{{>header}}
 <h3> DefCore test results </h3>
 {{#defcore_tests}}
 <div>
@@ -141,7 +139,7 @@ Test execution time: {{duration_seconds}} <br>
 {{/defcore_tests}}
 {{#other_tests}}
 <h3> Passed tests out of scope </h3>
-Total passed tests tests out of scope: {{count}}  <a onclick="$('#other_tests_list').slideToggle();return false;" href="#"> [plain list] </a>
+Total passed tests out of scope: {{count}}  <a onclick="$('#other_tests_list').slideToggle();return false;" href="#"> [plain list] </a>
 <ul id=other_tests_list style="display:none;" class="fa-ul test_results">
 {{#list}}
     <li class="fa fa-check passed"> <span class="passed"> {{.}} </span>  </li>

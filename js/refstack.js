@@ -7,17 +7,26 @@
 
 'use strict';
 
-var pretty_time_format = function (time) {
-    var hours = Math.floor(time / 3600),
+var pretty_time_format = function (time_in, with_sign) {
+    var time = Math.abs(time_in),
+        hours = Math.floor(time / 3600),
         minutes = Math.floor((time - (hours * 3600)) / 60),
         seconds = time - (hours * 3600) - (minutes * 60),
         result;
+
     if (hours < 10) {hours = '0' + hours; }
     if (minutes < 10) {minutes = '0' + minutes; }
     if (seconds < 10) {seconds = '0' + seconds; }
     result = minutes + 'm ' + seconds + 's';
     if (hours > 0) {
         return hours + 'h ' + result;
+    }
+    if (with_sign) {
+        if (time_in >= 0) {
+            result = '+ ' + result;
+        } else {
+            result = '- ' + result;
+        }
     }
     return result;
 };
@@ -249,6 +258,8 @@ var post_processing = function post_processing() {
     $('div.cap_shot:even').addClass('zebra_even');
     $('div#core_filter').buttonset();
     $('div#admin_filter').buttonset();
+    $('#schema_selector').selectmenu({change: function () {window.render_page()} });
+
 };
 
 var render_defcore_report_page = function () {
@@ -267,13 +278,15 @@ var render_defcore_report_page = function () {
     console.log(schema);
     $.when(
         $.get('mustache/report_base.mst', undefined, undefined, 'html'),
-        $.get('mustache/single_test_result.mst', undefined, undefined, 'html'),
+        $.get('mustache/single_header.mst', undefined, undefined, 'html'),
+        $.get('mustache/single_capabilities_details.mst', undefined, undefined, 'html'),
         $.get('capabilities/' + schema, undefined, undefined, 'json'),
         $.get(window.result_source, undefined, undefined, 'json')
-    ).done(function (base_template, caps_template, schema, test_result) {
+    ).done(function (base_template, header_template, caps_template, schema, test_result) {
         var caps_list = window.build_caps_list(schema[0], filters),
             report = build_report(caps_list, test_result[0]);
         $("div#test_results").html(Mustache.render(base_template[0], report, {
+            header: header_template[0],
             caps_details: caps_template[0]
         }));
         post_processing();
@@ -298,17 +311,24 @@ var render_defcore_diff_report_page = function () {
     }
     $.when(
         $.get('mustache/report_base.mst', undefined, undefined, 'html'),
-        $.get('mustache/diff_test_result.mst', undefined, undefined, 'html'),
+        $.get('mustache/diff_header.mst', undefined, undefined, 'html'),
+        $.get('mustache/diff_capabilities_details.mst', undefined, undefined, 'html'),
         $.get('capabilities/' + schema, undefined, undefined, 'json'),
         $.get(window.result_source, undefined, undefined, 'json'),
         $.get(window.prev_result_source, undefined, undefined, 'json')
-    ).done(function (base_template, caps_template, schema,
+    ).done(function (base_template, header_template, caps_template, schema,
                      test_result, prev_result) {
         var caps_list = window.build_caps_list(schema[0], filters),
             report = build_report(caps_list, test_result[0]),
             diff_report = build_diff_report(report, prev_result[0]);
-
+        diff_report.current_run = test_result[0];
+        diff_report.previous_run = prev_result[0];
+        diff_report.time_diff = pretty_time_format(diff_report.current_run.duration_seconds - diff_report.previous_run.duration_seconds, true);
+        diff_report.current_run.duration_seconds = pretty_time_format(diff_report.current_run.duration_seconds);
+        diff_report.previous_run.duration_seconds = pretty_time_format(diff_report.previous_run.duration_seconds);
+        diff_report.same_clouds = diff_report.current_run.cpid === diff_report.previous_run.cpid;
         $("div#test_results").html(Mustache.render(base_template[0], diff_report, {
+            header: header_template[0],
             caps_details: caps_template[0]
         }));
         post_processing();
