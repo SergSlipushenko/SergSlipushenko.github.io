@@ -153,7 +153,6 @@ var build_report = function (caps_list, test_result) {
 // Building data for rendering report for comparison  two test runs.
 // Requires capabilities list. It can be build by "build_caps_list" function
 var build_diff_report = function (caps_list, test_result, prev_test_result) {
-
     var diff_report = build_report(caps_list, test_result),
         other_tests = prev_test_result.results.slice(0);
     diff_report.current_run = test_result;
@@ -169,7 +168,7 @@ var build_diff_report = function (caps_list, test_result, prev_test_result) {
             capability.fixed_tests = [];
             capability.broken_tests = [];
             capability.tests.forEach(function (test) {
-                var passed = test_result.results.indexOf(test) >= 0,
+                var passed = prev_test_result.results.indexOf(test) >= 0,
                     test_index = other_tests.indexOf(test),
                     failed_index = 0,
                     passed_index = 0;
