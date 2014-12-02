@@ -16,6 +16,7 @@ var capitaliseFirstLetter = function (string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
+// Function searches for test with specified test_id on github and opens result in new window
 var get_code_url = function (test_id) {
     var id = test_id.split('/').join('.'),
         parts = id.split('.'),
@@ -57,12 +58,7 @@ var get_code_url = function (test_id) {
     );
 };
 
-var render_header = function (data) {
-    var template = $('#header_template').html();
-    data.release = capitaliseFirstLetter(data.release);
-    $("div#header").html(Mustache.render(template, data));
-};
-
+// Function builds list of capabilities from json schema and applies filters to this list
 var build_caps_list = function (data, filters) {
     var criteria_count = Object.keys(data.criteria).length,
         caps_dict = {'capabilities': {}},
@@ -113,7 +109,8 @@ var build_caps_list = function (data, filters) {
     return caps_list;
 };
 
-var upd_filters_local = function () {
+//Get admin and core filter values
+var get_filters_local = function () {
     if (document.getElementById('only_core')) {
         window.only_core = document.getElementById('only_core').checked;
     } else {
@@ -127,14 +124,23 @@ var upd_filters_local = function () {
     return {only_core: window.only_core, admin_filter: window.admin_filter};
 };
 
+//Rendering page header
+var render_header = function (data) {
+    var template = $('#header_template').html();
+    data.release = capitaliseFirstLetter(data.release);
+    $("div#header").html(Mustache.render(template, data));
+};
+
+//Rendeirng capabilities list
 var render_caps = function (data) {
-    var filters = upd_filters_local(),
+    var filters = get_filters_local(),
         template = $('#capabilities_template').html(),
         caps_list = build_caps_list(data, filters),
         rendered = Mustache.render(template, caps_list);
     $("div#capabilities").html(rendered);
 };
 
+//Rendering criteria section
 var render_criteria = function (data) {
     var template = $('#criteria_template').html(),
         crits = {'criteria': []};
@@ -146,6 +152,7 @@ var render_criteria = function (data) {
     $("ul#criteria").html(Mustache.render(template, crits));
 };
 
+//Rendering page
 var render_capabilities_page = function () {
     $.get('capabilities/havanacore.json').done(function (data) {
         render_caps(data);
@@ -154,6 +161,7 @@ var render_capabilities_page = function () {
     });
 };
 
+//Helper for toggling one item in list
 var toggle_one_item = function (klass, id, postfix) {
     $('div.' + klass + '_' + postfix + ':not(div#' + id + '_' + postfix + ')').slideUp();
     $('div#' + id + '_' + postfix).slideToggle();

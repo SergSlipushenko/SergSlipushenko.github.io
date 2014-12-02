@@ -113,12 +113,13 @@ div.caps_details_table{
 
 .zebra_odd div {
     width: auto;
-		background-color: #FDFFF5;
-	}
+        background-color: #FDFFF5;
+    }
+
 .zebra_even div {
     width: auto;
-		background-color: #F7F5FF;
-	}
+        background-color: #F7F5FF;
+    }
 
 .ui-button .ui-button-text
 {

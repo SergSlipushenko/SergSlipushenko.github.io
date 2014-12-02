@@ -7,6 +7,8 @@
 
 'use strict';
 
+// Format time (numbers of seconds) in format xx h xx m xx s
+// with_sign flag forces to add sign to result
 var pretty_time_format = function (time_in, with_sign) {
     var time = Math.abs(time_in),
         hours = Math.floor(time / 3600),
@@ -31,13 +33,15 @@ var pretty_time_format = function (time_in, with_sign) {
     return result;
 };
 
-var chart_bullets = function (text, render) {
-    if (this.result === 1) {
-        return render('<span style="width: 1em; display: inline-block;" class="fa fa-check passed" title="' + this.test_id + '"></span>');
-    }
-    return render('<span style="width: 1em; display: inline-block;" class="fa fa-times failed" title="' + this.test_id + '"></span>');
-};
+//var chart_bullets = function (text, render) {
+//
+//    if (this.result === 1) {
+//        return render('<span style="width: 1em; display: inline-block;" class="fa fa-check passed" title="' + this.test_id + '"></span>');
+//    }
+//    return render('<span style="width: 1em; display: inline-block;" class="fa fa-times failed" title="' + this.test_id + '"></span>');
+//};
 
+// Used in templates for rendering custom bullets in capabilities support list
 var caps_support = function (text, render) {
     if (this.fully_supported) {
         return render('<span class="fa fa-check cap-passed" title="Fully supported"></span>');
@@ -48,6 +52,8 @@ var caps_support = function (text, render) {
     return render('<span class="fa fa-times cap-failed" title="Unsupported"></span>');
 };
 
+// Building data for rendering report for a single test run
+// Requires capabilities list. It can be build by "build_caps_list" function
 var build_report = function (caps_list, test_result) {
     var other_tests = test_result.results.slice(0),
         result = {
@@ -116,7 +122,6 @@ var build_report = function (caps_list, test_result) {
             if (capability.fully_supported) {
                 capability.partial_supported = false;
             }
-            capability.chart_bullets = function () {return chart_bullets; };
             capability.caps_support = function () {return caps_support; };
             if (capability.fully_supported) {
                 ext_capability_class.full_support_count += 1;
@@ -145,12 +150,21 @@ var build_report = function (caps_list, test_result) {
     return result;
 };
 
-var build_diff_report = function (report, test_result) {
-    var result = $.extend({}, report),
-        other_tests = test_result.results.slice(0);
-    result.defcore_tests.fixed_tests = [];
-    result.defcore_tests.broken_tests = [];
-    result.defcore_tests.capabilities = report.defcore_tests.capabilities.map(function (capability_class) {
+// Building data for rendering report for comparison  two test runs.
+// Requires capabilities list. It can be build by "build_caps_list" function
+var build_diff_report = function (caps_list, test_result, prev_test_result) {
+
+    var diff_report = build_report(caps_list, test_result),
+        other_tests = prev_test_result.results.slice(0);
+    diff_report.current_run = test_result;
+    diff_report.previous_run = prev_test_result;
+    diff_report.time_diff = pretty_time_format(diff_report.current_run.duration_seconds - diff_report.previous_run.duration_seconds, true);
+    diff_report.current_run.duration_seconds = pretty_time_format(diff_report.current_run.duration_seconds);
+    diff_report.previous_run.duration_seconds = pretty_time_format(diff_report.previous_run.duration_seconds);
+    diff_report.same_clouds = diff_report.current_run.cpid === diff_report.previous_run.cpid;
+    diff_report.defcore_tests.fixed_tests = [];
+    diff_report.defcore_tests.broken_tests = [];
+    diff_report.defcore_tests.capabilities = diff_report.defcore_tests.capabilities.map(function (capability_class) {
         capability_class.items = capability_class.items.map(function (capability) {
             capability.fixed_tests = [];
             capability.broken_tests = [];
@@ -162,8 +176,8 @@ var build_diff_report = function (report, test_result) {
                 if (passed) {
                     if (capability.passed_tests.indexOf(test) < 0) {
                         capability.broken_tests.push(test);
-                        if (result.defcore_tests.broken_tests.indexOf(test) < 0) {
-                            result.defcore_tests.broken_tests.push(test);
+                        if (diff_report.defcore_tests.broken_tests.indexOf(test) < 0) {
+                            diff_report.defcore_tests.broken_tests.push(test);
                         }
                         failed_index = capability.failed_tests.indexOf(test);
                         if (failed_index < 0) {
@@ -178,8 +192,8 @@ var build_diff_report = function (report, test_result) {
                 } else {
                     if (capability.failed_tests.indexOf(test) < 0) {
                         capability.fixed_tests.push(test);
-                        if (result.defcore_tests.fixed_tests.indexOf(test) < 0) {
-                            result.defcore_tests.fixed_tests.push(test);
+                        if (diff_report.defcore_tests.fixed_tests.indexOf(test) < 0) {
+                            diff_report.defcore_tests.fixed_tests.push(test);
                         }
                         passed_index = capability.passed_tests.indexOf(test);
                         if (passed_index < 0) {
@@ -196,31 +210,33 @@ var build_diff_report = function (report, test_result) {
         });
         return capability_class;
     });
-    result.defcore_tests.passed_tests = result.defcore_tests.passed_tests.filter(function (test) {
-        return result.defcore_tests.fixed_tests.indexOf(test) < 0;
+    diff_report.defcore_tests.passed_tests = diff_report.defcore_tests.passed_tests.filter(function (test) {
+        return diff_report.defcore_tests.fixed_tests.indexOf(test) < 0;
     });
-    result.defcore_tests.failed_tests = result.defcore_tests.failed_tests.filter(function (test) {
-        return result.defcore_tests.broken_tests.indexOf(test) < 0;
+    diff_report.defcore_tests.failed_tests = diff_report.defcore_tests.failed_tests.filter(function (test) {
+        return diff_report.defcore_tests.broken_tests.indexOf(test) < 0;
     });
-    result.defcore_tests.total_failed_count = result.defcore_tests.failed_tests.length;
-    result.defcore_tests.total_passed_count = result.defcore_tests.passed_tests.length;
-    result.defcore_tests.total_fixed_count = result.defcore_tests.fixed_tests.length;
-    result.defcore_tests.total_broken_count = result.defcore_tests.broken_tests.length;
-    return result;
+    diff_report.defcore_tests.total_failed_count = diff_report.defcore_tests.failed_tests.length;
+    diff_report.defcore_tests.total_passed_count = diff_report.defcore_tests.passed_tests.length;
+    diff_report.defcore_tests.total_fixed_count = diff_report.defcore_tests.fixed_tests.length;
+    diff_report.defcore_tests.total_broken_count = diff_report.defcore_tests.broken_tests.length;
+    return diff_report;
 };
 
+// Updating admin filter value and render page
 var admin_filter_update = function (item) {
     $.cookie('admin_filter_flag', item.name);
     window.render_page();
 };
 
+// Updating core filter value and render page
 var core_filter_update = function (item) {
     $.cookie('only_core_flag', item.name === 'true');
     window.render_page();
 };
 
-
-var upd_filters_cookie = function () {
+// Get filter values (admin and core)
+var get_filters_cookie = function () {
     if ($('input#only_core').length === 0) {
         if (!$.cookie('only_core_flag')) {$.cookie('only_core_flag', 'true'); }
     }
@@ -230,29 +246,17 @@ var upd_filters_cookie = function () {
     return {only_core: $.cookie('only_core_flag') === 'true', admin_filter: $.cookie('admin_filter_flag')};
 };
 
+// Init page spinner
 var loading_spin = function () {
-    var opts = {
-        lines: 17,
-        length: 40,
-        width: 11,
-        radius: 32,
-        corners: 1,
-        rotate: 0,
-        direction: 1,
-        color: '#000',
-        speed: 1,
-        trail: 33,
-        shadow: false,
-        hwaccel: false,
-        className: 'spinner',
-        zIndex: 2e9,
-        top: '50%',
-        left: '50%'
-    },
+    var opts = { lines: 17, length: 40, width: 11, radius: 32, corners: 1,
+        rotate: 0, direction: 1, color: '#000', speed: 1, trail: 33,
+        shadow: false, hwaccel: false, className: 'spinner', zIndex: 2e9,
+        top: '50%', left: '50%' },
         target = document.getElementById('test_results');
     new Spinner(opts).spin(target);
 };
 
+// Page post processing for jquery stuff
 var post_processing = function post_processing() {
     $('div.cap_shot:odd').addClass('zebra_odd');
     $('div.cap_shot:even').addClass('zebra_even');
@@ -262,8 +266,9 @@ var post_processing = function post_processing() {
 
 };
 
+// Render page for report from single test run
 var render_defcore_report_page = function () {
-    var filters = upd_filters_cookie(),
+    var filters = get_filters_cookie(),
         schema = '',
         schema_selector = $('select#schema_selector');
 
@@ -293,8 +298,9 @@ var render_defcore_report_page = function () {
     });
 };
 
+// Render page for report for comparison two test run
 var render_defcore_diff_report_page = function () {
-    var filters = upd_filters_cookie(),
+    var filters = get_filters_cookie(),
         schema = '',
         schema_selector = $('select#schema_selector');
 
@@ -319,14 +325,7 @@ var render_defcore_diff_report_page = function () {
     ).done(function (base_template, header_template, caps_template, schema,
                      test_result, prev_result) {
         var caps_list = window.build_caps_list(schema[0], filters),
-            report = build_report(caps_list, test_result[0]),
-            diff_report = build_diff_report(report, prev_result[0]);
-        diff_report.current_run = test_result[0];
-        diff_report.previous_run = prev_result[0];
-        diff_report.time_diff = pretty_time_format(diff_report.current_run.duration_seconds - diff_report.previous_run.duration_seconds, true);
-        diff_report.current_run.duration_seconds = pretty_time_format(diff_report.current_run.duration_seconds);
-        diff_report.previous_run.duration_seconds = pretty_time_format(diff_report.previous_run.duration_seconds);
-        diff_report.same_clouds = diff_report.current_run.cpid === diff_report.previous_run.cpid;
+            diff_report = build_diff_report(caps_list, test_result[0], prev_result[0]);
         $("div#test_results").html(Mustache.render(base_template[0], diff_report, {
             header: header_template[0],
             caps_details: caps_template[0]
