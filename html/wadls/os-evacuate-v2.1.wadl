@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2014-2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+              xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-evacuate-v2.1">
+        <resource id="action" path="/v2.1/{tenant_id}/servers/{server_id}/action">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <param name="server_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The UUID for the server.</para>
+            </wadl:doc>
+         </param>
+         <method name="POST" rax:id="evacuateserver">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Evacuate server">
+               <para role="shortdesc">
+                Evacuates a server from a failed host to a new one.
+            </para>
+               <para>
+                Specify the <code>evacuate</code> action in the request body.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "evacuate": {
+        "host": "b419863b7d814906a68fb31703c0dbd6",
+        "admin_password": "MySecretPass",
+        "on_shared_storage": "False"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="evacuate" style="plain" type="xsd:string" required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Evacuate action">
+                        <para>
+                            Specify the <code>evacuate</code> action in the
+                            request body.
+                        </para>
+                    </wadl:doc>
+                  </param>
+                  <param name="host" style="plain" required="true" type="xsd:string">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Host">
+                        <para>
+                            The name or ID of the host to which the server
+                            is evacuated.
+                        </para>
+                    </wadl:doc>
+                  </param>
+                  <param name="admin_password"
+                         style="plain"
+                         type="xsd:string"
+                         required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Admin password">
+                        <para>
+                            An administrative password to access the
+                            evacuated instance.
+                        </para>
+                        <para>
+                            To set the administrative password, set the
+                            <code>enable_instance_password</code> option to
+                            <code>True</code> in the configuration. If this
+                            option is set to <code>False</code> and you
+                            attempt to set the administrative password, the
+                            password is not set and the response shows a
+                            <code>null</code> value for the
+                            <code>admin_password</code> parameter.
+                        </para>
+                    </wadl:doc>
+                  </param>
+                  <param name="on_shared_storage"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="On shared storage flag">
+                        <para>
+                            Set to <code>True</code> to indicate that server
+                            is on shared storage. Otherwise, set to
+                            <code>False</code>.
+                        </para>
+                    </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="202">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "admin_password": "MySecretPass"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                            
+                        
+    </resources>
+    <!-- *******************************************************-->
+    <!--             OS-evacuate                           -->
+    <!--*******************************************************-->
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="evacuateserver">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+                <param name="evacuate" style="plain" type="xsd:string" required="true">
+                    
+                </param>
+                <param name="host" style="plain" required="true" type="xsd:string">
+                    
+                </param>
+                <param name="admin_password"
+                   style="plain"
+                   type="xsd:string"
+                   required="false">
+                    
+                </param>
+                <param name="on_shared_storage"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+                    
+                </param>
+            </representation>
+        </request>
+        <response status="202">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+</wadl:application>

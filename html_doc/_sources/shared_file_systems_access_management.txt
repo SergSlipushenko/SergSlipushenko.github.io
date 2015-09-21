@@ -1,0 +1,390 @@
+.. _shared_file_systems_access_management:
+
+=================
+Access management
+=================
+
+The Shared File Systems Storage Service allows to manage access to to different
+objects. You can manage access to a share based on share access rules (an ACL),
+:ref:`share type <shared_file_systems_share_type_management>` and add security
+service (LDAP, Kerberos, or Microsoft Active Directory) to a
+:ref:`share network <shared_file_systems_share_networks>`.
+
+Manage access to share
+----------------------
+
+The Shared File Systems Storage Service allows to grant or deny access to
+a specified share, and list the permissions for a specified share.
+
+To grant or deny access to a share, specify one of these supported share
+access levels:
+
+- **rw**. Read and write (RW) access. This is the default value.
+
+- **ro**. Read-only (RO) access.
+
+You must also specify one of these supported authentication methods:
+
+- **ip**. Authenticates an instance through its IP address. A valid
+  format is ``XX.XX.XX.XX`` or ``XX.XX.XX.XX/XX``. For example ``0.0.0.0/0``.
+
+- **cert**. Authenticates an instance through a TLS certificate. Specify the
+  TLS identity as the IDENTKEY. A valid value is any string up to 64 characters
+  long in the common name (CN) of the certificate. The meaning of a string
+  depends on its interpretation.
+
+- **user**. Authenticates by a specified user or group name. A valid value is
+  an alphanumeric string that can contain some special characters and is from
+  4 to 32 characters long.
+
+Try to mount NFS share with export path
+``10.254.0.5:/shares/share-5789ddcf-35c9-4b64-a28a-7f6a4a574b6a`` on the
+node with IP address ``10.254.0.4``:
+
+.. code:: console
+
+ $ sudo mount -v -t nfs 10.254.0.5:/shares/share-5789ddcf-35c9-4b64-a28a-7f6a4a574b6a /mnt/
+ mount.nfs: timeout set for Tue Oct  6 10:37:23 2015
+ mount.nfs: trying text-based options 'vers=4,addr=10.254.0.5,clientaddr=10.254.0.4'
+ mount.nfs: mount(2): Permission denied
+ mount.nfs: access denied by server while mounting 10.254.0.5:/shares/share-5789ddcf-35c9-4b64-a28a-7f6a4a574b6a
+
+An error message "Permission denied" appeared, so you are now allowed to mount
+a share without an access rule. Allow access to the share with ``ip`` access
+type and ``10.254.0.4`` IP address:
+
+.. code:: console
+
+ $ manila access-allow Share2 ip 10.254.0.4 --access-level rw
+ +--------------+--------------------------------------+
+ | Property     | Value                                |
+ +--------------+--------------------------------------+
+ | share_id     | 7bcd888b-681b-4836-ac9c-c3add4e62537 |
+ | access_type  | ip                                   |
+ | access_to    | 10.254.0.4                           |
+ | access_level | rw                                   |
+ | state        | new                                  |
+ | id           | de715226-da00-4cfc-b1ab-c11f3393745e |
+ +--------------+--------------------------------------+
+
+Try to mount a share again. This time it is mounted successfully:
+
+.. code:: console
+
+ $ sudo mount -v -t nfs 10.254.0.5:/shares/share-5789ddcf-35c9-4b64-a28a-7f6a4a574b6a /mnt/
+
+Since it is allowed node on 10.254.0.4 read and write access, try to create
+a file on a mounted share:
+
+.. code:: console
+
+ $ cd /mnt
+ $ ls
+ lost+found
+ $ touch my_file.txt
+
+Connect via SSH to the 10.254.0.5 node and check new file `my_file.txt`
+in the ``/shares/share-5789ddcf-35c9-4b64-a28a-7f6a4a574b6a`` directory:
+
+.. code:: console
+
+ $ ssh manila@10.254.0.5
+ The authenticity of host '10.254.0.5 (10.254.0.5)' can't be established.
+ ECDSA key fingerprint is cd:ed:df:30:17:05:03:b2:9a:45:74:9c:ca:c1:ae:c6.
+ Are you sure you want to continue connecting (yes/no)? yes
+ Warning: Permanently added '10.254.0.5' (ECDSA) to the list of known hosts.
+ Welcome to Ubuntu 14.04.2 LTS (GNU/Linux 3.13.0-53-generic i686)
+
+ * Documentation:  https://help.ubuntu.com/
+ $ cd /shares
+ $ ls
+ share-5789ddcf-35c9-4b64-a28a-7f6a4a574b6a
+ $ cd share-5789ddcf-35c9-4b64-a28a-7f6a4a574b6a
+ $ ls
+ lost+found  my_file.txt
+
+You have successfully created a file from the IP address to which was granted
+read and write access.
+
+Allow access to the share with ``user`` access type:
+
+.. code:: console
+
+ $ manila access-allow Share2 user demo --access-level rw
+ +--------------+--------------------------------------+
+ | Property     | Value                                |
+ +--------------+--------------------------------------+
+ | share_id     | 7bcd888b-681b-4836-ac9c-c3add4e62537 |
+ | access_type  | user                                 |
+ | access_to    | demo                                 |
+ | access_level | rw                                   |
+ | state        | new                                  |
+ | id           | 4f391c6b-fb4f-47f5-8b4b-88c5ec9d568a |
+ +--------------+--------------------------------------+
+
+.. note::
+    Different share features are supported by different share drivers.
+    For the example hereinabove was used the Generic (Cinder as back-end)
+    driver that doesn't support ``user`` and ``cert`` authentications methods.
+    For details of supporting of features by different drivers, see `Manila
+    share features support mapping
+    <http://docs.openstack.org/developer/manila/devref/share_back_ends_feature
+    _support_mapping.html>`_.
+
+To verify that the access rules (ACL) were configured correctly for a share,
+you list permissions for a share:
+
+.. code:: console
+
+ $ manila access-list Share2
+ +--------------------------------------+-------------+------------+--------------+--------+
+ | id                                   | access type | access to  | access level | state  |
+ +--------------------------------------+-------------+------------+--------------+--------+
+ | 4f391c6b-fb4f-47f5-8b4b-88c5ec9d568a | user        | demo       | rw           | error  |
+ | de715226-da00-4cfc-b1ab-c11f3393745e | ip          | 10.254.0.4 | rw           | active |
+ +--------------------------------------+-------------+------------+--------------+--------+
+
+Deny access to the share and check that deleted access rule is absent in the
+access rule list:
+
+.. code:: console
+
+ $ manila access-deny Share2 de715226-da00-4cfc-b1ab-c11f3393745e
+
+ $ manila access-list Share2
+ +--------------------------------------+-------------+-----------+--------------+-------+
+ | id                                   | access type | access to | access level | state |
+ +--------------------------------------+-------------+-----------+--------------+-------+
+ | 4f391c6b-fb4f-47f5-8b4b-88c5ec9d568a | user        | demo      | rw           | error |
+ +--------------------------------------+-------------+-----------+--------------+-------+
+
+.. _share_type_access:
+
+Share type access
+-----------------
+
+You can manage the access to the private
+:ref:`share types <shared_file_systems_share_type_management>` for the
+different projects: add access, remove access, and get information about access
+for a specified private share type.
+
+Create a private type:
+
+.. code:: console
+
+ $ manila type-create my_type1 True --is_public False
+ +-----+---------+-----------+-----------+----------------------------------+----------------------+
+ | ID  | Name    | Visibility| is_default| required_extra_specs             | optional_extra_specs |
+ +-----+---------+-----------+-----------+----------------------------------+----------------------+
+ | a4..| my_type1| private   | -         | driver_handles_share_servers:True| snapshot_support:True|
+ +-----+---------+-----------+-----------+----------------------------------+----------------------+
+
+.. note::
+    If you run **manila type-list** you see only public types. To see the
+    private types also, run **manila type-list** with ``-all`` optional
+    argument.
+
+Grant access to created private type for a demo and alt_demo projects
+by providing their IDs:
+
+.. code:: console
+
+ $ manila type-access-add my_type1 d8f9af6915404114ae4f30668a4f5ba7
+ $ manila type-access-add my_type1 e4970f57f1824faab2701db61ee7efdf
+
+Get information about access for a private share type ``my_type1``:
+
+.. code:: console
+
+ $ manila type-access-list my_type1
+ +----------------------------------+
+ | Project_ID                       |
+ +----------------------------------+
+ | d8f9af6915404114ae4f30668a4f5ba7 |
+ | e4970f57f1824faab2701db61ee7efdf |
+ +----------------------------------+
+
+After you granted the access to the share type users can see the type in the
+list and create shares with allowed private share type.
+
+To deny access for a specified project, use
+**manila type-access-remove <share_type> <project_id>** command.
+
+Security services for networking
+--------------------------------
+
+You can create, update, view, and delete a security service. A security service
+stores configuration information for clients for authentication and
+authorization (AuthN/AuthZ). For example, a share server will be the client for
+an existing service such as LDAP, Kerberos, or Microsoft Active Directory.
+
+You can associate a share with from one to three security service types:
+
+- ``ldap``. LDAP.
+
+- ``kerberos``. Kerberos.
+
+- ``active_directory``. Microsoft Active Directory.
+
+You can configure a security service with these options:
+
+- A DNS IP address.
+
+- An IP address or host name.
+
+- A domain.
+
+- A user or group name.
+
+- The password for the user, if you specify a user name.
+
+The security service can be added to the
+:ref:`share network <shared_file_systems_share_networks>`.
+
+To create a security service, specify the security service type and optionally
+name, description of a security service, DNS IP address used inside tenant's
+network, security service IP address or hostname, domain, security service user
+or group used by tenant, a password of user.
+
+Create a ``ldap`` security service:
+
+.. code:: console
+
+ $ manila security-service-create ldap --dns-ip 8.8.8.8 --server 10.254.0.3 --name my_ldap_security_service
+ +-------------+--------------------------------------+
+ | Property    | Value                                |
+ +-------------+--------------------------------------+
+ | status      | new                                  |
+ | domain      | None                                 |
+ | password    | None                                 |
+ | name        | my_ldap_security_service             |
+ | dns_ip      | 8.8.8.8                              |
+ | created_at  | 2015-09-25T10:19:06.019527           |
+ | updated_at  | None                                 |
+ | server      | 10.254.0.3                           |
+ | user        | None                                 |
+ | project_id  | 20787a7ba11946adad976463b57d8a2f     |
+ | type        | ldap                                 |
+ | id          | 413479b2-0d20-4c58-a9d3-b129fa592d8e |
+ | description | None                                 |
+ +-------------+--------------------------------------+
+
+To create ``kerberos`` security service, run:
+
+.. code:: console
+
+ $ manila security-service-create kerberos --server 10.254.0.3 --user demo --password secret --name my_kerberos_security_service --description "Kerberos security service"
+ +-------------+--------------------------------------+
+ | Property    | Value                                |
+ +-------------+--------------------------------------+
+ | status      | new                                  |
+ | domain      | None                                 |
+ | password    | secret                               |
+ | name        | my_kerberos_security_service         |
+ | dns_ip      | None                                 |
+ | created_at  | 2015-09-25T10:26:03.211849           |
+ | updated_at  | None                                 |
+ | server      | 10.254.0.3                           |
+ | user        | demo                                 |
+ | project_id  | 20787a7ba11946adad976463b57d8a2f     |
+ | type        | kerberos                             |
+ | id          | 7f46a447-2534-453d-924d-bd7c8e63bbec |
+ | description | Kerberos security service            |
+ +-------------+--------------------------------------+
+
+To see the list of created security service use
+**manila security-service-list**:
+
+.. code:: console
+
+ $ manila security-service-list
+ +--------------------------------------+------------------------------+--------+----------+
+ | id                                   | name                         | status | type     |
+ +--------------------------------------+------------------------------+--------+----------+
+ | 413479b2-0d20-4c58-a9d3-b129fa592d8e | my_ldap_security_service     | new    | ldap     |
+ | 7f46a447-2534-453d-924d-bd7c8e63bbec | my_kerberos_security_service | new    | kerberos |
+ +--------------------------------------+------------------------------+--------+----------+
+
+You can add a security service to the existing
+:ref:`share network <shared_file_systems_share_networks>` that is not used yet
+(is not associated with a share).
+
+Add a security service to the share network with
+**share-network-security-service-add** specifying share network, security
+service and print the information about the security service. You can see
+new attribute ``share_networks`` with associated share network ID.
+
+.. code:: console
+
+ $ manila share-network-security-service-add share_net2 my_ldap_security_service
+
+ $ manila security-service-show my_ldap_security_service
+ +----------------+-------------------------------------------+
+ | Property       | Value                                     |
+ +----------------+-------------------------------------------+
+ | status         | new                                       |
+ | domain         | None                                      |
+ | password       | None                                      |
+ | name           | my_ldap_security_service                  |
+ | dns_ip         | 8.8.8.8                                   |
+ | created_at     | 2015-09-25T10:19:06.000000                |
+ | updated_at     | None                                      |
+ | server         | 10.254.0.3                                |
+ | share_networks | [u'6d36c41f-d310-4aff-a0c2-ffd870e91cab'] |
+ | user           | None                                      |
+ | project_id     | 20787a7ba11946adad976463b57d8a2f          |
+ | type           | ldap                                      |
+ | id             | 413479b2-0d20-4c58-a9d3-b129fa592d8e      |
+ | description    | None                                      |
+ +----------------+-------------------------------------------+
+
+It is possible to see the list of security services associated with
+given share network. List security services for ``share_net2`` share network:
+
+.. code:: console
+
+ $ manila share-network-security-service-list share_net2
+ +--------------------------------------+--------------------------+--------+------+
+ | id                                   | name                     | status | type |
+ +--------------------------------------+--------------------------+--------+------+
+ | 413479b2-0d20-4c58-a9d3-b129fa592d8e | my_ldap_security_service | new    | ldap |
+ +--------------------------------------+--------------------------+--------+------+
+
+You also can dissociate a security service from the share network
+and see that a security service now has empty list of share networks:
+
+.. code:: console
+
+ $ manila share-network-security-service-remove share_net2 my_ldap_security_service
+
+ $ manila security-service-show my_ldap_security_service
+ +----------------+--------------------------------------+
+ | Property       | Value                                |
+ +----------------+--------------------------------------+
+ | status         | new                                  |
+ | domain         | None                                 |
+ | password       | None                                 |
+ | name           | my_ldap_security_service             |
+ | dns_ip         | 8.8.8.8                              |
+ | created_at     | 2015-09-25T10:19:06.000000           |
+ | updated_at     | None                                 |
+ | server         | 10.254.0.3                           |
+ | share_networks | []                                   |
+ | user           | None                                 |
+ | project_id     | 20787a7ba11946adad976463b57d8a2f     |
+ | type           | ldap                                 |
+ | id             | 413479b2-0d20-4c58-a9d3-b129fa592d8e |
+ | description    | None                                 |
+ +----------------+--------------------------------------+
+
+Shared File Systems Storage allows you to update a security service fields
+using **manila security-service-update** command with optional arguments
+such as ``--dns-ip``, ``--server``, ``--domain``, ``--user``, ``--password``,
+``--name``, or ``--description``.
+
+To remove a security service, that is not assosiated with any share networks,
+run:
+
+.. code:: console
+
+ $ manila security-service-delete my_ldap_security_service

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2014-2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+              xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-limits-v2.1">
+        <resource id="limits" path="/v2.1/{tenant_id}/limits">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="getlimits">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show global and rate limits">
+               <para role="shortdesc">Shows global and rate limit
+                information.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "limits": {
+        "absolute": {
+            "maxImageMeta": 128,
+            "maxPersonality": 5,
+            "maxPersonalitySize": 10240,
+            "maxSecurityGroupRules": 20,
+            "maxSecurityGroups": 10,
+            "maxServerMeta": 128,
+            "maxTotalCores": 20,
+            "maxTotalFloatingIps": 10,
+            "maxTotalInstances": 10,
+            "maxTotalKeypairs": 100,
+            "maxTotalRAMSize": 51200,
+            "maxServerGroups": 10,
+            "maxServerGroupMembers": 10,
+            "totalCoresUsed": 0,
+            "totalInstancesUsed": 0,
+            "totalRAMUsed": 0,
+            "totalSecurityGroupsUsed": 0,
+            "totalFloatingIpsUsed": 0,
+            "totalServerGroupsUsed": 0
+        },
+        "rate": []
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                
+                  <param name="X-OpenStack-Request-ID"
+                         style="header"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Returns a unique request ID that provides tracking for the
+      request. Provider must configure middleware to provide the request
+      ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                    
+                
+    </resources>
+    <!-- *******************************************************-->
+    <!--             Limit                           -->
+    <!--*******************************************************-->
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="getlimits">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+                
+            <param name="X-OpenStack-Request-ID"
+                   style="header"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+</wadl:application>

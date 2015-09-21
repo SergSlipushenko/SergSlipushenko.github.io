@@ -1,0 +1,1552 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+   <head>
+      <meta content="text/html; charset=UTF-8" http-equiv="content-type"></meta>
+      <meta charset="UTF-8"></meta>
+      <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"></meta>
+      <meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>
+      <title>OpenStack API Documentation</title>
+      <link href="apiref/css/bootstrap.min.css" rel="stylesheet"></link>
+      <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+      <link href="apiref/css/style.css" rel="stylesheet"></link>
+      <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+      <link href="apiref/css/bootstrap.min.css" rel="stylesheet"></link>
+   </head>
+   <body>
+      <div class="navbar navbar-default" role="navigation">
+         <div class="container">
+            <div class="navbar-header"><button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="/">Open Stack</a></div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+               <ul class="nav navbar-nav">
+                  <li><a href="http://www.openstack.org" title="Go to the Home page">Home</a></li>
+                  <li><a href="http://www.openstack.org/projects" title="Go to the OpenStack Projects page">Projects</a></li>
+                  <li><a href="http://www.openstack.org/user-stories" title="Go to the OpenStack user stories page">User Stories</a></li>
+                  <li><a href="http://www.openstack.org/community" title="Go to the Community page">Community</a></li>
+                  <li><a href="http://www.openstack.org/blog" title="Go to the OpenStack Blog">Blog</a></li>
+                  <li><a href="http://wiki.openstack.org/" title="Go to the OpenStack Wiki">Wiki</a></li>
+                  <li class="active"><a href="http://docs.openstack.org/" title="Go to OpenStack Documentation">Documentation</a></li>
+                  <li><a alt="Download a pdf of this document" class="pdficon" href="http://api.openstack.org/api-ref-guides/bk-api-ref-image-v1.pdf" onclick="_gaq.push(['_trackEvent', 'Header', 'pdfDownload', 'click', 1]);" title="Open the PDF for this page">&nbsp;&nbsp;&nbsp;<img src="apiref/images/pdf.png"></img></a></li>
+               </ul>
+            </div>
+         </div>
+      </div>
+      <div class="container">
+         <div class="row">
+            <div class="col-md-3">
+               <div class="api-sidebar" data-offset-bottom="0" data-offset-top="80" data-spy="affix">
+                  <ul class="nav api-sidenav">
+                     <li><a class="smallcapped" href="#images-api-v1">Image&nbsp;service&nbsp;API&nbsp;v1&nbsp;(SUPPORTED)</a></li>
+                     <li class="divider"></li>
+                     <ul class="nav active">
+                        <li><a href="api-ref-blockstorage-v2.html">
+                              Block
+                              Storage API v2 (CURRENT)</a></li>
+                        <li><a href="api-ref-blockstorage-v1.html">
+                              Block
+                              Storage API v1 (DEPRECATED)</a></li>
+                        <li><a href="api-ref-compute-v2.1.html">
+                              Compute API
+                              v2.1 (CURRENT)</a></li>
+                        <li><a href="api-ref-compute-v2.html">
+                              Compute API
+                              v2 (SUPPORTED)</a></li>
+                        <li><a href="api-ref-compute-v2-ext.html">
+                              Compute
+                              API v2 extensions (SUPPORTED)</a></li>
+                        <li><a href="api-ref-data-processing-v1.1.html">Data
+                              Processing v1.1 (CURRENT)</a></li>
+                        <li><a href="api-ref-database-v1.html">Database
+                              Service API v1.0 (CURRENT)</a></li>
+                        <li><a href="api-ref-identity-v3.html">Identity API
+                              v3 (CURRENT)</a></li>
+                        <li><a href="api-ref-identity-v3-ext.html">Identity API
+                              v3 extensions (CURRENT)</a></li>
+                        <li><a href="api-ref-identity-v2.html">Identity API
+                              v2.0 (SUPPORTED)</a></li>
+                        <li><a href="api-ref-identity-admin-v2.html">Identity admin API
+                              v2.0 (SUPPORTED)</a></li>
+                        <li><a href="api-ref-identity-v2-ext.html">Identity API
+                              v2.0 extensions (SUPPORTED)</a></li>
+                        <li><a href="api-ref-image-v2.html">Image service
+                              API v2 (CURRENT)</a></li>
+                        <li><a href="api-ref-image-v1.html">Image service
+                              API v1 (SUPPORTED)</a></li>
+                        <li><a href="api-ref-networking-v2.html">Networking
+                              API v2.0 (CURRENT)</a></li>
+                        <li><a href="api-ref-networking-v2-ext.html">Networking
+                              API v2.0 extensions (CURRENT)</a></li>
+                        <li><a href="api-ref-objectstorage-v1.html">Object
+                              Storage API v1 (SUPPORTED)</a></li>
+                        <li><a href="api-ref-orchestration-v1.html">Orchestration API v1 (CURRENT)</a></li>
+                        <li><a href="api-ref-share-v2.html">Shared File Systems API v2 (CURRENT)</a></li>
+                        <li><a href="api-ref-share-v1.html">Shared File Systems API v1 (SUPPORTED)</a></li>
+                        <li><a href="api-ref-telemetry-v2.html">Telemetry
+                              API v2 (CURRENT)</a></li>
+                     </ul>
+                  </ul>
+                  <div class="row">
+                     <div class="col-md-7"><label class="sr-only" for="search-box">Search
+                           on this page</label><input class="form-control" id="search-box" placeholder="Search this page" type="text"></input></div>
+                     <div class="col-md-5"><button class="btn btn-default" id="search-btn">Search</button></div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-9 api-documentation">
+               
+               
+               <div id="images-api-v1">
+                  <div class="subhead">
+                     <h2>Image service API v1 (SUPPORTED)<a class="headerlink" href="#images-api-v1" title="Permalink to this headline"><span class="glyphicon glyphicon-link"></span></a></h2>
+                  </div>
+                  
+                  
+                  <p>Loads images for use at launch time by the Compute API. Also,
+                     assigns metadata to images.
+                  </p>
+                  
+                  <p>Some cloud implementations do not expose this API and offer
+                     pretested images only.
+                  </p>
+                  
+                  <p>Cloud providers can configure property protections that
+                     prevent non-administrative users from updating and deleting
+                     protected properties. For more information, see <a href="http://docs.openstack.org/admin-guide-cloud/compute-images-instances.html#image-properties-and-property-protection">Image property protection</a> in the
+                     
+                     <citetitle xmlns="http://docbook.org/ns/docbook">OpenStack Cloud Administrator
+                        Guide
+                     </citetitle>.
+                  </p>
+                  
+                  <div id="versions-v1">
+                     <div class="subhead">
+                        <h3>API versions<a class="headerlink" href="#versions-v1" title="Permalink to this headline"><span class="glyphicon glyphicon-link"></span></a></h3>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d117e215 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#listVersions-image-v1"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">GET</span></div>
+                           <div class="col-md-5">/</div>
+                           <div class="col-md-5"><strong id="listVersions-image-v1">List API versions</strong><p>Lists information about all Image
+                                 service API versions.
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d117e215" data-toggle="collapse" id="detail-d117e215-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d117e215">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>, 
+                                    <returnvalue>300</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"></div>
+                              </div>
+                              <div class="example">
+                                 <pre>{
+    "versions": [
+        {
+            "status": "CURRENT",
+            "id": "v2.2",
+            "links": [
+                {
+                    "href": "http://23.253.228.211:9292/v2/",
+                    "rel": "self"
+                }
+            ]
+        },
+        {
+            "status": "SUPPORTED",
+            "id": "v2.1",
+            "links": [
+                {
+                    "href": "http://23.253.228.211:9292/v2/",
+                    "rel": "self"
+                }
+            ]
+        },
+        {
+            "status": "SUPPORTED",
+            "id": "v2.0",
+            "links": [
+                {
+                    "href": "http://23.253.228.211:9292/v2/",
+                    "rel": "self"
+                }
+            ]
+        },
+        {
+            "status": "SUPPORTED",
+            "id": "v1.1",
+            "links": [
+                {
+                    "href": "http://23.253.228.211:9292/v1/",
+                    "rel": "self"
+                }
+            ]
+        },
+        {
+            "status": "SUPPORTED",
+            "id": "v1.0",
+            "links": [
+                {
+                    "href": "http://23.253.228.211:9292/v1/",
+                    "rel": "self"
+                }
+            ]
+        }
+    ]
+}
+</pre>
+                                 </div>
+                              <p class="nobody">This operation does not accept a request
+                                 body.
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div id="images-v1">
+                     <div class="subhead">
+                        <h3>Images<a class="headerlink" href="#images-v1" title="Permalink to this headline"><span class="glyphicon glyphicon-link"></span></a></h3>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d117e255 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#listImage-v1"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">GET</span></div>
+                           <div class="col-md-5">/v1/images</div>
+                           <div class="col-md-5"><strong id="listImage-v1">List images</strong><p>Lists public VM images.</p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d117e255" data-toggle="collapse" id="detail-d117e255-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d117e255">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>name (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Filters the image list by a specified image name,
+                                                   in string format.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>container_format (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Filters the image list by a specified container
+                                                   format, such as <code>ovf</code>,
+                                                   <code>bare</code>, <code>aki</code>,
+                                                   <code>ari</code>, or <code>ami</code>.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>disk_format (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Filters the image list by a specified disk format. A valid value
+                                                   is <code>aki</code>, <code>ari</code>, <code>ami</code>,
+                                                   <code>raw</code>, <code>iso</code>, <code>vhd</code>,
+                                                   <code>vdi</code>, <code>qcow2</code>, or <code>vmdk</code>.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>status (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Filters the image list by a specified status. A
+                                                   valid value is <code>queued</code>,
+                                                   <code>saving</code>, <code>active</code>,
+                                                   <code>killed</code>, <code>deleted</code>, or
+                                                   <code>pending_delete</code>.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>size_min (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Filters the image list by a specified minimum
+                                                   image size, in bytes.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>size_max (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Filters the image list by a specified maximum
+                                                   image size, in bytes.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>changes-since (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:dateTime</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Filters the image list to those images that
+                                                   have changed since a specified time stamp
+                                                   value.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <div class="example">
+                                 <pre>{
+    "images": [
+        {
+            "uri": "http://glance.example.com/images/71c675ab-d94f-49cd-a114-e12490b328d9",
+            "name": "Ubuntu 10.04 Plain",
+            "disk_format": "vhd",
+            "container_format": "ovf",
+            "size": "5368709120"
+        },
+        {
+            "...": "..."
+        }
+    ]
+}
+</pre>
+                                 </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d117e412 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#createImage-v1"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">POST</span></div>
+                           <div class="col-md-5">/v1/images</div>
+                           <div class="col-md-5"><strong id="createImage-v1">Create image</strong><p>Registers a virtual machine (VM)
+                                 image.
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d117e412" data-toggle="collapse" id="detail-d117e412-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d117e412">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>202</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>name</td>
+                                             <td>plain</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>Name for the image. Note that the name
+                                                   of an image is not unique to a Glance
+                                                   node. The API cannot expect users to know
+                                                   the names of images owned by
+                                                   others.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>disk_format</td>
+                                             <td>plain</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   A valid value is <code>aki</code>,
+                                                   <code>ari</code>, <code>ami</code>,
+                                                   <code>raw</code>, <code>iso</code>,
+                                                   <code>vhd</code>, <code>vdi</code>,
+                                                   <code>qcow2</code>, or <code>vmdk</code>.
+                                                   
+                                                </p>
+                                                
+                                                <p>The disk format of a VM image is the
+                                                   format of the underlying disk image.
+                                                   Virtual appliance vendors have different
+                                                   formats for laying out the information
+                                                   contained in a VM disk image.
+                                                </p>
+                                                
+                                                <p>You can set the container format for
+                                                   your image to one of the following
+                                                   values:
+                                                </p>
+                                                
+                                                <ul>
+                                                   
+                                                   <li>
+                                                      
+                                                      <p>
+                                                         <strong xmlns="http://docbook.org/ns/docbook">raw</strong>
+                                                         
+                                                      </p>
+                                                      
+                                                      <p>Unstructured disk image
+                                                         format.
+                                                      </p>
+                                                      
+                                                   </li>
+                                                   
+                                                   <li>
+                                                      
+                                                      <p>
+                                                         <strong xmlns="http://docbook.org/ns/docbook">vhd</strong>
+                                                         
+                                                      </p>
+                                                      
+                                                      <p>VHD disk format, a common disk
+                                                         format used by VM monitors from
+                                                         VMWare, Xen, Microsoft, VirtualBox,
+                                                         and others.
+                                                      </p>
+                                                      
+                                                   </li>
+                                                   
+                                                   <li>
+                                                      
+                                                      <p>
+                                                         <strong xmlns="http://docbook.org/ns/docbook">vmdk</strong>
+                                                         
+                                                      </p>
+                                                      
+                                                      <p>A common disk format that
+                                                         supported by many VM
+                                                         monitors.
+                                                      </p>
+                                                      
+                                                   </li>
+                                                   
+                                                   <li>
+                                                      
+                                                      <p>
+                                                         <strong xmlns="http://docbook.org/ns/docbook">vdi</strong>
+                                                         
+                                                      </p>
+                                                      
+                                                      <p>Supported by VirtualBox VM
+                                                         monitor and the QEMU
+                                                         emulator.
+                                                      </p>
+                                                      
+                                                   </li>
+                                                   
+                                                   <li>
+                                                      
+                                                      <p>
+                                                         <strong xmlns="http://docbook.org/ns/docbook">iso</strong>
+                                                         
+                                                      </p>
+                                                      
+                                                      <p>An archive format for the data
+                                                         contents of an optical disc, such
+                                                         as CDROM.
+                                                      </p>
+                                                      
+                                                   </li>
+                                                   
+                                                   <li>
+                                                      
+                                                      <p>
+                                                         <strong xmlns="http://docbook.org/ns/docbook">qcow2</strong>
+                                                         
+                                                      </p>
+                                                      
+                                                      <p>Supported by the QEMU emulator
+                                                         that can expand dynamically and
+                                                         supports Copy on Write.
+                                                      </p>
+                                                      
+                                                   </li>
+                                                   
+                                                   <li>
+                                                      
+                                                      <p>
+                                                         <strong xmlns="http://docbook.org/ns/docbook">aki</strong>
+                                                         
+                                                      </p>
+                                                      
+                                                      <p>An Amazon kernel image.</p>
+                                                      
+                                                   </li>
+                                                   
+                                                   <li>
+                                                      
+                                                      <p>
+                                                         <strong xmlns="http://docbook.org/ns/docbook">ari</strong>
+                                                         
+                                                      </p>
+                                                      
+                                                      <p>An Amazon ramdisk image.</p>
+                                                      
+                                                   </li>
+                                                   
+                                                   <li>
+                                                      
+                                                      <p>
+                                                         <strong xmlns="http://docbook.org/ns/docbook">ami</strong>
+                                                         
+                                                      </p>
+                                                      
+                                                      <p>An Amazon machine image.</p>
+                                                      
+                                                   </li>
+                                                   
+                                                </ul>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>container_format</td>
+                                             <td>plain</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>The container format refers to whether
+                                                   the VM image is in a file format that also
+                                                   contains metadata about the actual
+                                                   VM.
+                                                </p>
+                                                
+                                                <p>
+                                                   Container formats include OVF and Amazon AMI. In
+                                                   addition, a VM image might not have a container
+                                                   format. Instead, the image is a blob of
+                                                   unstructured data.
+                                                   
+                                                </p>
+                                                
+                                                <p>You can set the container format to one
+                                                   of the following formats:
+                                                </p>
+                                                
+                                                <ul>
+                                                   
+                                                   <li>
+                                                      
+                                                      <p>
+                                                         <strong xmlns="http://docbook.org/ns/docbook">ovf</strong>
+                                                         
+                                                      </p>
+                                                      
+                                                      <p>OVF container format.</p>
+                                                      
+                                                   </li>
+                                                   
+                                                   <li>
+                                                      
+                                                      <p>
+                                                         <strong xmlns="http://docbook.org/ns/docbook">bare</strong>
+                                                         
+                                                      </p>
+                                                      
+                                                      <p>No container or metadata
+                                                         envelope for the image.
+                                                      </p>
+                                                      
+                                                   </li>
+                                                   
+                                                   <li>
+                                                      
+                                                      <p>
+                                                         <strong xmlns="http://docbook.org/ns/docbook">aki</strong>
+                                                         
+                                                      </p>
+                                                      
+                                                      <p>Amazon kernel image.</p>
+                                                      
+                                                   </li>
+                                                   
+                                                   <li>
+                                                      
+                                                      <p>
+                                                         <strong xmlns="http://docbook.org/ns/docbook">ari</strong>
+                                                         
+                                                      </p>
+                                                      
+                                                      <p>Amazon ramdisk image.</p>
+                                                      
+                                                   </li>
+                                                   
+                                                   <li>
+                                                      
+                                                      <p>
+                                                         <strong xmlns="http://docbook.org/ns/docbook">ami</strong>
+                                                         
+                                                      </p>
+                                                      
+                                                      <p>Amazon machine image.</p>
+                                                      
+                                                   </li>
+                                                   
+                                                </ul>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>createImage (Optional)</td>
+                                             <td></td>
+                                             <td>ImageForCreate</td>
+                                             <td></td>
+                                          </tr>
+                                       </tbody>
+                                    </table><b>Response parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>location</td>
+                                             <td>plain</td>
+                                             <td>xsd:anyURI</td>
+                                             <td>
+                                                
+                                                <p>A location for the image identified by a
+                                                   URI.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d117e692 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#listDetailImage-v1"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">GET</span></div>
+                           <div class="col-md-5">/v1/images/detail</div>
+                           <div class="col-md-5"><strong id="listDetailImage-v1">List image details</strong><p>Lists details for available
+                                 images.
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d117e692" data-toggle="collapse" id="detail-d117e692-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d117e692">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>name (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Filters the image list by a specified image name,
+                                                   in string format.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>container_format (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Filters the image list by a specified container
+                                                   format, such as <code>ovf</code>,
+                                                   <code>bare</code>, <code>aki</code>,
+                                                   <code>ari</code>, or <code>ami</code>.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>disk_format (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Filters the image list by a specified disk format. A valid value
+                                                   is <code>aki</code>, <code>ari</code>, <code>ami</code>,
+                                                   <code>raw</code>, <code>iso</code>, <code>vhd</code>,
+                                                   <code>vdi</code>, <code>qcow2</code>, or <code>vmdk</code>.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>status (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Filters the image list by a specified status. A
+                                                   valid value is <code>queued</code>,
+                                                   <code>saving</code>, <code>active</code>,
+                                                   <code>killed</code>, <code>deleted</code>, or
+                                                   <code>pending_delete</code>.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>size_min (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Filters the image list by a specified minimum
+                                                   image size, in bytes.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>size_max (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Filters the image list by a specified maximum
+                                                   image size, in bytes.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>changes-since (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:dateTime</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Filters the image list to those images that
+                                                   have changed since a specified time stamp
+                                                   value.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table><b>Response parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>next (Optional)</td>
+                                             <td>plain</td>
+                                             <td>xsd:anyURI</td>
+                                             <td>
+                                                
+                                                <p>Show the next item in the list.</p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>previous (Optional)</td>
+                                             <td>plain</td>
+                                             <td>xsd:anyURI</td>
+                                             <td>
+                                                
+                                                <p>Show the previous item in the
+                                                   list.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <div class="example">
+                                 <pre>{
+    "images": [
+        {
+            "uri": "http://glance.example.com/images/71c675ab-d94f-49cd-a114-e12490b328d9",
+            "name": "Ubuntu 10.04 Plain 5GB",
+            "disk_format": "vhd",
+            "container_format": "ovf",
+            "size": "5368709120",
+            "checksum": "c2e5db72bd7fd153f53ede5da5a06de3",
+            "created_at": "2010-02-03 09:34:01",
+            "updated_at": "2010-02-03 09:34:01",
+            "deleted_at": "",
+            "status": "active",
+            "is_public": true,
+            "min_ram": 256,
+            "min_disk": 5,
+            "owner": null,
+            "properties": {
+                "distro": "Ubuntu 10.04 LTS"
+            }
+        },
+        {
+            "...": "..."
+        }
+    ]
+}
+</pre>
+                                 </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d117e884 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#getImage-v1"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">GET</span></div>
+                           <div class="col-md-5">/v1/images/&#8203;{image_id}&#8203;</div>
+                           <div class="col-md-5"><strong id="getImage-v1">Show image details and image binary</strong><p>Shows the image details as headers
+                                 and the image binary in the body of the
+                                 response.
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d117e884" data-toggle="collapse" id="detail-d117e884-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d117e884">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>image_id</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Image ID stored through the image API. Typically a UUID.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <div class="example">
+                                 <pre>{
+    "images": [
+        {
+            "uri": "http://glance.example.com/images/71c675ab-d94f-49cd-a114-e12490b328d9",
+            "name": "Ubuntu 10.04 Plain 5GB",
+            "disk_format": "vhd",
+            "container_format": "ovf",
+            "size": "5368709120",
+            "checksum": "c2e5db72bd7fd153f53ede5da5a06de3",
+            "created_at": "2010-02-03 09:34:01",
+            "updated_at": "2010-02-03 09:34:01",
+            "deleted_at": "",
+            "status": "active",
+            "is_public": true,
+            "min_ram": 256,
+            "min_disk": 5,
+            "owner": null,
+            "properties": {
+                "distro": "Ubuntu 10.04 LTS"
+            }
+        },
+        {
+            "...": "..."
+        }
+    ]
+}
+</pre>
+                                 </div>
+                              <p class="nobody">This operation does not accept a request
+                                 body.
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d117e909 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#updateImage-v1"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">PUT</span></div>
+                           <div class="col-md-5">/v1/images/&#8203;{image_id}&#8203;</div>
+                           <div class="col-md-5"><strong id="updateImage-v1">Update image</strong><p>Updates an image, uploads an image
+                                 file, or updates metadata for an image.
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d117e909" data-toggle="collapse" id="detail-d117e909-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d117e909">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>image_id</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Image ID stored through the image API. Typically a UUID.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table><b>Response parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>location</td>
+                                             <td>plain</td>
+                                             <td>xsd:anyURI</td>
+                                             <td></td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <p class="nobody">This operation does not accept a request
+                                 body.
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d117e930 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#deleteImage-v1"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">DELETE</span></div>
+                           <div class="col-md-5">/v1/images/&#8203;{image_id}&#8203;</div>
+                           <div class="col-md-5"><strong id="deleteImage-v1">Delete image</strong><p>Deletes the specified image.</p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d117e930" data-toggle="collapse" id="detail-d117e930-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d117e930">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>204</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>image_id</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Image ID stored through the image API. Typically a UUID.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <p class="nobody">This operation does not accept a request body
+                                 and does not return a response body.
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div id="members-v1">
+                     <div class="subhead">
+                        <h3>Members<a class="headerlink" href="#members-v1" title="Permalink to this headline"><span class="glyphicon glyphicon-link"></span></a></h3>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d117e961 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#replaceMember-v1"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">PUT</span></div>
+                           <div class="col-md-5">/v1/images/&#8203;{image_id}&#8203;/members</div>
+                           <div class="col-md-5"><strong id="replaceMember-v1">Replace member</strong><p>Replaces a membership list for an
+                                 image.
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d117e961" data-toggle="collapse" id="detail-d117e961-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d117e961">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>204</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>image_id</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Image ID stored through the image API. Typically a UUID.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>memberships</td>
+                                             <td>plain</td>
+                                             <td>String</td>
+                                             <td></td>
+                                          </tr>
+                                          <tr>
+                                             <td>can_share</td>
+                                             <td>plain</td>
+                                             <td>xsd:boolean</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Indicates whether the specified owner is
+                                                   authorized to share the specified image.
+                                                   
+                                                </p>
+                                                
+                                                <p>
+                                                   If the owner can share the image, this value is
+                                                   <code>true</code>. Otherwise, this value is
+                                                   <code>false</code>.
+                                                   
+                                                </p>
+                                                
+                                                <p>
+                                                   The owner ID, which is the tenant ID, is
+                                                   specified in the request URI.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <p class="nobody">This operation does not return a response
+                                 body.
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d117e1027 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#addMember-v1"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">PUT</span></div>
+                           <div class="col-md-5">/v1/images/&#8203;{image_id}&#8203;/members/&#8203;{owner_id}&#8203;</div>
+                           <div class="col-md-5"><strong id="addMember-v1">Add member</strong><p>Adds a member to an image.</p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d117e1027" data-toggle="collapse" id="detail-d117e1027-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d117e1027">
+                           <div class="col-md-12">
+                              <div>
+                                 <p>
+                                    If you omit the request body, this call adds the membership to
+                                    the image, leaves the existing memberships unmodified, and
+                                    sets the <code>can_share</code> attribute to
+                                    <code>false</code> for new memberships.
+                                    
+                                 </p>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>204</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>image_id</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Image ID stored through the image API. Typically a UUID.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>owner_id</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Owner ID, which is the tenant ID.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>can_share</td>
+                                             <td>plain</td>
+                                             <td>xsd:boolean</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Indicates whether the specified owner is
+                                                   authorized to share the specified image.
+                                                   
+                                                </p>
+                                                
+                                                <p>
+                                                   If the owner can share the image, this value is
+                                                   <code>true</code>. Otherwise, this value is
+                                                   <code>false</code>.
+                                                   
+                                                </p>
+                                                
+                                                <p>
+                                                   The owner ID, which is the tenant ID, is
+                                                   specified in the request URI.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <div class="example">
+                                 <pre>{
+    "members": [
+        {
+            "member_id": "tenant1",
+            "can_share": false
+        },
+        {
+            "member_id": "tenant2",
+            "can_share": false
+        }
+    ]
+}
+</pre>
+                                 </div>
+                              <p class="nobody">This operation does not return a response
+                                 body.
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d117e1082 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#removeMember-v1"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">DELETE</span></div>
+                           <div class="col-md-5">/v1/images/&#8203;{image_id}&#8203;/members/&#8203;{owner_id}&#8203;</div>
+                           <div class="col-md-5"><strong id="removeMember-v1">Remove member</strong><p>Removes a member from an
+                                 image.
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d117e1082" data-toggle="collapse" id="detail-d117e1082-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d117e1082">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>204</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>image_id</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Image ID stored through the image API. Typically a UUID.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>owner_id</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Owner ID, which is the tenant ID.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>member_id</td>
+                                             <td>plain</td>
+                                             <td>csapi:uuid</td>
+                                             <td>
+                                                
+                                                <p>ID of member with which an image is
+                                                   shared.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <p class="nobody">This operation does not return a response
+                                 body.
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div id="shared_images_v1">
+                     <div class="subhead">
+                        <h3>Shared images<a class="headerlink" href="#shared_images_v1" title="Permalink to this headline"><span class="glyphicon glyphicon-link"></span></a></h3>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d117e1128 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#getSharedImages-v1"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">GET</span></div>
+                           <div class="col-md-5">/v1/shared-images/&#8203;{owner_id}&#8203;</div>
+                           <div class="col-md-5"><strong id="getSharedImages-v1">List shared images</strong><p>
+                                 Lists the VM images that are shared with a specified owner.
+                                 The owner ID is the tenant ID.
+                                 
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d117e1128" data-toggle="collapse" id="detail-d117e1128-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d117e1128">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>owner_id</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Owner ID, which is the tenant ID.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table><b>Response parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>image_id</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Image ID stored through the image API. Typically a UUID.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>can_share</td>
+                                             <td>plain</td>
+                                             <td>xsd:boolean</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Indicates whether the specified owner is
+                                                   authorized to share the specified image.
+                                                   
+                                                </p>
+                                                
+                                                <p>
+                                                   If the owner can share the image, this value is
+                                                   <code>true</code>. Otherwise, this value is
+                                                   <code>false</code>.
+                                                   
+                                                </p>
+                                                
+                                                <p>
+                                                   The owner ID, which is the tenant ID, is
+                                                   specified in the request URI.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <div class="example">
+                                 <pre>{
+    "shared_images": [
+        {
+            "image_id": "71c675ab-d94f-49cd-a114-e12490b328d9",
+            "can_share": false
+        },
+        {
+            "...": "..."
+        }
+    ]
+}
+</pre>
+                                 </div>
+                              <p class="nobody">This operation does not accept a request
+                                 body.
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div>
+               
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-9" id="footer">
+               <p>The OpenStack project is provided under the
+                  Apache 2.0 license.
+               </p>
+            </div>
+         </div>
+      </div><script src="apiref/js/jquery-1.10.2.min.js" type="text/javascript"></script><script src="apiref/js/bootstrap.min.js" type="text/javascript"></script><script src="apiref/js/api-site.js" type="text/javascript"></script><script type="text/javascript">
+                    var _gaq = _gaq || [];
+                    _gaq.push(['_setAccount', 'UA-17511903-1']);
+                    _gaq.push(['_setDomainName', '.openstack.org']);
+                    _gaq.push(['_trackPageview']);
+                    (function () {
+                    var ga = document.createElement('script');
+                    ga.type = 'text/javascript';
+                    ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(ga, s);
+                    })();
+                  </script></body>
+</html>

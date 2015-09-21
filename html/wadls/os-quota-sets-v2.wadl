@@ -1,0 +1,987 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2013-2014 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:csapi="http://docs.openstack.org/api/openstack-block-storage/v2"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://volume.example.com/"
+              xml:id="os-quota-sets-cinder-v2">
+        <resource path="/v2/{tenant_id}/os-quota-sets/{tenant_id}"
+                id="tenant_id_cinder_v2">
+         <param name="tenant_id"
+                style="template"
+                type="xsd:string"
+                required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Tenant ID">
+                        <para>The ID for the tenant or project in a
+                            multi-tenancy cloud.</para>
+            </wadl:doc>
+                </param>
+         <param name="tenant_id"
+                style="template"
+                type="xsd:string"
+                required="true">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Project ID">
+                                <para>The ID for the tenant for which
+                                   you want to show, update, or delete
+                                   quotas. This ID is different from
+                                   the first tenant ID that you
+                                   specify in the URI: That ID is for
+                                   the admin tenant.</para>
+                            </wadl:doc>
+                        </param>
+         <method name="GET" rax:id="showQuota">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Show quotas">
+               <para role="shortdesc">Shows quotas for a tenant.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/xml">
+                
+                  <param name="usage" style="query" required="false" type="xsd:boolean">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+        Set to <code>usage=True</code> to show quota usage. Default is
+        <code>False</code>.
+      </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Show quotas response: JSON">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "quota_set": {
+        "gigabytes": 5,
+        "snapshots": 10,
+        "volumes": 20
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+               <representation mediaType="application/xml">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Show quotas response: XML">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="xml">&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;quota_set id="fake_tenant"&gt;
+  &lt;gigabytes&gt;5&lt;/gigabytes&gt;
+  &lt;snapshots&gt;10&lt;/snapshots&gt;
+  &lt;volumes&gt;20&lt;/volumes&gt;
+&lt;/quota_set&gt;
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                 
+                  <param name="quota_set"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            A <code>quota_set</code> object.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="gigabytes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshots" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of snapshots allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="volumes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of volumes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                 
+                  <param name="in_use" style="plain" required="false" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+        The in use data size. Visible only if you set the
+        <code>usage=True</code> query parameter.
+      </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="reserved" style="plain" required="false" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+        Reserved volume size. Visible only if you set the
+        <code>usage=True</code> query parameter.
+      </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="PUT" rax:id="updateQuota">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Update quotas">
+               <para role="shortdesc">Updates quotas for a tenant.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Update quotas response: JSON">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "quota_set": {
+        "snapshots": 45
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+               <representation mediaType="application/xml">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Show quotas response: XML">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="xml">&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;quota_set id="fake_tenant"&gt;
+  &lt;snapshots&gt;45&lt;/snapshots&gt;
+&lt;/quota_set&gt;
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+          
+                  <param name="quota_set"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            A <code>quota_set</code> object.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="gigabytes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshots" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of snapshots allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="volumes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of volumes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Update quota response: JSON">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "quota_set": {
+        "snapshots": 45
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+               <representation mediaType="application/xml">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Update quota response: XML">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="xml">&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;quota_set id="fake_tenant"&gt;
+  &lt;gigabytes&gt;5&lt;/gigabytes&gt;
+  &lt;snapshots&gt;10&lt;/snapshots&gt;
+  &lt;volumes&gt;20&lt;/volumes&gt;
+&lt;/quota_set&gt;
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               
+                  <param name="quota_set"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            A <code>quota_set</code> object.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="gigabytes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshots" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of snapshots allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="volumes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of volumes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="DELETE" rax:id="deleteQuotas">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Delete quotas">
+               <para role="shortdesc">Deletes quotas for a tenant so the
+                quotas revert to default values.</para>
+            </wadl:doc>
+            <response status="200"/>
+         </method>
+      </resource>
+                        
+                        
+                        
+                        
+                    <resource path="/v2/{tenant_id}/os-quota-sets/defaults" id="defaults-cinder-v2">
+         <param name="tenant_id"
+                style="template"
+                type="xsd:string"
+                required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Tenant ID">
+                        <para>The ID for the tenant or project in a
+                            multi-tenancy cloud.</para>
+            </wadl:doc>
+                </param>
+         <method name="GET" rax:id="getDefaults">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Get default quotas">
+               <para role="shortdesc">Gets default quotas for a
+                tenant.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Get default quotas response: JSON">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "quota_set": {
+        "gigabytes": 5,
+        "snapshots": 10,
+        "volumes": 20
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+               <representation mediaType="application/xml">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Get default quotas response: XML">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="xml">&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;quota_set id="fake_tenant"&gt;
+  &lt;gigabytes&gt;5&lt;/gigabytes&gt;
+  &lt;snapshots&gt;10&lt;/snapshots&gt;
+  &lt;volumes&gt;20&lt;/volumes&gt;
+&lt;/quota_set&gt;
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                
+                  <param name="quota_set"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            A <code>quota_set</code> object.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="gigabytes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshots" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of snapshots allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="volumes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of volumes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                        
+                    <resource id="user_id-cinder-v2"
+                path="/v2/{tenant_id}/os-quota-sets/{tenant_id}/{user_id}">
+         <param name="tenant_id"
+                style="template"
+                type="xsd:string"
+                required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Tenant ID">
+                        <para>The ID for the tenant or project in a
+                            multi-tenancy cloud.</para>
+            </wadl:doc>
+                </param>
+         <param name="tenant_id"
+                style="template"
+                type="xsd:string"
+                required="true">
+                          <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Project ID">
+                            <para>
+                              The ID for the tenant for which  you want to
+                              show or update quotas. This ID is different
+                              from the first tenant ID that you specify in
+                              the URI: That ID is for the admin tenant.
+                            </para>
+                          </wadl:doc>
+                        </param>
+         <param name="user_id"
+                style="template"
+                type="xsd:string"
+                required="true">
+                              <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="User ID">
+                                 <para>
+                                    The user ID. Specify in the URI as a query
+                                    string: <code>user_id={user_id}</code>.
+                                </para>
+                              </wadl:doc>
+                            </param>
+         <method name="GET" rax:id="showQuotaUser">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show quotas for user">
+               <para role="shortdesc">Enables an admin user to show quotas for a specified
+                tenant and user.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Show quotas for user response: JSON">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "quota_set": {
+        "snapshots": 45
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+               <representation mediaType="application/xml">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Show quotas for user response: XML">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="xml">&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;quota_set id="fake_tenant"&gt;
+  &lt;gigabytes&gt;5&lt;/gigabytes&gt;
+  &lt;snapshots&gt;10&lt;/snapshots&gt;
+  &lt;volumes&gt;20&lt;/volumes&gt;
+&lt;/quota_set&gt;
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               
+                  <param name="quota_set"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            A <code>quota_set</code> object.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="gigabytes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshots" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of snapshots allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="volumes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of volumes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="PUT" rax:id="updateQuotaUser">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Update quotas for user">
+               <para role="shortdesc">Updates quotas for a specified
+                tenant/project and user.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Update quotas for user request: JSON">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "quota_set": {
+        "snapshots": 45
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+               <representation mediaType="application/xml">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Update quotas for user request: XML">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="xml">&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;quota_set id="fake_tenant"&gt;
+  &lt;snapshots&gt;45&lt;/snapshots&gt;
+&lt;/quota_set&gt;
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                
+                  <param name="quota_set"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            A <code>quota_set</code> object.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="gigabytes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshots" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of snapshots allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="volumes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of volumes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Update quotas for user response: JSON">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "quota_set": {
+        "snapshots": 45
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+               <representation mediaType="application/xml">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Show quotas for user response: XML">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="xml">&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;quota_set id="fake_tenant"&gt;
+  &lt;gigabytes&gt;5&lt;/gigabytes&gt;
+  &lt;snapshots&gt;10&lt;/snapshots&gt;
+  &lt;volumes&gt;20&lt;/volumes&gt;
+&lt;/quota_set&gt;
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                
+                  <param name="quota_set"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            A <code>quota_set</code> object.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="gigabytes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshots" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of snapshots allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="volumes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of volumes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="DELETE" rax:id="deleteQuotasUser">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Delete quotas for user">
+               <para role="shortdesc">Deletes quotas for a user so that
+                the quotas revert to default values.</para>
+            </wadl:doc>
+            <response status="200"/>
+         </method>
+      </resource>
+                            
+                            
+                            
+                            
+                        <resource id="user_id-detail-cinder-v2"
+                path="/v2/{tenant_id}/os-quota-sets/{tenant_id}/detail/{user_id}">
+         <param name="tenant_id"
+                style="template"
+                type="xsd:string"
+                required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Tenant ID">
+                        <para>The ID for the tenant or project in a
+                            multi-tenancy cloud.</para>
+            </wadl:doc>
+                </param>
+         <param name="tenant_id"
+                style="template"
+                type="xsd:string"
+                required="true">
+                          <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Project ID">
+                            <para>
+                              The ID for the tenant for which  you want to
+                              show or update quotas. This ID is different
+                              from the first tenant ID that you specify in
+                              the URI: That ID is for the admin tenant.
+                            </para>
+                          </wadl:doc>
+                        </param>
+         <param name="user_id"
+                style="template"
+                type="xsd:string"
+                required="true">
+                               <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="User ID">
+                                <para>
+                                  The user ID. Specify in the
+                                  URI as a query string:
+                                  <code>user_id={user_id}</code>.
+                                </para>
+                              </wadl:doc>
+                            </param>
+         <method name="GET" rax:id="showQuotaDetailUser">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show quota details for user">
+               <para role="shortdesc">
+                Shows details for quotas for a specified tenant and user.
+              </para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Show quota details for user response: JSON">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "quota_set": {
+        "snapshots": 45
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param name="quota_set"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            A <code>quota_set</code> object.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="gigabytes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshots" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of snapshots allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="volumes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of volumes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                            
+                            
+                          
+    </resources>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/api/openstack-block-storage/v2"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="getDefaults">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+            <representation mediaType="application/xml">
+                
+                
+            <param name="quota_set"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+    
+</param>
+            <param name="gigabytes" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="snapshots" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="volumes" style="plain" required="true" type="xsd:int">
+    
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/api/openstack-block-storage/v2"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="showQuota">
+        
+        <request>
+            <representation mediaType="application/xml">
+                
+            <param name="usage" style="query" required="false" type="xsd:boolean">
+    
+</param>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+            <representation mediaType="application/xml">
+                
+                 
+            <param name="quota_set"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+    
+</param>
+            <param name="gigabytes" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="snapshots" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="volumes" style="plain" required="true" type="xsd:int">
+    
+</param>
+                 
+            <param name="in_use" style="plain" required="false" type="xsd:string">
+    
+</param>
+            <param name="reserved" style="plain" required="false" type="xsd:int">
+    
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/api/openstack-block-storage/v2"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="PUT"
+           id="updateQuota">
+        
+        <request>
+        <representation mediaType="application/json">
+          
+        </representation>
+        <representation mediaType="application/xml">
+          
+          
+            <param name="quota_set"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+    
+</param>
+            <param name="gigabytes" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="snapshots" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="volumes" style="plain" required="true" type="xsd:int">
+    
+</param>
+        </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+              
+            </representation>
+            <representation mediaType="application/xml">
+              
+               
+            <param name="quota_set"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+    
+</param>
+            <param name="gigabytes" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="snapshots" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="volumes" style="plain" required="true" type="xsd:int">
+    
+</param>
+          </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/api/openstack-block-storage/v2"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="DELETE"
+           id="deleteQuotas">
+        
+        <response status="200"/>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/api/openstack-block-storage/v2"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="showQuotaUser">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+              
+            </representation>
+            <representation mediaType="application/xml">
+              
+               
+            <param name="quota_set"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+    
+</param>
+            <param name="gigabytes" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="snapshots" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="volumes" style="plain" required="true" type="xsd:int">
+    
+</param>
+          </representation>
+      </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/api/openstack-block-storage/v2"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="PUT"
+           id="updateQuotaUser">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            </representation>
+            <representation mediaType="application/xml">
+                
+                
+            <param name="quota_set"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+    
+</param>
+            <param name="gigabytes" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="snapshots" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="volumes" style="plain" required="true" type="xsd:int">
+    
+</param>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+            <representation mediaType="application/xml">
+                
+                
+            <param name="quota_set"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+    
+</param>
+            <param name="gigabytes" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="snapshots" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="volumes" style="plain" required="true" type="xsd:int">
+    
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/api/openstack-block-storage/v2"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="DELETE"
+           id="deleteQuotasUser">
+        
+        <response status="200"/>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/api/openstack-block-storage/v2"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="showQuotaDetailUser">
+        
+        <response status="200">
+          <representation mediaType="application/json">
+            
+            
+            <param name="quota_set"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+    
+</param>
+            <param name="gigabytes" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="snapshots" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="volumes" style="plain" required="true" type="xsd:int">
+    
+</param>
+          </representation>
+      </response>
+  </method>
+</wadl:application>

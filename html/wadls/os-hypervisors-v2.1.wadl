@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2014-2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+              xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-hypervisors-v2.1">
+        <resource id="os-hypervisors" path="/v2.1/{tenant_id}/os-hypervisors">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="listhypervisors">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List hypervisors">
+               <para role="shortdesc">Lists hypervisors.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "hypervisors": [
+        {
+            "hypervisor_hostname": "fake-mini",
+            "id": 1,
+            "state": "up",
+            "status": "enabled"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="X-OpenStack-Request-ID"
+                         style="header"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Returns a unique request ID that provides tracking for the
+      request. Provider must configure middleware to provide the request
+      ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                    
+                    <resource id="statistics" path="/v2.1/{tenant_id}/os-hypervisors/statistics">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="showhypervisorstatistics">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show hypervisor statistics">
+               <para role="shortdesc">Shows statistics for all
+                hypervisors.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "hypervisor_statistics": {
+        "count": 1,
+        "current_workload": 0,
+        "disk_available_least": 0,
+        "free_disk_gb": 1028,
+        "free_ram_mb": 7680,
+        "local_gb": 1028,
+        "local_gb_used": 0,
+        "memory_mb": 8192,
+        "memory_mb_used": 512,
+        "running_vms": 0,
+        "vcpus": 1,
+        "vcpus_used": 0
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="X-OpenStack-Request-ID"
+                         style="header"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Returns a unique request ID that provides tracking for the
+      request. Provider must configure middleware to provide the request
+      ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                        
+                    
+                    <resource id="os-pci" path="/v2.1/{tenant_id}/os-hypervisors/os-pci">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="listHypervisorsPciDetails">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List hypervisors with PCI statistics">
+               <para role="shortdesc">
+                Lists hypervisors. Includes PCI device statistics.
+            </para>
+            </wadl:doc>
+            <request> </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "hypervisors": [
+        {
+            "cpu_info": "{\"arch\": \"x86_64\", \"model\": \"Nehalem\", \"vendor\": \"Intel\", \"features\": [\"pge\", \"clflush\"], \"topology\": {\"cores\": 1, \"threads\": 1, \"sockets\": 4}}",
+            "state": "up",
+            "status": "enabled",
+            "current_workload": 0,
+            "disk_available_least": 0,
+            "host_ip": "1.1.1.1",
+            "free_disk_gb": 1028,
+            "free_ram_mb": 7680,
+            "hypervisor_hostname": "fake-mini",
+            "hypervisor_type": "fake",
+            "hypervisor_version": 1000,
+            "id": 1,
+            "local_gb": 1028,
+            "local_gb_used": 0,
+            "memory_mb": 8192,
+            "memory_mb_used": 512,
+            "os-pci:pci_stats": [
+                {
+                    "count": 5,
+                    "key1": "value1",
+                    "keya": "valuea",
+                    "product_id": "1520",
+                    "vendor_id": "8086",
+                    "numa_node": 1
+                }
+            ],
+            "running_vms": 0,
+            "service": {
+                "host": "043b3cacf6f34c90a7245151fc8ebcda",
+                "id": 2,
+                "disabled_reason": null
+            },
+            "vcpus": 1,
+            "vcpus_used": 0
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="X-OpenStack-Request-ID"
+                         style="header"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Returns a unique request ID that provides tracking for the
+      request. Provider must configure middleware to provide the request
+      ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                        
+                    
+                    
+                    <resource id="hypervisor_id"
+                path="/v2.1/{tenant_id}/os-hypervisors/{hypervisor_id}">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="showhypervisordetails">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show hypervisor details">
+               <para role="shortdesc">Shows details for a specified
+                hypervisor.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "hypervisor": {
+        "cpu_info": "{\"arch\": \"x86_64\", \"model\": \"Nehalem\", \"vendor\": \"Intel\", \"features\": [\"pge\", \"clflush\"], \"topology\": {\"cores\": 1, \"threads\": 1, \"sockets\": 4}}",
+        "state": "up",
+        "status": "enabled",
+        "current_workload": 0,
+        "disk_available_least": 0,
+        "host_ip": "1.1.1.1",
+        "free_disk_gb": 1028,
+        "free_ram_mb": 7680,
+        "hypervisor_hostname": "fake-mini",
+        "hypervisor_type": "fake",
+        "hypervisor_version": 1000,
+        "id": 1,
+        "local_gb": 1028,
+        "local_gb_used": 0,
+        "memory_mb": 8192,
+        "memory_mb_used": 512,
+        "running_vms": 0,
+        "service": {
+            "host": "043b3cacf6f34c90a7245151fc8ebcda",
+            "id": 2,
+            "disabled_reason": null
+        },
+        "vcpus": 1,
+        "vcpus_used": 0
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="X-OpenStack-Request-ID"
+                         style="header"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Returns a unique request ID that provides tracking for the
+      request. Provider must configure middleware to provide the request
+      ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                        
+                        <resource id="os-pci2"
+                path="/v2.1/{tenant_id}/os-hypervisors/{hypervisor_id}/os-pci">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="showHypervisorsPci">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show hypervisor with PCI statistics">
+               <para role="shortdesc">
+                Shows information for a specified hypervisor. Includes PCI
+                device statistics.
+            </para>
+            </wadl:doc>
+            <request> </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "hypervisor": {
+        "cpu_info": "{\"arch\": \"x86_64\", \"model\": \"Nehalem\", \"vendor\": \"Intel\", \"features\": [\"pge\", \"clflush\"], \"topology\": {\"cores\": 1, \"threads\": 1, \"sockets\": 4}}",
+        "current_workload": 0,
+        "disk_available_least": 0,
+        "host_ip": "1.1.1.1",
+        "state": "up",
+        "status": "enabled",
+        "free_disk_gb": 1028,
+        "free_ram_mb": 7680,
+        "hypervisor_hostname": "fake-mini",
+        "hypervisor_type": "fake",
+        "hypervisor_version": 1000,
+        "id": 1,
+        "local_gb": 1028,
+        "local_gb_used": 0,
+        "memory_mb": 8192,
+        "memory_mb_used": 512,
+        "os-pci:pci_stats": [
+            {
+                "count": 5,
+                "key1": "value1",
+                "keya": "valuea",
+                "product_id": "1520",
+                "vendor_id": "8086",
+                "numa_node": 1
+            }
+        ],
+        "running_vms": 0,
+        "service": {
+            "host": "043b3cacf6f34c90a7245151fc8ebcda",
+            "id": 2,
+            "disabled_reason": null
+        },
+        "vcpus": 1,
+        "vcpus_used": 0
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="X-OpenStack-Request-ID"
+                         style="header"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Returns a unique request ID that provides tracking for the
+      request. Provider must configure middleware to provide the request
+      ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                            
+                        
+                        
+                        
+                        <resource id="hypervisor_id2"
+                path="/v2.1/{tenant_id}/os-hypervisors/{hypervisor_id}/{hypervisor_id}">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <param name="hypervisor_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The ID of the hypervisor.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="showhypervisordetails">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show hypervisor details">
+               <para role="shortdesc">Shows details for a specified
+                hypervisor.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "hypervisor": {
+        "cpu_info": "{\"arch\": \"x86_64\", \"model\": \"Nehalem\", \"vendor\": \"Intel\", \"features\": [\"pge\", \"clflush\"], \"topology\": {\"cores\": 1, \"threads\": 1, \"sockets\": 4}}",
+        "state": "up",
+        "status": "enabled",
+        "current_workload": 0,
+        "disk_available_least": 0,
+        "host_ip": "1.1.1.1",
+        "free_disk_gb": 1028,
+        "free_ram_mb": 7680,
+        "hypervisor_hostname": "fake-mini",
+        "hypervisor_type": "fake",
+        "hypervisor_version": 1000,
+        "id": 1,
+        "local_gb": 1028,
+        "local_gb_used": 0,
+        "memory_mb": 8192,
+        "memory_mb_used": 512,
+        "running_vms": 0,
+        "service": {
+            "host": "043b3cacf6f34c90a7245151fc8ebcda",
+            "id": 2,
+            "disabled_reason": null
+        },
+        "vcpus": 1,
+        "vcpus_used": 0
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="X-OpenStack-Request-ID"
+                         style="header"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Returns a unique request ID that provides tracking for the
+      request. Provider must configure middleware to provide the request
+      ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                            
+
+                            
+                            
+                            <resource id="uptime"
+                path="/v2.1/{tenant_id}/os-hypervisors/{hypervisor_id}/{hypervisor_id}/uptime">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <param name="hypervisor_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The ID of the hypervisor.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="showhypervisoruptime">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show hypervisor uptime">
+               <para role="shortdesc">Shows the uptime for a specified
+                hypervisor.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "hypervisor": {
+        "hypervisor_hostname": "fake-mini",
+        "id": 1,
+        "state": "up",
+        "status": "enabled",
+        "uptime": " 08:32:11 up 93 days, 18:25, 12 users, load average: 0.20, 0.12, 0.14"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="X-OpenStack-Request-ID"
+                         style="header"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Returns a unique request ID that provides tracking for the
+      request. Provider must configure middleware to provide the request
+      ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                                
+                            
+                        
+                    
+                
+    </resources>
+    <!-- *******************************************************-->
+    <!--        OS Hypervisors                        -->
+    <!--*******************************************************-->
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="listhypervisors">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                 
+            <param name="X-OpenStack-Request-ID"
+                   style="header"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="showhypervisordetails">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                 
+            <param name="X-OpenStack-Request-ID"
+                   style="header"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="showhypervisorstatistics">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                 
+            <param name="X-OpenStack-Request-ID"
+                   style="header"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="showhypervisoruptime">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                 
+            <param name="X-OpenStack-Request-ID"
+                   style="header"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="listHypervisorsPciDetails">
+        
+        <request> </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                 
+            <param name="X-OpenStack-Request-ID"
+                   style="header"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="showHypervisorsPci">
+        
+        <request> </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                 
+            <param name="X-OpenStack-Request-ID"
+                   style="header"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+</wadl:application>

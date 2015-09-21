@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2013-2015 OpenStack Foundation, All Rights Reserved -->
+<!--*******************************************************-->
+<!--         Import Common XML Entities                    -->
+<!--                                                       -->
+<!--     You can resolve the entities with xmllint          -->
+<!--                                                       -->
+<!--        xmllint -noent os-routers.wadl                 -->
+<!--*******************************************************-->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <!--*******************************************************-->
+   <!--             All Resources                             -->
+   <!--*******************************************************-->
+   <resources xmlns:csapi="http://docs.openstack.org/compute/api/v1.1"
+              xmlns:linkend="http://www.w3.org/1999/linkend"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://neutron.example.com/"
+              xml:id="os-routers-v2">
+      <resource path="/v2.0/routers/{router_id}" id="router_id">
+         <param name="router_id" style="template" type="csapi:UUID">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Port ID">The UUID
+                            for the router of interest to
+                            you.</wadl:doc>
+               </param>
+         <method name="PUT" rax:id="updateRouter">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Update router">
+               <para role="shortdesc">Configures extra routes on a specified router.</para>
+               <para>
+            The next hop IP address must be a part of one of the subnets to which
+                 the router interfaces are connected. Otherwise, the server
+                 responds with the
+            <code>400 Bad Request</code>
+            error code.
+         </para>
+               <para>
+            When a validation error is detected, such as a format
+                error of IP address or CIDR, the server responds with the
+            <code>400 Bad Request</code>
+            error code.
+         </para>
+               <para>
+            When Networking receives a request to delete the router
+                interface for subnets that are used by one or more routes, it
+                responds with a
+            <code>409 Conflict</code>
+            error code.
+         </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "router": {
+        "routes": [
+            {
+                "nexthop": "10.1.0.10",
+                "destination": "40.0.1.0/24"
+            }
+        ]
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param required="false" name="routes" style="plain" type="xsd:dict">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>List of dictionary pairs in this format:</para>
+                        <programlisting>[
+  {
+    "nexthop":"IPADDRESS",
+    "destination":"CIDR"
+  }
+]</programlisting>
+                     </wadl:doc>
+                  </param>
+                  <param required="false"
+                         name="next_hop"
+                         style="plain"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The IP address of the next hop.</para>
+                     </wadl:doc>
+                  </param>
+                  <param required="false"
+                         name="destination"
+                         style="plain"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The destination CIDR.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "router": {
+        "status": "ACTIVE",
+        "external_gateway_info": {
+            "network_id": "5c26e0bb-a9a9-429c-9703-5c417a221096",
+            "external_fixed_ips": [
+                {
+                    "subnet_id": "255.255.255.0",
+                    "ip": "192.168.10.2"
+                }
+            ]
+        },
+        "name": "router1",
+        "admin_state_up": true,
+        "tenant_id": "936fa220b2c24a87af51026439af7a3e",
+        "routes": [
+            {
+                "nexthop": "10.1.0.10",
+                "destination": "40.0.1.0/24"
+            }
+        ],
+        "id": "babc8173-46f6-4b6f-8b95-38c1683a4e22"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response> 
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="409">
+               <representation mediaType="application/xml" element="csapi:conflict"/>
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+      </resource>
+               
+               
+            
+   </resources>
+   <!--*******************************************************-->
+   <!--               All Methods                             -->
+   <!--*******************************************************-->
+   <method xmlns:csapi="http://docs.openstack.org/compute/api/v1.1"
+           xmlns:linkend="http://www.w3.org/1999/linkend"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="PUT"
+           id="updateRouter">
+      
+      <request>
+         <representation mediaType="application/json">
+            
+            
+            <param required="false" name="routes" style="plain" type="xsd:dict">
+    
+</param>
+            <param required="false"
+                   name="next_hop"
+                   style="plain"
+                   type="xsd:string">
+    
+</param>
+            <param required="false"
+                   name="destination"
+                   style="plain"
+                   type="xsd:string">
+    
+</param>
+         </representation>
+      </request>
+      <response status="200">
+         <representation mediaType="application/json">
+            
+         </representation>
+        </response> 
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="404">
+            <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+            <representation mediaType="application/json"/>
+        </response> 
+      <response status="409">
+         <representation mediaType="application/xml" element="csapi:conflict"/>
+         <representation mediaType="application/json"/>
+      </response>
+    </method>
+</wadl:application>

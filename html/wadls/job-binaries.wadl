@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2015 OpenStack Foundation, All Rights Reserved -->
+<!--*******************************************************-->
+<!--         Import Common XML Entities                    -->
+<!--                                                       -->
+<!--     You can resolve the entities with xmllint         -->
+<!--                                                       -->
+<!--        xmllint -noent job-binaries.wadl               -->
+<!--*******************************************************-->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="job-binaries-v1.1">
+        <resource id="job-binaries" path="/v1.1/{tenant_id}/job-binaries">
+         <param name="tenant_id" style="template" type="capi:UUID">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The unique identifier of the tenant or account.</para>
+                    </wadl:doc>
+                </param>
+         <method name="GET" rax:id="job-binaries-list">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List job binaries">
+               <para role="shortdesc">Lists the available job binaries.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "binaries": [
+        {
+            "description": "",
+            "url": "internal-db://d2498cbf-4589-484a-a814-81436c18beb3",
+            "tenant_id": "11587919cc534bcbb1027a161c82cf58",
+            "created_at": "2013-10-15 12:36:59.375060",
+            "updated_at": null,
+            "id": "84248975-3c82-4206-a58d-6e7fb3a563fd",
+            "name": "example.pig"
+        },
+        {
+            "description": "",
+            "url": "internal-db://22f1d87a-23c8-483e-a0dd-cb4a16dde5f9",
+            "tenant_id": "11587919cc534bcbb1027a161c82cf58",
+            "created_at": "2013-10-15 12:43:52.265899",
+            "updated_at": null,
+            "id": "508fc62d-1d58-4412-b603-bdab307bb926",
+            "name": "udf.jar"
+        },
+        {
+            "description": "",
+            "url": "swift://container/jar-example.jar",
+            "tenant_id": "11587919cc534bcbb1027a161c82cf58",
+            "created_at": "2013-10-15 14:25:04.970513",
+            "updated_at": null,
+            "id": "a716a9cd-9add-4b12-b1b6-cdb71aaef350",
+            "name": "jar-example.jar"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+         <method name="POST" rax:id="job-binaries-create">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Create job binary">
+               <para role="shortdesc">Creates a job binary.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "url": "swift://container/jar-example.jar",
+    "name": "jar-example.jar",
+    "description": "This is a job binary",
+    "extra": {
+        "password": "swordfish",
+        "user": "admin"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </request>
+            <response status="202">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "job_binary": {
+        "description": "This is a job binary",
+        "url": "swift://container/jar-example.jar",
+        "tenant_id": "11587919cc534bcbb1027a161c82cf58",
+        "created_at": "2013-10-15 14:49:20.106452",
+        "id": "07f86352-ee8a-4b08-b737-d705ded5ff9c",
+        "name": "jar-example.jar"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                    
+                    
+                    <resource id="job-binaries-id"
+                path="/v1.1/{tenant_id}/job-binaries/{job_binaries_id}">
+         <param name="tenant_id" style="template" type="capi:UUID">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The unique identifier of the tenant or account.</para>
+                    </wadl:doc>
+                </param>
+         <param name="job_binaries_id" style="template" type="capi:UUID">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                                <para>The ID of the job binary.</para>
+                            </wadl:doc>
+                        </param>
+         <method name="GET" rax:id="job-binaries-show">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show job binary details">
+               <para role="shortdesc">Shows details for a specified
+              job binary.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "job_binary": {
+        "description": "an example jar file",
+        "url": "swift://container/jar-example.jar",
+        "tenant_id": "11587919cc534bcbb1027a161c82cf58",
+        "created_at": "2013-10-15 14:25:04.970513",
+        "updated_at": null,
+        "id": "a716a9cd-9add-4b12-b1b6-cdb71aaef350",
+        "name": "jar-example.jar"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+         <method name="DELETE" rax:id="job-binaries-delete">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Delete job binary">
+               <para role="shortdesc">Deletes a specified job binary.</para>
+            </wadl:doc>
+            <response status="204"/>
+         </method>
+      </resource>
+                        
+                        
+                        
+                        <resource id="job-binaries-id-data"
+                path="/v1.1/{tenant_id}/job-binaries/{job_binaries_id}/data">
+         <param name="tenant_id" style="template" type="capi:UUID">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The unique identifier of the tenant or account.</para>
+                    </wadl:doc>
+                </param>
+         <param name="job_binaries_id" style="template" type="capi:UUID">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                                <para>The ID of the job binary.</para>
+                            </wadl:doc>
+                        </param>
+         <method name="GET" rax:id="job-binaries-data">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Get job binary data">
+               <para role="shortdesc">Gets data for a specified job
+                binary.</para>
+               <para>The response body shows the job binary raw data and
+                    the response headers show the data length.</para>
+               <para>Example response:</para>
+               <para>
+                  <programlisting>HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Length: 161
+Content-Type: text/html; charset=utf-8
+Date: Sat, 28 Mar 2015 02:42:48 GMT
+
+A = load '$INPUT' using PigStorage(':') as (fruit: chararray);
+B = foreach A generate com.hadoopbook.pig.Trim(fruit);
+store B into '$OUTPUT' USING PigStorage();</programlisting>
+               </para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <param name="Content-Length"
+                         style="header"
+                         type="xsd:string"
+                         required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The length of the returned data in bytes.</para>
+                    </wadl:doc>
+                  </param>
+                  <!-- the following element is present to suppress the output
+                     about this method not returning a body -->
+               </representation>
+            </response>
+         </method>
+      </resource>
+                          
+                        
+                    
+                
+    </resources>
+    <!-- *******************************************************-->
+    <!--             Job binary actions                         -->
+    <!-- *******************************************************-->
+    <method xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="job-binaries-list">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="job-binaries-create">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            </representation>
+        </request>
+        <response status="202">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="job-binaries-show">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="DELETE"
+           id="job-binaries-delete">
+        
+        <response status="204"/>
+    </method>
+    <method xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="job-binaries-data">
+        
+        <response status="200">
+             <representation mediaType="application/json">
+                <param name="Content-Length"
+                   style="header"
+                   type="xsd:string"
+                   required="true">
+                    
+                </param>
+                <!-- the following element is present to suppress the output
+                     about this method not returning a body -->
+            </representation>
+        </response>
+    </method>
+</wadl:application>

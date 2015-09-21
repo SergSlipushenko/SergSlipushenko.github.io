@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+              xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="server-metadata-v2.1">
+        <resource id="server_metadata"
+                path="/v2.1/{tenant_id}/servers/{server_id}/metadata">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <param name="server_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The UUID for the server.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="listServerMetadata">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List all metadata">
+               <para role="shortdesc">
+                Lists all metadata for a specified server.
+            </para>
+               <para>
+                Policy defaults enable only users with the administrative role
+                or the owner of the server to perform this operation. Cloud
+                providers can change these permissions through the
+                <code>policy.json</code> file.
+            </para>
+            </wadl:doc>
+            <response status="200 203">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "metadata": {
+        "foo": "Foo Value"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="X-OpenStack-Request-ID"
+                         style="header"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Returns a unique request ID that provides tracking for the
+      request. Provider must configure middleware to provide the request
+      ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="PUT" rax:id="createServerMetadata">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Create or replace metadata items">
+               <para role="shortdesc">
+                Creates or replaces one or more specified metadata items for a specified server.
+            </para>
+               <para>
+                Creates any metadata items that do not already exist in the
+                server. Removes and completely replaces any metadata items
+                that already exist in the server with the metadata items in
+                the request.
+            </para>
+               <para>
+                If this operation exceeds the quota for metadata items, the API throws an <code>overLimit (413)</code>
+                fault.
+            </para>
+               <para>
+                Policy defaults enable only users with the administrative role
+                or the owner of the server to perform this operation. Cloud
+                providers can change these permissions through the
+                <code>policy.json</code> file.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "metadata": {
+        "foo": "Foo Value"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "metadata": {
+        "foo": "Foo Value"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+         <method name="POST" rax:id="updateServerMetadata">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Update metadata items">
+               <para role="shortdesc">
+                Updates one or more metadata items for a specified
+                server.
+            </para>
+               <para>
+                Replaces metadata items that match the specified keys. Does
+                not modify items that are not specified in the request.
+            </para>
+               <para>
+                If this operation exceeds the quota for metadata items, the
+                API throws an <code>overLimit (413)</code> fault.
+            </para>
+               <para>
+                Policy defaults enable only users with the administrative role
+                or the owner of the server to perform this operation. Cloud
+                providers can change these permissions through the
+                <code>policy.json</code> file.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "metadata": {
+        "foo": "Foo Value"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "metadata": {
+        "foo": "Foo Value"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+      </resource>
+      <resource id="ServerMetadataKey"
+                path="/v2.1/{tenant_id}/servers/{server_id}/metadata/{key}">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <param name="server_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The UUID for the server.</para>
+            </wadl:doc>
+         </param>
+         <param name="key" style="template" type="xsd:string">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The metadata key.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="getServerMetadataItem">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show metadata item details">
+               <para role="shortdesc">
+                Shows details for a specified metadata item, by key, for a
+                specified server.
+            </para>
+               <para>
+                Policy defaults enable only users with the administrative role
+                or the owner of the server to perform this operation. Cloud
+                providers can change these permissions through the
+                <code>policy.json</code> file.
+            </para>
+            </wadl:doc>
+            <response status="200 203">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "meta": {
+        "foo": "Foo Value"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="X-OpenStack-Request-ID"
+                         style="header"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Returns a unique request ID that provides tracking for the
+      request. Provider must configure middleware to provide the request
+      ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="PUT" rax:id="setServerMetadataItem">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Create or update metadata item">
+               <para role="shortdesc">
+                Creates or replaces a specified metadata item, by key, for a specified server.
+            </para>
+               <para>
+                Creates a metadata item that does not already exist in the
+                server. Removes and completely replaces a metadata item
+                that already exists in the server with the metadata item in
+                the request.
+            </para>
+               <para>
+                If this operation exceeds the quota for metadata items, the API throws an <code>overLimit (413)</code>
+                fault.
+            </para>
+               <para>
+                Policy defaults enable only users with the administrative role
+                or the owner of the server to perform this operation. Cloud
+                providers can change these permissions through the
+                <code>policy.json</code> file.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "meta": {
+        "foo": "Bar Value"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "meta": {
+        "foo": "Foo Value"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+         <method name="DELETE" rax:id="deleteServerMetadataItem">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Delete metadata item">
+               <para role="shortdesc">
+                Deletes a specified metadata item, by key, from a specified server.
+            </para>
+               <para>
+                Policy defaults enable only users with the administrative role
+                or the owner of the server to perform this operation. Cloud
+                providers can change these permissions through the
+                <code>policy.json</code> file.
+            </para>
+            </wadl:doc>
+            <response status="204"/>
+         </method>
+      </resource>
+                                
+
+                                
+                                
+                                
+                            
+    </resources>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="listServerMetadata">
+        
+        <response status="200 203">
+            <representation mediaType="application/json">
+                 
+            <param name="X-OpenStack-Request-ID"
+                   style="header"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="updateServerMetadata">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="PUT"
+           id="createServerMetadata">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="getServerMetadataItem">
+        
+        <response status="200 203">
+            <representation mediaType="application/json">
+                 
+            <param name="X-OpenStack-Request-ID"
+                   style="header"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="PUT"
+           id="setServerMetadataItem">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="DELETE"
+           id="deleteServerMetadataItem">
+        
+        <response status="204"/>
+    </method>
+</wadl:application>

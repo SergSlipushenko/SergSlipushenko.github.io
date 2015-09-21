@@ -1,0 +1,148 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+   <head>
+      <meta content="text/html; charset=UTF-8" http-equiv="content-type"></meta>
+      <meta charset="UTF-8"></meta>
+      <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"></meta>
+      <meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>
+      <title>OpenStack API Documentation</title>
+      <link href="apiref/css/bootstrap.min.css" rel="stylesheet"></link>
+      <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+      <link href="apiref/css/style.css" rel="stylesheet"></link>
+      <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+      <link href="apiref/css/bootstrap.min.css" rel="stylesheet"></link>
+   </head>
+   <body>
+      <div class="navbar navbar-default" role="navigation">
+         <div class="container">
+            <div class="navbar-header"><button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="/">Open Stack</a></div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+               <ul class="nav navbar-nav">
+                  <li><a href="http://www.openstack.org" title="Go to the Home page">Home</a></li>
+                  <li><a href="http://www.openstack.org/projects" title="Go to the OpenStack Projects page">Projects</a></li>
+                  <li><a href="http://www.openstack.org/user-stories" title="Go to the OpenStack user stories page">User Stories</a></li>
+                  <li><a href="http://www.openstack.org/community" title="Go to the Community page">Community</a></li>
+                  <li><a href="http://www.openstack.org/blog" title="Go to the OpenStack Blog">Blog</a></li>
+                  <li><a href="http://wiki.openstack.org/" title="Go to the OpenStack Wiki">Wiki</a></li>
+                  <li class="active"><a href="http://docs.openstack.org/" title="Go to OpenStack Documentation">Documentation</a></li>
+                  <li><a alt="Download a pdf of this document" class="pdficon" href="http://api.openstack.org/api-ref-guides/bk-api-ref-share-v1.pdf" onclick="_gaq.push(['_trackEvent', 'Header', 'pdfDownload', 'click', 1]);" title="Open the PDF for this page">&nbsp;&nbsp;&nbsp;<img src="apiref/images/pdf.png"></img></a></li>
+               </ul>
+            </div>
+         </div>
+      </div>
+      <div class="container">
+         <div class="row">
+            <div class="col-md-3">
+               <div class="api-sidebar" data-offset-bottom="0" data-offset-top="80" data-spy="affix">
+                  <ul class="nav api-sidenav">
+                     <li><a class="smallcapped" href="#share-api-v1">Shared&nbsp;File&nbsp;Systems&nbsp;API&nbsp;v1&nbsp;(SUPPORTED)</a></li>
+                     <li class="divider"></li>
+                     <ul class="nav active">
+                        <li><a href="api-ref-blockstorage-v2.html">
+                              Block
+                              Storage API v2 (CURRENT)</a></li>
+                        <li><a href="api-ref-blockstorage-v1.html">
+                              Block
+                              Storage API v1 (DEPRECATED)</a></li>
+                        <li><a href="api-ref-compute-v2.1.html">
+                              Compute API
+                              v2.1 (CURRENT)</a></li>
+                        <li><a href="api-ref-compute-v2.html">
+                              Compute API
+                              v2 (SUPPORTED)</a></li>
+                        <li><a href="api-ref-compute-v2-ext.html">
+                              Compute
+                              API v2 extensions (SUPPORTED)</a></li>
+                        <li><a href="api-ref-data-processing-v1.1.html">Data
+                              Processing v1.1 (CURRENT)</a></li>
+                        <li><a href="api-ref-database-v1.html">Database
+                              Service API v1.0 (CURRENT)</a></li>
+                        <li><a href="api-ref-identity-v3.html">Identity API
+                              v3 (CURRENT)</a></li>
+                        <li><a href="api-ref-identity-v3-ext.html">Identity API
+                              v3 extensions (CURRENT)</a></li>
+                        <li><a href="api-ref-identity-v2.html">Identity API
+                              v2.0 (SUPPORTED)</a></li>
+                        <li><a href="api-ref-identity-admin-v2.html">Identity admin API
+                              v2.0 (SUPPORTED)</a></li>
+                        <li><a href="api-ref-identity-v2-ext.html">Identity API
+                              v2.0 extensions (SUPPORTED)</a></li>
+                        <li><a href="api-ref-image-v2.html">Image service
+                              API v2 (CURRENT)</a></li>
+                        <li><a href="api-ref-image-v1.html">Image service
+                              API v1 (SUPPORTED)</a></li>
+                        <li><a href="api-ref-networking-v2.html">Networking
+                              API v2.0 (CURRENT)</a></li>
+                        <li><a href="api-ref-networking-v2-ext.html">Networking
+                              API v2.0 extensions (CURRENT)</a></li>
+                        <li><a href="api-ref-objectstorage-v1.html">Object
+                              Storage API v1 (SUPPORTED)</a></li>
+                        <li><a href="api-ref-orchestration-v1.html">Orchestration API v1 (CURRENT)</a></li>
+                        <li><a href="api-ref-share-v2.html">Shared File Systems API v2 (CURRENT)</a></li>
+                        <li><a href="api-ref-share-v1.html">Shared File Systems API v1 (SUPPORTED)</a></li>
+                        <li><a href="api-ref-telemetry-v2.html">Telemetry
+                              API v2 (CURRENT)</a></li>
+                     </ul>
+                  </ul>
+                  <div class="row">
+                     <div class="col-md-7"><label class="sr-only" for="search-box">Search
+                           on this page</label><input class="form-control" id="search-box" placeholder="Search this page" type="text"></input></div>
+                     <div class="col-md-5"><button class="btn btn-default" id="search-btn">Search</button></div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-9 api-documentation">
+               
+               
+               <div id="share-api-v1">
+                  <div class="subhead">
+                     <h2>Shared File Systems API v1 (SUPPORTED)<a class="headerlink" href="#share-api-v1" title="Permalink to this headline"><span class="glyphicon glyphicon-link"></span></a></h2>
+                  </div>
+                  
+                  
+                  <p>
+                     Provides coordinated access to shared or distributed file systems.
+                     
+                  </p>
+                  
+                  <p>
+                     The Shared File Systems API v1 is functionally identical to the <a href="api-ref-share-v2.html">Shared File Systems
+                        API v2.0</a>. Subsequent API v2 micro-versions, such as v2.1, differ
+                     from API v1.0.
+                     
+                  </p>
+                  
+                  <p>
+                     Starting with API v2.0, the API uses Compute-style micro-versions.
+                     
+                  </p>
+                  
+               </div>
+               
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-9" id="footer">
+               <p>The OpenStack project is provided under the
+                  Apache 2.0 license.
+               </p>
+            </div>
+         </div>
+      </div><script src="apiref/js/jquery-1.10.2.min.js" type="text/javascript"></script><script src="apiref/js/bootstrap.min.js" type="text/javascript"></script><script src="apiref/js/api-site.js" type="text/javascript"></script><script type="text/javascript">
+                    var _gaq = _gaq || [];
+                    _gaq.push(['_setAccount', 'UA-17511903-1']);
+                    _gaq.push(['_setDomainName', '.openstack.org']);
+                    _gaq.push(['_trackPageview']);
+                    (function () {
+                    var ga = document.createElement('script');
+                    ga.type = 'text/javascript';
+                    ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(ga, s);
+                    })();
+                  </script></body>
+</html>

@@ -1,0 +1,605 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2012-2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns:db="http://docbook.org/ns/docbook"
+              xmlns:common="http://docs.openstack.org/common/api/v1.0"
+              xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-used-limits-for-admins-v2">
+        <resource id="Limits" path="/v2/{tenant_id}/limits{tenant_id}">
+         <param name="tenant_id" style="template" type="xsd:string">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Tenant ID">
+               <para>The ID
+                            for the tenant or account in a
+                            multi-tenancy cloud.</para>
+            </wadl:doc>
+                </param>
+         <param name="tenant_id" style="template" type="String">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Tenant ID">
+               <para>The ID for the tenant for
+                                   which an administrator wants to get
+                                   quota information. Specify the
+                                   customer tenant ID in the URI as
+                                   <code>?tenant_id={tenant_id}</code>.</para>
+            </wadl:doc>
+                        </param>
+         <method name="GET" rax:id="getCustomerLimits">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      title="Get customer limits"
+                      xml:lang="EN">
+               <para role="shortdesc">Enables administrators to get
+                absolute and rate limit information, including
+                information about currently used absolute limits, for
+                a specified customer tenant ID.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Used limits for admins: JSON response">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "limits": {
+        "absolute": {
+            "maxImageMeta": 128,
+            "maxPersonality": 5,
+            "maxPersonalitySize": 10240,
+            "maxSecurityGroupRules": 20,
+            "maxSecurityGroups": 10,
+            "maxServerMeta": 128,
+            "maxTotalCores": 20,
+            "maxTotalFloatingIps": 10,
+            "maxTotalInstances": 10,
+            "maxTotalKeypairs": 100,
+            "maxTotalRAMSize": 51200,
+            "totalCoresUsed": 0,
+            "totalInstancesUsed": 0,
+            "totalRAMUsed": 0,
+            "totalSecurityGroupsUsed": 0,
+            "totalFloatingIpsUsed": 0
+        },
+        "rate": [
+            {
+                "limit": [
+                    {
+                        "next-available": "2012-11-27T17:24:52Z",
+                        "remaining": 120,
+                        "unit": "MINUTE",
+                        "value": 120,
+                        "verb": "POST"
+                    },
+                    {
+                        "next-available": "2012-11-27T17:24:52Z",
+                        "remaining": 120,
+                        "unit": "MINUTE",
+                        "value": 120,
+                        "verb": "PUT"
+                    },
+                    {
+                        "next-available": "2012-11-27T17:24:52Z",
+                        "remaining": 120,
+                        "unit": "MINUTE",
+                        "value": 120,
+                        "verb": "DELETE"
+                    }
+                ],
+                "regex": ".*",
+                "uri": "*"
+            },
+            {
+                "limit": [
+                    {
+                        "next-available": "2012-11-27T17:24:52Z",
+                        "remaining": 120,
+                        "unit": "MINUTE",
+                        "value": 120,
+                        "verb": "POST"
+                    }
+                ],
+                "regex": "^/servers",
+                "uri": "*/servers"
+            },
+            {
+                "limit": [
+                    {
+                        "next-available": "2012-11-27T17:24:52Z",
+                        "remaining": 120,
+                        "unit": "MINUTE",
+                        "value": 120,
+                        "verb": "GET"
+                    }
+                ],
+                "regex": ".*changes-since.*",
+                "uri": "*changes-since*"
+            },
+            {
+                "limit": [
+                    {
+                        "next-available": "2012-11-27T17:24:52Z",
+                        "remaining": 12,
+                        "unit": "MINUTE",
+                        "value": 12,
+                        "verb": "GET"
+                    }
+                ],
+                "regex": "^/os-fping",
+                "uri": "*/os-fping"
+            }
+        ]
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+               <representation mediaType="application/xml">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Used limits for admins: XML response">
+                    <xsdxt:code>
+                        <programlisting language="xml">&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;limits xmlns:os-used-limits="http://docs.openstack.org/compute/ext/used_limits/api/v1.1" xmlns:atom="http://www.w3.org/2005/Atom" xmlns="http://docs.openstack.org/common/api/v1.0"&gt;
+  &lt;rates&gt;
+    &lt;rate regex=".*" uri="*"&gt;
+      &lt;limit next-available="2012-11-27T17:24:53Z" unit="MINUTE" verb="POST" remaining="120" value="120"/&gt;
+      &lt;limit next-available="2012-11-27T17:24:53Z" unit="MINUTE" verb="PUT" remaining="120" value="120"/&gt;
+      &lt;limit next-available="2012-11-27T17:24:53Z" unit="MINUTE" verb="DELETE" remaining="120" value="120"/&gt;
+    &lt;/rate&gt;
+    &lt;rate regex="^/servers" uri="*/servers"&gt;
+      &lt;limit next-available="2012-11-27T17:24:53Z" unit="MINUTE" verb="POST" remaining="120" value="120"/&gt;
+    &lt;/rate&gt;
+    &lt;rate regex=".*changes-since.*" uri="*changes-since*"&gt;
+      &lt;limit next-available="2012-11-27T17:24:53Z" unit="MINUTE" verb="GET" remaining="120" value="120"/&gt;
+    &lt;/rate&gt;
+    &lt;rate regex="^/os-fping" uri="*/os-fping"&gt;
+      &lt;limit next-available="2012-11-27T17:24:53Z" unit="MINUTE" verb="GET" remaining="12" value="12"/&gt;
+    &lt;/rate&gt;
+  &lt;/rates&gt;
+  &lt;absolute&gt;
+    &lt;limit name="maxServerMeta" value="128"/&gt;
+    &lt;limit name="maxPersonality" value="5"/&gt;
+    &lt;limit name="maxImageMeta" value="128"/&gt;
+    &lt;limit name="maxPersonalitySize" value="10240"/&gt;
+    &lt;limit name="maxSecurityGroupRules" value="20"/&gt;
+    &lt;limit name="maxTotalKeypairs" value="100"/&gt;
+    &lt;limit name="totalRAMUsed" value="0"/&gt;
+    &lt;limit name="totalInstancesUsed" value="0"/&gt;
+    &lt;limit name="maxSecurityGroups" value="10"/&gt;
+    &lt;limit name="totalFloatingIpsUsed" value="0"/&gt;
+    &lt;limit name="maxTotalCores" value="20"/&gt;
+    &lt;limit name="totalSecurityGroupsUsed" value="0"/&gt;
+    &lt;limit name="maxTotalFloatingIps" value="10"/&gt;
+    &lt;limit name="maxTotalInstances" value="10"/&gt;
+    &lt;limit name="totalCoresUsed" value="0"/&gt;
+    &lt;limit name="maxTotalRAMSize" value="51200"/&gt;
+  &lt;/absolute&gt;
+&lt;/limits&gt;
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                
+                  <param name="maxImageMeta"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The maximum number of key-value pairs per image for the
+            project.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="maxPersonality"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The maximum number of file path and content pairs that can be
+            supplied on server build and rebuild for the project.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="maxPersonalitySize"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The maximum size, in bytes, for each personality file that is
+            guaranteed to apply to all images in the project. Providers can
+            set additional per-image personality limits.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="maxSecurityGroupRules"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The maximum number of security group rules per security group for
+            the project.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="maxSecurityGroups"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The maximum number of security groups per server for the project.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="maxServerMeta"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The maximum number of metadata key-value pairs that can be supplied
+            per server for the project.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="maxTotalCores"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The maximum number of cores for the project.</para>
+                     </wadl:doc>
+                  </param>
+                  <param name="maxTotalFloatingIps"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The maximum number of floating IP addresses for the project.
+        </para>
+                        <para>
+            These IPs must be allocated from the central pool before you can
+            use them. To allocate a floating IP to a project, see <link xlink:href="http://docs.openstack.org/user-guide/cli_manage_ip_addresses.html#associate-floating-ip-addresses">Associate
+            floating IP addresses</link>.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="maxTotalInstances"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The maximum number of servers at any one time for the project.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="maxTotalKeypairs"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The maximum number of key pairs per server for the project.</para>
+                     </wadl:doc>
+                  </param>
+                  <param name="maxTotalRAMSize"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The maximum total amount of RAM, in MB, for all servers at any one
+            time for the project.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="maxServerGroups"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The maximum number of server groups per server for the project.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="maxServerGroupMembers"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The maximum number of server group members per server group for the project.
+        </para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="totalCoresUsed"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            Total cores used.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="totalInstancesUsed"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            Total instances used.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="totalRAMUsed"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            Total RAM, in MB, used for all servers at any one
+            time.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="totalSecurityGroupsUsed"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            Total security groups used.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="totalCoresUsed"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            Total cores used.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="totalFloatingIpsUsed"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            Total floating IP addresses used.
+        </para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="rate" style="plain" required="true" type="xsd:dict">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            Current rate limits.
+        </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="413">
+               <representation mediaType="application/xml" element="csapi:overLimit"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+      </resource>
+                        
+                        
+                
+    </resources>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="getCustomerLimits">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+            <representation mediaType="application/xml">
+                
+                
+            <param name="maxImageMeta"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="maxPersonality"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="maxPersonalitySize"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="maxSecurityGroupRules"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="maxSecurityGroups"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="maxServerMeta"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="maxTotalCores"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="maxTotalFloatingIps"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="maxTotalInstances"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="maxTotalKeypairs"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="maxTotalRAMSize"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="maxServerGroups"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="maxServerGroupMembers"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param> 
+            <param name="totalCoresUsed"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="totalInstancesUsed"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="totalRAMUsed"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="totalSecurityGroupsUsed"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="totalCoresUsed"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="totalFloatingIpsUsed"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param> 
+            <param name="rate" style="plain" required="true" type="xsd:dict">
+    
+</param>
+            </representation>
+        </response> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="413">
+         <representation mediaType="application/xml" element="csapi:overLimit"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response>
+    </method>
+</wadl:application>

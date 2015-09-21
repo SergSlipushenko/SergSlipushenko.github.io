@@ -1,0 +1,952 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2014-2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <resources xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+              xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-security-groups-v2.1">
+      <resource path="/v2.1/{tenant_id}/os-security-groups" id="os-security-groups2">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="listSecGroups">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List security groups">
+               <para role="shortdesc">Lists security groups.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="List security groups: JSON response">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "security_groups": [
+        {
+            "description": "default",
+            "id": "3fb26eb3-581b-4420-9963-b0879a026506",
+            "name": "default",
+            "rules": [],
+            "tenant_id": "openstack"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="security_groups"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security groups object">
+                        <para>Security groups object.</para>
+                     </wadl:doc>
+                  </param>
+            
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="description"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group description">
+                        <para>Security group description.</para>
+                     </wadl:doc>
+                  </param>
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="id"
+                         style="plain"
+                         type="csapi:UUID"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group ID">
+                        <para>The security group ID.</para>
+                     </wadl:doc>
+                  </param>
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="name"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group name">
+                        <para>The security group name.</para>
+                     </wadl:doc>
+                  </param>
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="rules"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group rules object">
+                        <para>A security group rules object.</para>
+                     </wadl:doc>
+                  </param>
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="tenant_id"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Tenant ID">
+                        <para>The tenant.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="POST" rax:id="createSecGroup">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Create security group">
+               <para role="shortdesc">Creates a security group.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Create security group: JSON request">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "security_group": {
+        "name": "test",
+        "description": "test"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="security_group"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Add security group">
+                        <para>
+                     Specify the <code>security_group</code> action in the
+                     request body.
+                  </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="name" style="plain" type="xsd:string" required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group name">
+                        <para>The security group name.</para>
+                     </wadl:doc>
+                  </param>
+                  <param name="description"
+                         style="plain"
+                         type="xsd:string"
+                         required="false">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group description">
+                        <para>Security group description.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Create security group: JSON response">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "security_group": {
+        "description": "test",
+        "id": "de3ff110-46b2-4ace-bb76-a2e1ed741b95",
+        "name": "test",
+        "rules": [],
+        "tenant_id": "openstack"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="security_group"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group object">
+                        <para>Security group object.</para>
+                     </wadl:doc>
+                  </param>
+            
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="description"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group description">
+                        <para>Security group description.</para>
+                     </wadl:doc>
+                  </param>
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="id"
+                         style="plain"
+                         type="csapi:UUID"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group ID">
+                        <para>The security group ID.</para>
+                     </wadl:doc>
+                  </param>
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="name"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group name">
+                        <para>The security group name.</para>
+                     </wadl:doc>
+                  </param>
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="rules"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group rules object">
+                        <para>A security group rules object.</para>
+                     </wadl:doc>
+                  </param>
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="tenant_id"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Tenant ID">
+                        <para>The tenant.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+               
+               
+               <resource id="security_group_id"
+                path="/v2.1/{tenant_id}/os-security-groups/{security_group_id}">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <param name="security_group_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The ID of the security group.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="showSecGroup">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show security group information">
+               <para role="shortdesc">Shows information for a specified
+                security group.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Show security group: JSON response">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "security_group": {
+        "description": "default",
+        "id": "de3ff110-46b2-4ace-bb76-a2e1ed741b95",
+        "name": "default",
+        "rules": [],
+        "tenant_id": "openstack"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="security_group"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group object">
+                        <para>Security group object.</para>
+                     </wadl:doc>
+                  </param>
+            
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="description"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group description">
+                        <para>Security group description.</para>
+                     </wadl:doc>
+                  </param>
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="id"
+                         style="plain"
+                         type="csapi:UUID"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group ID">
+                        <para>The security group ID.</para>
+                     </wadl:doc>
+                  </param>
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="name"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group name">
+                        <para>The security group name.</para>
+                     </wadl:doc>
+                  </param>
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="rules"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group rules object">
+                        <para>A security group rules object.</para>
+                     </wadl:doc>
+                  </param>
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="tenant_id"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Tenant ID">
+                        <para>The tenant.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="PUT" rax:id="updateSecGroup">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Update security group">
+               <para role="shortdesc">
+            Updates a security group.
+         </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Update security group: JSON request">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "security_group": {
+        "name": "mysecgroup",
+        "description": "my security group"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="name" style="plain" type="xsd:string" required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group name">
+                        <para>
+                     The security group name.
+                  </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="description"
+                         style="plain"
+                         type="xsd:string"
+                         required="false">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group description">
+                        <para>
+                     Security group description.
+                  </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Update security group: JSON response">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "security_group": {
+        "rules": [],
+        "tenant_id": "a52cdb9cc7854a39a23d3af73a40899e",
+        "id": "01fbade5-b664-42f6-83ae-4e214f4263fa",
+        "name": "mysecgroup",
+        "description": "my security group"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="security_group"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group object">
+                        <para>Security group object.</para>
+                     </wadl:doc>
+                  </param>
+            
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="description"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group description">
+                        <para>Security group description.</para>
+                     </wadl:doc>
+                  </param>
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="id"
+                         style="plain"
+                         type="csapi:UUID"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group ID">
+                        <para>The security group ID.</para>
+                     </wadl:doc>
+                  </param>
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="name"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group name">
+                        <para>The security group name.</para>
+                     </wadl:doc>
+                  </param>
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="rules"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group rules object">
+                        <para>A security group rules object.</para>
+                     </wadl:doc>
+                  </param>
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="tenant_id"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Tenant ID">
+                        <para>The tenant.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="DELETE" rax:id="deleteSecGroup">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Delete security group">
+               <para role="shortdesc">Deletes a specified security
+                group.</para>
+            </wadl:doc>
+            <response status="202"/>
+         </method>
+      </resource>
+                  
+
+                  
+                  
+                  
+               
+           <resource path="/v2.1/{tenant_id}/servers/{server_id}/os-security-groups"
+                id="os-security-groups">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <param name="server_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The UUID for the server.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="listSecGroupsByServer">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List security groups by server">
+               <para role="shortdesc">Lists security groups for a
+                specified server.</para>
+            </wadl:doc>
+            <response status="200">
+         
+               <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                      name="security_groups"
+                      style="plain"
+                      type="xsd:string"
+                      required="true">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Security groups object">
+                     <para>Security groups object.</para>
+                  </wadl:doc>
+               </param>
+         
+               <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                      name="description"
+                      style="plain"
+                      type="xsd:string"
+                      required="true">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Security group description">
+                     <para>Security group description.</para>
+                  </wadl:doc>
+               </param>
+               <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                      name="id"
+                      style="plain"
+                      type="csapi:UUID"
+                      required="true">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Security group ID">
+                     <para>The security group ID.</para>
+                  </wadl:doc>
+               </param>
+               <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                      name="name"
+                      style="plain"
+                      type="xsd:string"
+                      required="true">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Security group name">
+                     <para>The security group name.</para>
+                  </wadl:doc>
+               </param>
+               <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                      name="rules"
+                      style="plain"
+                      type="xsd:string"
+                      required="true">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Security group rules object">
+                     <para>A security group rules object.</para>
+                  </wadl:doc>
+               </param>
+               <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                      name="tenant_id"
+                      style="plain"
+                      type="xsd:string"
+                      required="true">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Tenant ID">
+                     <para>The tenant.</para>
+                  </wadl:doc>
+               </param>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="List security groups by server: JSON response">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "security_groups": [
+        {
+            "description": "default",
+            "id": "3fb26eb3-581b-4420-9963-b0879a026506",
+            "name": "default",
+            "rules": [],
+            "tenant_id": "openstack"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                     
+                  
+   </resources>
+   <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="listSecGroups">
+      
+      <response status="200">
+         <representation mediaType="application/json">
+            
+            
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="security_groups"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+            
+         </param>
+            
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="description"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+            
+         </param>
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="id"
+                   style="plain"
+                   type="csapi:UUID"
+                   required="true">
+            
+         </param>
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="name"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+            
+         </param>
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="rules"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+            
+         </param>
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="tenant_id"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+            
+         </param>
+         </representation>
+      </response>
+   </method>
+   <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="listSecGroupsByServer">
+      
+      <response status="200">
+         
+         <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                name="security_groups"
+                style="plain"
+                type="xsd:string"
+                required="true">
+            
+         </param>
+         
+         <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                name="description"
+                style="plain"
+                type="xsd:string"
+                required="true">
+            
+         </param>
+         <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                name="id"
+                style="plain"
+                type="csapi:UUID"
+                required="true">
+            
+         </param>
+         <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                name="name"
+                style="plain"
+                type="xsd:string"
+                required="true">
+            
+         </param>
+         <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                name="rules"
+                style="plain"
+                type="xsd:string"
+                required="true">
+            
+         </param>
+         <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                name="tenant_id"
+                style="plain"
+                type="xsd:string"
+                required="true">
+            
+         </param>
+         <representation mediaType="application/json">
+            
+         </representation>
+      </response>
+   </method>
+   <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="showSecGroup">
+      
+      <response status="200">
+         <representation mediaType="application/json">
+            
+            
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="security_group"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+  
+</param>
+            
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="description"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+            
+         </param>
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="id"
+                   style="plain"
+                   type="csapi:UUID"
+                   required="true">
+            
+         </param>
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="name"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+            
+         </param>
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="rules"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+            
+         </param>
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="tenant_id"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+            
+         </param>
+         </representation>
+      </response>
+   </method>
+   <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="createSecGroup">
+      
+      <request>
+         <representation mediaType="application/json">
+            
+            <param name="security_group"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+               
+            </param>
+            <param name="name" style="plain" type="xsd:string" required="true">
+               
+            </param>
+            <param name="description"
+                   style="plain"
+                   type="xsd:string"
+                   required="false">
+               
+            </param>
+         </representation>
+      </request>
+      <response status="200">
+         <representation mediaType="application/json">
+            
+            
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="security_group"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+  
+</param>
+            
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="description"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+            
+         </param>
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="id"
+                   style="plain"
+                   type="csapi:UUID"
+                   required="true">
+            
+         </param>
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="name"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+            
+         </param>
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="rules"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+            
+         </param>
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="tenant_id"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+            
+         </param>
+         </representation>
+      </response>
+   </method>
+   <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="PUT"
+           id="updateSecGroup">
+      
+      <request>
+         <representation mediaType="application/json">
+            
+            <param name="name" style="plain" type="xsd:string" required="true">
+               
+            </param>
+            <param name="description"
+                   style="plain"
+                   type="xsd:string"
+                   required="false">
+               
+            </param>
+         </representation>
+      </request>
+      <response status="200">
+         <representation mediaType="application/json">
+            
+            
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="security_group"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+  
+</param>
+            
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="description"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+            
+         </param>
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="id"
+                   style="plain"
+                   type="csapi:UUID"
+                   required="true">
+            
+         </param>
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="name"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+            
+         </param>
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="rules"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+            
+         </param>
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="tenant_id"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+            
+         </param>
+         </representation>
+      </response>
+   </method>
+   <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="DELETE"
+           id="deleteSecGroup">
+      
+      <response status="202"/>
+   </method>
+</wadl:application>

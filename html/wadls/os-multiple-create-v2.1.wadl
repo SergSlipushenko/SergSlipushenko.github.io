@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2014 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+              xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+              xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-multiple-create-v2.1">
+        <resource id="servers" path="/v2.1/{tenant_id}/servers">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <method name="POST" rax:id="createServer">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Create multiple servers">
+               <para role="shortdesc">
+                Creates one or more servers with an optional reservation ID.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "server": {
+        "name": "new-server-test",
+        "imageRef": "http://openstack.example.com/openstack/images/70a599e0-31e7-49b7-b260-868f441e862b",
+        "flavorRef": "http://openstack.example.com/openstack/flavors/1",
+        "metadata": {
+            "My Server Name": "Apache1"
+        },
+        "min_count": "2",
+        "max_count": "3"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "server": {
+        "name": "new-server-test",
+        "imageRef": "http://openstack.example.com/openstack/images/70a599e0-31e7-49b7-b260-868f441e862b",
+        "flavorRef": "http://openstack.example.com/openstack/flavors/1",
+        "metadata": {
+            "My Server Name": "Apache1"
+        },
+        "return_reservation_id": "True",
+        "min_count": "2",
+        "max_count": "3"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </request>
+            <response status="202">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "server": {
+        "adminPass": "wfksH3GTTseP",
+        "id": "440cf918-3ee0-4143-b289-f63e1d2000e6",
+        "links": [
+            {
+                "href": "http://openstack.example.com/v2.1/servers/440cf918-3ee0-4143-b289-f63e1d2000e6",
+                "rel": "self"
+            },
+            {
+                "href": "http://openstack.example.com/servers/440cf918-3ee0-4143-b289-f63e1d2000e6",
+                "rel": "bookmark"
+            }
+        ]
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "reservation_id": "r-3fhpjulh"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                    <!--  &serverCreateParameters; -->
+                    
+                    
+                    
+                    
+                
+    </resources>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="createServer">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            </representation>
+            <representation mediaType="application/json">
+                
+            </representation>
+        </request>
+        <response status="202">
+            <representation mediaType="application/json">
+                
+            </representation>
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+</wadl:application>

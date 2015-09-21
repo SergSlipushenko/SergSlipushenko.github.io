@@ -1,0 +1,1152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+  <title>OpenStack Docs: Scalable and highly available DHCP agents</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+<!-- CSS references are in the css.html template -->
+    <!-- Bootstrap Core CSS -->
+    <link href="_static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Pygments css -->
+    <link href="_static/css/native.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <!--<link href="font-awesome.min.css" rel="stylesheet">-->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+
+	<!-- BB: theme style sheets moved here so that theme rules aren't 
+	     overridden by awesome rules. Should they go after the scripts below? -->
+    <!-- Custom CSS -->
+    <link href="_static/css/combined.css" rel="stylesheet">
+    <link href="_static/css/styles.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Page-specific CSS -->
+  
+  
+ </head>
+ <body>
+    <!-- Header -->
+        <!-- Header Navigation -->
+        <nav class="navbar navbar-default inner" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+             <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+      <span class="sr-only">
+      Toggle navigation
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+      </button>
+                <div class="brand-wrapper">
+                    <a class="navbar-brand" href="/"></a>
+                </div>
+                <div class="search-icon show"><i class="fa fa-search"></i>
+Search</div>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling
+-->
+            <div class="collapse navbar-collapse"
+id="bs-example-navbar-collapse-1">
+                <div class="search-container tiny">
+
+
+
+  <div id="gcse">
+    <script type="text/javascript">
+      (function() {
+        var cx = '000108871792296872333:noj9nikm74i';
+        var gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = (document.location.protocol == 'https:' ? 'https:' :
+'http:') +
+            '//www.google.com/cse/cse.js?cx=' + cx;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+      })();
+    </script>
+    <gcse:search gname="standard"></gcse:search>
+  </div>
+
+
+                    <i class="fa fa-times close-search"></i>
+                </div>
+                    <ul class="nav navbar-nav navbar-main show">
+                        <li>
+
+
+
+  <div id="gcse-mobile">
+    <gcse:search gname="mobile"></gcse:search>
+  </div>
+
+
+                        </li>
+
+
+                        <li>
+
+                                <a href="http://www.openstack.org/software/" class="drop"
+id="dropdownMenuSoftware">Software <i class="fa fa-caret-down"></i></a>
+                                <ul class="dropdown-menu" role="menu"
+aria-labelledby="dropdownMenuSoftware">
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="http://www.openstack.org/software/">Overview</a></li>
+
+
+
+                                            <li role="presentation"
+class="divider"></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="http://www.openstack.org/software/openstack-compute/">Compute</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="http://www.openstack.org/software/openstack-storage/">Storage</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="http://www.openstack.org/software/openstack-networking/">Networking</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="http://www.openstack.org/software/openstack-dashboard/">Dashboard</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="http://www.openstack.org/software/openstack-shared-services/">Shared Services</a></li>
+
+
+
+                                            <li role="presentation"
+class="divider"></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="http://www.openstack.org/software/start/">Get
+Started</a></li>
+
+
+                                </ul>
+
+                        </li>
+
+                        <li>
+
+                                <a href="http://www.openstack.org/user-stories/" class="drop"
+id="dropdownMenuUsers">Users <i class="fa fa-caret-down"></i></a>
+                                <ul class="dropdown-menu" role="menu"
+aria-labelledby="dropdownMenuUsers">
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="http://www.openstack.org/user-stories/">Overview</a></li>
+
+
+
+                                            <li role="presentation"
+class="divider"></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="//superuser.openstack.org/">Superuser
+Magazine</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="http://www.openstack.org/enterprise/auto/">Featured:  Top 10
+Automaker</a></li>
+
+
+                                </ul>
+
+                        </li>
+
+                        <li>
+
+                                <a href="http://www.openstack.org/community/" class="drop"
+id="dropdownMenuCommunity">Community <i class="fa fa-caret-down"></i></a>
+                                <ul class="dropdown-menu" role="menu"
+aria-labelledby="dropdownMenuCommunity">
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="http://www.openstack.org/community/">Welcome! Start Here</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="//ask.openstack.org/">Ask A Technical
+Question</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//wiki.openstack.org/wiki/Main_Page">OpenStack Wiki</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//www.openstack.org/community/events/">Community Events</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//wiki.openstack.org/wiki/Getting_The_Code">Source Code</a></li>
+
+
+
+                                            <li role="presentation"
+class="divider"></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//www.openstack.org/foundation/companies/">Supporting Companies</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//www.openstack.org/community/jobs/">Jobs</a></li>
+
+
+
+                                            <li role="presentation"
+class="divider"></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="//www.openstack.org/join/">Join The
+Community</a></li>
+
+
+                                </ul>
+
+                        </li>
+
+                        <li>
+
+                                <a href="http://www.openstack.org/marketplace/">Marketplace</a>
+
+                        </li>
+
+                        <li>
+
+                                <a href="http://www.openstack.org/events/" class="drop"
+id="dropdownMenuEvents">Events <i class="fa fa-caret-down"></i></a>
+                                <ul class="dropdown-menu" role="menu"
+aria-labelledby="dropdownMenuEvents">
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//www.openstack.org/community/events/">Overview</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//www.openstack.org/summit/openstack-paris-summit-2014/">The OpenStack
+Summit</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="//www.openstack.org/community/events/">More
+OpenStack Events</a></li>
+
+
+                                </ul>
+
+                        </li>
+
+                        <li>
+
+                                <a href="http://www.openstack.org/blog/">Blog</a>
+
+                        </li>
+
+                        <li>
+
+                                <a href="http://docs.openstack.org/">Docs</a>
+
+                        </li>
+
+
+                        <li>
+                            <a href="http://openstack.org/Security/login/"
+class="sign-in-btn">Sign In</a>
+                        </li>
+                    </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Begin Page Content -->
+        <div class="container docs-book-wrapper">
+        <div class="row">
+            <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+<!-- Row with title and buttons-->
+            <div class="row">
+                <div class="col-lg-8">
+                <h2>Scalable and highly available DHCP agents</h2>
+                </div>
+<div class="docs-actions">
+                  
+                  <a href="networking_adv-config.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Advanced configuration options"></i></a>
+                  
+                  
+                  <a href="networking_use.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Use Networking"></i></a>
+                  
+                  <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+                </div>
+            </div>
+            <div class="row docs-byline">
+                <div class="docs-updated">
+                    updated: 2015-10-12 18:28 | release: 0.9
+                </div>
+                <a href="http://git.openstack.org/" class="docs-edit">
+                    <i class="fa fa-pencil"></i> suggest edits
+                </a>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="docs-top-contents">
+                    <h5>Contents</h5>
+                    <ul>
+<li><a class="reference internal" href="#">Scalable and highly available DHCP agents</a><ul>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#commands-in-agent-management-and-scheduler-extensions">Commands in agent management and scheduler extensions</a></li>
+</ul>
+</li>
+</ul>
+
+                    </div>
+                <div class="docs-body">
+
+  <div class="section" id="scalable-and-highly-available-dhcp-agents">
+<h1>Scalable and highly available DHCP agents<a class="headerlink" href="#scalable-and-highly-available-dhcp-agents" title="Permalink to this headline">¶</a></h1>
+<p>This section describes how to use the agent management (alias agent) and
+scheduler (alias agent_scheduler) extensions for DHCP agents
+scalability and HA.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Use the <strong class="command">neutron ext-list</strong> client command to check if these
+extensions are enabled:</p>
+<div class="code console last highlight-python"><div class="highlight"><pre>$ neutron ext-list -c name -c alias
+
++-----------------+--------------------------+
+| alias           | name                     |
++-----------------+--------------------------+
+| agent_scheduler | Agent Schedulers         |
+| binding         | Port Binding             |
+| quotas          | Quota management support |
+| agent           | agent                    |
+| provider        | Provider Network         |
+| router          | Neutron L3 Router        |
+| lbaas           | Load Balancing service    |
+| extraroute      | Neutron Extra Route      |
++-----------------+--------------------------+
+</pre></div>
+</div>
+</div>
+<p><img alt="image0" src="_images/demo_multiple_dhcp_agents.png" /></p>
+<p>There will be three hosts in the setup.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Host</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>OpenStack controller host - controlnod</td>
+<td>Runs the Networking, Identity, and Compute services that are required
+to deploy VMs. The node must have at least one network interface that
+is connected to the Management Network. Note that <tt class="docutils literal"><span class="pre">nova-network</span></tt> should
+not be running because it is replaced by Neutron.</td>
+</tr>
+<tr class="row-odd"><td>HostA</td>
+<td>Runs <tt class="docutils literal"><span class="pre">nova-compute</span></tt>, the Neutron L2 agent and DHCP agent</td>
+</tr>
+<tr class="row-even"><td>HostB</td>
+<td>Same as HostA</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Hosts for demo</strong></p>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p><strong>controlnode: neutron server</strong></p>
+<ol class="arabic">
+<li><p class="first">Neutron configuration file <tt class="file docutils literal"><span class="pre">/etc/neutron/neutron.conf</span></tt>:</p>
+<div class="highlight-ini"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre> <span class="k">[DEFAULT]</span>
+ <span class="na">core_plugin</span> <span class="o">=</span> <span class="s">linuxbridge</span>
+<span class="s"> rabbit_host = controlnode</span>
+<span class="s"> allow_overlapping_ips = True</span>
+<span class="s"> host = controlnode</span>
+<span class="s"> agent_down_time = 5</span>
+</pre></div>
+</td></tr></table></div>
+</li>
+<li><p class="first">Update the plug-in configuration file
+<tt class="file docutils literal"><span class="pre">/etc/neutron/plugins/linuxbridge/linuxbridge_conf.ini</span></tt>:</p>
+<div class="highlight-ini"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre> <span class="k">[vlans]</span>
+ <span class="na">tenant_network_type</span> <span class="o">=</span> <span class="s">vlan</span>
+<span class="s"> network_vlan_ranges = physnet1:1000:2999</span>
+<span class="s"> [database]</span>
+<span class="s"> connection = mysql://root:root@127.0.0.1:3306/neutron_linux_bridge</span>
+<span class="s"> retry_interval = 2</span>
+<span class="s"> [linux_bridge]</span>
+<span class="s"> physical_interface_mappings = physnet1:eth0</span>
+</pre></div>
+</td></tr></table></div>
+</li>
+</ol>
+<p><strong>HostA and HostB: L2 agent</strong></p>
+<ol class="arabic">
+<li><p class="first">Neutron configuration file <tt class="file docutils literal"><span class="pre">/etc/neutron/neutron.conf</span></tt>:</p>
+<div class="highlight-ini"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre> <span class="k">[DEFAULT]</span>
+ <span class="na">rabbit_host</span> <span class="o">=</span> <span class="s">controlnode</span>
+<span class="s"> rabbit_password = openstack</span>
+<span class="s"> # host = HostB on hostb</span>
+<span class="s"> host = HostA</span>
+</pre></div>
+</td></tr></table></div>
+</li>
+<li><p class="first">Update the plug-in configuration file
+<tt class="file docutils literal"><span class="pre">/etc/neutron/plugins/linuxbridge/linuxbridge_conf.ini</span></tt>:</p>
+<div class="highlight-ini"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre> <span class="k">[vlans]</span>
+ <span class="na">tenant_network_type</span> <span class="o">=</span> <span class="s">vlan</span>
+<span class="s"> network_vlan_ranges = physnet1:1000:2999</span>
+<span class="s"> [database]</span>
+<span class="s"> connection = mysql://root:root@127.0.0.1:3306/neutron_linux_bridge</span>
+<span class="s"> retry_interval = 2</span>
+<span class="s"> [linux_bridge]</span>
+<span class="s"> physical_interface_mappings = physnet1:eth0</span>
+</pre></div>
+</td></tr></table></div>
+</li>
+<li><p class="first">Update the nova configuration file <tt class="file docutils literal"><span class="pre">/etc/nova/nova.conf</span></tt>:</p>
+<div class="highlight-ini"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre> <span class="k">[DEFAULT]</span>
+ <span class="na">network_api_class</span><span class="o">=</span><span class="s">nova.network.neutronv2.api.API</span>
+<span class="s"> firewall_driver=nova.virt.firewall.NoopFirewallDriver</span>
+
+ <span class="k">[neutron]</span>
+ <span class="na">admin_username</span><span class="o">=</span><span class="s">neutron</span>
+<span class="s"> admin_password=servicepassword</span>
+<span class="s"> admin_auth_url=http://controlnode:35357/v2.0/</span>
+<span class="s"> auth_strategy=keystone</span>
+<span class="s"> admin_tenant_name=servicetenant</span>
+<span class="s"> url=http://100.1.1.10:9696/</span>
+</pre></div>
+</td></tr></table></div>
+</li>
+</ol>
+<p><strong>HostA and HostB: DHCP agent</strong></p>
+<ul>
+<li><p class="first">Update the DHCP configuration file <tt class="file docutils literal"><span class="pre">/etc/neutron/dhcp_agent.ini</span></tt>:</p>
+<div class="code ini highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">DEFAULT</span><span class="p">]</span>
+<span class="n">interface_driver</span> <span class="o">=</span> <span class="n">neutron</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">linux</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">BridgeInterfaceDriver</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="commands-in-agent-management-and-scheduler-extensions">
+<h2>Commands in agent management and scheduler extensions<a class="headerlink" href="#commands-in-agent-management-and-scheduler-extensions" title="Permalink to this headline">¶</a></h2>
+<p>The following commands require the tenant running the command to have an
+admin role.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Ensure that the following environment variables are set. These are
+used by the various clients to access the Identity service.</p>
+<div class="code bash last highlight-python"><div class="highlight"><pre>export OS_USERNAME=admin
+export OS_PASSWORD=adminpassword
+export OS_TENANT_NAME=admin
+export OS_AUTH_URL=http://controlnode:5000/v2.0/
+</pre></div>
+</div>
+</div>
+<p><strong>Settings</strong></p>
+<p>To experiment, you need VMs and a neutron network:</p>
+<div class="code console highlight-python"><div class="highlight"><pre>$ nova list
+
+ +-------------------------------------+----------+--------+--------------+
+ | ID                                  | Name     | Status | Networks     |
+ +-------------------------------------+----------+--------+--------------+
+ | c394fcd0-0baa-43ae-a793-201815c3e8ce| myserver1| ACTIVE | net1=10.0.1.3|
+ | 2d604e05-9a6c-4ddb-9082-8a1fbdcc797d| myserver2| ACTIVE | net1=10.0.1.4|
+ | c7c0481c-3db8-4d7a-a948-60ce8211d585| myserver3| ACTIVE | net1=10.0.1.5|
+ +-------------------------------------+----------+--------+--------------+
+
+$ neutron net-list
+ +-------------------------+------+--------------------------------------+
+ | id                      | name | subnets                              |
+ +-------------------------+------+--------------------------------------+
+ | 89dca1c6-c7d4-4f7a-     |      |                                      |
+ | b730-549af0fb6e34       | net1 | f6c832e3-9968-46fd-8e45-d5cf646db9d1 |
+ +-------------------------+------+--------------------------------------+
+</pre></div>
+</div>
+<p><strong>Manage agents in neutron deployment</strong></p>
+<p>Every agent that supports these extensions will register itself with the
+neutron server when it starts up.</p>
+<ol class="arabic">
+<li><p class="first">List all agents:</p>
+<div class="code console highlight-python"><div class="highlight"><pre>$ neutron agent-list
+
++--------------------------------------+--------------------+-------+-------+----------------+
+| id                                   | agent_type         | host  | alive | admin_state_up |
++--------------------------------------+--------------------+-------+-------+----------------+
+| 1b69828d-6a9b-4826-87cd-1757f0e27f31 | Linux bridge agent | HostA | :-)   | True           |
+| a0c1c21c-d4f4-4577-9ec7-908f2d48622d | DHCP agent         | HostA | :-)   | True           |
+| ed96b856-ae0f-4d75-bb28-40a47ffd7695 | Linux bridge agent | HostB | :-)   | True           |
+| f28aa126-6edb-4ea5-a81e-8850876bc0a8 | DHCP agent         | HostB | :-)   | True           |
++--------------------------------------+--------------------+-------+-------+----------------+
+</pre></div>
+</div>
+<p>The output shows information for four agents. The <tt class="docutils literal"><span class="pre">alive</span></tt> field shows
+<tt class="docutils literal"><span class="pre">:-)</span></tt> if the agent reported its state within the period defined by the
+<tt class="docutils literal"><span class="pre">agent_down_time</span></tt> option in the <tt class="file docutils literal"><span class="pre">neutron.conf</span></tt> file. Otherwise the
+<tt class="docutils literal"><span class="pre">alive</span></tt> is <tt class="docutils literal"><span class="pre">xxx</span></tt>.</p>
+</li>
+<li><p class="first">List the DHCP agents that host a specified network:</p>
+<p>In some deployments, one DHCP agent is not enough to hold all network
+data. In addition, you must have a backup for it even when the
+deployment is small. The same network can be assigned to more than one
+DHCP agent and one DHCP agent can host more than one network.</p>
+</li>
+<li><p class="first">List DHCP agents that host a specified network:</p>
+<div class="code console highlight-python"><div class="highlight"><pre>$ neutron dhcp-agent-list-hosting-net net1
+
++--------------------------------------+-------+----------------+-------+
+| id                                   | host  | admin_state_up | alive |
++--------------------------------------+-------+----------------+-------+
+| a0c1c21c-d4f4-4577-9ec7-908f2d48622d | HostA | True           | :-)   |
++--------------------------------------+-------+----------------+-------+
+</pre></div>
+</div>
+</li>
+<li><p class="first">List the networks hosted by a given DHCP agent:</p>
+<p>This command is to show which networks a given dhcp agent is managing.</p>
+<div class="code console highlight-python"><div class="highlight"><pre>$ neutron net-list-on-dhcp-agent a0c1c21c-d4f4-4577-9ec7-908f2d48622d
+
++------------------------+------+---------------------------------+
+| id                     | name | subnets                         |
++------------------------+------+---------------------------------+
+| 89dca1c6-c7d4-4f7a     |      |                                 |
+| -b730-549af0fb6e34     | net1 | f6c832e3-9968-46fd              |
+|                        |      | -8e45-d5cf646db9d1  10.0.1.0/24 |
++------------------------+------+---------------------------------+
+</pre></div>
+</div>
+</li>
+<li><p class="first">Show agent details.</p>
+<p>The <strong class="command">agent-show</strong> command shows details for a specified agent:</p>
+<div class="code console highlight-python"><div class="highlight"><pre>$ neutron agent-show a0c1c21c-d4f4-4577-9ec7-908f2d48622d
+
++--------------------+---------------------------------------------------+
+| Field              | Value                                             |
++--------------------+---------------------------------------------------+
+| admin_state_up     | True                                              |
+| agent_type         | DHCP agent                                        |
+| alive              | False                                             |
+| binary             | neutron-dhcp-agent                                |
+| configurations     |{                                                  |
+|                    | &quot;subnets&quot;: 1,                                     |
+|                    | &quot;use_namespaces&quot;: true,                           |
+|                    | &quot;dhcp_driver&quot;: &quot;neutron.agent.linux.dhcp.Dnsmasq&quot;,|
+|                    | &quot;networks&quot;: 1,                                    |
+|                    | &quot;dhcp_lease_time&quot;: 120,                           |
+|                    | &quot;ports&quot;: 3                                        |
+|                    |}                                                  |
+| created_at         | 2013-03-16T01:16:18.000000                        |
+| description        |                                                   |
+| heartbeat_timestamp| 2013-03-17T01:37:22.000000                        |
+| host               | HostA                                             |
+| id                 | 58f4ce07-6789-4bb3-aa42-ed3779db2b03              |
+| started_at         | 2013-03-16T06:48:39.000000                        |
+| topic              | dhcp_agent                                        |
++--------------------+---------------------------------------------------+
+</pre></div>
+</div>
+<p>In this output, <tt class="docutils literal"><span class="pre">heartbeat_timestamp</span></tt> is the time on the neutron
+server. You do not need to synchronize all agents to this time for this
+extension to run correctly. <tt class="docutils literal"><span class="pre">configurations</span></tt> describes the static
+configuration for the agent or run time data. This agent is a DHCP agent
+and it hosts one network, one subnet, and three ports.</p>
+<p>Different types of agents show different details. The following output
+shows information for a Linux bridge agent:</p>
+<div class="code console highlight-python"><div class="highlight"><pre>$ neutron agent-show ed96b856-ae0f-4d75-bb28-40a47ffd7695
+
++---------------------+--------------------------------------+
+| Field               | Value                                |
++---------------------+--------------------------------------+
+| admin_state_up      | True                                 |
+| binary              | neutron-linuxbridge-agent            |
+| configurations      | {                                    |
+|                     |      &quot;physnet1&quot;: &quot;eth0&quot;,             |
+|                     |      &quot;devices&quot;: &quot;4&quot;                  |
+|                     | }                                    |
+| created_at          | 2013-03-16T01:49:52.000000           |
+| description         |                                      |
+| disabled            | False                                |
+| group               | agent                                |
+| heartbeat_timestamp | 2013-03-16T01:59:45.000000           |
+| host                | HostB                                |
+| id                  | ed96b856-ae0f-4d75-bb28-40a47ffd7695 |
+| topic               | N/A                                  |
+| started_at          | 2013-03-16T06:48:39.000000           |
+| type                | Linux bridge agent                   |
++---------------------+--------------------------------------+
+</pre></div>
+</div>
+<p>The output shows <tt class="docutils literal"><span class="pre">bridge-mapping</span></tt> and the number of virtual network
+devices on this L2 agent.</p>
+</li>
+</ol>
+<p><strong>Manage assignment of networks to DHCP agent</strong></p>
+<p>Now that you have run the <strong class="command">net-list-on-dhcp-agent</strong> and
+<strong class="command">dhcp-agent-list-hosting-net</strong> commands, you can add a network to a
+DHCP agent and remove one from it.</p>
+<ol class="arabic">
+<li><p class="first">Default scheduling.</p>
+<p>When you create a network with one port, you can schedule it to an
+active DHCP agent. If many active DHCP agents are running, select one
+randomly. You can design more sophisticated scheduling algorithms in the
+same way as nova-schedule later on.</p>
+<div class="code console highlight-python"><div class="highlight"><pre>$ neutron net-create net2
+$ neutron subnet-create net2 9.0.1.0/24 --name subnet2
+$ neutron port-create net2
+$ neutron dhcp-agent-list-hosting-net net2
+
++--------------------------------------+-------+----------------+-------+
+| id                                   | host  | admin_state_up | alive |
++--------------------------------------+-------+----------------+-------+
+| a0c1c21c-d4f4-4577-9ec7-908f2d48622d | HostA | True           | :-)   |
++--------------------------------------+-------+----------------+-------+
+</pre></div>
+</div>
+<p>It is allocated to DHCP agent on HostA. If you want to validate the
+behavior through the <strong class="command">dnsmasq</strong> command, you must create a subnet for
+the network because the DHCP agent starts the dnsmasq service only if
+there is a DHCP.</p>
+</li>
+<li><p class="first">Assign a network to a given DHCP agent.</p>
+<p>To add another DHCP agent to host the network, run this command:</p>
+<div class="code console highlight-python"><div class="highlight"><pre>$ neutron dhcp-agent-network-add f28aa126-6edb-4ea5-a81e-8850876bc0a8 net2
+Added network net2 to dhcp agent
+$ neutron dhcp-agent-list-hosting-net net2
+
++--------------------------------------+-------+----------------+-------+
+| id                                   | host  | admin_state_up | alive |
++--------------------------------------+-------+----------------+-------+
+| a0c1c21c-d4f4-4577-9ec7-908f2d48622d | HostA | True           | :-)   |
+| f28aa126-6edb-4ea5-a81e-8850876bc0a8 | HostB | True           | :-)   |
++--------------------------------------+-------+----------------+-------+
+
+Both DHCP agents host the ``net2`` network.
+</pre></div>
+</div>
+</li>
+<li><p class="first">Remove a network from a specified DHCP agent.</p>
+<p>This command is the sibling command for the previous one. Remove
+<tt class="docutils literal"><span class="pre">net2</span></tt> from the DHCP agent for HostA:</p>
+<div class="code console highlight-python"><div class="highlight"><pre>$ neutron dhcp-agent-network-remove a0c1c21c-d4f4-4577-9ec7-908f2d48622d
+net2
+Removed network net2 to dhcp agent
+$ neutron dhcp-agent-list-hosting-net net2
+
++--------------------------------------+-------+----------------+-------+
+| id                                   | host  | admin_state_up | alive |
++--------------------------------------+-------+----------------+-------+
+| f28aa126-6edb-4ea5-a81e-8850876bc0a8 | HostB | True           | :-)   |
++--------------------------------------+-------+----------------+-------+
+</pre></div>
+</div>
+<p>You can see that only the DHCP agent for HostB is hosting the <tt class="docutils literal"><span class="pre">net2</span></tt>
+network.</p>
+</li>
+</ol>
+<p><strong>HA of DHCP agents</strong></p>
+<p>Boot a VM on net2. Let both DHCP agents host <tt class="docutils literal"><span class="pre">net2</span></tt>. Fail the agents
+in turn to see if the VM can still get the desired IP.</p>
+<ol class="arabic">
+<li><p class="first">Boot a VM on net2:</p>
+<div class="code console highlight-python"><div class="highlight"><pre>$ neutron net-list
+
++-------------------------+------+-----------------------------+
+| id                      | name | subnets                     |
++-------------------------+------+-----------------------------+
+| 89dca1c6-c7d4-4f7a-     |      |                             |
+| b730-549af0fb6e34       | net1 | f6c832e3-9968-46fd-8e45     |
+|                         |      | -d5cf646db9d1  10.0.1.0/24  |
+| 9b96b14f-71b8-4918-90aa-|      |                             |
+| c5d705606b1a            | net2 | 6979b71a-0ae8-448c-aa87-    |
+|                         |      | 65f68eedcaaa  9.0.1.0/24    |
++-------------------------+------+-----------------------------+
+</pre></div>
+</div>
+<div class="code console highlight-python"><div class="highlight"><pre>$ nova boot --image tty --flavor 1 myserver4 \
+  --nic net-id=9b96b14f-71b8-4918-90aa-c5d705606b1a
+</pre></div>
+</div>
+<div class="code console highlight-python"><div class="highlight"><pre>   $ nova list
+
++-------------------------------------+----------+-------+---------------+
+| ID                                  | Name     | Status| Networks      |
++-------------------------------------+----------+-------+---------------+
+|c394fcd0-0baa-43ae-a793-201815c3e8ce |myserver1 |ACTIVE | net1=10.0.1.3 |
+|2d604e05-9a6c-4ddb-9082-8a1fbdcc797d |myserver2 |ACTIVE | net1=10.0.1.4 |
+|c7c0481c-3db8-4d7a-a948-60ce8211d585 |myserver3 |ACTIVE | net1=10.0.1.5 |
+|f62f4731-5591-46b1-9d74-f0c901de567f |myserver4 |ACTIVE | net2=9.0.1.2  |
++-------------------------------------+----------+-------+---------------+
+</pre></div>
+</div>
+</li>
+<li><p class="first">Make sure both DHCP agents hosting &#8216;net2&#8217;:</p>
+<p>Use the previous commands to assign the network to agents.</p>
+<div class="code console highlight-python"><div class="highlight"><pre>$ neutron dhcp-agent-list-hosting-net net2
+
++--------------------------------------+-------+----------------+-------+
+| id                                   | host  | admin_state_up | alive |
++--------------------------------------+-------+----------------+-------+
+| a0c1c21c-d4f4-4577-9ec7-908f2d48622d | HostA | True           | :-)   |
+| f28aa126-6edb-4ea5-a81e-8850876bc0a8 | HostB | True           | :-)   |
++--------------------------------------+-------+----------------+-------+
+</pre></div>
+</div>
+</li>
+</ol>
+<p><strong>Test the HA</strong></p>
+<ol class="arabic simple">
+<li>Log in to the <tt class="docutils literal"><span class="pre">myserver4</span></tt> VM, and run <tt class="docutils literal"><span class="pre">udhcpc</span></tt>, <tt class="docutils literal"><span class="pre">dhclient</span></tt> or
+other DHCP client.</li>
+<li>Stop the DHCP agent on HostA. Besides stopping the
+<tt class="docutils literal"><span class="pre">neutron-dhcp-agent</span></tt> binary, you must stop the <tt class="docutils literal"><span class="pre">dnsmasq</span></tt> processes.</li>
+<li>Run a DHCP client in VM to see if it can get the wanted IP.</li>
+<li>Stop the DHCP agent on HostB too.</li>
+<li>Run <tt class="docutils literal"><span class="pre">udhcpc</span></tt> in the VM; it cannot get the wanted IP.</li>
+<li>Start DHCP agent on HostB. The VM gets the wanted IP again.</li>
+</ol>
+<p><strong>Disable and remove an agent</strong></p>
+<p>An administrator might want to disable an agent if a system hardware or
+software upgrade is planned. Some agents that support scheduling also
+support disabling and enabling agents, such as L3 and DHCP agents. After
+the agent is disabled, the scheduler does not schedule new resources to
+the agent. After the agent is disabled, you can safely remove the agent.
+Remove the resources on the agent before you delete the agent.</p>
+<p>To run the following commands, you must stop the DHCP agent on HostA.</p>
+<div class="code console highlight-python"><div class="highlight"><pre>$ neutron agent-update --admin-state-up False a0c1c21c-d4f4-4577
+  -9ec7-908f2d48622d
+$ neutron agent-list
+
++--------------------------------------+--------------------+-------+-------+----------------+
+| id                                   | agent_type         | host  | alive | admin_state_up |
++--------------------------------------+--------------------+-------+-------+----------------+
+| 1b69828d-6a9b-4826-87cd-1757f0e27f31 | Linux bridge agent | HostA | :-)   | True           |
+| a0c1c21c-d4f4-4577-9ec7-908f2d48622d | DHCP agent         | HostA | :-)   | False          |
+| ed96b856-ae0f-4d75-bb28-40a47ffd7695 | Linux bridge agent | HostB | :-)   | True           |
+| f28aa126-6edb-4ea5-a81e-8850876bc0a8 | DHCP agent         | HostB | :-)   | True           |
++--------------------------------------+--------------------+-------+-------+----------------+
+</pre></div>
+</div>
+<div class="code console highlight-python"><div class="highlight"><pre>$ neutron agent-delete a0c1c21c-d4f4-4577-9ec7-908f2d48622d
+Deleted agent: a0c1c21c-d4f4-4577-9ec7-908f2d48622d
+$ neutron agent-list
+
++--------------------------------------+--------------------+-------+-------+----------------+
+| id                                   | agent_type         | host  | alive | admin_state_up |
++--------------------------------------+--------------------+-------+-------+----------------+
+| 1b69828d-6a9b-4826-87cd-1757f0e27f31 | Linux bridge agent | HostA | :-)   | True           |
+| ed96b856-ae0f-4d75-bb28-40a47ffd7695 | Linux bridge agent | HostB | :-)   | True           |
+| f28aa126-6edb-4ea5-a81e-8850876bc0a8 | DHCP agent         | HostB | :-)   | True           |
++--------------------------------------+--------------------+-------+-------+----------------+
+</pre></div>
+</div>
+<p>After deletion, if you restart the DHCP agent, it appears on the agent
+list again.</p>
+</div>
+</div>
+
+
+              </div>
+          </div>
+          </div>
+          <!-- <div class="docs-tags">
+                <a href="#" class="docs-tag">Network Time Protocol (NTP)</a>
+                <a href="#" class="docs-tag">Security</a>
+                <a href="#" class="docs-tag">Conceptual architecture</a>
+            </div> -->
+<div class="docs-actions">
+                  
+                  <a href="networking_adv-config.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Advanced configuration options"></i></a>
+                  
+                  
+                  <a href="networking_use.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Use Networking"></i></a>
+                  
+                  <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+                </div>
+                <div class="row docs-byline bottom">
+                <div class="docs-updated">
+                updated: 2015-10-12 18:28 | release: 0.9
+                </div>
+                <a href="http://git.openstack.org/" class="docs-edit">
+                    <i class="fa fa-pencil"></i> suggest edits
+                </a>
+</div>
+    <div class="row">
+         <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+           <img src="_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+<p>
+ Except where otherwise noted, this document is licensed under Creative Commons
+ Attribution 3.0 License
+ <a href="#">http://creativecommons.org/licenses/by/3.0/legalcode</a>.
+</p>
+<p>
+ <a href="http://www.openstack.org/legal">See All Legal Notices</a>
+</p>
+         </div>
+         <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+                    <!-- ID buglinkbottom added so that pre-filled doc bugs
+                    are sent to Launchpad projects related to the document -->
+                    <a href="#" id="logABugLink2" class="docs-footer-actions">
+                        <i class="fa fa-bug"></i>found an error? report a bug
+                    </a>
+                    <a href="http://ask.openstack.org" class="docs-footer-actions">
+                        <i class="fa fa-question-circle"></i>questions? <a href="http://ask.openstack.org/">ask.openstack.org</a>
+                    </a>
+                </div>
+     </div>
+     </div>
+            <!-- Docs Sidebar -->
+                <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+            <div class="search-icon show"><i class="fa fa-search"></i>
+Search</div>
+            <div class="btn-group docs-sidebar-releases">
+                <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+                <button href="#" type="button" data-toggle="dropdown" class="btn docs-sidebar-release-select">Release: Kilo (April 2015)<i class="fa fa-caret-down"></i></button>
+                <ul class="dropdown-menu docs-sidebar-dropdown" role="menu" aria-labelledby="dLabel">
+                    <li role="presentation" class="dropdown-header">Releases</li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/kilo/">Kilo (current release)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/juno/">Juno (October 2014)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/icehouse/">Icehouse (May 2014)</a></li>
+                    <li role="presentation" class="dropdown-header">Languages</li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/ja/">日本語 (Japanese)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/de/">Deutsch (German)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/fr/">Français (French)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/pt_BR/">Português (Portuguese)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/ko_KR/">한국어 (Korean)</a></li>
+                </ul>
+            </div>
+                <div class="docs-sidebar-toc">
+                    <div class="docs-sidebar-section" id="install-guides">
+                        <a class="docs-sidebar-section-title" href="http://docs.openstack.org/index.html#install-guides"><h4>Install Guides</h4></a>
+                    </div>
+                    <div class="docs-sidebar-section" id="user-guides">
+                        <a class="docs-sidebar-section-title" href="http://docs.openstack.org/index.html#user-guides"><h4>User Guides</h4></a>
+                    </div>
+                    <div class="docs-sidebar-section" id="configuration-guides">
+                        <a class="docs-sidebar-section-title" href="http://docs.openstack.org/index.html#configuration-guides"><h4>Configuration Guides</h4></a>
+                    </div>
+                    <div class="docs-sidebar-section" id="operations-guides">
+                        <a class="docs-sidebar-section-title" href="http://docs.openstack.org/openstack-ops/content/"><h4>Operations Guide</h4></a>
+                    </div>
+                    <div class="docs-sidebar-section" id="api-guides">
+                        <a class="docs-sidebar-section-title" href="http://docs.openstack.org/index.html#api-guides"><h4>API Guides</h4></a>
+                    </div>
+                    <div class="docs-sidebar-section" id="contributor-guides">
+                        <a class="docs-sidebar-section-title" href="http://docs.openstack.org/index.html#contributor-guides"><h4>Contributor Guides</h4></a>
+                    </div>
+                    <div class="docs-sidebar-section" id="table-of-contents">
+                        <a class="docs-sidebar-section-title"><h4>Contents</h4></a>
+                        <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="common/conventions.html">Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common/get_started_with_openstack.html">Get started with OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="identity_management.html">Identity management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dashboard.html">Dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compute.html">Compute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objectstorage.html">Object Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="blockstorage.html">Block Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shared_file_systems.html">Shared File Systems</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="networking.html">Networking</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="networking_introduction.html">Introduction to Networking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networking_config-plugins.html">Plug-in configurations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networking_config-agents.html">Configure neutron agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networking_arch.html">Networking architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networking_config-identity.html">Configure Identity service for Networking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networking_adv-config.html">Advanced configuration options</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Scalable and highly available DHCP agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networking_use.html">Use Networking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networking_adv-features.html">Advanced features through API extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networking_adv-operational-features.html">Advanced operational features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networking_auth.html">Authentication and authorization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="telemetry.html">Telemetry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="orchestration.html">Orchestration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cross_project.html">Cross-project features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common/app_support.html">Community support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common/glossary.html">Glossary</a></li>
+</ul>
+
+                    </div>
+                </div>
+                </div>
+
+</div>
+</div>
+    <!-- End Page Content -->
+
+    <!-- Footer -->
+    <!-- Footer -->
+        <footer>
+        <div class="container">
+            <div class="row footer-links">
+                <div class="col-lg-2 col-sm-2">
+                    <h3>OpenStack</h3>
+                    <ul>
+                        <li><a href="/foundation">About the Foundation</a></li>
+                        <li><a
+href="http://openstack.org/projects/">Projects</a></li>
+                        <li><a
+href="http://openstack.org/projects/openstack-security/">OpenStack
+Security</a></li>
+                        <li><a
+href="http://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+                        <li><a href="http://openstack.org/blog/">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-sm-2">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="http://openstack.org/community/">User
+Groups</a></li>
+                        <li><a
+href="http://openstack.org/community/events/">Events</a></li>
+                        <li><a
+href="http://openstack.org/community/jobs/">Jobs</a></li>
+                        <li><a
+href="http://openstack.org/foundation/companies/">Companies</a></li>
+                        <li><a
+href="https://wiki.openstack.org/wiki/How_To_Contribute">Contribute</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-sm-2">
+                    <h3>Documentation</h3>
+                    <ul>
+                        <li><a href="http://docs.openstack.org">OpenStack
+Manuals</a></li>
+                        <li><a
+href="http://openstack.org/software/start/">Getting Started</a></li>
+                        <li><a href="http://developer.openstack.org">API
+Documentation</a></li>
+                        <li><a href="https://wiki.openstack.org">Wiki</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-sm-2">
+                    <h3>Branding & Legal</h3>
+                    <ul>
+                        <li><a href="http://openstack.org/brand/">Logos &
+Guidelines</a></li>
+                        <li><a
+href="http://openstack.org/brand/openstack-trademark-policy/">Trademark
+Policy</a></li>
+                        <li><a href="http://openstack.org/privacy/">Privacy
+Policy</a></li>
+                        <li><a
+href="https://wiki.openstack.org/wiki/How_To_Contribute#Contributors_License_Agreement">OpenStack
+CLA</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-sm-4">
+                    <h3>Stay In Touch</h3>
+                    <a href="https://twitter.com/OpenStack" target="_blank"
+class="social-icons footer-twitter"></a>
+                    <a href="https://www.facebook.com/openstack"
+target="_blank" class="social-icons footer-facebook"></a>
+                    <a href="https://www.linkedin.com/company/openstack"
+target="_blank" class="social-icons footer-linkedin"></a>
+                    <a href="https://www.youtube.com/user/OpenStackFoundation"
+target="_blank" class="social-icons footer-youtube"></a>
+                    <!-- <form class="form-inline">
+                        <div class="form-group newsletter-form">
+                            <label>Join Our Newsletter</label>
+                            <input class="newsletter-input" type="input"
+placeholder="Email">
+                            <button type="submit"
+class="newsletter-btn">Join</button>
+                        </div>
+                    </form> -->
+                    <p class="fine-print">
+                        The OpenStack project is provided under the Apache 2.0
+license. Openstack.org is powered by <a href="http://rackspace.com"
+target="_blank">Rackspace Cloud Computing</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="footer-bottom">
+        <div class="container">
+            <form class="form-inline" id="FeedbackForm_FeedbackForm" action="/home/FeedbackForm" method="post" enctype="application/x-www-form-urlencoded">
+              <div class="form-group">
+                <div>
+                  <input class="feedback-input" type="input" placeholder="Give Us Your Feedback On This Page">
+                  <button type="submit" class="feedback-btn">Submit</button>
+                </div>
+              </div>
+            </form>
+        </div>
+    </div>
+
+<!-- Scripts in: static directory-->
+    <!-- jQuery Version 1.11.0 -->
+    <script type="text/javascript" src="_static/js/jquery-1.11.3.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script type="text/javascript" src="_static/js/bootstrap.min.js"></script>
+
+    <!-- The rest of the JS -->
+    <script type="text/javascript" src="_static/js/navigation.js"></script>
+
+    <!-- Docs JS -->
+    <script type="text/javascript" src="_static/js/docs.js"></script>
+
+    <!-- Popovers -->
+    <script type="text/javascript" src="_static/js/webui-popover.js"></script>
+
+    <!-- Javascript for page -->
+    <script language="JavaScript">
+    /* build a description of this page including SHA, source location on git repo and
+       build time, the project's launchpad bug tag and set the HREF of the bug buttons */
+
+        var lineFeed = "%0A";
+
+            /* "pagename" is the path to the source file, relative to conf.py's
+               directory. However, "pagename" is missing the rst extension. */
+            var sourceFile = "networking_multi-dhcp-agents" + ".rst"
+
+            /* Using the current working directory, figure out
+               in which book we are and use that information to
+               build a link to the source file on git.openstack.ort */
+            var pwd = "/home/sslypushenko/projects/openstack-manuals/doc/admin-guide-cloud/source"
+            var gitlink = "Source: http://git.openstack.org/cgit/openstack/openstack-manuals/tree"
+            gitlink += pwd.slice(pwd.lastIndexOf("/doc/")) + "/" + sourceFile
+
+        /* gitsha, project and bug_tag rely on variables in conf.py */
+        var gitSha = "SHA: 8ebff076eaaaefdb986e268bfeeee0938e272ecb"
+        var bugTitle = "Scalable and highly available DHCP agents in Cloud Administrator Guide"
+        var fieldTags = "admin-guide-cloud"
+
+        /* "last_updated" is the build date and time. It relies on the
+           conf.py variable "html_last_updated_fmt", which should include
+           year/month/day as well as hours and minutes                   */
+        var buildstring = "Release: 0.9 on 2015-10-12 18:28"
+
+        var fieldComment = encodeURI(buildstring) +
+                           lineFeed + encodeURI(gitSha) +
+                           lineFeed + encodeURI(gitlink)
+
+        logABug(bugTitle, fieldComment, fieldTags)
+    </script>
+    <!-- Javascript for search boxes (both sidebar and top nav) -->
+<script type="text/javascript">
+        (function() {
+        var cx = '000108871792296872333:noj9nikm74i';
+        var gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = (document.location.protocol == 'https:' ? 'https:' :
+'http:') +
+            '//www.google.com/cse/cse.js?cx=' + cx;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+      })();
+       </script>
+
+ </body>
+</html>

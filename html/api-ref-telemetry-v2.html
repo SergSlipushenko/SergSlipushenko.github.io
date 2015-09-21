@@ -1,0 +1,2618 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+   <head>
+      <meta content="text/html; charset=UTF-8" http-equiv="content-type"></meta>
+      <meta charset="UTF-8"></meta>
+      <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"></meta>
+      <meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>
+      <title>OpenStack API Documentation</title>
+      <link href="apiref/css/bootstrap.min.css" rel="stylesheet"></link>
+      <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+      <link href="apiref/css/style.css" rel="stylesheet"></link>
+      <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+      <link href="apiref/css/bootstrap.min.css" rel="stylesheet"></link>
+   </head>
+   <body>
+      <div class="navbar navbar-default" role="navigation">
+         <div class="container">
+            <div class="navbar-header"><button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="/">Open Stack</a></div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+               <ul class="nav navbar-nav">
+                  <li><a href="http://www.openstack.org" title="Go to the Home page">Home</a></li>
+                  <li><a href="http://www.openstack.org/projects" title="Go to the OpenStack Projects page">Projects</a></li>
+                  <li><a href="http://www.openstack.org/user-stories" title="Go to the OpenStack user stories page">User Stories</a></li>
+                  <li><a href="http://www.openstack.org/community" title="Go to the Community page">Community</a></li>
+                  <li><a href="http://www.openstack.org/blog" title="Go to the OpenStack Blog">Blog</a></li>
+                  <li><a href="http://wiki.openstack.org/" title="Go to the OpenStack Wiki">Wiki</a></li>
+                  <li class="active"><a href="http://docs.openstack.org/" title="Go to OpenStack Documentation">Documentation</a></li>
+                  <li><a alt="Download a pdf of this document" class="pdficon" href="http://api.openstack.org/api-ref-guides/bk-api-ref-telemetry-v2.pdf" onclick="_gaq.push(['_trackEvent', 'Header', 'pdfDownload', 'click', 1]);" title="Open the PDF for this page">&nbsp;&nbsp;&nbsp;<img src="apiref/images/pdf.png"></img></a></li>
+               </ul>
+            </div>
+         </div>
+      </div>
+      <div class="container">
+         <div class="row">
+            <div class="col-md-3">
+               <div class="api-sidebar" data-offset-bottom="0" data-offset-top="80" data-spy="affix">
+                  <ul class="nav api-sidenav">
+                     <li><a class="smallcapped" href="#telemetry-v2">Telemetry&nbsp;API&nbsp;v2&nbsp;(CURRENT)</a></li>
+                     <li class="divider"></li>
+                     <ul class="nav active">
+                        <li><a href="api-ref-blockstorage-v2.html">
+                              Block
+                              Storage API v2 (CURRENT)</a></li>
+                        <li><a href="api-ref-blockstorage-v1.html">
+                              Block
+                              Storage API v1 (DEPRECATED)</a></li>
+                        <li><a href="api-ref-compute-v2.1.html">
+                              Compute API
+                              v2.1 (CURRENT)</a></li>
+                        <li><a href="api-ref-compute-v2.html">
+                              Compute API
+                              v2 (SUPPORTED)</a></li>
+                        <li><a href="api-ref-compute-v2-ext.html">
+                              Compute
+                              API v2 extensions (SUPPORTED)</a></li>
+                        <li><a href="api-ref-data-processing-v1.1.html">Data
+                              Processing v1.1 (CURRENT)</a></li>
+                        <li><a href="api-ref-database-v1.html">Database
+                              Service API v1.0 (CURRENT)</a></li>
+                        <li><a href="api-ref-identity-v3.html">Identity API
+                              v3 (CURRENT)</a></li>
+                        <li><a href="api-ref-identity-v3-ext.html">Identity API
+                              v3 extensions (CURRENT)</a></li>
+                        <li><a href="api-ref-identity-v2.html">Identity API
+                              v2.0 (SUPPORTED)</a></li>
+                        <li><a href="api-ref-identity-admin-v2.html">Identity admin API
+                              v2.0 (SUPPORTED)</a></li>
+                        <li><a href="api-ref-identity-v2-ext.html">Identity API
+                              v2.0 extensions (SUPPORTED)</a></li>
+                        <li><a href="api-ref-image-v2.html">Image service
+                              API v2 (CURRENT)</a></li>
+                        <li><a href="api-ref-image-v1.html">Image service
+                              API v1 (SUPPORTED)</a></li>
+                        <li><a href="api-ref-networking-v2.html">Networking
+                              API v2.0 (CURRENT)</a></li>
+                        <li><a href="api-ref-networking-v2-ext.html">Networking
+                              API v2.0 extensions (CURRENT)</a></li>
+                        <li><a href="api-ref-objectstorage-v1.html">Object
+                              Storage API v1 (SUPPORTED)</a></li>
+                        <li><a href="api-ref-orchestration-v1.html">Orchestration API v1 (CURRENT)</a></li>
+                        <li><a href="api-ref-share-v2.html">Shared File Systems API v2 (CURRENT)</a></li>
+                        <li><a href="api-ref-share-v1.html">Shared File Systems API v1 (SUPPORTED)</a></li>
+                        <li><a href="api-ref-telemetry-v2.html">Telemetry
+                              API v2 (CURRENT)</a></li>
+                     </ul>
+                  </ul>
+                  <div class="row">
+                     <div class="col-md-7"><label class="sr-only" for="search-box">Search
+                           on this page</label><input class="form-control" id="search-box" placeholder="Search this page" type="text"></input></div>
+                     <div class="col-md-5"><button class="btn btn-default" id="search-btn">Search</button></div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-9 api-documentation">
+               
+               
+               <div id="telemetry-v2">
+                  <div class="subhead">
+                     <h2>Telemetry API v2 (CURRENT)<a class="headerlink" href="#telemetry-v2" title="Permalink to this headline"><span class="glyphicon glyphicon-link"></span></a></h2>
+                  </div>
+                  
+                  
+                  <p>Manages Telemetry operations.</p>
+                  
+                  <div id="alarms">
+                     <div class="subhead">
+                        <h3>Alarms<a class="headerlink" href="#alarms" title="Permalink to this headline"><span class="glyphicon glyphicon-link"></span></a></h3>
+                     </div>
+                     <p>Lists, creates, gets details for, updates, and deletes
+                        alarms.
+                     </p>
+                     <div class="doc-entry">
+                        <div class="row d85e206 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#listAlarms"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">GET</span></div>
+                           <div class="col-md-5">/v2/alarms</div>
+                           <div class="col-md-5"><strong id="listAlarms">List alarms</strong><p>Lists alarms, based on the
+                                 specified query.
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d85e206" data-toggle="collapse" id="detail-d85e206-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d85e206">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>q (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:list</td>
+                                             <td>
+                                                
+                                                <p>Filter rules for the alarms to be
+                                                   returned.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-3"><select class="example-select form-control">
+                                       <option data-target="#resp-json-d85e206" selected="selected" value="json">JSON
+                                          Response
+                                       </option>
+                                       <option data-target="#resp-xml-d85e206" value="xml">XML Response</option></select></div>
+                              </div>
+                              <div class="tab-content">
+                                 <div class="tab-pane example active" id="resp-json-d85e206">
+                                    <div class="example">
+                                       <pre>[
+    {
+        "alarm_actions": [
+            "http://site:8000/alarm"
+        ],
+        "alarm_id": null,
+        "combination_rule": null,
+        "description": "An alarm",
+        "enabled": true,
+        "insufficient_data_actions": [
+            "http://site:8000/nodata"
+        ],
+        "name": "SwiftObjectAlarm",
+        "ok_actions": [
+            "http://site:8000/ok"
+        ],
+        "project_id": "c96c887c216949acbdfbd8b494863567",
+        "repeat_actions": false,
+        "state": "ok",
+        "state_timestamp": "2013-11-21T12:33:08.486228",
+        "threshold_rule": null,
+        "timestamp": "2013-11-21T12:33:08.486221",
+        "type": "threshold",
+        "user_id": "c96c887c216949acbdfbd8b494863567"
+    }
+]</pre>
+                                       </div>
+                                 </div>
+                                 <div class="tab-pane example" id="resp-xml-d85e206">
+                                    <div class="example">
+                                       <pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;values&gt;
+  &lt;value&gt;
+    &lt;alarm_actions&gt;
+      &lt;item&gt;http://site:8000/alarm&lt;/item&gt;
+    &lt;/alarm_actions&gt;
+    &lt;alarm_id nil="true" /&gt;
+    &lt;combination_rule nil="true" /&gt;
+    &lt;description&gt;An alarm&lt;/description&gt;
+    &lt;enabled&gt;true&lt;/enabled&gt;
+    &lt;insufficient_data_actions&gt;
+      &lt;item&gt;http://site:8000/nodata&lt;/item&gt;
+    &lt;/insufficient_data_actions&gt;
+    &lt;name&gt;SwiftObjectAlarm&lt;/name&gt;
+    &lt;ok_actions&gt;
+      &lt;item&gt;http://site:8000/ok&lt;/item&gt;
+    &lt;/ok_actions&gt;
+    &lt;project_id&gt;c96c887c216949acbdfbd8b494863567&lt;/project_id&gt;
+    &lt;repeat_actions&gt;false&lt;/repeat_actions&gt;
+    &lt;state&gt;ok&lt;/state&gt;
+    &lt;state_timestamp&gt;2013-11-21T12:33:08.486228&lt;/state_timestamp&gt;
+    &lt;threshold_rule nil="true" /&gt;
+    &lt;timestamp&gt;2013-11-21T12:33:08.486221&lt;/timestamp&gt;
+    &lt;type&gt;threshold&lt;/type&gt;
+    &lt;user_id&gt;c96c887c216949acbdfbd8b494863567&lt;/user_id&gt;
+  &lt;/value&gt;
+&lt;/values&gt;</pre>
+                                       </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d85e256 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#createAlarm"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">POST</span></div>
+                           <div class="col-md-5">/v2/alarms</div>
+                           <div class="col-md-5"><strong id="createAlarm">Create alarm</strong><p>Creates an alarm.</p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d85e256" data-toggle="collapse" id="detail-d85e256-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d85e256">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>data (Optional)</td>
+                                             <td>query</td>
+                                             <td>Alarm</td>
+                                             <td>
+                                                
+                                                <p>An alarm within the request body.</p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-3"><select class="example-select form-control">
+                                       <option data-target="#resp-json-d85e256" selected="selected" value="json">JSON
+                                          Response
+                                       </option>
+                                       <option data-target="#resp-xml-d85e256" value="xml">XML Response</option></select></div>
+                              </div>
+                              <div class="tab-content">
+                                 <div class="tab-pane example active" id="resp-json-d85e256">
+                                    <div class="example">
+                                       <pre>{
+    "alarm_actions": [
+        "http://site:8000/alarm"
+    ],
+    "alarm_id": null,
+    "combination_rule": null,
+    "description": "An alarm",
+    "enabled": true,
+    "insufficient_data_actions": [
+        "http://site:8000/nodata"
+    ],
+    "name": "SwiftObjectAlarm",
+    "ok_actions": [
+        "http://site:8000/ok"
+    ],
+    "project_id": "c96c887c216949acbdfbd8b494863567",
+    "repeat_actions": false,
+    "state": "ok",
+    "state_timestamp": "2013-11-21T12:33:08.486228",
+    "threshold_rule": null,
+    "timestamp": "2013-11-21T12:33:08.486221",
+    "type": "threshold",
+    "user_id": "c96c887c216949acbdfbd8b494863567"
+}</pre>
+                                       </div>
+                                 </div>
+                                 <div class="tab-pane example" id="resp-xml-d85e256">
+                                    <div class="example">
+                                       <pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;value&gt;
+  &lt;alarm_actions&gt;
+    &lt;item&gt;http://site:8000/alarm&lt;/item&gt;
+  &lt;/alarm_actions&gt;
+  &lt;alarm_id nil="true" /&gt;
+  &lt;combination_rule nil="true" /&gt;
+  &lt;description&gt;An alarm&lt;/description&gt;
+  &lt;enabled&gt;true&lt;/enabled&gt;
+  &lt;insufficient_data_actions&gt;
+    &lt;item&gt;http://site:8000/nodata&lt;/item&gt;
+  &lt;/insufficient_data_actions&gt;
+  &lt;name&gt;SwiftObjectAlarm&lt;/name&gt;
+  &lt;ok_actions&gt;
+    &lt;item&gt;http://site:8000/ok&lt;/item&gt;
+  &lt;/ok_actions&gt;
+  &lt;project_id&gt;c96c887c216949acbdfbd8b494863567&lt;/project_id&gt;
+  &lt;repeat_actions&gt;false&lt;/repeat_actions&gt;
+  &lt;state&gt;ok&lt;/state&gt;
+  &lt;state_timestamp&gt;2013-11-21T12:33:08.486228&lt;/state_timestamp&gt;
+  &lt;threshold_rule nil="true" /&gt;
+  &lt;timestamp&gt;2013-11-21T12:33:08.486221&lt;/timestamp&gt;
+  &lt;type&gt;threshold&lt;/type&gt;
+  &lt;user_id&gt;c96c887c216949acbdfbd8b494863567&lt;/user_id&gt;
+&lt;/value&gt;</pre>
+                                       </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d85e318 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#showAlarm"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">GET</span></div>
+                           <div class="col-md-5">/v2/alarms/&#8203;{alarm_id}&#8203;</div>
+                           <div class="col-md-5"><strong id="showAlarm">Show alarm</strong><p>Shows information for a specified
+                                 alarm, by alarm ID.
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d85e318" data-toggle="collapse" id="detail-d85e318-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d85e318">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>alarm_id</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>The UUID of the alarm.</p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-3"><select class="example-select form-control">
+                                       <option data-target="#resp-json-d85e318" selected="selected" value="json">JSON
+                                          Response
+                                       </option>
+                                       <option data-target="#resp-xml-d85e318" value="xml">XML Response</option></select></div>
+                              </div>
+                              <div class="tab-content">
+                                 <div class="tab-pane example active" id="resp-json-d85e318">
+                                    <div class="example">
+                                       <pre>{
+    "alarm_actions": [
+        "http://site:8000/alarm"
+    ],
+    "alarm_id": null,
+    "combination_rule": null,
+    "description": "An alarm",
+    "enabled": true,
+    "insufficient_data_actions": [
+        "http://site:8000/nodata"
+    ],
+    "name": "SwiftObjectAlarm",
+    "ok_actions": [
+        "http://site:8000/ok"
+    ],
+    "project_id": "c96c887c216949acbdfbd8b494863567",
+    "repeat_actions": false,
+    "state": "ok",
+    "state_timestamp": "2013-11-21T12:33:08.486228",
+    "threshold_rule": null,
+    "timestamp": "2013-11-21T12:33:08.486221",
+    "type": "threshold",
+    "user_id": "c96c887c216949acbdfbd8b494863567"
+}</pre>
+                                       </div>
+                                 </div>
+                                 <div class="tab-pane example" id="resp-xml-d85e318">
+                                    <div class="example">
+                                       <pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;value&gt;
+  &lt;alarm_actions&gt;
+    &lt;item&gt;http://site:8000/alarm&lt;/item&gt;
+  &lt;/alarm_actions&gt;
+  &lt;alarm_id nil="true" /&gt;
+  &lt;combination_rule nil="true" /&gt;
+  &lt;description&gt;An alarm&lt;/description&gt;
+  &lt;enabled&gt;true&lt;/enabled&gt;
+  &lt;insufficient_data_actions&gt;
+    &lt;item&gt;http://site:8000/nodata&lt;/item&gt;
+  &lt;/insufficient_data_actions&gt;
+  &lt;name&gt;SwiftObjectAlarm&lt;/name&gt;
+  &lt;ok_actions&gt;
+    &lt;item&gt;http://site:8000/ok&lt;/item&gt;
+  &lt;/ok_actions&gt;
+  &lt;project_id&gt;c96c887c216949acbdfbd8b494863567&lt;/project_id&gt;
+  &lt;repeat_actions&gt;false&lt;/repeat_actions&gt;
+  &lt;state&gt;ok&lt;/state&gt;
+  &lt;state_timestamp&gt;2013-11-21T12:33:08.486228&lt;/state_timestamp&gt;
+  &lt;threshold_rule nil="true" /&gt;
+  &lt;timestamp&gt;2013-11-21T12:33:08.486221&lt;/timestamp&gt;
+  &lt;type&gt;threshold&lt;/type&gt;
+  &lt;user_id&gt;c96c887c216949acbdfbd8b494863567&lt;/user_id&gt;
+&lt;/value&gt;</pre>
+                                       </div>
+                                 </div>
+                              </div>
+                              <p class="nobody">This operation does not accept a request
+                                 body.
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d85e353 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#updateAlarm"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">PUT</span></div>
+                           <div class="col-md-5">/v2/alarms/&#8203;{alarm_id}&#8203;</div>
+                           <div class="col-md-5"><strong id="updateAlarm">Update alarm</strong><p>Updates a specified alarm.</p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d85e353" data-toggle="collapse" id="detail-d85e353-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d85e353">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>alarm_id</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>The UUID of the alarm.</p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>data (Optional)</td>
+                                             <td>query</td>
+                                             <td>Alarm</td>
+                                             <td>
+                                                
+                                                <p>An alarm within the request body.</p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-3"><select class="example-select form-control">
+                                       <option data-target="#resp-json-d85e353" selected="selected" value="json">JSON
+                                          Response
+                                       </option>
+                                       <option data-target="#resp-xml-d85e353" value="xml">XML Response</option></select></div>
+                              </div>
+                              <div class="tab-content">
+                                 <div class="tab-pane example active" id="resp-json-d85e353">
+                                    <div class="example">
+                                       <pre>{
+    "alarm_actions": [
+        "http://site:8000/alarm"
+    ],
+    "alarm_id": null,
+    "combination_rule": null,
+    "description": "An alarm",
+    "enabled": true,
+    "insufficient_data_actions": [
+        "http://site:8000/nodata"
+    ],
+    "name": "SwiftObjectAlarm",
+    "ok_actions": [
+        "http://site:8000/ok"
+    ],
+    "project_id": "c96c887c216949acbdfbd8b494863567",
+    "repeat_actions": false,
+    "state": "ok",
+    "state_timestamp": "2013-11-21T12:33:08.486228",
+    "threshold_rule": null,
+    "timestamp": "2013-11-21T12:33:08.486221",
+    "type": "threshold",
+    "user_id": "c96c887c216949acbdfbd8b494863567"
+}</pre>
+                                       </div>
+                                 </div>
+                                 <div class="tab-pane example" id="resp-xml-d85e353">
+                                    <div class="example">
+                                       <pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;value&gt;
+  &lt;alarm_actions&gt;
+    &lt;item&gt;http://site:8000/alarm&lt;/item&gt;
+  &lt;/alarm_actions&gt;
+  &lt;alarm_id nil="true" /&gt;
+  &lt;combination_rule nil="true" /&gt;
+  &lt;description&gt;An alarm&lt;/description&gt;
+  &lt;enabled&gt;true&lt;/enabled&gt;
+  &lt;insufficient_data_actions&gt;
+    &lt;item&gt;http://site:8000/nodata&lt;/item&gt;
+  &lt;/insufficient_data_actions&gt;
+  &lt;name&gt;SwiftObjectAlarm&lt;/name&gt;
+  &lt;ok_actions&gt;
+    &lt;item&gt;http://site:8000/ok&lt;/item&gt;
+  &lt;/ok_actions&gt;
+  &lt;project_id&gt;c96c887c216949acbdfbd8b494863567&lt;/project_id&gt;
+  &lt;repeat_actions&gt;false&lt;/repeat_actions&gt;
+  &lt;state&gt;ok&lt;/state&gt;
+  &lt;state_timestamp&gt;2013-11-21T12:33:08.486228&lt;/state_timestamp&gt;
+  &lt;threshold_rule nil="true" /&gt;
+  &lt;timestamp&gt;2013-11-21T12:33:08.486221&lt;/timestamp&gt;
+  &lt;type&gt;threshold&lt;/type&gt;
+  &lt;user_id&gt;c96c887c216949acbdfbd8b494863567&lt;/user_id&gt;
+&lt;/value&gt;</pre>
+                                       </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d85e403 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#deleteAlarm"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">DELETE</span></div>
+                           <div class="col-md-5">/v2/alarms/&#8203;{alarm_id}&#8203;</div>
+                           <div class="col-md-5"><strong id="deleteAlarm">Delete alarm</strong><p>
+                                 Deletes a specified alarm, by alarm ID.
+                                 
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d85e403" data-toggle="collapse" id="detail-d85e403-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d85e403">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>204</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>alarm_id</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>The UUID of the alarm.</p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <p class="nobody">This operation does not accept a request body
+                                 and does not return a response body.
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d85e425 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#updateAlarmState"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">PUT</span></div>
+                           <div class="col-md-5">/v2/alarms/&#8203;{alarm_id}&#8203;/state</div>
+                           <div class="col-md-5"><strong id="updateAlarmState">Update alarm state</strong><p>Sets the state of a specified
+                                 alarm.
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d85e425" data-toggle="collapse" id="detail-d85e425-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d85e425">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>alarm_id</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>The UUID of the alarm.</p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>state (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:dict</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   An alarm state within the request body. A valid
+                                                   value is <code>ok</code>, <code>alarm</code>, or
+                                                   <code>insufficient data</code>.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <p class="nobody">This operation does not return a response
+                                 body.
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d85e459 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#showAlarmState"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">GET</span></div>
+                           <div class="col-md-5">/v2/alarms/&#8203;{alarm_id}&#8203;/state</div>
+                           <div class="col-md-5"><strong id="showAlarmState">Show alarm state</strong><p>
+                                 Shows the state for a specified alarm, by alarm ID.
+                                 
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d85e459" data-toggle="collapse" id="detail-d85e459-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d85e459">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>alarm_id</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>The UUID of the alarm.</p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <p class="nobody">This operation does not return a response
+                                 body.
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d85e483 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#showAlarmHistory"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">GET</span></div>
+                           <div class="col-md-5">/v2/alarms/&#8203;{alarm_id}&#8203;/history</div>
+                           <div class="col-md-5"><strong id="showAlarmHistory">Show alarm history</strong><p>
+                                 Assembles and shows the history for a specified alarm, by
+                                 alarm ID.
+                                 
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d85e483" data-toggle="collapse" id="detail-d85e483-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d85e483">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>alarm_id</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>The UUID of the alarm.</p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>q (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:list</td>
+                                             <td>
+                                                
+                                                <p>Filter rules for the changes to be
+                                                   described.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <p class="nobody">This operation does not return a response
+                                 body.
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div id="meters">
+                     <div class="subhead">
+                        <h3>Meters<a class="headerlink" href="#meters" title="Permalink to this headline"><span class="glyphicon glyphicon-link"></span></a></h3>
+                     </div>
+                     <p>Gets information for meters.</p>
+                     <div class="doc-entry">
+                        <div class="row d85e523 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#listMeters"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">GET</span></div>
+                           <div class="col-md-5">/v2/meters</div>
+                           <div class="col-md-5"><strong id="listMeters">List meters</strong><p>Lists meters, based on the data
+                                 recorded so far.
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d85e523" data-toggle="collapse" id="detail-d85e523-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d85e523">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>q (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:list</td>
+                                             <td>
+                                                
+                                                <p>Filter rules for the meters to be
+                                                   returned.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-3"><select class="example-select form-control">
+                                       <option data-target="#resp-json-d85e523" selected="selected" value="json">JSON
+                                          Response
+                                       </option>
+                                       <option data-target="#resp-xml-d85e523" value="xml">XML Response</option></select></div>
+                              </div>
+                              <div class="tab-content">
+                                 <div class="tab-pane example active" id="resp-json-d85e523">
+                                    <div class="example">
+                                       <pre>[
+    {
+        "meter_id": "YmQ5NDMxYzEtOGQ2OS00YWQzLTgwM2EtOGQ0YTZiODlmZDM2K2luc3RhbmNl\n",
+        "name": "instance",
+        "project_id": "35b17138-b364-4e6a-a131-8f3099c5be68",
+        "resource_id": "bd9431c1-8d69-4ad3-803a-8d4a6b89fd36",
+        "source": "openstack",
+        "type": "gauge",
+        "unit": "instance",
+        "user_id": "efd87807-12d2-4b38-9c70-5f5c2ac427ff"
+    }
+]</pre>
+                                       </div>
+                                 </div>
+                                 <div class="tab-pane example" id="resp-xml-d85e523">
+                                    <div class="example">
+                                       <pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;values&gt;
+  &lt;value&gt;
+    &lt;meter_id&gt;YmQ5NDMxYzEtOGQ2OS00YWQzLTgwM2EtOGQ0YTZiODlmZDM2K2luc3RhbmNl
+  &lt;/meter_id&gt;
+    &lt;name&gt;instance&lt;/name&gt;
+    &lt;project_id&gt;35b17138-b364-4e6a-a131-8f3099c5be68&lt;/project_id&gt;
+    &lt;resource_id&gt;bd9431c1-8d69-4ad3-803a-8d4a6b89fd36&lt;/resource_id&gt;
+    &lt;source&gt;openstack&lt;/source&gt;
+    &lt;type&gt;gauge&lt;/type&gt;
+    &lt;unit&gt;instance&lt;/unit&gt;
+    &lt;user_id&gt;efd87807-12d2-4b38-9c70-5f5c2ac427ff&lt;/user_id&gt;
+  &lt;/value&gt;
+&lt;/values&gt;</pre>
+                                       </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d85e585 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#listSamplesforMeter"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">GET</span></div>
+                           <div class="col-md-5">/v2/meters/&#8203;{meter_name}&#8203;</div>
+                           <div class="col-md-5"><strong id="listSamplesforMeter">List samples for meter</strong><p>Lists samples for a specified
+                                 meter, by meter name.
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d85e585" data-toggle="collapse" id="detail-d85e585-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d85e585">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>meter_name</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>The name of the meter.</p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>q (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:list</td>
+                                             <td>
+                                                
+                                                <p>Filter rules for the data to be
+                                                   returned.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>limit (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:int</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Requests a specified page size of returned items from the query.
+                                                   Returns a number of items up to the specified limit value. Use the
+                                                   <code>limit</code> parameter to make an initial limited request
+                                                   and use the ID of the last-seen item from the response as the
+                                                   <code>marker</code> parameter value in a subsequent limited request.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>marker (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Specifies the ID of the last-seen item. Use the <code>limit</code>
+                                                   parameter to make an initial limited request and use the ID of the
+                                                   last-seen item from the response as the <code>marker</code>
+                                                   parameter value in a subsequent limited request.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-3"><select class="example-select form-control">
+                                       <option data-target="#resp-json-d85e585" selected="selected" value="json">JSON
+                                          Response
+                                       </option>
+                                       <option data-target="#resp-xml-d85e585" value="xml">XML Response</option></select></div>
+                              </div>
+                              <div class="tab-content">
+                                 <div class="tab-pane example active" id="resp-json-d85e585">
+                                    <div class="example">
+                                       <pre>[
+    {
+        "counter_name": "instance",
+        "counter_type": "gauge",
+        "counter_unit": "instance",
+        "counter_volume": 1.0,
+        "message_id": "5460acce-4fd6-480d-ab18-9735ec7b1996",
+        "project_id": "35b17138-b364-4e6a-a131-8f3099c5be68",
+        "resource_id": "bd9431c1-8d69-4ad3-803a-8d4a6b89fd36",
+        "resource_metadata": {
+            "name1": "value1",
+            "name2": "value2"
+        },
+        "source": "openstack",
+        "timestamp": "2013-11-21T12:33:08.323533",
+        "user_id": "efd87807-12d2-4b38-9c70-5f5c2ac427ff"
+    }
+]</pre>
+                                       </div>
+                                 </div>
+                                 <div class="tab-pane example" id="resp-xml-d85e585">
+                                    <div class="example">
+                                       <pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;values&gt;
+  &lt;value&gt;
+    &lt;counter_name&gt;instance&lt;/counter_name&gt;
+    &lt;counter_type&gt;gauge&lt;/counter_type&gt;
+    &lt;counter_unit&gt;instance&lt;/counter_unit&gt;
+    &lt;counter_volume&gt;1.0&lt;/counter_volume&gt;
+    &lt;message_id&gt;5460acce-4fd6-480d-ab18-9735ec7b1996&lt;/message_id&gt;
+    &lt;project_id&gt;35b17138-b364-4e6a-a131-8f3099c5be68&lt;/project_id&gt;
+    &lt;resource_id&gt;bd9431c1-8d69-4ad3-803a-8d4a6b89fd36&lt;/resource_id&gt;
+    &lt;resource_metadata&gt;
+      &lt;item&gt;
+        &lt;key&gt;name2&lt;/key&gt;
+        &lt;value&gt;value2&lt;/value&gt;
+      &lt;/item&gt;
+      &lt;item&gt;
+        &lt;key&gt;name1&lt;/key&gt;
+        &lt;value&gt;value1&lt;/value&gt;
+      &lt;/item&gt;
+    &lt;/resource_metadata&gt;
+    &lt;source&gt;openstack&lt;/source&gt;
+    &lt;timestamp&gt;2013-11-21T12:33:08.323533&lt;/timestamp&gt;
+    &lt;user_id&gt;efd87807-12d2-4b38-9c70-5f5c2ac427ff&lt;/user_id&gt;
+  &lt;/value&gt;
+&lt;/values&gt;</pre>
+                                       </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d85e665 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#createMeter"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">POST</span></div>
+                           <div class="col-md-5">/v2/meters/&#8203;{meter_name}&#8203;</div>
+                           <div class="col-md-5"><strong id="createMeter">Create meter</strong><p>Adds a list of samples to the
+                                 specified meter, by meter name.
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d85e665" data-toggle="collapse" id="detail-d85e665-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d85e665">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>meter_name</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>The name of the meter.</p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>samples (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:list</td>
+                                             <td>
+                                                
+                                                <p>A list of samples within the request
+                                                   body.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-3"><select class="example-select form-control">
+                                       <option data-target="#resp-json-d85e665" selected="selected" value="json">JSON
+                                          Response
+                                       </option>
+                                       <option data-target="#resp-xml-d85e665" value="xml">XML Response</option></select></div>
+                              </div>
+                              <div class="tab-content">
+                                 <div class="tab-pane example active" id="resp-json-d85e665">
+                                    <div class="example">
+                                       <pre>[
+    {
+        "counter_name": "instance",
+        "counter_type": "gauge",
+        "counter_unit": "instance",
+        "counter_volume": 1.0,
+        "message_id": "5460acce-4fd6-480d-ab18-9735ec7b1996",
+        "project_id": "35b17138-b364-4e6a-a131-8f3099c5be68",
+        "resource_id": "bd9431c1-8d69-4ad3-803a-8d4a6b89fd36",
+        "resource_metadata": {
+            "name1": "value1",
+            "name2": "value2"
+        },
+        "source": "openstack",
+        "timestamp": "2013-11-21T12:33:08.323533",
+        "user_id": "efd87807-12d2-4b38-9c70-5f5c2ac427ff"
+    }
+]</pre>
+                                       </div>
+                                 </div>
+                                 <div class="tab-pane example" id="resp-xml-d85e665">
+                                    <div class="example">
+                                       <pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;values&gt;
+  &lt;value&gt;
+    &lt;counter_name&gt;instance&lt;/counter_name&gt;
+    &lt;counter_type&gt;gauge&lt;/counter_type&gt;
+    &lt;counter_unit&gt;instance&lt;/counter_unit&gt;
+    &lt;counter_volume&gt;1.0&lt;/counter_volume&gt;
+    &lt;message_id&gt;5460acce-4fd6-480d-ab18-9735ec7b1996&lt;/message_id&gt;
+    &lt;project_id&gt;35b17138-b364-4e6a-a131-8f3099c5be68&lt;/project_id&gt;
+    &lt;resource_id&gt;bd9431c1-8d69-4ad3-803a-8d4a6b89fd36&lt;/resource_id&gt;
+    &lt;resource_metadata&gt;
+      &lt;item&gt;
+        &lt;key&gt;name2&lt;/key&gt;
+        &lt;value&gt;value2&lt;/value&gt;
+      &lt;/item&gt;
+      &lt;item&gt;
+        &lt;key&gt;name1&lt;/key&gt;
+        &lt;value&gt;value1&lt;/value&gt;
+      &lt;/item&gt;
+    &lt;/resource_metadata&gt;
+    &lt;source&gt;openstack&lt;/source&gt;
+    &lt;timestamp&gt;2013-11-21T12:33:08.323533&lt;/timestamp&gt;
+    &lt;user_id&gt;efd87807-12d2-4b38-9c70-5f5c2ac427ff&lt;/user_id&gt;
+  &lt;/value&gt;
+&lt;/values&gt;</pre>
+                                       </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d85e727 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#listSamplesStatistics"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">GET</span></div>
+                           <div class="col-md-5">/v2/meters/&#8203;{meter_name}&#8203;/statistics</div>
+                           <div class="col-md-5"><strong id="listSamplesStatistics">Show meter statistics</strong><p>
+                                 Computes and lists statistics for samples in a specified
+                                 time range.
+                                 
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d85e727" data-toggle="collapse" id="detail-d85e727-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d85e727">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>meter_name</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>The name of the meter.</p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>q (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:list</td>
+                                             <td>
+                                                
+                                                <p>Filter rules for the data to be
+                                                   returned.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>groupby (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:list</td>
+                                             <td>
+                                                
+                                                <p>Fields for group by aggregation</p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>period (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:int</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   The period, in seconds, for which you want
+                                                   statistics.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-3"><select class="example-select form-control">
+                                       <option data-target="#resp-json-d85e727" selected="selected" value="json">JSON
+                                          Response
+                                       </option>
+                                       <option data-target="#resp-xml-d85e727" value="xml">XML Response</option></select></div>
+                              </div>
+                              <div class="tab-content">
+                                 <div class="tab-pane example active" id="resp-json-d85e727">
+                                    <div class="example">
+                                       <pre>[
+    {
+        "avg": 4.5,
+        "count": 10,
+        "duration": 300.0,
+        "duration_end": "2013-01-04T16:47:00",
+        "duration_start": "2013-01-04T16:42:00",
+        "max": 9.0,
+        "min": 1.0,
+        "period": 7200,
+        "period_end": "2013-01-04T18:00:00",
+        "period_start": "2013-01-04T16:00:00",
+        "sum": 45.0,
+        "unit": "GiB"
+    }
+]</pre>
+                                       </div>
+                                 </div>
+                                 <div class="tab-pane example" id="resp-xml-d85e727">
+                                    <div class="example">
+                                       <pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;values&gt;
+  &lt;value&gt;
+    &lt;avg&gt;4.5&lt;/avg&gt;
+    &lt;count&gt;10&lt;/count&gt;
+    &lt;duration&gt;300.0&lt;/duration&gt;
+    &lt;duration_end&gt;2013-01-04T16:47:00&lt;/duration_end&gt;
+    &lt;duration_start&gt;2013-01-04T16:42:00&lt;/duration_start&gt;
+    &lt;max&gt;9.0&lt;/max&gt;
+    &lt;min&gt;1.0&lt;/min&gt;
+    &lt;period&gt;7200&lt;/period&gt;
+    &lt;period_end&gt;2013-01-04T18:00:00&lt;/period_end&gt;
+    &lt;period_start&gt;2013-01-04T16:00:00&lt;/period_start&gt;
+    &lt;sum&gt;45.0&lt;/sum&gt;
+    &lt;unit&gt;GiB&lt;/unit&gt;
+  &lt;/value&gt;
+&lt;/values&gt;</pre>
+                                       </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div id="samples">
+                     <div class="subhead">
+                        <h3>Samples<a class="headerlink" href="#samples" title="Permalink to this headline"><span class="glyphicon glyphicon-link"></span></a></h3>
+                     </div>
+                     <p>Gets samples.</p>
+                     <div class="doc-entry">
+                        <div class="row d85e810 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#listSamples"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">GET</span></div>
+                           <div class="col-md-5">/v2/samples</div>
+                           <div class="col-md-5"><strong id="listSamples">List samples</strong><p>
+                                 Lists all known samples, based on the data recorded so far.
+                                 
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d85e810" data-toggle="collapse" id="detail-d85e810-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d85e810">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>q (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:list</td>
+                                             <td>
+                                                
+                                                <p>Filter rules for the samples to be
+                                                   returned.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-3"><select class="example-select form-control">
+                                       <option data-target="#resp-json-d85e810" selected="selected" value="json">JSON
+                                          Response
+                                       </option>
+                                       <option data-target="#resp-xml-d85e810" value="xml">XML Response</option></select></div>
+                              </div>
+                              <div class="tab-content">
+                                 <div class="tab-pane example active" id="resp-json-d85e810">
+                                    <div class="example">
+                                       <pre>[
+    {
+        "id": "8db08c68-bc70-11e4-a8c4-fa163e1d1a9b",
+        "metadata": {
+            "name1": "value1",
+            "name2": "value2"
+        },
+        "meter": "instance",
+        "project_id": "35b17138-b364-4e6a-a131-8f3099c5be68",
+        "recorded_at": "2015-02-24T22:00:32.747930",
+        "resource_id": "bd9431c1-8d69-4ad3-803a-8d4a6b89fd36",
+        "source": "openstack",
+        "timestamp": "2015-02-24T22:00:32.747930",
+        "type": "gauge",
+        "unit": "instance",
+        "user_id": "efd87807-12d2-4b38-9c70-5f5c2ac427ff",
+        "volume": 1.0
+    }
+]
+</pre>
+                                       </div>
+                                 </div>
+                                 <div class="tab-pane example" id="resp-xml-d85e810">
+                                    <div class="example">
+                                       <pre>&lt;values&gt;
+  &lt;value&gt;
+    &lt;id&gt;8db08c68-bc70-11e4-a8c4-fa163e1d1a9b&lt;/id&gt;
+    &lt;meter&gt;instance&lt;/meter&gt;
+    &lt;type&gt;gauge&lt;/type&gt;
+    &lt;unit&gt;instance&lt;/unit&gt;
+    &lt;volume&gt;1.0&lt;/volume&gt;
+    &lt;user_id&gt;efd87807-12d2-4b38-9c70-5f5c2ac427ff&lt;/user_id&gt;
+    &lt;project_id&gt;35b17138-b364-4e6a-a131-8f3099c5be68&lt;/project_id&gt;
+    &lt;resource_id&gt;bd9431c1-8d69-4ad3-803a-8d4a6b89fd36&lt;/resource_id&gt;
+    &lt;source&gt;openstack&lt;/source&gt;
+    &lt;timestamp&gt;2015-02-24T22:00:32.747930&lt;/timestamp&gt;
+    &lt;recorded_at&gt;2015-02-24T22:00:32.747930&lt;/recorded_at&gt;
+    &lt;metadata&gt;
+      &lt;item&gt;
+        &lt;key&gt;name2&lt;/key&gt;
+        &lt;value&gt;value2&lt;/value&gt;
+      &lt;/item&gt;
+      &lt;item&gt;
+        &lt;key&gt;name1&lt;/key&gt;
+        &lt;value&gt;value1&lt;/value&gt;
+      &lt;/item&gt;
+    &lt;/metadata&gt;
+  &lt;/value&gt;
+&lt;/values&gt;
+</pre>
+                                       </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d85e872 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#showSample"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">GET</span></div>
+                           <div class="col-md-5">/v2/samples/&#8203;{sample_id}&#8203;</div>
+                           <div class="col-md-5"><strong id="showSample">Show sample</strong><p>
+                                 Shows information for a specified sample, by sample ID.
+                                 
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d85e872" data-toggle="collapse" id="detail-d85e872-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d85e872">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>sample_id</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>The UUID of the sample.</p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-3"><select class="example-select form-control">
+                                       <option data-target="#resp-json-d85e872" selected="selected" value="json">JSON
+                                          Response
+                                       </option>
+                                       <option data-target="#resp-xml-d85e872" value="xml">XML Response</option></select></div>
+                              </div>
+                              <div class="tab-content">
+                                 <div class="tab-pane example active" id="resp-json-d85e872">
+                                    <div class="example">
+                                       <pre>{
+    "id": "8db08c68-bc70-11e4-a8c4-fa163e1d1a9b",
+    "metadata": {
+        "name1": "value1",
+        "name2": "value2"
+    },
+    "meter": "instance",
+    "project_id": "35b17138-b364-4e6a-a131-8f3099c5be68",
+    "recorded_at": "2015-02-24T22:00:32.747930",
+    "resource_id": "bd9431c1-8d69-4ad3-803a-8d4a6b89fd36",
+    "source": "openstack",
+    "timestamp": "2015-02-24T22:00:32.747930",
+    "type": "gauge",
+    "unit": "instance",
+    "user_id": "efd87807-12d2-4b38-9c70-5f5c2ac427ff",
+    "volume": 1.0
+}
+</pre>
+                                       </div>
+                                 </div>
+                                 <div class="tab-pane example" id="resp-xml-d85e872">
+                                    <div class="example">
+                                       <pre>&lt;value&gt;
+  &lt;id&gt;8db08c68-bc70-11e4-a8c4-fa163e1d1a9b&lt;/id&gt;
+  &lt;meter&gt;instance&lt;/meter&gt;
+  &lt;type&gt;gauge&lt;/type&gt;
+  &lt;unit&gt;instance&lt;/unit&gt;
+  &lt;volume&gt;1.0&lt;/volume&gt;
+  &lt;user_id&gt;efd87807-12d2-4b38-9c70-5f5c2ac427ff&lt;/user_id&gt;
+  &lt;project_id&gt;35b17138-b364-4e6a-a131-8f3099c5be68&lt;/project_id&gt;
+  &lt;resource_id&gt;bd9431c1-8d69-4ad3-803a-8d4a6b89fd36&lt;/resource_id&gt;
+  &lt;source&gt;openstack&lt;/source&gt;
+  &lt;timestamp&gt;2015-02-24T22:00:32.747930&lt;/timestamp&gt;
+  &lt;recorded_at&gt;2015-02-24T22:00:32.747930&lt;/recorded_at&gt;
+  &lt;metadata&gt;
+    &lt;item&gt;
+      &lt;key&gt;name2&lt;/key&gt;
+      &lt;value&gt;value2&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;name1&lt;/key&gt;
+      &lt;value&gt;value1&lt;/value&gt;
+    &lt;/item&gt;
+  &lt;/metadata&gt;
+&lt;/value&gt;
+</pre>
+                                       </div>
+                                 </div>
+                              </div>
+                              <p class="nobody">This operation does not accept a request
+                                 body.
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div id="resources">
+                     <div class="subhead">
+                        <h3>Resources<a class="headerlink" href="#resources" title="Permalink to this headline"><span class="glyphicon glyphicon-link"></span></a></h3>
+                     </div>
+                     <p>Gets information for resources.</p>
+                     <div class="doc-entry">
+                        <div class="row d85e923 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#listResources"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">GET</span></div>
+                           <div class="col-md-5">/v2/resources</div>
+                           <div class="col-md-5"><strong id="listResources">List resources</strong><p>Lists definitions for all
+                                 resources.
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d85e923" data-toggle="collapse" id="detail-d85e923-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d85e923">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>q (Optional)</td>
+                                             <td>query</td>
+                                             <td>xsd:list</td>
+                                             <td>
+                                                
+                                                <p>Filter rules for the resources to be
+                                                   returned.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-3"><select class="example-select form-control">
+                                       <option data-target="#resp-json-d85e923" selected="selected" value="json">JSON
+                                          Response
+                                       </option>
+                                       <option data-target="#resp-xml-d85e923" value="xml">XML Response</option></select></div>
+                              </div>
+                              <div class="tab-content">
+                                 <div class="tab-pane example active" id="resp-json-d85e923">
+                                    <div class="example">
+                                       <pre>[
+    {
+        "links": [
+            {
+                "href": "http://localhost:8777/v2/resources/bd9431c1-8d69-4ad3-803a-8d4a6b89fd36",
+                "rel": "self"
+            },
+            {
+                "href": "http://localhost:8777/v2/meters/volume?q.field=resource_id&amp;q.value=bd9431c1-8d69-4ad3-803a-8d4a6b89fd36",
+                "rel": "volume"
+            }
+        ],
+        "metadata": {
+            "name1": "value1",
+            "name2": "value2"
+        },
+        "project_id": "35b17138-b364-4e6a-a131-8f3099c5be68",
+        "resource_id": "bd9431c1-8d69-4ad3-803a-8d4a6b89fd36",
+        "source": "openstack",
+        "timestamp": "2013-11-21T12:33:08.189843",
+        "user_id": "efd87807-12d2-4b38-9c70-5f5c2ac427ff"
+    }
+]</pre>
+                                       </div>
+                                 </div>
+                                 <div class="tab-pane example" id="resp-xml-d85e923">
+                                    <div class="example">
+                                       <pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;values&gt;
+  &lt;value&gt;
+    &lt;links&gt;
+      &lt;item&gt;
+        &lt;href&gt;http://localhost:8777/v2/resources/bd9431c1-8d69-4ad3-803a-8d4a6b89fd36&lt;/href&gt;
+        &lt;rel&gt;self&lt;/rel&gt;
+      &lt;/item&gt;
+      &lt;item&gt;
+        &lt;href&gt;http://localhost:8777/v2/meters/volume?q.field=resource_id&amp;amp;q.value=bd9431c1-8d69-4ad3-803a-8d4a6b89fd36&lt;/href&gt;
+        &lt;rel&gt;volume&lt;/rel&gt;
+      &lt;/item&gt;
+    &lt;/links&gt;
+    &lt;metadata&gt;
+      &lt;item&gt;
+        &lt;key&gt;name2&lt;/key&gt;
+        &lt;value&gt;value2&lt;/value&gt;
+      &lt;/item&gt;
+      &lt;item&gt;
+        &lt;key&gt;name1&lt;/key&gt;
+        &lt;value&gt;value1&lt;/value&gt;
+      &lt;/item&gt;
+    &lt;/metadata&gt;
+    &lt;project_id&gt;35b17138-b364-4e6a-a131-8f3099c5be68&lt;/project_id&gt;
+    &lt;resource_id&gt;bd9431c1-8d69-4ad3-803a-8d4a6b89fd36&lt;/resource_id&gt;
+    &lt;source&gt;openstack&lt;/source&gt;
+    &lt;timestamp&gt;2013-11-21T12:33:08.189843&lt;/timestamp&gt;
+    &lt;user_id&gt;efd87807-12d2-4b38-9c70-5f5c2ac427ff&lt;/user_id&gt;
+  &lt;/value&gt;
+&lt;/values&gt;</pre>
+                                       </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="doc-entry">
+                        <div class="row d85e985 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#showResource"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">GET</span></div>
+                           <div class="col-md-5">/v2/resources/&#8203;{resource_id}&#8203;</div>
+                           <div class="col-md-5"><strong id="showResource">Show resource information</strong><p>Shows information for a specified
+                                 resource, by resource ID.
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d85e985" data-toggle="collapse" id="detail-d85e985-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d85e985">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Request parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>resource_id</td>
+                                             <td>URI</td>
+                                             <td>xsd:string</td>
+                                             <td>
+                                                
+                                                <p>The UUID of the resource.</p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-3"><select class="example-select form-control">
+                                       <option data-target="#resp-json-d85e985" selected="selected" value="json">JSON
+                                          Response
+                                       </option>
+                                       <option data-target="#resp-xml-d85e985" value="xml">XML Response</option></select></div>
+                              </div>
+                              <div class="tab-content">
+                                 <div class="tab-pane example active" id="resp-json-d85e985">
+                                    <div class="example">
+                                       <pre>{
+    "links": [
+        {
+            "href": "http://localhost:8777/v2/resources/bd9431c1-8d69-4ad3-803a-8d4a6b89fd36",
+            "rel": "self"
+        },
+        {
+            "href": "http://localhost:8777/v2/meters/volume?q.field=resource_id&amp;q.value=bd9431c1-8d69-4ad3-803a-8d4a6b89fd36",
+            "rel": "volume"
+        }
+    ],
+    "metadata": {
+        "name1": "value1",
+        "name2": "value2"
+    },
+    "project_id": "35b17138-b364-4e6a-a131-8f3099c5be68",
+    "resource_id": "bd9431c1-8d69-4ad3-803a-8d4a6b89fd36",
+    "source": "openstack",
+    "timestamp": "2013-11-21T12:33:08.189843",
+    "user_id": "efd87807-12d2-4b38-9c70-5f5c2ac427ff"
+}</pre>
+                                       </div>
+                                 </div>
+                                 <div class="tab-pane example" id="resp-xml-d85e985">
+                                    <div class="example">
+                                       <pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;value&gt;
+  &lt;links&gt;
+    &lt;item&gt;
+      &lt;href&gt;http://localhost:8777/v2/resources/bd9431c1-8d69-4ad3-803a-8d4a6b89fd36&lt;/href&gt;
+      &lt;rel&gt;self&lt;/rel&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;href&gt;http://localhost:8777/v2/meters/volume?q.field=resource_id&amp;amp;q.value=bd9431c1-8d69-4ad3-803a-8d4a6b89fd36&lt;/href&gt;
+      &lt;rel&gt;volume&lt;/rel&gt;
+    &lt;/item&gt;
+  &lt;/links&gt;
+  &lt;metadata&gt;
+    &lt;item&gt;
+      &lt;key&gt;name2&lt;/key&gt;
+      &lt;value&gt;value2&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;name1&lt;/key&gt;
+      &lt;value&gt;value1&lt;/value&gt;
+    &lt;/item&gt;
+  &lt;/metadata&gt;
+  &lt;project_id&gt;35b17138-b364-4e6a-a131-8f3099c5be68&lt;/project_id&gt;
+  &lt;resource_id&gt;bd9431c1-8d69-4ad3-803a-8d4a6b89fd36&lt;/resource_id&gt;
+  &lt;source&gt;openstack&lt;/source&gt;
+  &lt;timestamp&gt;2013-11-21T12:33:08.189843&lt;/timestamp&gt;
+  &lt;user_id&gt;efd87807-12d2-4b38-9c70-5f5c2ac427ff&lt;/user_id&gt;
+&lt;/value&gt;</pre>
+                                       </div>
+                                 </div>
+                              </div>
+                              <p class="nobody">This operation does not accept a request
+                                 body.
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div id="capabilities">
+                     <div class="subhead">
+                        <h3>Capabilities<a class="headerlink" href="#capabilities" title="Permalink to this headline"><span class="glyphicon glyphicon-link"></span></a></h3>
+                     </div>
+                     <p>Gets information for API and storage capabilities.</p>
+                     <p>
+                        The Telemetry service enables you to store samples, events,
+                        and alarm definitions in supported database back ends. The
+                        <code>capabilities</code> resource enables you to list the
+                        capabilities that a database supports.
+                        
+                     </p>
+                     <p>
+                        The <code>capabilities</code> resource returns a flattened
+                        dictionary of capability properties, each with an associated
+                        boolean value. A value of <code>true</code> indicates that the
+                        corresponding capability is available in the back end.
+                        
+                     </p>
+                     <p>
+                        Optionally, you can configure separate database back ends for
+                        samples, events, and alarm definitions. The
+                        <code>capabilities</code> response body shows a value of
+                        <code>true</code> to indicate that the samples, events, or alarm
+                        definitions database is ready to use in a production environment.
+                        
+                     </p>
+                     <div class="doc-entry">
+                        <div class="row d85e1060 operation-grp">
+                           <link href="apiref/css/main.css" rel="stylesheet" type="text/css"></link>
+                           <div class="col-md-1 operation"><a class="operation-anchor" href="#listCapabilities"><span class="glyphicon glyphicon-link"></span></a><span class="label label-success">GET</span></div>
+                           <div class="col-md-5">/v2/capabilities</div>
+                           <div class="col-md-5"><strong id="listCapabilities">List capabilities</strong><p>
+                                 A representation of the API and storage capabilities. Usually
+                                 constrained by restrictions imposed by the storage driver.
+                                 
+                              </p>&nbsp; 
+                           </div>
+                           <div class="col-md-1"><button class="btn btn-info btn-sm btn-detail" data-target="#detail-d85e1060" data-toggle="collapse" id="detail-d85e1060-btn">detail</button></div>
+                        </div>
+                        <div class="row collapse api-detail" id="detail-d85e1060">
+                           <div class="col-md-12">
+                              <div></div>
+                              <div class="row">
+                                 <div class="col-md-3"><b>Normal response codes</b></div>
+                                 <div class="col-md-9">
+                                    <returnvalue>200</returnvalue>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12"><b>Response parameters</b><table class="table table-bordered table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Parameter</th>
+                                             <th>Style</th>
+                                             <th>Type</th>
+                                             <th>Description</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>api</td>
+                                             <td>plain</td>
+                                             <td>array</td>
+                                             <td>
+                                                
+                                                <p>An array of API capabilities for the
+                                                   configured storage driver.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>alarms:history:query:complex</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the complex query capability
+                                                   for alarm history is available for the configured database
+                                                   back end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>alarms:history:query:simple</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the simple query capability
+                                                   for alarm history is available for the configured database
+                                                   back end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>alarms:query:complex</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the complex query capability
+                                                   for alarm definitions is available for the configured database
+                                                   back end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>alarms:query:simple</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the simple query capability
+                                                   for alarm definitions is available for the configured database
+                                                   back end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>events:query:simple</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the simple query capability
+                                                   for events is available for the configured database
+                                                   back end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>meters:pagination</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether pagination
+                                                   for meters is available for the configured database
+                                                   back end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>meters:query:complex</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the complex query capability
+                                                   for meters is available for the configured database
+                                                   back end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>meters:query:metadata</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the simple query capability
+                                                   for the metadata of meters is available for the configured
+                                                   database back end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>meters:query:simple</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the simple query capability
+                                                   for meters is available for the configured database back
+                                                   end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>resources:pagination</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether pagination
+                                                   for resources is available for the configured database
+                                                   back end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>resources:query:complex</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the complex query capability
+                                                   for resources is available for the configured database
+                                                   back end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>resources:query:metadata</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the simple query capability
+                                                   for the metadata of resources is available for the configured
+                                                   database back end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>resources:query:simple</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the simple query capability
+                                                   for resources is available for the configured database back
+                                                   end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>samples:pagination</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether pagination
+                                                   for samples is available for the configured database
+                                                   back end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>samples:query:complex</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the complex query capability
+                                                   for samples is available for the configured database
+                                                   back end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>samples:query:metadata</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the simple query capability
+                                                   for the metadata of samples is available for the configured
+                                                   database back end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>samples:query:simple</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the simple query capability
+                                                   for samples is available for the configured database back
+                                                   end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>statistics:aggregation:selectable:avg</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the <code>avg</code> capability
+                                                   is available for the configured database back end. A value of <code>true</code> indicates that the capability is available. Use the
+                                                   <code>avg</code> capability to get average values
+                                                   for samples.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>statistics:aggregation:selectable:cardinality</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Indicates whether the <code>cardinality</code> capability is
+                                                   available for the configured database back end. A value of
+                                                   <code>true</code> indicates that the capability is available. Use
+                                                   the <code>cardinality</code> capability to get cardinality
+                                                   for samples.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>statistics:aggregation:selectable:count</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the <code>count</code> capability
+                                                   is available for the configured database back end. A value of <code>true</code> indicates that the capability is available. Use the
+                                                   <code>count</code> capability to calculate the number of
+                                                   samples for a specified query.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>statistics:aggregation:selectable:max</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the <code>max</code> capability
+                                                   is available for the configured database back end. A value of <code>true</code> indicates that the capability is available. Use the
+                                                   <code>max</code> capability to calculate the maximum value
+                                                   for a specified query.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>statistics:aggregation:selectable:min</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the <code>min</code> capability
+                                                   is available for the configured database back end. A value of <code>true</code> indicates that the capability is available. Use the
+                                                   <code>min</code> capability to calculate the minimum value
+                                                   for a specified query.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>statistics:aggregation:selectable:quartile</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the <code>quartile</code> capability
+                                                   is available for the configured database back end. A value of <code>true</code> indicates that the capability is available. Use the
+                                                   <code>quartile</code> capability to calculate the quartile of
+                                                   sample volumes for a specified query.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>statistics:aggregation:selectable:stddev</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the <code>stddev</code> capability
+                                                   is available for the configured database back end. A value of <code>true</code> indicates that the capability is available. Use the
+                                                   <code>stddev</code> capability to calculate the standard deviation of
+                                                   sample volumes for a specified query.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>statistics:aggregation:selectable:sum</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the <code>sum</code> capability
+                                                   is available for the configured database back end. A value of <code>true</code> indicates that the capability is available. Use the
+                                                   <code>sum</code> capability to calculate the sum of
+                                                   sample volumes for a specified query.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>statistics:aggregation:standard</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the <code>standard</code> set of
+                                                   aggregation capability is available for the configured database
+                                                   back end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>statistics:groupby</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the <code>groupby</code>
+                                                   capabilityality is available for calculating statistics
+                                                   for the configured database back end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>statistics:pagination</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether pagination
+                                                   for statistics is available for the configured database
+                                                   back end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>statistics:query:complex</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the complex query capability
+                                                   for statistics is available for the configured database
+                                                   back end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>statistics:query:metadata</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the simple query capability
+                                                   for the metadata of samples used for calculating statistics
+                                                   is available for the configured database back end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>statistics:query:simple</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the simple query capability
+                                                   for statistics is available for the configured database back
+                                                   end. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>alarm_storage</td>
+                                             <td>plain</td>
+                                             <td>array</td>
+                                             <td>
+                                                
+                                                <p>Defines the capabilities for the storage that stores persisting alarm definitions. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>storage:production_ready</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Indicates whether the the configured database back end is
+                                                   ready to use in production environment. A value of
+                                                   <code>true</code> indicates that the database back end is
+                                                   ready to use in a production environment.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>event_storage</td>
+                                             <td>plain</td>
+                                             <td>array</td>
+                                             <td>
+                                                
+                                                <p>
+                                                   Defines the capabilities for the storage that stores
+                                                   persisting events. A value of <code>true</code> indicates that
+                                                   the capability is available.
+                                                   
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>storage:production_ready</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the the configured database
+                                                   back end is ready to use in production environment. A value of
+                                                   <code>true</code> indicates that the database back end is
+                                                   ready to use in a production environment.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>storage</td>
+                                             <td>plain</td>
+                                             <td>array</td>
+                                             <td>
+                                                
+                                                <p>Defines the capabilities for the storage that stores persisting samples. A value of <code>true</code> indicates that the capability is available.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>storage:production_ready</td>
+                                             <td>plain</td>
+                                             <td>boolean</td>
+                                             <td>
+                                                
+                                                <p>Indicates whether the the configured database
+                                                   back end is ready to use in production environment. A value of
+                                                   <code>true</code> indicates that the database back end is
+                                                   ready to use in a production environment.
+                                                </p>
+                                                
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-3"><select class="example-select form-control">
+                                       <option data-target="#resp-json-d85e1060" selected="selected" value="json">JSON
+                                          Response
+                                       </option>
+                                       <option data-target="#resp-xml-d85e1060" value="xml">XML Response</option></select></div>
+                              </div>
+                              <div class="tab-content">
+                                 <div class="tab-pane example active" id="resp-json-d85e1060">
+                                    <div class="example">
+                                       <pre>{
+    "alarm_storage": {
+        "storage:production_ready": true
+    },
+    "api": {
+        "alarms:history:query:complex": true,
+        "alarms:history:query:simple": true,
+        "alarms:query:complex": true,
+        "alarms:query:simple": true,
+        "events:query:simple": true,
+        "meters:pagination": true,
+        "meters:query:complex": false,
+        "meters:query:metadata": true,
+        "meters:query:simple": true,
+        "resources:pagination": false,
+        "resources:query:complex": false,
+        "resources:query:metadata": true,
+        "resources:query:simple": true,
+        "samples:pagination": true,
+        "samples:query:complex": true,
+        "samples:query:metadata": true,
+        "samples:query:simple": true,
+        "statistics:aggregation:selectable:avg": true,
+        "statistics:aggregation:selectable:cardinality": true,
+        "statistics:aggregation:selectable:count": true,
+        "statistics:aggregation:selectable:max": true,
+        "statistics:aggregation:selectable:min": true,
+        "statistics:aggregation:selectable:quartile": false,
+        "statistics:aggregation:selectable:stddev": true,
+        "statistics:aggregation:selectable:sum": true,
+        "statistics:aggregation:standard": true,
+        "statistics:groupby": true,
+        "statistics:pagination": true,
+        "statistics:query:complex": false,
+        "statistics:query:metadata": true,
+        "statistics:query:simple": true
+    },
+    "event_storage": {
+        "storage:production_ready": true
+    },
+    "storage": {
+        "storage:production_ready": true
+    }
+}
+</pre>
+                                       </div>
+                                 </div>
+                                 <div class="tab-pane example" id="resp-xml-d85e1060">
+                                    <div class="example">
+                                       <pre>&lt;value&gt;
+  &lt;api&gt;
+    &lt;item&gt;
+      &lt;key&gt;statistics:query:complex&lt;/key&gt;
+      &lt;value&gt;false&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;alarms:history:query:simple&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;meters:query:metadata&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;alarms:query:simple&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;resources:query:simple&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;statistics:aggregation:selectable:quartile&lt;/key&gt;
+      &lt;value&gt;false&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;statistics:query:simple&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;statistics:aggregation:selectable:count&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;statistics:aggregation:selectable:min&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;samples:pagination&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;statistics:pagination&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;alarms:query:complex&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;meters:query:complex&lt;/key&gt;
+      &lt;value&gt;false&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;resources:pagination&lt;/key&gt;
+      &lt;value&gt;false&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;statistics:groupby&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;alarms:history:query:complex&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;meters:pagination&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;meters:query:simple&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;samples:query:metadata&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;statistics:query:metadata&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;samples:query:simple&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;resources:query:metadata&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;statistics:aggregation:selectable:max&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;samples:query:complex&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;statistics:aggregation:standard&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;statistics:aggregation:selectable:sum&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;events:query:simple&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;statistics:aggregation:selectable:stddev&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;statistics:aggregation:selectable:avg&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;statistics:aggregation:selectable:cardinality&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;resources:query:complex&lt;/key&gt;
+      &lt;value&gt;false&lt;/value&gt;
+    &lt;/item&gt;
+  &lt;/api&gt;
+  &lt;storage&gt;
+    &lt;item&gt;
+      &lt;key&gt;storage:production_ready&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+  &lt;/storage&gt;
+  &lt;alarm_storage&gt;
+    &lt;item&gt;
+      &lt;key&gt;storage:production_ready&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+  &lt;/alarm_storage&gt;
+  &lt;event_storage&gt;
+    &lt;item&gt;
+      &lt;key&gt;storage:production_ready&lt;/key&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/item&gt;
+  &lt;/event_storage&gt;
+&lt;/value&gt;
+</pre>
+                                       </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div>
+               
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-9" id="footer">
+               <p>The OpenStack project is provided under the
+                  Apache 2.0 license.
+               </p>
+            </div>
+         </div>
+      </div><script src="apiref/js/jquery-1.10.2.min.js" type="text/javascript"></script><script src="apiref/js/bootstrap.min.js" type="text/javascript"></script><script src="apiref/js/api-site.js" type="text/javascript"></script><script type="text/javascript">
+                    var _gaq = _gaq || [];
+                    _gaq.push(['_setAccount', 'UA-17511903-1']);
+                    _gaq.push(['_setDomainName', '.openstack.org']);
+                    _gaq.push(['_trackPageview']);
+                    (function () {
+                    var ga = document.createElement('script');
+                    ga.type = 'text/javascript';
+                    ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(ga, s);
+                    })();
+                  </script></body>
+</html>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2014-2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+              xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-versions-v2.1">
+        <resource id="versions" path="/">
+         <method name="GET" rax:id="listVersionsv2.1">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List API versions">
+               <para role="shortdesc">
+                Lists information about all Compute API versions.
+            </para>
+            </wadl:doc>
+            <response status="200 300">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "versions": [
+        {
+            "id": "v2.0",
+            "links": [
+                {
+                    "href": "http://openstack.example.com/v2/",
+                    "rel": "self"
+                }
+            ],
+            "status": "SUPPORTED",
+            "version": "",
+            "min_version": "",
+            "updated": "2011-01-21T11:33:21Z"
+        },
+        {
+            "id": "v2.1",
+            "links": [
+                {
+                    "href": "http://openstack.example.com/v2.1/",
+                    "rel": "self"
+                }
+            ],
+            "status": "CURRENT",
+            "version": "2.3",
+            "min_version": "2.1",
+            "updated": "2013-07-23T11:33:21Z"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="X-OpenStack-Request-ID"
+                         style="header"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Returns a unique request ID that provides tracking for the
+      request. Provider must configure middleware to provide the request
+      ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+            
+        
+    </resources>
+    <!-- *******************************************************-->
+    <!--             Versions                                   -->
+    <!--*******************************************************-->
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="listVersionsv2.1">
+        
+        <response status="200 300">
+            <representation mediaType="application/json">
+                 
+            <param name="X-OpenStack-Request-ID"
+                   style="header"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+</wadl:application>

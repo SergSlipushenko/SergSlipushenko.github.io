@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+              xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-virtual-interfaces-v2.1">
+        <resource path="/v2.1/{tenant_id}/servers/{server_id}/os-virtual-interfaces"
+                id="os-virtual-interfaces">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <param name="server_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The UUID for the server.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="getVirtualInterfaces">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List virtual interfaces">
+               <para role="shortdesc">Lists the virtual interfaces for a
+                specified instance.</para>
+               <para>
+              Policy defaults enable only users with the administrative role
+              or the owner of the server to perform this operation. Change
+              these permissions through the <code>policy.json</code> file.
+            </para>
+            </wadl:doc>
+            <response status="202">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "virtual_interfaces": [
+        {
+            "id": "cec8b9bb-5d22-4104-b3c8-4c35db3210a6",
+            "mac_address": "fa:16:3e:3c:ce:6f",
+            "net_id": "cec8b9bb-5d22-4104-b3c8-4c35db3210a7"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="virtual_interfaces"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Virtual interface information">
+                        <para>A <code>virtual_interfaces</code> object.</para>
+                     </wadl:doc>
+                  </param>
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="id"
+                         style="plain"
+                         type="csapi:UUID"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Virtual interface ID">
+                        <para>The ID of the virtual interface.</para>
+                     </wadl:doc>
+                  </param>
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="mac_address"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="MAC address">
+                        <para>The MAC address.</para>
+                     </wadl:doc>
+                  </param>
+                  <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                         name="net_id"
+                         style="plain"
+                         type="csapi:UUID"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Virtual network ID">
+                        <para>The ID of the virtual network.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                           
+                       
+    </resources>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="getVirtualInterfaces">
+        
+        <response status="202">
+            <representation mediaType="application/json">
+                
+                
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="virtual_interfaces"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+   
+</param>
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="id"
+                   style="plain"
+                   type="csapi:UUID"
+                   required="true">
+   
+</param>
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="mac_address"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+   
+</param>
+            <param xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+                   name="net_id"
+                   style="plain"
+                   type="csapi:UUID"
+                   required="true">
+   
+</param>
+            </representation>
+        </response>
+    </method>
+</wadl:application>

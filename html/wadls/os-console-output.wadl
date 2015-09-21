@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:db="http://docbook.org/ns/docbook"
+              xmlns:common="http://docs.openstack.org/common/api/v1.0"
+              xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-console-output-v2.1">
+        <resource path="/v2/{tenant_id}/servers/{server_id}/action"
+                id="action-os-console-output">
+         <param name="tenant_id" style="template" type="xsd:string">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Tenant ID">
+               <para>The ID
+                            for the tenant or account in a
+                            multi-tenancy cloud.</para>
+            </wadl:doc>
+                </param>
+         <method name="POST" rax:id="getConsoleOutput">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Get console output for an instance">
+               <para role="shortdesc">Gets console output for a server
+                instance.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Get console output: JSON request">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "os-getConsoleOutput": {
+        "length": 50
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="os-getConsoleOutput"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Get console output action">
+                        <para>Specify the
+                                <code>os-getConsoleOutput</code>
+                            action in the request
+                        body.</para>
+                     </wadl:doc>
+                  </param>
+                  <param name="length" style="plain">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Length">
+                        <para>Number of lines to fetch from the end of
+                            console log.</para>
+                    </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Get console output: JSON response">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "output": "FAKE CONSOLE OUTPUT\nANOTHER\nLAST LINE"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="413">
+               <representation mediaType="application/xml" element="csapi:overLimit"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+      </resource>
+                            
+                        
+    </resources>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="getConsoleOutput">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+                <param name="os-getConsoleOutput"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+                    
+                </param>
+                <param name="length" style="plain">
+                    
+                </param>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="413">
+         <representation mediaType="application/xml" element="csapi:overLimit"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response>
+    </method>
+</wadl:application>

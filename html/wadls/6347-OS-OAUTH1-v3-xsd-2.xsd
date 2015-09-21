@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+                    Flattened from: file:/home/sslypushenko/projects/api-site/api-ref/src/wadls/identity-api/src/v3/xsd/api-common.xsd-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:rax="http://docs.rackspace.com/api"
+            xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:identity="http://docs.openstack.org/identity/api/v3"
+            xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+            xmlns:atom="http://www.w3.org/2005/Atom"
+            xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+            xmlns:hpext="http://www.hp.com/identity/api/ext/HP-IDM/v1.0"
+            xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+            xmlns:html="http://www.w3.org/1999/xhtml"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            targetNamespace="http://docs.openstack.org/common/api/v1.0">
+   <annotation xmlns="http://www.w3.org/2001/XMLSchema">
+        <xsd:appinfo xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <xsdxt:title>Open Stack Common API Schema Types 1.0</xsdxt:title>
+        </xsd:appinfo>
+        <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p>
+                This is the main index XML Schema document
+                for Common API Schema Types Version 1.0.
+            </p>
+        </xsd:documentation>
+    </annotation>
+</xsd:schema>

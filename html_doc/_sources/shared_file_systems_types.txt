@@ -1,0 +1,11 @@
+.. _shared_file_systems_types:
+
+===========
+Share types
+===========
+
+TBD
+
+Scope:
+ - How share types works. Extra specs
+ - Manage share types

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2012-2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-availability-zone-v2.1">
+        <resource path="/v2.1/{tenant_id}/os-availability-zone" id="os-availability-zone">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="getAvailabilityZone">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Get availability zone information">
+               <para role="shortdesc">Gets availability zone information.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Get availability zone information: JSON response">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "availabilityZoneInfo": [
+        {
+            "zoneState": {
+                "available": true
+            },
+            "hosts": null,
+            "zoneName": "nova"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                    
+                    <resource path="/v2.1/{tenant_id}/os-availability-zone/detail" id="detial">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="getAvailabilityZoneDetails">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Get detailed availability zone information">
+               <para role="shortdesc">Gets detailed availability zone information.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Get detailed availability zone information: JSON response">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "availabilityZoneInfo": [
+        {
+            "zoneState": {
+                "available": true
+            },
+            "hosts": {
+                "test-host": {
+                    "nova-conductor": {
+                        "available": true,
+                        "active": true,
+                        "updated_at": "2015-04-16T08:58:55.000000"
+                    },
+                    "nova-cert": {
+                        "available": true,
+                        "active": true,
+                        "updated_at": "2015-04-16T08:58:55.000000"
+                    },
+                    "nova-consoleauth": {
+                        "available": true,
+                        "active": true,
+                        "updated_at": "2015-04-16T08:58:55.000000"
+                    },
+                    "nova-scheduler": {
+                        "available": true,
+                        "active": true,
+                        "updated_at": "2015-04-16T08:58:55.000000"
+                    },
+                    "nova-network": {
+                        "available": true,
+                        "active": true,
+                        "updated_at": "2015-04-16T08:58:54.000000"
+                    }
+                }
+            },
+            "zoneName": "internal"
+        },
+        {
+            "zoneState": {
+                "available": true
+            },
+            "hosts": {
+                "test-host": {
+                    "nova-compute": {
+                        "available": true,
+                        "active": true,
+                        "updated_at": "2015-04-16T08:58:56.000000"
+                    }
+                }
+            },
+            "zoneName": "nova"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                        
+                    
+                
+    </resources>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="getAvailabilityZone">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="getAvailabilityZoneDetails">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+</wadl:application>

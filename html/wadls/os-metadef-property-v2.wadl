@@ -1,0 +1,1937 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2015 OpenStack Foundation, All Rights Reserved -->
+<!--*******************************************************-->
+<!--         Import Common XML Entities                    -->
+<!--                                                       -->
+<!--     You can resolve the entities with xmllint          -->
+<!--                                                       -->
+<!--        xmllint -noent os-image-2.2.wadl               -->
+<!--*******************************************************-->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <wadl:grammars xmlns:db="http://docbook.org/ns/docbook"
+                  xmlns="http://wadl.dev.java.net/2009/02">
+      <wadl:include href="7587-os-metadef-property-v2-xsd-1.xsd"/>
+      <wadl:include href="7587-os-metadef-property-v2-xsd-2.xsd"/>
+   </wadl:grammars>
+    <!--*******************************************************-->
+    <!--             All Resources                             -->
+    <!--*******************************************************-->
+    <resources xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:db="http://docbook.org/ns/docbook"
+              xmlns:common="http://docs.openstack.org/common/api/v1.0"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+              xmlns:csapi="http://docs.openstack.org/image/api/v2"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://glance.example.com/"
+              xml:id="os-metadef-property-v2">
+        <resource id="properties" path="/v2/metadefs/namespaces/{namespace}/properties">
+         <method name="POST" rax:id="createProperty-v2">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Create property">
+               <para role="shortdesc">
+                Creates a property definition within a namespace.
+            </para>
+               <para>
+                The schema is a subset of JSON property definition schema.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json" element="image">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "description": "The hypervisor type. It may be used by the host properties filter for scheduling. The ImagePropertiesFilter filters compute nodes that satisfy any architecture, hypervisor type, or virtual machine mode properties specified on the instance's image properties. Image properties are contained in the image dictionary in the request_spec.",
+    "enum": [
+        "xen",
+        "qemu",
+        "kvm",
+        "lxc",
+        "uml",
+        "vmware",
+        "hyperv"
+    ],
+    "name": "hypervisor_type",
+    "title": "Hypervisor Type",
+    "type": "string"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                
+                  <param name="name" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The name of the property.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="title" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The title of the property.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="type" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The property type.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="enum" style="plain" required="false" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Enumeration of property values.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="items" style="plain" required="false" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Schema for the items in an array.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="description"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The description of the property.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="operators"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Operators property description.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="default"
+                         style="plain"
+                         required="false"
+                         type="xsd:base64Binary">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Default property description.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="readonly"
+                         style="plain"
+                         required="false"
+                         type="xsd:boolean">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Indicates whether this is a read-only property.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="minimum" style="plain" required="false" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Minimum allowed numerical value.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="maximum" style="plain" required="false" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Maximum allowed numerical value.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="minLength"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Minimum allowed string length.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="maxLength"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Maximum allowed string length.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="pattern" style="plain" required="false" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>A regular expression (ECMA 262) that a string value
+      must match.
+   </para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="minItems"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Minimum length of an array.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="maxItems"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Maximum length of an array.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="uniqueItems"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Indicates whether all values in the array must be distinct.
+   </para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="additionalItems"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Describes extra items, if you use <i>tuple typing</i>. If the value of
+      <code>items</code> is an array (tuple typing) and the instance is longer
+      than the list of schemas in <code>items</code>, the additional items are
+      described by the schema in this property.
+   </para>
+                        <para>
+      If this value is <code>false</code>, the instance cannot be longer than
+      the list of schemas in <code>items</code>.
+   </para>
+                        <para>
+      If this value is <code>true</code>, that is equivalent to the empty
+      schema (anything goes).
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="201">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "description": "The hypervisor type. It may be used by the host properties filter for scheduling. The ImagePropertiesFilter filters compute nodes that satisfy any architecture, hypervisor type, or virtual machine mode properties specified on the instance's image properties. Image properties are contained in the image dictionary in the request_spec.",
+    "enum": [
+        "xen",
+        "qemu",
+        "kvm",
+        "lxc",
+        "uml",
+        "vmware",
+        "hyperv"
+    ],
+    "name": "hypervisor_type",
+    "title": "Hypervisor Type",
+    "type": "string"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="name" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The name of the property.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="title" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The title of the property.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="type" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The property type.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="enum" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Enumeration of property values.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="items" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Schema for the items in an array.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="description"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The description of the property.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="operators"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Operators property description.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="default"
+                         style="plain"
+                         required="true"
+                         type="xsd:base64Binary">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Default property description.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="readonly"
+                         style="plain"
+                         required="true"
+                         type="xsd:boolean">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Indicates whether this is a read-only property.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="minimum" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Minimum allowed numerical value.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="maximum" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Maximum allowed numerical value.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="minLength"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Minimum allowed string length.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="maxLength"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Maximum allowed string length.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="pattern" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>A regular expression (ECMA 262) that a string value
+      must match.
+   </para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="minItems" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Minimum length of an array.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="maxItems" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Maximum length of an array.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="uniqueItems"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Indicates whether all values in the array must be distinct.
+   </para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="additionalItems"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Describes extra items, if you use <i>tuple typing</i>. If the value of
+      <code>items</code> is an array (tuple typing) and the instance is longer
+      than the list of schemas in <code>items</code>, the additional items are
+      described by the schema in this property.
+   </para>
+                        <para>
+      If this value is <code>false</code>, the instance cannot be longer than
+      the list of schemas in <code>items</code>.
+   </para>
+                        <para>
+      If this value is <code>true</code>, that is equivalent to the empty
+      schema (anything goes).
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="GET" rax:id="listProperties-v2">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List properties">
+               <para role="shortdesc">Lists property definitions within
+                a namespace.</para>
+               <para>Returns a list of property definitions in a
+                namespace.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                
+                  <param name="namespace"
+                         style="template"
+                         type="csapi:uuid"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Namespace">
+                        <para>Unique namespace.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "properties": {
+        "hw_disk_bus": {
+            "description": "Specifies the type of disk controller to attach disk devices to.",
+            "enum": [
+                "scsi",
+                "virtio",
+                "uml",
+                "xen",
+                "ide",
+                "usb"
+            ],
+            "title": "Disk Bus",
+            "type": "string"
+        },
+        "hw_machine_type": {
+            "description": "Enables booting an ARM system using the specified machine type. By default, if an ARM image is used and its type is not specified, Compute uses vexpress-a15 (for ARMv7) or virt (for AArch64) machine types. Valid types can be viewed by using the virsh capabilities command (machine types are displayed in the machine tag).",
+            "title": "Machine Type",
+            "type": "string"
+        },
+        "hw_qemu_guest_agent": {
+            "description": "It is a daemon program running inside the domain which is supposed to help management applications with executing functions which need assistance of the guest OS. For example, freezing and thawing filesystems, entering suspend. However, guest agent (GA) is not bullet proof, and hostile guest OS can send spurious replies.",
+            "enum": [
+                "yes",
+                "no"
+            ],
+            "title": "QEMU Guest Agent",
+            "type": "string"
+        },
+        "hw_rng_model": {
+            "default": "virtio",
+            "description": "Adds a random-number generator device to the image's instances. The cloud administrator can enable and control device behavior by configuring the instance's flavor. By default: The generator device is disabled. /dev/random is used as the default entropy source. To specify a physical HW RNG device, use the following option in the nova.conf file: rng_dev_path=/dev/hwrng",
+            "title": "Random Number Generator Device",
+            "type": "string"
+        },
+        "hw_scsi_model": {
+            "default": "virtio-scsi",
+            "description": "Enables the use of VirtIO SCSI (virtio-scsi) to provide block device access for compute instances; by default, instances use VirtIO Block (virtio-blk). VirtIO SCSI is a para-virtualized SCSI controller device that provides improved scalability and performance, and supports advanced SCSI hardware.",
+            "title": "SCSI Model",
+            "type": "string"
+        },
+        "hw_video_model": {
+            "description": "The video image driver used.",
+            "enum": [
+                "vga",
+                "cirrus",
+                "vmvga",
+                "xen",
+                "qxl"
+            ],
+            "title": "Video Model",
+            "type": "string"
+        },
+        "hw_video_ram": {
+            "description": "Maximum RAM for the video image. Used only if a hw_video:ram_max_mb value has been set in the flavor's extra_specs and that value is higher than the value set in hw_video_ram.",
+            "title": "Max Video Ram",
+            "type": "integer"
+        },
+        "hw_vif_model": {
+            "description": "Specifies the model of virtual network interface device to use. The valid options depend on the configured hypervisor. KVM and QEMU: e1000, ne2k_pci, pcnet, rtl8139, and virtio. VMware: e1000, e1000e, VirtualE1000, VirtualE1000e, VirtualPCNet32, VirtualSriovEthernetCard, and VirtualVmxnet. Xen: e1000, netfront, ne2k_pci, pcnet, and rtl8139.",
+            "enum": [
+                "e1000",
+                "ne2k_pci",
+                "pcnet",
+                "rtl8139",
+                "virtio",
+                "e1000",
+                "e1000e",
+                "VirtualE1000",
+                "VirtualE1000e",
+                "VirtualPCNet32",
+                "VirtualSriovEthernetCard",
+                "VirtualVmxnet",
+                "netfront",
+                "ne2k_pci"
+            ],
+            "title": "Virtual Network Interface",
+            "type": "string"
+        },
+        "os_command_line": {
+            "description": "The kernel command line to be used by the libvirt driver, instead of the default. For linux containers (LXC), the value is used as arguments for initialization. This key is valid only for Amazon kernel, ramdisk, or machine images (aki, ari, or ami).",
+            "title": "Kernel Command Line",
+            "type": "string"
+        }
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="properties"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>A properties object.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="name" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The name of the property.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="title" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The title of the property.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="type" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The property type.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="enum" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Enumeration of property values.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="items" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Schema for the items in an array.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="description"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The description of the property.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="operators"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Operators property description.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="default"
+                         style="plain"
+                         required="true"
+                         type="xsd:base64Binary">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Default property description.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="readonly"
+                         style="plain"
+                         required="true"
+                         type="xsd:boolean">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Indicates whether this is a read-only property.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="minimum" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Minimum allowed numerical value.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="maximum" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Maximum allowed numerical value.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="minLength"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Minimum allowed string length.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="maxLength"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Maximum allowed string length.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="pattern" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>A regular expression (ECMA 262) that a string value
+      must match.
+   </para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="minItems" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Minimum length of an array.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="maxItems" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Maximum length of an array.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="uniqueItems"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Indicates whether all values in the array must be distinct.
+   </para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="additionalItems"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Describes extra items, if you use <i>tuple typing</i>. If the value of
+      <code>items</code> is an array (tuple typing) and the instance is longer
+      than the list of schemas in <code>items</code>, the additional items are
+      described by the schema in this property.
+   </para>
+                        <para>
+      If this value is <code>false</code>, the instance cannot be longer than
+      the list of schemas in <code>items</code>.
+   </para>
+                        <para>
+      If this value is <code>true</code>, that is equivalent to the empty
+      schema (anything goes).
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+      <resource path="/v2/metadefs/namespaces/{namespace}/properties/{property_name}"
+                id="property_name">
+         <method name="GET" rax:id="getProperty-v2">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Get property definition">
+               <para role="shortdesc">Gets the definition for a specified property.
+            </para>
+               <para>
+                If you include the <code>resource_type</code> query
+                parameter, the prefix of the included resource type is removed
+                from the property name before the query is submitted. This
+                enables you to look for a property name that starts with a
+                prefix from an associated resource type.
+            </para>
+               <para>Response body shows a single property entity.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                
+                  <param name="namespace"
+                         style="template"
+                         type="csapi:uuid"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Namespace">
+                        <para>Unique namespace.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="property_name"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The name of the property.</para>
+                     </wadl:doc>
+                  </param>
+                  <param name="resource_type"
+                         style="query"
+                         required="false"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+                        Filter parameter.
+                    </para>
+                        <para>
+                        Shows only property names that start with a prefix
+                        from an associated specified resource type.
+                    </para>
+                        <para>
+                        The prefix of the included resource type is removed
+                        from the property name in the response.
+                    </para>
+                     </wadl:doc>
+                  </param>
+                </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "description": "The hypervisor type. It may be used by the host properties filter for scheduling. The ImagePropertiesFilter filters compute nodes that satisfy any architecture, hypervisor type, or virtual machine mode properties specified on the instance's image properties. Image properties are contained in the image dictionary in the request_spec.",
+    "enum": [
+        "xen",
+        "qemu",
+        "kvm",
+        "lxc",
+        "uml",
+        "vmware",
+        "hyperv"
+    ],
+    "name": "hypervisor_type",
+    "title": "Hypervisor Type",
+    "type": "string"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                
+                  <param name="name" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The name of the property.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="title" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The title of the property.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="type" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The property type.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="enum" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Enumeration of property values.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="items" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Schema for the items in an array.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="description"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The description of the property.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="operators"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Operators property description.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="default"
+                         style="plain"
+                         required="true"
+                         type="xsd:base64Binary">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Default property description.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="readonly"
+                         style="plain"
+                         required="true"
+                         type="xsd:boolean">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Indicates whether this is a read-only property.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="minimum" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Minimum allowed numerical value.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="maximum" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Maximum allowed numerical value.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="minLength"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Minimum allowed string length.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="maxLength"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Maximum allowed string length.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="pattern" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>A regular expression (ECMA 262) that a string value
+      must match.
+   </para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="minItems" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Minimum length of an array.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="maxItems" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Maximum length of an array.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="uniqueItems"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Indicates whether all values in the array must be distinct.
+   </para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="additionalItems"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Describes extra items, if you use <i>tuple typing</i>. If the value of
+      <code>items</code> is an array (tuple typing) and the instance is longer
+      than the list of schemas in <code>items</code>, the additional items are
+      described by the schema in this property.
+   </para>
+                        <para>
+      If this value is <code>false</code>, the instance cannot be longer than
+      the list of schemas in <code>items</code>.
+   </para>
+                        <para>
+      If this value is <code>true</code>, that is equivalent to the empty
+      schema (anything goes).
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="PUT" rax:id="updateProperty-v2">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Update property definition">
+               <para role="shortdesc">Updates a specified property definition.
+                </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json" element="image">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "description": "The hypervisor type. It may be used by the host properties filter for scheduling. The ImagePropertiesFilter filters compute nodes that satisfy any architecture, hypervisor type, or virtual machine mode properties specified on the instance's image properties. Image properties are contained in the image dictionary in the request_spec.",
+    "enum": [
+        "xen",
+        "qemu",
+        "kvm",
+        "lxc",
+        "uml",
+        "vmware",
+        "hyperv"
+    ],
+    "name": "hypervisor_type",
+    "title": "Hypervisor Type",
+    "type": "string"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="name" style="plain" type="xsd:string" required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Name of the property.
+                        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="title" style="plain" type="xsd:string" required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Property title.
+                        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="type" style="plain" type="xsd:string" required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Property type
+                        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="enum" style="plain" type="xsd:enum" required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Enumeration of property values.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="items" style="plain" type="xsd:dict" required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                         <para>specifies schema for the items in an
+                         array.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="description"
+                         style="plain"
+                         type="xsd:string"
+                         required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                         <para>Property description.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="operators"
+                         style="plain"
+                         type="xsd:string"
+                         required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                         <para>Operators property description.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="default"
+                         style="plain"
+                         type="xsd:base64Binary"
+                         required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                         <para>Default property description.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="readonly"
+                         style="plain"
+                         type="xsd:boolean"
+                         required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                         <para>Indicates whether this is a read-only property.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="minimum" style="plain" type="xsd:int" required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                         <para>Minimum allowed numerical value.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="maximum" style="plain" type="xsd:dict" required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                         <para>Maximum allowed numerical value.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="minLength" style="plain" type="xsd:dict" required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                         <para>Minimum allowed string length.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="maxLength" style="plain" type="xsd:dict" required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                         <para>Maximum allowed string length.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="pattern" style="plain" type="xsd:dict" required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                         <para>A regular expression (ECMA 262) that
+                         a string value must match.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="minItems" style="plain" type="xsd:dict" required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                         <para>Minimum length of an array.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="maxItems" style="plain" type="xsd:dict" required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                         <para>Maximum length of an array.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="uniqueItems"
+                         style="plain"
+                         type="xsd:dict"
+                         required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                         <para>whether all the values in the array
+                         must be distinct.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="additionalItems"
+                         style="plain"
+                         type="xsd:dict"
+                         required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                         <para>
+                            If you use <i>tuple-typing</i>, describes extra
+                            items. If the value of <code>items</code> is an
+                            array and the instance is longer than the list of
+                            schemas in <code>items</code>, the schema in this
+                            property describes the additional items.
+                        </para>
+                        <para>
+                            If this value is false, the instance cannot be
+                            longer than the number of schemas listed in
+                            <code>items</code>.
+                        </para>
+                        <para>
+                            A value of true indicates an empty schema, or
+                            anything goes.
+                     </para>
+                    </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "description": "The hypervisor type. It may be used by the host properties filter for scheduling. The ImagePropertiesFilter filters compute nodes that satisfy any architecture, hypervisor type, or virtual machine mode properties specified on the instance's image properties. Image properties are contained in the image dictionary in the request_spec.",
+    "enum": [
+        "xen",
+        "qemu",
+        "kvm",
+        "lxc",
+        "uml",
+        "vmware",
+        "hyperv"
+    ],
+    "name": "hypervisor_type",
+    "title": "Hypervisor Type",
+    "type": "string"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                 
+                  <param name="name" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The name of the property.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="title" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The title of the property.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="type" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The property type.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="enum" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Enumeration of property values.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="items" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Schema for the items in an array.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="description"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The description of the property.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="operators"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Operators property description.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="default"
+                         style="plain"
+                         required="true"
+                         type="xsd:base64Binary">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Default property description.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="readonly"
+                         style="plain"
+                         required="true"
+                         type="xsd:boolean">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Indicates whether this is a read-only property.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="minimum" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Minimum allowed numerical value.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="maximum" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Maximum allowed numerical value.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="minLength"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Minimum allowed string length.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="maxLength"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Maximum allowed string length.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="pattern" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>A regular expression (ECMA 262) that a string value
+      must match.
+   </para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="minItems" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Minimum length of an array.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="maxItems" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Maximum length of an array.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="uniqueItems"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Indicates whether all values in the array must be distinct.
+   </para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="additionalItems"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Describes extra items, if you use <i>tuple typing</i>. If the value of
+      <code>items</code> is an array (tuple typing) and the instance is longer
+      than the list of schemas in <code>items</code>, the additional items are
+      described by the schema in this property.
+   </para>
+                        <para>
+      If this value is <code>false</code>, the instance cannot be longer than
+      the list of schemas in <code>items</code>.
+   </para>
+                        <para>
+      If this value is <code>true</code>, that is equivalent to the empty
+      schema (anything goes).
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="DELETE" rax:id="deleteProperty-v2">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Remove property definition">
+               <para role="shortdesc">
+                Removes a specified property definition in a specified
+                namespace.
+            </para>
+               <para>
+                To remove a property, first make an update namespace request
+                to set the <code>protected</code> attribute to false (boolean)
+                on the namespace. Then, remove the property. If the operation
+                succeeds, the response returns the HTTP 204 status code.
+            </para>
+               <para>
+                If you try to remove a property in a namespace
+                with the <code>protected</code> attribute set to true
+                (boolean), the operation fails and the response returns the
+                HTTP 403 error code.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                
+                  <param name="namespace"
+                         style="template"
+                         type="csapi:uuid"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Namespace">
+                        <para>Unique namespace.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="property_name"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The name of the property.</para>
+                     </wadl:doc>
+                  </param> 
+               </representation>
+            </request>
+            <response status="204"/>
+            <response status="403"/>
+         </method>
+      </resource>
+                                
+                                
+                                
+                            
+    </resources>
+    <!--*******************************************************-->
+    <!--               All Methods                             -->
+    <!--*******************************************************-->
+    <!-- Property methods -->
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+           xmlns:csapi="http://docs.openstack.org/image/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="createProperty-v2">
+        
+        <request>
+            <representation mediaType="application/json" element="image">
+                
+                
+            <param name="name" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="title" style="plain" required="true" type="xsd:string">
+
+</param> 
+            <param name="type" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="enum" style="plain" required="false" type="xsd:string">
+
+</param> 
+            <param name="items" style="plain" required="false" type="xsd:string">
+
+</param>
+                
+            <param name="description"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param> 
+            <param name="operators"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="default"
+                   style="plain"
+                   required="false"
+                   type="xsd:base64Binary">
+
+</param> 
+            <param name="readonly"
+                   style="plain"
+                   required="false"
+                   type="xsd:boolean">
+
+</param>
+                
+            <param name="minimum" style="plain" required="false" type="xsd:string">
+
+</param>
+                
+            <param name="maximum" style="plain" required="false" type="xsd:string">
+
+</param> 
+            <param name="minLength"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="maxLength"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param> 
+            <param name="pattern" style="plain" required="false" type="xsd:string">
+
+</param>
+                
+            <param name="minItems"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param> 
+            <param name="maxItems"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="uniqueItems"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="additionalItems"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </request>
+        <response status="201">
+            <representation mediaType="application/json">
+                 
+            <param name="name" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="title" style="plain" required="true" type="xsd:string">
+
+</param> 
+            <param name="type" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="enum" style="plain" required="true" type="xsd:string">
+
+</param> 
+            <param name="items" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="description"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param> 
+            <param name="operators"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="default"
+                   style="plain"
+                   required="true"
+                   type="xsd:base64Binary">
+
+</param> 
+            <param name="readonly"
+                   style="plain"
+                   required="true"
+                   type="xsd:boolean">
+
+</param>
+                
+            <param name="minimum" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="maximum" style="plain" required="true" type="xsd:string">
+
+</param> 
+            <param name="minLength"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="maxLength"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param> 
+            <param name="pattern" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="minItems" style="plain" required="true" type="xsd:string">
+
+</param> 
+            <param name="maxItems" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="uniqueItems"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="additionalItems"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+           xmlns:csapi="http://docs.openstack.org/image/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="listProperties-v2">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            <param name="namespace"
+                   style="template"
+                   type="csapi:uuid"
+                   required="true">
+
+</param>
+         </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                 
+            <param name="properties"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="name" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="title" style="plain" required="true" type="xsd:string">
+
+</param> 
+            <param name="type" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="enum" style="plain" required="true" type="xsd:string">
+
+</param> 
+            <param name="items" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="description"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param> 
+            <param name="operators"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="default"
+                   style="plain"
+                   required="true"
+                   type="xsd:base64Binary">
+
+</param> 
+            <param name="readonly"
+                   style="plain"
+                   required="true"
+                   type="xsd:boolean">
+
+</param>
+                
+            <param name="minimum" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="maximum" style="plain" required="true" type="xsd:string">
+
+</param> 
+            <param name="minLength"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="maxLength"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param> 
+            <param name="pattern" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="minItems" style="plain" required="true" type="xsd:string">
+
+</param> 
+            <param name="maxItems" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="uniqueItems"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="additionalItems"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+           xmlns:csapi="http://docs.openstack.org/image/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="getProperty-v2">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            <param name="namespace"
+                   style="template"
+                   type="csapi:uuid"
+                   required="true">
+
+</param>
+                
+            <param name="property_name"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                <param name="resource_type"
+                   style="query"
+                   required="false"
+                   type="xsd:int">
+                
+                </param>
+                </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                
+                
+            <param name="name" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="title" style="plain" required="true" type="xsd:string">
+
+</param> 
+            <param name="type" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="enum" style="plain" required="true" type="xsd:string">
+
+</param> 
+            <param name="items" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="description"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param> 
+            <param name="operators"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="default"
+                   style="plain"
+                   required="true"
+                   type="xsd:base64Binary">
+
+</param> 
+            <param name="readonly"
+                   style="plain"
+                   required="true"
+                   type="xsd:boolean">
+
+</param>
+                
+            <param name="minimum" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="maximum" style="plain" required="true" type="xsd:string">
+
+</param> 
+            <param name="minLength"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="maxLength"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param> 
+            <param name="pattern" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="minItems" style="plain" required="true" type="xsd:string">
+
+</param> 
+            <param name="maxItems" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="uniqueItems"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="additionalItems"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+           xmlns:csapi="http://docs.openstack.org/image/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="PUT"
+           id="updateProperty-v2">
+        
+        <request>
+            <representation mediaType="application/json" element="image">
+                
+                <param name="name" style="plain" type="xsd:string" required="true">
+                    
+                </param>
+                <param name="title" style="plain" type="xsd:string" required="true">
+                    
+                </param>
+                <param name="type" style="plain" type="xsd:string" required="true">
+                    
+                </param>
+                <param name="enum" style="plain" type="xsd:enum" required="false">
+                    
+                </param>
+                <param name="items" style="plain" type="xsd:dict" required="false">
+                    
+                </param>
+                <param name="description"
+                   style="plain"
+                   type="xsd:string"
+                   required="false">
+                    
+                </param>
+                <param name="operators"
+                   style="plain"
+                   type="xsd:string"
+                   required="false">
+                    
+                </param>
+                <param name="default"
+                   style="plain"
+                   type="xsd:base64Binary"
+                   required="false">
+                    
+                </param>
+                <param name="readonly"
+                   style="plain"
+                   type="xsd:boolean"
+                   required="false">
+                    
+                </param>
+                <param name="minimum" style="plain" type="xsd:int" required="false">
+                    
+                </param>
+                <param name="maximum" style="plain" type="xsd:dict" required="false">
+                    
+                </param>
+                <param name="minLength" style="plain" type="xsd:dict" required="false">
+                    
+                </param>
+                <param name="maxLength" style="plain" type="xsd:dict" required="false">
+                    
+                </param>
+                <param name="pattern" style="plain" type="xsd:dict" required="false">
+                    
+                </param>
+                <param name="minItems" style="plain" type="xsd:dict" required="false">
+                    
+                </param>
+                <param name="maxItems" style="plain" type="xsd:dict" required="false">
+                    
+                </param>
+                <param name="uniqueItems"
+                   style="plain"
+                   type="xsd:dict"
+                   required="false">
+                    
+                </param>
+                <param name="additionalItems"
+                   style="plain"
+                   type="xsd:dict"
+                   required="false">
+                    
+                </param>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                
+                 
+            <param name="name" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="title" style="plain" required="true" type="xsd:string">
+
+</param> 
+            <param name="type" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="enum" style="plain" required="true" type="xsd:string">
+
+</param> 
+            <param name="items" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="description"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param> 
+            <param name="operators"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="default"
+                   style="plain"
+                   required="true"
+                   type="xsd:base64Binary">
+
+</param> 
+            <param name="readonly"
+                   style="plain"
+                   required="true"
+                   type="xsd:boolean">
+
+</param>
+                
+            <param name="minimum" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="maximum" style="plain" required="true" type="xsd:string">
+
+</param> 
+            <param name="minLength"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="maxLength"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param> 
+            <param name="pattern" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="minItems" style="plain" required="true" type="xsd:string">
+
+</param> 
+            <param name="maxItems" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="uniqueItems"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="additionalItems"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+           xmlns:csapi="http://docs.openstack.org/image/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="DELETE"
+           id="deleteProperty-v2">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            <param name="namespace"
+                   style="template"
+                   type="csapi:uuid"
+                   required="true">
+
+</param>
+                
+            <param name="property_name"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param> 
+         </representation>
+        </request>
+        <response status="204"/>
+        <response status="403"/>
+    </method>
+</wadl:application>

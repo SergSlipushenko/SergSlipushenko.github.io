@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-server-external-events-v2.1">
+        <resource id="os-server-external-events"
+                path="/v2.1/{tenant_id}/os-server-external-events">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <method name="POST" rax:id="createevents">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Create events">
+               <para role="shortdesc">Creates events.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "events": [
+        {
+            "name": "test-event",
+            "tag": "foo",
+            "status": "completed",
+            "server_uuid": "3df201cf-2451-44f2-8d25-a4ca826fc1f3"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="events" style="plain" type="xsd:dict" required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="List events">
+                        <para>
+                            Specify the <code>events</code> action in the
+                            request body.
+                        </para>
+                    </wadl:doc>
+                  </param>
+                  <param name="name" style="plain" type="xsd:string" required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="name">
+                        <para>
+                            The event name. Valid values are
+                            <code>network-changed</code>, <code>network-vif-plugged</code>,
+                            <code>network-vif-unplugged</code>, and
+                            <code>network-vif-deletedplugged</code>.
+                        </para>
+                    </wadl:doc>
+                  </param>
+                  <param name="tag" style="plain" type="xsd:string" required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="tag">
+                        <para>
+                            A string value that identifies the event.
+                        </para>
+                    </wadl:doc>
+                  </param>
+                  <param name="server_uuid"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="server_uuid">
+                        <para>
+                            The ID of the server that is associated with the event.
+                        </para>
+                    </wadl:doc>
+                  </param>
+                  <param name="status" style="plain" type="xsd:string" required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="status">
+                        <para>
+                            The event status. Valid values are
+                            <code>failed</code>, <code>completed</code>, and
+                            <code>in-progress</code>.
+                        </para>
+                    </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "events": [
+        {
+            "code": 200,
+            "name": "network-changed",
+            "server_uuid": "ff1df7b2-6772-45fd-9326-c0a3b05591c2",
+            "status": "completed",
+            "tag": "foo"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="code" style="plain" type="xsd:string" required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="code">
+                        <para>
+                            The HTTP status code that pertains to the
+                            individual event.
+                        </para>
+                    </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                    
+                
+    </resources>
+    <!-- *******************************************************-->
+    <!--     Server external events                            -->
+    <!--*******************************************************-->
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="createevents">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+                <param name="events" style="plain" type="xsd:dict" required="true">
+                    
+                </param>
+                <param name="name" style="plain" type="xsd:string" required="true">
+                    
+                </param>
+                <param name="tag" style="plain" type="xsd:string" required="false">
+                    
+                </param>
+                <param name="server_uuid"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+                    
+                </param>
+                <param name="status" style="plain" type="xsd:string" required="true">
+                    
+                </param>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                
+                <param name="code" style="plain" type="xsd:string" required="true">
+                    
+                </param>
+            </representation>
+        </response>
+    </method>
+</wadl:application>

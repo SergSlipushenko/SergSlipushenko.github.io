@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <wadl:grammars xmlns:db="http://docbook.org/ns/docbook"
+                  xmlns="http://wadl.dev.java.net/2009/02">
+      <wadl:include href="59876-os-pci-v2.1-xsd-1.xsd"/>
+      <wadl:include href="59876-os-pci-v2.1-xsd-2.xsd"/>
+   </wadl:grammars>
+    <resources xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+              xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:csapi="http://docs.openstack.org/compute/api/v2.1"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-pci-v2.1">
+        <resource id="os-pci" path="/v2.1/{tenant_id}/os-pci">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="listPciDevices">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List PCI devices">
+               <para role="shortdesc">
+                Lists PCI devices.
+            </para>
+            </wadl:doc>
+            <request> </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "pci_devices": [
+        {
+            "address": "0000:04:10.0",
+            "compute_node_id": 1,
+            "id": 1,
+            "product_id": "1520",
+            "status": "available",
+            "vendor_id": "8086"
+        },
+        {
+            "address": "0000:04:10.1",
+            "compute_node_id": 1,
+            "id": 2,
+            "product_id": "1520",
+            "status": "available",
+            "vendor_id": "8086"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="X-OpenStack-Request-ID"
+                         style="header"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Returns a unique request ID that provides tracking for the
+      request. Provider must configure middleware to provide the request
+      ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                    
+                    <resource id="detail" path="/v2.1/{tenant_id}/os-pci/detail">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="listPciDevicesDetail">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List PCI devices with extra information">
+               <para role="shortdesc">
+                Lists PCI devices with extra information.
+            </para>
+            </wadl:doc>
+            <request> </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "pci_devices": [
+        {
+            "address": "0000:04:10.0",
+            "compute_node_id": 1,
+            "dev_id": "pci_0000_04_10_0",
+            "dev_type": "type-VF",
+            "extra_info": {
+                "key1": "value1",
+                "key2": "value2"
+            },
+            "id": 1,
+            "server_uuid": "69ba1044-0766-4ec0-b60d-09595de034a1",
+            "label": "label_8086_1520",
+            "product_id": "1520",
+            "status": "available",
+            "vendor_id": "8086"
+        },
+        {
+            "address": "0000:04:10.1",
+            "compute_node_id": 1,
+            "dev_id": "pci_0000_04_10_1",
+            "dev_type": "type-VF",
+            "extra_info": {
+                "key3": "value3",
+                "key4": "value4"
+            },
+            "id": 2,
+            "server_uuid": "d5b446a6-a1b4-4d01-b4f0-eac37b3a62fc",
+            "label": "label_8086_1520",
+            "product_id": "1520",
+            "status": "available",
+            "vendor_id": "8086"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="X-OpenStack-Request-ID"
+                         style="header"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Returns a unique request ID that provides tracking for the
+      request. Provider must configure middleware to provide the request
+      ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                        
+                    
+                    <resource id="pci_id" path="/v2.1/{tenant_id}/os-pci/{pci_id}">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <param name="pci_id" style="template" type="csapi:UUID">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                                <para>The ID of the PCI device.</para>
+                            </wadl:doc>
+                        </param>
+         <method name="GET" rax:id="showPciDevicePool">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show PCI device with extra information">
+               <para role="shortdesc">
+                Shows information for a specified PCI device. Includes extra
+                information.
+            </para>
+            </wadl:doc>
+            <request> </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "pci_device": {
+        "address": "0000:04:10.0",
+        "compute_node_id": 1,
+        "dev_id": "pci_0000_04_10_0",
+        "dev_type": "type-VF",
+        "extra_info": {
+            "key1": "value1",
+            "key2": "value2"
+        },
+        "id": 1,
+        "server_uuid": "69ba1044-0766-4ec0-b60d-09595de034a1",
+        "label": "label_8086_1520",
+        "product_id": "1520",
+        "status": "available",
+        "vendor_id": "8086"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="X-OpenStack-Request-ID"
+                         style="header"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Returns a unique request ID that provides tracking for the
+      request. Provider must configure middleware to provide the request
+      ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                        
+                        
+                    
+                
+    </resources>
+    <!-- *******************************************************-->
+    <!--        OS PCI pools                                    -->
+    <!-- *******************************************************-->
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/compute/api/v2.1"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="listPciDevices">
+        
+        <request> </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                 
+            <param name="X-OpenStack-Request-ID"
+                   style="header"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/compute/api/v2.1"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="listPciDevicesDetail">
+        
+        <request> </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                 
+            <param name="X-OpenStack-Request-ID"
+                   style="header"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/compute/api/v2.1"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="showPciDevicePool">
+        
+        <request> </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                 
+            <param name="X-OpenStack-Request-ID"
+                   style="header"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+</wadl:application>

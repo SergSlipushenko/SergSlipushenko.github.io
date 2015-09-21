@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns:db="http://docbook.org/ns/docbook"
+              xmlns:common="http://docs.openstack.org/common/api/v1.0"
+              xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="jobs-v1.1">
+        <resource id="jobs" path="/v1.1/{tenant_id}/jobs">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The unique identifier of the tenant or account.</para>
+                    </wadl:doc>
+                </param>
+         <method name="GET" rax:id="jobsList">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="List jobs">
+               <para role="shortdesc">Lists all jobs.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "jobs": [
+        {
+            "tenant_id": "9cd1314a0a31493282b6712b76a8fcda",
+            "created_at": "2015-02-10 14:25:48",
+            "id": "1a674c31-9aaa-4d07-b844-2bf200a1b836",
+            "name": "Edp-test-job-3d60854e",
+            "updated_at": null,
+            "description": "",
+            "libs": [
+                {
+                    "tenant_id": "9cd1314a0a31493282b6712b76a8fcda",
+                    "created_at": "2015-02-10 14:25:48",
+                    "id": "0ff4ac10-94a4-4e25-9ac9-603afe27b100",
+                    "name": "binary-job-339c2d1a.jar",
+                    "updated_at": null,
+                    "description": "",
+                    "url": "swift://Edp-test-c71e6bce.sahara/binary-job-339c2d1a.jar"
+                }
+            ],
+            "type": "MapReduce",
+            "mains": []
+        },
+        {
+            "tenant_id": "9cd1314a0a31493282b6712b76a8fcda",
+            "created_at": "2015-02-10 14:25:44",
+            "id": "4d1f3759-3497-4927-8352-910bacf24e62",
+            "name": "Edp-test-job-6b6953c8",
+            "updated_at": null,
+            "description": "",
+            "libs": [
+                {
+                    "tenant_id": "9cd1314a0a31493282b6712b76a8fcda",
+                    "created_at": "2015-02-10 14:25:44",
+                    "id": "e0d47800-4ac1-4d63-a2e1-c92d669a44e2",
+                    "name": "binary-job-6f21a2f8.jar",
+                    "updated_at": null,
+                    "description": "",
+                    "url": "swift://Edp-test-b409ec68.sahara/binary-job-6f21a2f8.jar"
+                }
+            ],
+            "type": "Pig",
+            "mains": [
+                {
+                    "tenant_id": "9cd1314a0a31493282b6712b76a8fcda",
+                    "created_at": "2015-02-10 14:25:44",
+                    "id": "e073e896-f123-4b76-995f-901d786262df",
+                    "name": "binary-job-d4f8bd75.pig",
+                    "updated_at": null,
+                    "description": "",
+                    "url": "swift://Edp-test-b409ec68.sahara/binary-job-d4f8bd75.pig"
+                }
+            ]
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+         <method name="POST" rax:id="jobCreate">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Create job">
+               <para role="shortdesc">Creates a job object.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "description": "This is pig job example",
+    "mains": [
+        "90d9d5ec-11aa-48bd-bc8c-34936ce0db6e"
+    ],
+    "libs": [
+        "320a2ca7-25fd-4b48-9bc3-4fb1b6c4ff27"
+    ],
+    "type": "Pig",
+    "name": "pig-job-example"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </request>
+            <response status="202">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "job": {
+        "tenant_id": "9cd1314a0a31493282b6712b76a8fcda",
+        "created_at": "2015-03-27 08:48:38.630827",
+        "id": "71defc8f-d005-484f-9d86-1aedf644d1ef",
+        "name": "pig-job-example",
+        "description": "This is pig job example",
+        "libs": [
+            {
+                "tenant_id": "9cd1314a0a31493282b6712b76a8fcda",
+                "created_at": "2015-02-10 14:25:53",
+                "id": "320a2ca7-25fd-4b48-9bc3-4fb1b6c4ff27",
+                "name": "binary-job",
+                "updated_at": null,
+                "description": "",
+                "url": "internal-db://c6a925fa-ac1d-4b2e-b88a-7054e1927521"
+            }
+        ],
+        "type": "Pig",
+        "mains": [
+            {
+                "tenant_id": "9cd1314a0a31493282b6712b76a8fcda",
+                "created_at": "2015-02-03 10:47:51",
+                "id": "90d9d5ec-11aa-48bd-bc8c-34936ce0db6e",
+                "name": "pig",
+                "updated_at": null,
+                "description": "",
+                "url": "internal-db://872878f6-72ea-44db-8d1d-e6a6396d2df0"
+            }
+        ]
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                    
+                    
+                    <resource id="jobId" path="/v1.1/{tenant_id}/jobs/{job_id}">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The unique identifier of the tenant or account.</para>
+                    </wadl:doc>
+                </param>
+         <param name="job_id" style="template" type="csapi:UUID">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                                <para>The unique identifier of the job.</para>
+                            </wadl:doc>
+                        </param>
+         <method name="GET" rax:id="jobInfo">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show job details">
+               <para role="shortdesc">Shows details for a specified job.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "job": {
+        "tenant_id": "9cd1314a0a31493282b6712b76a8fcda",
+        "created_at": "2015-02-10 14:25:48",
+        "id": "1a674c31-9aaa-4d07-b844-2bf200a1b836",
+        "name": "Edp-test-job",
+        "updated_at": null,
+        "description": "",
+        "libs": [
+            {
+                "tenant_id": "9cd1314a0a31493282b6712b76a8fcda",
+                "created_at": "2015-02-10 14:25:48",
+                "id": "0ff4ac10-94a4-4e25-9ac9-603afe27b100",
+                "name": "binary-job.jar",
+                "updated_at": null,
+                "description": "",
+                "url": "swift://Edp-test-c71e6bce.sahara/binary-job.jar"
+            }
+        ],
+        "type": "MapReduce",
+        "mains": []
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+         <method name="DELETE" rax:id="jobDelete">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Remove job">
+               <para role="shortdesc">Removes a specified job.</para>
+            </wadl:doc>
+            <response status="204"/>
+         </method>
+      </resource>
+                        
+                        
+                        
+                        <resource id="execute" path="/v1.1/{tenant_id}/jobs/{job_id}/execute">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The unique identifier of the tenant or account.</para>
+                    </wadl:doc>
+                </param>
+         <param name="job_id" style="template" type="csapi:UUID">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                                <para>The unique identifier of the job.</para>
+                            </wadl:doc>
+                        </param>
+         <method name="POST" rax:id="jobExecute">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Run job">
+               <para role="shortdesc">Runs a specified job.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "cluster_id": "776e441b-5816-4d47-9e07-7ded58f9a5f6",
+    "input_id": "af7dc864-6331-4c30-80f5-63d74b667eaf",
+    "output_id": "b63780f3-13d7-4286-b731-88270fb204de",
+    "job_configs": {
+        "configs": {
+            "mapred.map.tasks": "1",
+            "mapred.reduce.tasks": "1"
+        },
+        "args": [
+            "arg1",
+            "arg2"
+        ],
+        "params": {
+            "param2": "value2",
+            "param1": "value1"
+        }
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </request>
+            <response status="202">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "job_execution": {
+        "output_id": "b63780f3-13d7-4286-b731-88270fb204de",
+        "info": {
+            "status": "PENDING"
+        },
+        "job_id": "65afed9c-dad7-4658-9554-b7b4e1ca908f",
+        "tenant_id": "11587919cc534bcbb1027a161c82cf58",
+        "created_at": "2013-10-17 13:17:03.631362",
+        "input_id": "af7dc864-6331-4c30-80f5-63d74b667eaf",
+        "cluster_id": "776e441b-5816-4d47-9e07-7ded58f9a5f6",
+        "job_configs": {
+            "configs": {
+                "mapred.map.tasks": "1",
+                "mapred.reduce.tasks": "1"
+            },
+            "args": [
+                "arg1",
+                "arg2"
+            ],
+            "params": {
+                "param2": "value2",
+                "param1": "value1"
+            }
+        },
+        "id": "fb2ba667-1162-4f6d-ba77-662c04dfac35"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                            
+                        
+                    
+                
+    </resources>
+    <!-- *******************************************************-->
+    <!--      jobs            -->
+    <!--*******************************************************-->
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="jobsList">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="jobInfo">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="jobCreate">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            </representation>
+        </request>
+        <response status="202">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="DELETE"
+           id="jobDelete">
+        
+        <response status="204"/>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="jobExecute">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            </representation>
+        </request>
+        <response status="202">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+</wadl:application>

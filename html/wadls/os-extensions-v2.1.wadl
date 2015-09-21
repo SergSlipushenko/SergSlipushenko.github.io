@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2012-2014 OpenStack Foundation, All Rights Reserved -->
+<!--*******************************************************-->
+<!--         Import Common XML Entities                    -->
+<!--                                                       -->
+<!--     You can resolve the entities with xmllint          -->
+<!--                                                       -->
+<!--        xmllint -noent os-extensions-v2.1.wadl           -->
+<!--*******************************************************-->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+              xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-extensions-v2.1">
+        <!--*******************************************************-->
+        <!--             All Resources                             -->
+        <!--*******************************************************-->
+        <resource id="extensions" path="/v2.1/extensions">
+         <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                   xml:lang="EN"
+                   title="Detail image list">
+            <para>A list of supported extensions.</para>
+        </wadl:doc>
+         <method name="GET" rax:id="listExtensions">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List extensions">
+               <para role="shortdesc">Lists available extensions.</para>
+            </wadl:doc>
+            <response status="200 203">
+               <param name="next"
+                      style="plain"
+                      type="xsd:anyURI"
+                      path="/common:extensions/atom:link[@rel='next']/@href">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <para>Moves to the next metadata
+                        item.</para>
+                  </wadl:doc>
+                  <link resource_type="#ExtensionList" rel="next"/>
+               </param>
+               <param name="previous"
+                      style="plain"
+                      type="xsd:anyURI"
+                      path="/common:extensions/atom:link[@rel='previous']/@href">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <para>Moves to the previous metadata
+                        item.</para>
+                  </wadl:doc>
+                  <link resource_type="#ExtensionList" rel="previous"/>
+               </param>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "extension": {
+        "alias": "os-create-backup",
+        "description": "Create a backup of a server.",
+        "links": [],
+        "name": "CreateBackup",
+        "namespace": "http://docs.openstack.org/compute/ext/fake_xml",
+        "updated": "2014-12-03T00:00:00Z"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="X-OpenStack-Request-ID"
+                         style="header"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Returns a unique request ID that provides tracking for the
+      request. Provider must configure middleware to provide the request
+      ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+      <resource id="extension" path="/v2.1/extensions/{alias}">
+         <param name="alias" style="template" type="xsd:string">
+                        <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>An alias, which is a
+                                name for a pointer to a resource. For
+                                example, a named extension.</para>
+                        </wadl:doc>
+                    </param>
+         <method name="GET" rax:id="getExtension">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Get extension">
+               <para role="shortdesc">Shows details about a specified
+                extension.</para>
+               <para>Extensions introduce features and vendor-specific
+                functionality to the API without requiring a version
+                change.</para>
+            </wadl:doc>
+            <response status="200 203">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "extension": {
+        "updated": "2011-09-27T00:00:00+00:00",
+        "name": "DiskConfig",
+        "links": [],
+        "namespace": "http://docs.openstack.org/compute/ext/disk_config/api/v1.1",
+        "alias": "OS-DCF",
+        "description": "Disk Management Extension."
+    }
+}</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="X-OpenStack-Request-ID"
+                         style="header"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Returns a unique request ID that provides tracking for the
+      request. Provider must configure middleware to provide the request
+      ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                    
+                    
+                
+    </resources>
+
+    <!--*******************************************************-->
+    <!--               Resource Types                          -->
+    <!--*******************************************************-->
+    
+    
+
+    <!--*******************************************************-->
+    <!--               All Methods                             -->
+    <!--*******************************************************-->
+    <!-- Extensions -->
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="listExtensions">
+        
+        <response status="200 203">
+            <param name="next"
+                style="plain"
+                type="xsd:anyURI"
+                path="/common:extensions/atom:link[@rel='next']/@href">
+                
+                
+            </param>
+            <param name="previous"
+                style="plain"
+                type="xsd:anyURI"
+                path="/common:extensions/atom:link[@rel='previous']/@href">
+                
+                
+            </param>
+            <representation mediaType="application/json">
+                 
+            <param name="X-OpenStack-Request-ID"
+                   style="header"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="getExtension">
+        
+        <response status="200 203">
+            <representation mediaType="application/json">
+                 
+            <param name="X-OpenStack-Request-ID"
+                   style="header"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+</wadl:application>

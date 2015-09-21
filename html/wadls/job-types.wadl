@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns:db="http://docbook.org/ns/docbook"
+              xmlns:common="http://docs.openstack.org/common/api/v1.0"
+              xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="job-types-v1.1">
+        <resource id="job-types" path="/v1.1/{tenant_id}/job-types">
+         <param name="tenant_id" style="template" type="capi:UUID">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The unique identifier of the tenant or account.</para>
+                    </wadl:doc>
+                </param>
+         <method name="GET" rax:id="jobTypesList">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List job types">
+               <para role="shortdesc">Lists job types filtered by specified filter parameters.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <param name="plugin" style="template" type="xsd:string">
+                        <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                            <para>Filter results by plugin name.</para>
+                        </wadl:doc>
+                  </param>
+                  <param name="version" style="template" type="xsd:string">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Filter results by plugin version.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="type" style="template" type="xsd:string">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Filter results by job type.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="hints" style="template" type="xsd:bool">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Include configuration hints in results.</para>
+                    </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "job_types": [
+        {
+            "plugins": [
+                {
+                    "description": "The Apache Vanilla plugin provides the ability to launch upstream Vanilla Apache Hadoop cluster without any management consoles. It can also deploy the Oozie component.",
+                    "versions": {
+                        "1.2.1": {},
+                        "2.6.0": {}
+                    },
+                    "title": "Vanilla Apache Hadoop",
+                    "name": "vanilla"
+                },
+                {
+                    "description": "The Hortonworks Sahara plugin automates the deployment of the Hortonworks Data Platform (HDP) on OpenStack.",
+                    "versions": {
+                        "1.3.2": {},
+                        "2.0.6": {}
+                    },
+                    "title": "Hortonworks Data Platform",
+                    "name": "hdp"
+                },
+                {
+                    "description": "The Cloudera Sahara plugin provides the ability to launch the Cloudera distribution of Apache Hadoop (CDH) with Cloudera Manager management console.",
+                    "versions": {
+                        "5": {},
+                        "5.3.0": {}
+                    },
+                    "title": "Cloudera Plugin",
+                    "name": "cdh"
+                }
+            ],
+            "name": "Hive"
+        },
+        {
+            "plugins": [
+                {
+                    "description": "The Apache Vanilla plugin provides the ability to launch upstream Vanilla Apache Hadoop cluster without any management consoles. It can also deploy the Oozie component.",
+                    "versions": {
+                        "1.2.1": {},
+                        "2.6.0": {}
+                    },
+                    "title": "Vanilla Apache Hadoop",
+                    "name": "vanilla"
+                },
+                {
+                    "description": "The Hortonworks Sahara plugin automates the deployment of the Hortonworks Data Platform (HDP) on OpenStack.",
+                    "versions": {
+                        "1.3.2": {},
+                        "2.0.6": {}
+                    },
+                    "title": "Hortonworks Data Platform",
+                    "name": "hdp"
+                },
+                {
+                    "description": "The Cloudera Sahara plugin provides the ability to launch the Cloudera distribution of Apache Hadoop (CDH) with Cloudera Manager management console.",
+                    "versions": {
+                        "5": {},
+                        "5.3.0": {}
+                    },
+                    "title": "Cloudera Plugin",
+                    "name": "cdh"
+                }
+            ],
+            "name": "Java"
+        },
+        {
+            "plugins": [
+                {
+                    "description": "The Apache Vanilla plugin provides the ability to launch upstream Vanilla Apache Hadoop cluster without any management consoles. It can also deploy the Oozie component.",
+                    "versions": {
+                        "1.2.1": {},
+                        "2.6.0": {}
+                    },
+                    "title": "Vanilla Apache Hadoop",
+                    "name": "vanilla"
+                },
+                {
+                    "description": "The Hortonworks Sahara plugin automates the deployment of the Hortonworks Data Platform (HDP) on OpenStack.",
+                    "versions": {
+                        "1.3.2": {},
+                        "2.0.6": {}
+                    },
+                    "title": "Hortonworks Data Platform",
+                    "name": "hdp"
+                },
+                {
+                    "description": "The Cloudera Sahara plugin provides the ability to launch the Cloudera distribution of Apache Hadoop (CDH) with Cloudera Manager management console.",
+                    "versions": {
+                        "5": {},
+                        "5.3.0": {}
+                    },
+                    "title": "Cloudera Plugin",
+                    "name": "cdh"
+                }
+            ],
+            "name": "MapReduce"
+        },
+        {
+            "plugins": [
+                {
+                    "description": "The Apache Vanilla plugin provides the ability to launch upstream Vanilla Apache Hadoop cluster without any management consoles. It can also deploy the Oozie component.",
+                    "versions": {
+                        "1.2.1": {},
+                        "2.6.0": {}
+                    },
+                    "title": "Vanilla Apache Hadoop",
+                    "name": "vanilla"
+                },
+                {
+                    "description": "The Hortonworks Sahara plugin automates the deployment of the Hortonworks Data Platform (HDP) on OpenStack.",
+                    "versions": {
+                        "1.3.2": {},
+                        "2.0.6": {}
+                    },
+                    "title": "Hortonworks Data Platform",
+                    "name": "hdp"
+                },
+                {
+                    "description": "The Cloudera Sahara plugin provides the ability to launch the Cloudera distribution of Apache Hadoop (CDH) with Cloudera Manager management console.",
+                    "versions": {
+                        "5": {},
+                        "5.3.0": {}
+                    },
+                    "title": "Cloudera Plugin",
+                    "name": "cdh"
+                }
+            ],
+            "name": "MapReduce.Streaming"
+        },
+        {
+            "plugins": [
+                {
+                    "description": "The Apache Vanilla plugin provides the ability to launch upstream Vanilla Apache Hadoop cluster without any management consoles. It can also deploy the Oozie component.",
+                    "versions": {
+                        "1.2.1": {},
+                        "2.6.0": {}
+                    },
+                    "title": "Vanilla Apache Hadoop",
+                    "name": "vanilla"
+                },
+                {
+                    "description": "The Hortonworks Sahara plugin automates the deployment of the Hortonworks Data Platform (HDP) on OpenStack.",
+                    "versions": {
+                        "1.3.2": {},
+                        "2.0.6": {}
+                    },
+                    "title": "Hortonworks Data Platform",
+                    "name": "hdp"
+                },
+                {
+                    "description": "The Cloudera Sahara plugin provides the ability to launch the Cloudera distribution of Apache Hadoop (CDH) with Cloudera Manager management console.",
+                    "versions": {
+                        "5": {},
+                        "5.3.0": {}
+                    },
+                    "title": "Cloudera Plugin",
+                    "name": "cdh"
+                }
+            ],
+            "name": "Pig"
+        },
+        {
+            "plugins": [
+                {
+                    "description": "The Apache Vanilla plugin provides the ability to launch upstream Vanilla Apache Hadoop cluster without any management consoles. It can also deploy the Oozie component.",
+                    "versions": {
+                        "1.2.1": {},
+                        "2.6.0": {}
+                    },
+                    "title": "Vanilla Apache Hadoop",
+                    "name": "vanilla"
+                },
+                {
+                    "description": "The Hortonworks Sahara plugin automates the deployment of the Hortonworks Data Platform (HDP) on OpenStack.",
+                    "versions": {
+                        "1.3.2": {},
+                        "2.0.6": {}
+                    },
+                    "title": "Hortonworks Data Platform",
+                    "name": "hdp"
+                },
+                {
+                    "description": "The Cloudera Sahara plugin provides the ability to launch the Cloudera distribution of Apache Hadoop (CDH) with Cloudera Manager management console.",
+                    "versions": {
+                        "5": {},
+                        "5.3.0": {}
+                    },
+                    "title": "Cloudera Plugin",
+                    "name": "cdh"
+                }
+            ],
+            "name": "Shell"
+        },
+        {
+            "plugins": [
+                {
+                    "description": "This plugin provides an ability to launch Spark on Hadoop CDH cluster without any management consoles.",
+                    "versions": {
+                        "1.0.0": {}
+                    },
+                    "title": "Apache Spark",
+                    "name": "spark"
+                }
+            ],
+            "name": "Spark"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                    
+                
+    </resources>
+    <!-- *******************************************************-->
+    <!--      Job Types            -->
+    <!--*******************************************************-->
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="jobTypesList">
+        
+        <request>
+            <representation mediaType="application/json">
+                <param name="plugin" style="template" type="xsd:string">
+                        
+                </param>
+                <param name="version" style="template" type="xsd:string">
+                    
+                </param>
+                <param name="type" style="template" type="xsd:string">
+                    
+                </param>
+                <param name="hints" style="template" type="xsd:bool">
+                    
+                </param>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+</wadl:application>

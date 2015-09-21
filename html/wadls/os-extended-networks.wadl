@@ -1,0 +1,2236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:csapi="http://docs.rackspacecloud.com/csapi/v1.0"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-extended-networks-v2">
+        <resource id="tenant_id" path="/v2/{tenant_id}">
+         <param name="tenant_id" style="template" type="xsd:string">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+                            The unique identifier of the tenant or account.
+                        </para>
+                    </wadl:doc>
+                </param>
+         <method name="POST" rax:id="CreateNetwork">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Create network">
+               <para role="shortdesc">Creates a network with extended attributes.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "network": {
+        "label": "new net 111",
+        "cidr": "10.20.105.0/24",
+        "mtu": 9000,
+        "dhcp_server": "10.20.105.2",
+        "enable_dhcp": false,
+        "share_address": true,
+        "allowed_start": "10.20.105.10",
+        "allowed_end": "10.20.105.200"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                
+                  <param name="network" style="plain" required="true" type="csapi:dict">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>A dictionary
+      representation of a
+      network.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="bridge" style="plain" required="false" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VIFs on this network
+      are connected to this
+      bridge.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="bridge_interface"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The bridge is connected
+      to this interface.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="broadcast"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The broadcast address.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="cidr" style="plain" required="false" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>IPv4
+      subnet.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="cidr_v6" style="plain" required="false" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>IPv6 subnet.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="created_at"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Created-at timestamp in ISO 8601 format.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="deleted" style="plain" required="false" type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Deleted flag.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="deleted_at"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Deleted-at timestamp in ISO 8601 format.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="dhcp_start"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>DHCP starting address.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="dns1" style="plain" required="false" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>First
+      DNS.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="dns2" style="plain" required="false" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Second
+      DNS.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="gateway" style="plain" required="false" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>IPv4 gateway.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="gateway_v6"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>IPv6 gateway.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="host" style="plain" required="false" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Network host.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="id" style="plain" required="false" type="csapi:uuid">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The network ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="injected" style="plain" required="false" type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Injected flag.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="label" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Network
+      label.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="multi_host"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Multi
+      host.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="netmask" style="plain" required="false" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The net mask.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="netmask_v6"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The IPv6 net mask.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="priority" style="plain" required="false" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Network priority.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="project_id"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Project ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="rxtx_base"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>RXTX base factor value for the network.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="updated_at"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Updated-at timestamp in ISO 8601 format.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="vlan" style="plain" required="false" type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VLAN ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="vpn_private_address"
+                         style="plain"
+                         required="false"
+                         type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VPN private address.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="vpn_public_address"
+                         style="plain"
+                         required="false"
+                         type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VPN public address.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="vpn_public_port"
+                         style="plain"
+                         required="false"
+                         type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VPN public port.
+   </para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="allowed_start"
+                         style="plain"
+                         required="false"
+                         type="xsd:ip">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      If set, reserves all IP addresses before the
+      <code>allowed_start</code> value.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="allowed_end" style="plain" required="false" type="xsd:ip">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      If set, reserves all IP addresses after the
+      <code>allowed_end</code> value.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="dhcp_server" style="plain" required="false" type="xsd:ip">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      If you set this parameter to a value other than
+      your default gateway IP address, Compute assumes
+      that your default gateway IP address is external.
+      Default is the default gateway IP address.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="enable_dhcp"
+                         style="plain"
+                         required="false"
+                         type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Enables or disables DHCP on the network. Default is
+      <code>true</code>, which enables DHCP. Set to
+      <code>false</code> to disable DHCP.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="mtu" style="plain" required="false" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Enables you to set the
+      <code>network_device_mtu</code> attribute on each
+      network. This attribute sets the maximum
+      transmission unit (MTU) on a network. Default is
+      enabled.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="share_address"
+                         style="plain"
+                         required="false"
+                         type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      If set to <code>true</code>, network has the same
+      DHCP IP address on every host, which enables you
+      to set the <code>share_dhcp_address</code> flag on
+      each network. Default is <code>true</code>.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="202">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "network": {
+        "bridge": null,
+        "bridge_interface": null,
+        "broadcast": "10.20.105.255",
+        "cidr": "10.20.105.0/24",
+        "cidr_v6": null,
+        "created_at": null,
+        "deleted": null,
+        "deleted_at": null,
+        "dhcp_server": "10.20.105.2",
+        "dhcp_start": "10.20.105.2",
+        "dns1": null,
+        "dns2": null,
+        "enable_dhcp": false,
+        "gateway": "10.20.105.1",
+        "gateway_v6": null,
+        "host": null,
+        "id": "d7a17c0c-457e-4ab4-a99c-4fa1762f5359",
+        "injected": null,
+        "label": "new net 111",
+        "mtu": 9000,
+        "multi_host": null,
+        "netmask": "255.255.255.0",
+        "netmask_v6": null,
+        "priority": null,
+        "project_id": null,
+        "rxtx_base": null,
+        "share_address": true,
+        "updated_at": null,
+        "vlan": null,
+        "vpn_private_address": null,
+        "vpn_public_address": null,
+        "vpn_public_port": null
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                
+                  <param name="network" style="plain" required="true" type="csapi:dict">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>A dictionary
+      representation of a
+      network.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="bridge" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VIFs on this network
+      are connected to this
+      bridge.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="bridge_interface"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The bridge is connected
+      to this interface.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="broadcast"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The broadcast address.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="cidr" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>IPv4
+      subnet.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="cidr_v6" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>IPv6
+      subnet.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="created_at"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Created-at timestamp in ISO 8601 format.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="deleted" style="plain" required="true" type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Deleted flag.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="deleted_at"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Deleted-at timestamp in ISO 8601 format.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="dhcp_start"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>DHCP starting address.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="dns1" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>First
+      DNS.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="dns2" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Second
+      DNS.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="gateway" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>IPv4
+      gateway.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="gateway_v6"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>IPv6
+      gateway.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="host" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Network host.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="id" style="plain" required="true" type="csapi:uuid">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The network ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="injected" style="plain" required="true" type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Injected flag.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="label" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Network
+      label.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="multi_host"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Multi
+      host.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="netmask" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The net mask.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="netmask_v6"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The IPv6 net mask.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="priority" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Network priority.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="project_id"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Project
+      id.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="rxtx_base"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>RXTX base factor value for the network.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="updated_at"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Updated-at timestamp in ISO 8601 format.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="vlan" style="plain" required="true" type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VLAN ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="vpn_private_address"
+                         style="plain"
+                         required="true"
+                         type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VPN private address.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="vpn_public_address"
+                         style="plain"
+                         required="true"
+                         type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VPN public address.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="vpn_public_port"
+                         style="plain"
+                         required="true"
+                         type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VPN public port.
+   </para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="dhcp_server" style="plain" required="true" type="xsd:ip">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      If set to a value other than your default gateway
+      IP address, Compute assumes that your default
+      gateway IP address is external.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="enable_dhcp"
+                         style="plain"
+                         required="true"
+                         type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      If set to <code>true</code>, DHCP is enabled. If
+      set to <code>false</code>, DHCP is disabled.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="mtu" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      If set to <code>true</code>, you can set the
+      <code>network_device_mtu</code> attribute on each
+      network. This attribute sets the maximum
+      transmission unit (MTU) on a network.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="share_address"
+                         style="plain"
+                         required="true"
+                         type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      If set to <code>true</code>, network has the same
+      DHCP IP address on every host. You can set the
+      <code>share_dhcp_address</code> flag on each
+      network.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="413">
+               <representation mediaType="application/xml" element="csapi:overLimit"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+      </resource>
+                
+                
+                <resource id="os-extended-networks" path="/v2/{tenant_id}/os-extended-networks">
+         <param name="tenant_id" style="template" type="xsd:string">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+                            The unique identifier of the tenant or account.
+                        </para>
+                    </wadl:doc>
+                </param>
+         <method name="GET" rax:id="ListNetworks">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List networks">
+               <para role="shortdesc">
+                Lists networks that are available to the tenant. The
+                information in the network list includes extended network
+                attributes.
+            </para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "networks": [
+        {
+            "bridge": "br100",
+            "bridge_interface": "eth0",
+            "broadcast": "10.0.0.7",
+            "cidr": "10.0.0.0/29",
+            "cidr_v6": null,
+            "created_at": "2011-08-15T06:19:19.387525",
+            "deleted": false,
+            "deleted_at": null,
+            "dhcp_server": "10.0.0.1",
+            "dhcp_start": "10.0.0.3",
+            "dns1": null,
+            "dns2": null,
+            "enable_dhcp": true,
+            "gateway": "10.0.0.1",
+            "gateway_v6": null,
+            "host": "nsokolov-desktop",
+            "id": "20c8acc0-f747-4d71-a389-46d078ebf047",
+            "injected": false,
+            "label": "mynet_0",
+            "mtu": null,
+            "multi_host": false,
+            "netmask": "255.255.255.248",
+            "netmask_v6": null,
+            "priority": null,
+            "project_id": "1234",
+            "rxtx_base": null,
+            "share_address": false,
+            "updated_at": "2011-08-16T09:26:13.048257",
+            "vlan": 100,
+            "vpn_private_address": "10.0.0.2",
+            "vpn_public_address": "127.0.0.1",
+            "vpn_public_port": 1000
+        },
+        {
+            "bridge": "br101",
+            "bridge_interface": "eth0",
+            "broadcast": "10.0.0.15",
+            "cidr": "10.0.0.10/29",
+            "cidr_v6": null,
+            "created_at": "2011-08-15T06:19:19.885495",
+            "deleted": false,
+            "deleted_at": null,
+            "dhcp_server": "10.0.0.9",
+            "dhcp_start": "10.0.0.11",
+            "dns1": null,
+            "dns2": null,
+            "enable_dhcp": true,
+            "gateway": "10.0.0.9",
+            "gateway_v6": null,
+            "host": null,
+            "id": "20c8acc0-f747-4d71-a389-46d078ebf000",
+            "injected": false,
+            "label": "mynet_1",
+            "mtu": null,
+            "multi_host": false,
+            "netmask": "255.255.255.248",
+            "netmask_v6": null,
+            "priority": null,
+            "project_id": null,
+            "rxtx_base": null,
+            "share_address": false,
+            "updated_at": null,
+            "vlan": 101,
+            "vpn_private_address": "10.0.0.10",
+            "vpn_public_address": null,
+            "vpn_public_port": 1001
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                
+                  <param name="network" style="plain" required="true" type="csapi:dict">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>A dictionary
+      representation of a
+      network.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="bridge" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VIFs on this network
+      are connected to this
+      bridge.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="bridge_interface"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The bridge is connected
+      to this interface.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="broadcast"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The broadcast address.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="cidr" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>IPv4
+      subnet.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="cidr_v6" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>IPv6
+      subnet.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="created_at"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Created-at timestamp in ISO 8601 format.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="deleted" style="plain" required="true" type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Deleted flag.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="deleted_at"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Deleted-at timestamp in ISO 8601 format.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="dhcp_start"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>DHCP starting address.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="dns1" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>First
+      DNS.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="dns2" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Second
+      DNS.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="gateway" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>IPv4
+      gateway.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="gateway_v6"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>IPv6
+      gateway.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="host" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Network host.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="id" style="plain" required="true" type="csapi:uuid">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The network ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="injected" style="plain" required="true" type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Injected flag.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="label" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Network
+      label.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="multi_host"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Multi
+      host.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="netmask" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The net mask.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="netmask_v6"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The IPv6 net mask.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="priority" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Network priority.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="project_id"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Project
+      id.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="rxtx_base"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>RXTX base factor value for the network.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="updated_at"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Updated-at timestamp in ISO 8601 format.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="vlan" style="plain" required="true" type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VLAN ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="vpn_private_address"
+                         style="plain"
+                         required="true"
+                         type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VPN private address.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="vpn_public_address"
+                         style="plain"
+                         required="true"
+                         type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VPN public address.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="vpn_public_port"
+                         style="plain"
+                         required="true"
+                         type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VPN public port.
+   </para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="dhcp_server" style="plain" required="true" type="xsd:ip">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      If set to a value other than your default gateway
+      IP address, Compute assumes that your default
+      gateway IP address is external.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="enable_dhcp"
+                         style="plain"
+                         required="true"
+                         type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      If set to <code>true</code>, DHCP is enabled. If
+      set to <code>false</code>, DHCP is disabled.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="mtu" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      If set to <code>true</code>, you can set the
+      <code>network_device_mtu</code> attribute on each
+      network. This attribute sets the maximum
+      transmission unit (MTU) on a network.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="share_address"
+                         style="plain"
+                         required="true"
+                         type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      If set to <code>true</code>, network has the same
+      DHCP IP address on every host. You can set the
+      <code>share_dhcp_address</code> flag on each
+      network.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="413">
+               <representation mediaType="application/xml" element="csapi:overLimit"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+      </resource>
+                    
+                    <resource path="/v2/{tenant_id}/os-extended-networks/{id}" id="id">
+         <param name="tenant_id" style="template" type="xsd:string">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+                            The unique identifier of the tenant or account.
+                        </para>
+                    </wadl:doc>
+                </param>
+         <param name="id" style="template" required="true" type="csapi:UUID">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                                <para>
+                                    The unique identifier associated
+                                    with the network.
+                               </para>
+                           </wadl:doc>
+                        </param>
+         <method name="GET" rax:id="GetNetwork">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show network information">
+               <para role="shortdesc">
+                Shows information including extended attributes for a
+                specified network.
+            </para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "network": {
+        "bridge": "br100",
+        "bridge_interface": "eth0",
+        "broadcast": "10.0.0.7",
+        "cidr": "10.0.0.0/29",
+        "cidr_v6": null,
+        "created_at": "2011-08-15T06:19:19.387525",
+        "deleted": false,
+        "deleted_at": null,
+        "dhcp_server": "10.0.0.1",
+        "dhcp_start": "10.0.0.3",
+        "dns1": null,
+        "dns2": null,
+        "enable_dhcp": true,
+        "gateway": "10.0.0.1",
+        "gateway_v6": null,
+        "host": "nsokolov-desktop",
+        "id": "20c8acc0-f747-4d71-a389-46d078ebf047",
+        "injected": false,
+        "label": "mynet_0",
+        "mtu": null,
+        "multi_host": false,
+        "netmask": "255.255.255.248",
+        "netmask_v6": null,
+        "priority": null,
+        "project_id": "1234",
+        "rxtx_base": null,
+        "share_address": false,
+        "updated_at": "2011-08-16T09:26:13.048257",
+        "vlan": 100,
+        "vpn_private_address": "10.0.0.2",
+        "vpn_public_address": "127.0.0.1",
+        "vpn_public_port": 1000
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                
+                  <param name="network" style="plain" required="true" type="csapi:dict">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>A dictionary
+      representation of a
+      network.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="bridge" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VIFs on this network
+      are connected to this
+      bridge.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="bridge_interface"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The bridge is connected
+      to this interface.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="broadcast"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The broadcast address.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="cidr" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>IPv4
+      subnet.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="cidr_v6" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>IPv6
+      subnet.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="created_at"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Created-at timestamp in ISO 8601 format.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="deleted" style="plain" required="true" type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Deleted flag.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="deleted_at"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Deleted-at timestamp in ISO 8601 format.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="dhcp_start"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>DHCP starting address.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="dns1" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>First
+      DNS.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="dns2" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Second
+      DNS.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="gateway" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>IPv4
+      gateway.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="gateway_v6"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>IPv6
+      gateway.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="host" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Network host.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="id" style="plain" required="true" type="csapi:uuid">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The network ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="injected" style="plain" required="true" type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Injected flag.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="label" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Network
+      label.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="multi_host"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Multi
+      host.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="netmask" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The net mask.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="netmask_v6"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The IPv6 net mask.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="priority" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Network priority.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="project_id"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Project
+      id.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="rxtx_base"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>RXTX base factor value for the network.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="updated_at"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Updated-at timestamp in ISO 8601 format.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="vlan" style="plain" required="true" type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VLAN ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="vpn_private_address"
+                         style="plain"
+                         required="true"
+                         type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VPN private address.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="vpn_public_address"
+                         style="plain"
+                         required="true"
+                         type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VPN public address.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="vpn_public_port"
+                         style="plain"
+                         required="true"
+                         type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>VPN public port.
+   </para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="dhcp_server" style="plain" required="true" type="xsd:ip">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      If set to a value other than your default gateway
+      IP address, Compute assumes that your default
+      gateway IP address is external.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="enable_dhcp"
+                         style="plain"
+                         required="true"
+                         type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      If set to <code>true</code>, DHCP is enabled. If
+      set to <code>false</code>, DHCP is disabled.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="mtu" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      If set to <code>true</code>, you can set the
+      <code>network_device_mtu</code> attribute on each
+      network. This attribute sets the maximum
+      transmission unit (MTU) on a network.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="share_address"
+                         style="plain"
+                         required="true"
+                         type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      If set to <code>true</code>, network has the same
+      DHCP IP address on every host. You can set the
+      <code>share_dhcp_address</code> flag on each
+      network.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="413">
+               <representation mediaType="application/xml" element="csapi:overLimit"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+      </resource>
+                        
+                        
+                    
+                
+            
+    </resources>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.rackspacecloud.com/csapi/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="ListNetworks">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+                
+            <param name="network" style="plain" required="true" type="csapi:dict">
+
+</param>
+            <param name="bridge" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="bridge_interface"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="broadcast"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            <param name="cidr" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="cidr_v6" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="created_at"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="deleted" style="plain" required="true" type="xsd:bool">
+
+</param>
+            <param name="deleted_at"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="dhcp_start"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="dns1" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="dns2" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="gateway" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="gateway_v6"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="host" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="id" style="plain" required="true" type="csapi:uuid">
+
+</param>
+            <param name="injected" style="plain" required="true" type="xsd:bool">
+
+</param>
+            <param name="label" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="multi_host"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="netmask" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="netmask_v6"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="priority" style="plain" required="true" type="xsd:int">
+
+</param>
+            <param name="project_id"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="rxtx_base"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="updated_at"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="vlan" style="plain" required="true" type="csapi:UUID">
+
+</param>
+            <param name="vpn_private_address"
+                   style="plain"
+                   required="true"
+                   type="csapi:UUID">
+
+</param>
+            <param name="vpn_public_address"
+                   style="plain"
+                   required="true"
+                   type="csapi:UUID">
+
+</param>
+            <param name="vpn_public_port"
+                   style="plain"
+                   required="true"
+                   type="csapi:UUID">
+
+</param>
+                
+            <param name="dhcp_server" style="plain" required="true" type="xsd:ip">
+
+</param>
+            <param name="enable_dhcp"
+                   style="plain"
+                   required="true"
+                   type="xsd:bool">
+
+</param>
+            <param name="mtu" style="plain" required="true" type="xsd:int">
+
+</param>
+            <param name="share_address"
+                   style="plain"
+                   required="true"
+                   type="xsd:bool">
+
+</param>
+            </representation>
+        </response> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="413">
+         <representation mediaType="application/xml" element="csapi:overLimit"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.rackspacecloud.com/csapi/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="CreateNetwork">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+                
+            <param name="network" style="plain" required="true" type="csapi:dict">
+
+</param>
+            <param name="bridge" style="plain" required="false" type="xsd:string">
+
+</param>
+            <param name="bridge_interface"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            <param name="broadcast"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            <param name="cidr" style="plain" required="false" type="xsd:string">
+
+</param>
+            <param name="cidr_v6" style="plain" required="false" type="xsd:string">
+
+</param>
+            <param name="created_at"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            <param name="deleted" style="plain" required="false" type="xsd:bool">
+
+</param>
+            <param name="deleted_at"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            <param name="dhcp_start"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            <param name="dns1" style="plain" required="false" type="xsd:string">
+
+</param>
+            <param name="dns2" style="plain" required="false" type="xsd:string">
+
+</param>
+            <param name="gateway" style="plain" required="false" type="xsd:string">
+
+</param>
+            <param name="gateway_v6"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            <param name="host" style="plain" required="false" type="xsd:string">
+
+</param>
+            <param name="id" style="plain" required="false" type="csapi:uuid">
+
+</param>
+            <param name="injected" style="plain" required="false" type="xsd:bool">
+
+</param>
+            <param name="label" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="multi_host"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            <param name="netmask" style="plain" required="false" type="xsd:string">
+
+</param>
+            <param name="netmask_v6"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            <param name="priority" style="plain" required="false" type="xsd:int">
+
+</param>
+            <param name="project_id"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            <param name="rxtx_base"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            <param name="updated_at"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            <param name="vlan" style="plain" required="false" type="csapi:UUID">
+
+</param>
+            <param name="vpn_private_address"
+                   style="plain"
+                   required="false"
+                   type="csapi:UUID">
+
+</param>
+            <param name="vpn_public_address"
+                   style="plain"
+                   required="false"
+                   type="csapi:UUID">
+
+</param>
+            <param name="vpn_public_port"
+                   style="plain"
+                   required="false"
+                   type="csapi:UUID">
+
+</param>
+                
+            <param name="allowed_start"
+                   style="plain"
+                   required="false"
+                   type="xsd:ip">
+
+</param>
+            <param name="allowed_end" style="plain" required="false" type="xsd:ip">
+
+</param>
+            <param name="dhcp_server" style="plain" required="false" type="xsd:ip">
+
+</param>
+            <param name="enable_dhcp"
+                   style="plain"
+                   required="false"
+                   type="xsd:bool">
+
+</param>
+            <param name="mtu" style="plain" required="false" type="xsd:int">
+
+</param>
+            <param name="share_address"
+                   style="plain"
+                   required="false"
+                   type="xsd:bool">
+
+</param>
+            </representation>
+        </request>
+        <response status="202">
+            <representation mediaType="application/json">
+                
+                
+            <param name="network" style="plain" required="true" type="csapi:dict">
+
+</param>
+            <param name="bridge" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="bridge_interface"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="broadcast"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            <param name="cidr" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="cidr_v6" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="created_at"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="deleted" style="plain" required="true" type="xsd:bool">
+
+</param>
+            <param name="deleted_at"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="dhcp_start"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="dns1" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="dns2" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="gateway" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="gateway_v6"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="host" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="id" style="plain" required="true" type="csapi:uuid">
+
+</param>
+            <param name="injected" style="plain" required="true" type="xsd:bool">
+
+</param>
+            <param name="label" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="multi_host"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="netmask" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="netmask_v6"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="priority" style="plain" required="true" type="xsd:int">
+
+</param>
+            <param name="project_id"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="rxtx_base"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="updated_at"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="vlan" style="plain" required="true" type="csapi:UUID">
+
+</param>
+            <param name="vpn_private_address"
+                   style="plain"
+                   required="true"
+                   type="csapi:UUID">
+
+</param>
+            <param name="vpn_public_address"
+                   style="plain"
+                   required="true"
+                   type="csapi:UUID">
+
+</param>
+            <param name="vpn_public_port"
+                   style="plain"
+                   required="true"
+                   type="csapi:UUID">
+
+</param>
+                
+            <param name="dhcp_server" style="plain" required="true" type="xsd:ip">
+
+</param>
+            <param name="enable_dhcp"
+                   style="plain"
+                   required="true"
+                   type="xsd:bool">
+
+</param>
+            <param name="mtu" style="plain" required="true" type="xsd:int">
+
+</param>
+            <param name="share_address"
+                   style="plain"
+                   required="true"
+                   type="xsd:bool">
+
+</param>
+            </representation>
+        </response> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="413">
+         <representation mediaType="application/xml" element="csapi:overLimit"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.rackspacecloud.com/csapi/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="GetNetwork">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+                
+            <param name="network" style="plain" required="true" type="csapi:dict">
+
+</param>
+            <param name="bridge" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="bridge_interface"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="broadcast"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            <param name="cidr" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="cidr_v6" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="created_at"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="deleted" style="plain" required="true" type="xsd:bool">
+
+</param>
+            <param name="deleted_at"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="dhcp_start"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="dns1" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="dns2" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="gateway" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="gateway_v6"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="host" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="id" style="plain" required="true" type="csapi:uuid">
+
+</param>
+            <param name="injected" style="plain" required="true" type="xsd:bool">
+
+</param>
+            <param name="label" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="multi_host"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="netmask" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="netmask_v6"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="priority" style="plain" required="true" type="xsd:int">
+
+</param>
+            <param name="project_id"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="rxtx_base"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="updated_at"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="vlan" style="plain" required="true" type="csapi:UUID">
+
+</param>
+            <param name="vpn_private_address"
+                   style="plain"
+                   required="true"
+                   type="csapi:UUID">
+
+</param>
+            <param name="vpn_public_address"
+                   style="plain"
+                   required="true"
+                   type="csapi:UUID">
+
+</param>
+            <param name="vpn_public_port"
+                   style="plain"
+                   required="true"
+                   type="csapi:UUID">
+
+</param>
+                
+            <param name="dhcp_server" style="plain" required="true" type="xsd:ip">
+
+</param>
+            <param name="enable_dhcp"
+                   style="plain"
+                   required="true"
+                   type="xsd:bool">
+
+</param>
+            <param name="mtu" style="plain" required="true" type="xsd:int">
+
+</param>
+            <param name="share_address"
+                   style="plain"
+                   required="true"
+                   type="xsd:bool">
+
+</param>
+            </representation>
+        </response> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="413">
+         <representation mediaType="application/xml" element="csapi:overLimit"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response>
+    </method>
+</wadl:application>

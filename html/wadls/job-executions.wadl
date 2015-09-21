@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2015 OpenStack Foundation, All Rights Reserved -->
+<!--*******************************************************-->
+<!--         Import Common XML Entities                    -->
+<!--                                                       -->
+<!--     You can resolve the entities with xmllint         -->
+<!--                                                       -->
+<!--        xmllint -noent node-group-template.wadl        -->
+<!--*******************************************************-->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="cluster-templates-v1.1">
+        <resource id="job-executions" path="/v1.1/{tenant_id}/job-executions">
+         <param name="tenant_id" style="template" type="capi:UUID">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+                            The unique identifier of the tenant or account.
+                        </para>
+                    </wadl:doc>
+                </param>
+         <method name="GET" rax:id="job-executions-list">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List job executions">
+               <para role="shortdesc">
+                Lists available job executions.
+            </para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "job_executions": [
+        {
+            "output_id": "b63780f3-13d7-4286-b731-88270fb204de",
+            "info": {
+                "status": "RUNNING",
+                "externalId": null,
+                "run": 0,
+                "startTime": "Thu, 17 Oct 2013 13:53:14 GMT",
+                "appName": "job-wf",
+                "lastModTime": "Thu, 17 Oct 2013 13:53:17 GMT",
+                "actions": [
+                    {
+                        "status": "OK",
+                        "retries": 0,
+                        "transition": "job-node",
+                        "stats": null,
+                        "startTime": "Thu, 17 Oct 2013 13:53:14 GMT",
+                        "cred": "null",
+                        "errorMessage": null,
+                        "externalId": "-",
+                        "errorCode": null,
+                        "consoleUrl": "-",
+                        "toString": "Action name[:start:] status[OK]",
+                        "externalStatus": "OK",
+                        "conf": "",
+                        "type": ":START:",
+                        "trackerUri": "-",
+                        "externalChildIDs": null,
+                        "endTime": "Thu, 17 Oct 2013 13:53:15 GMT",
+                        "data": null,
+                        "id": "0000000-131017135256789-oozie-hado-W@:start:",
+                        "name": ":start:"
+                    },
+                    {
+                        "status": "RUNNING",
+                        "retries": 0,
+                        "transition": null,
+                        "stats": null,
+                        "startTime": "Thu, 17 Oct 2013 13:53:15 GMT",
+                        "cred": "null",
+                        "errorMessage": null,
+                        "externalId": "job_201310171352_0001",
+                        "errorCode": null,
+                        "consoleUrl": "http://edp-master-001:50030/jobdetails.jsp?jobid=job_201310171352_0001",
+                        "toString": "Action name[job-node] status[RUNNING]",
+                        "externalStatus": "RUNNING",
+                        "conf": "&lt;pig xmlns=\"uri:oozie:workflow:0.2\"&gt;\r\n  &lt;job-tracker&gt;edp-master-001:8021&lt;/job-tracker&gt;\r\n  &lt;name-node&gt;hdfs://edp-master-001:8020&lt;/name-node&gt;\r\n  &lt;configuration&gt;\r\n    &lt;property&gt;\r\n      &lt;name&gt;fs.swift.service.sahara.password&lt;/name&gt;\r\n      &lt;value&gt;swordfish&lt;/value&gt;\r\n    &lt;/property&gt;\r\n    &lt;property&gt;\r\n      &lt;name&gt;fs.swift.service.sahara.username&lt;/name&gt;\r\n      &lt;value&gt;admin&lt;/value&gt;\r\n    &lt;/property&gt;\r\n  &lt;/configuration&gt;\r\n  &lt;script&gt;example.pig&lt;/script&gt;\r\n  &lt;param&gt;INPUT=swift://container.sahara/text&lt;/param&gt;\r\n  &lt;param&gt;OUTPUT=swift://container.sahara/output&lt;/param&gt;\r\n&lt;/pig&gt;",
+                        "type": "pig",
+                        "trackerUri": "edp-master-001:8021",
+                        "externalChildIDs": null,
+                        "endTime": null,
+                        "data": null,
+                        "id": "0000000-131017135256789-oozie-hado-W@job-node",
+                        "name": "job-node"
+                    }
+                ],
+                "acl": null,
+                "consoleUrl": "http://edp-master-001.novalocal:11000/oozie?job=0000000-131017135256789-oozie-hado-W",
+                "appPath": "hdfs://edp-master-001:8020/user/hadoop/pig-job/9ceb6469-4d06-474d-995d-76fbc3b8c617/workflow.xml",
+                "toString": "Workflow id[0000000-131017135256789-oozie-hado-W] status[RUNNING]",
+                "user": "hadoop",
+                "conf": "&lt;configuration&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;user.name&lt;/name&gt;\r\n    &lt;value&gt;hadoop&lt;/value&gt;\r\n  &lt;/property&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;oozie.use.system.libpath&lt;/name&gt;\r\n    &lt;value&gt;true&lt;/value&gt;\r\n  &lt;/property&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;nameNode&lt;/name&gt;\r\n    &lt;value&gt;hdfs://edp-master-001:8020&lt;/value&gt;\r\n  &lt;/property&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;jobTracker&lt;/name&gt;\r\n    &lt;value&gt;edp-master-001:8021&lt;/value&gt;\r\n  &lt;/property&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;oozie.wf.application.path&lt;/name&gt;\r\n    &lt;value&gt;hdfs://edp-master-001:8020/user/hadoop/pig-job/9ceb6469-4d06-474d-995d-76fbc3b8c617/workflow.xml&lt;/value&gt;\r\n  &lt;/property&gt;\r\n&lt;/configuration&gt;",
+                "parentId": null,
+                "createdTime": "Thu, 17 Oct 2013 13:53:14 GMT",
+                "group": null,
+                "endTime": null,
+                "id": "0000000-131017135256789-oozie-hado-W"
+            },
+            "job_id": "65afed9c-dad7-4658-9554-b7b4e1ca908f",
+            "tenant_id": "11587919cc534bcbb1027a161c82cf58",
+            "start_time": "2013-10-17T17:53:14",
+            "updated_at": "2013-10-17 13:53:32.227919",
+            "return_code": null,
+            "oozie_job_id": "0000000-131017135256789-oozie-hado-W",
+            "input_id": "af7dc864-6331-4c30-80f5-63d74b667eaf",
+            "end_time": null,
+            "cluster_id": "eb85e8a0-510c-489f-b78e-ad1d29e957c8",
+            "id": "e63bdc21-0126-4fd2-90c6-5163d16f31df",
+            "progress": null,
+            "job_configs": {},
+            "created_at": "2013-10-17 13:51:11.671977"
+        },
+        {
+            "output_id": "b63780f3-13d7-4286-b731-88270fb204de",
+            "info": {
+                "status": "PENDING"
+            },
+            "job_id": "65afed9c-dad7-4658-9554-b7b4e1ca908f",
+            "tenant_id": "11587919cc534bcbb1027a161c82cf58",
+            "start_time": null,
+            "updated_at": null,
+            "return_code": null,
+            "oozie_job_id": null,
+            "input_id": "af7dc864-6331-4c30-80f5-63d74b667eaf",
+            "end_time": null,
+            "cluster_id": "eb85e8a0-510c-489f-b78e-ad1d29e957c8",
+            "id": "e63bdc21-0126-4fd2-90c6-5163d16f31df",
+            "progress": null,
+            "job_configs": {},
+            "created_at": "2013-10-17 14:37:04.107096"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                    
+                    <resource id="job_execution_id"
+                path="/v1.1/{tenant_id}/job-executions/{job_execution_id}">
+         <param name="tenant_id" style="template" type="capi:UUID">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+                            The unique identifier of the tenant or account.
+                        </para>
+                    </wadl:doc>
+                </param>
+         <param name="job_execution_id" style="template" type="capi:UUID">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                                <para>The unique identifier of the job execution.</para>
+                            </wadl:doc>
+                        </param>
+         <method name="GET" rax:id="job-executions-show">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show job execution details">
+               <para role="shortdesc">
+                Shows details for a specified job execution, by ID.
+            </para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "output_id": "b63780f3-13d7-4286-b731-88270fb204de",
+    "info": {
+        "status": "RUNNING",
+        "externalId": null,
+        "run": 0,
+        "startTime": "Thu, 17 Oct 2013 13:53:14 GMT",
+        "appName": "job-wf",
+        "lastModTime": "Thu, 17 Oct 2013 13:53:17 GMT",
+        "actions": [
+            {
+                "status": "OK",
+                "retries": 0,
+                "transition": "job-node",
+                "stats": null,
+                "startTime": "Thu, 17 Oct 2013 13:53:14 GMT",
+                "cred": "null",
+                "errorMessage": null,
+                "externalId": "-",
+                "errorCode": null,
+                "consoleUrl": "-",
+                "toString": "Action name[:start:] status[OK]",
+                "externalStatus": "OK",
+                "conf": "",
+                "type": ":START:",
+                "trackerUri": "-",
+                "externalChildIDs": null,
+                "endTime": "Thu, 17 Oct 2013 13:53:15 GMT",
+                "data": null,
+                "id": "0000000-131017135256789-oozie-hado-W@:start:",
+                "name": ":start:"
+            },
+            {
+                "status": "RUNNING",
+                "retries": 0,
+                "transition": null,
+                "stats": null,
+                "startTime": "Thu, 17 Oct 2013 13:53:15 GMT",
+                "cred": "null",
+                "errorMessage": null,
+                "externalId": "job_201310171352_0001",
+                "errorCode": null,
+                "consoleUrl": "http://edp-master-001:50030/jobdetails.jsp?jobid=job_201310171352_0001",
+                "toString": "Action name[job-node] status[RUNNING]",
+                "externalStatus": "RUNNING",
+                "conf": "&lt;pig xmlns=\"uri:oozie:workflow:0.2\"&gt;\r\n  &lt;job-tracker&gt;edp-master-001:8021&lt;/job-tracker&gt;\r\n  &lt;name-node&gt;hdfs://edp-master-001:8020&lt;/name-node&gt;\r\n  &lt;configuration&gt;\r\n    &lt;property&gt;\r\n      &lt;name&gt;fs.swift.service.sahara.password&lt;/name&gt;\r\n      &lt;value&gt;swordfish&lt;/value&gt;\r\n    &lt;/property&gt;\r\n    &lt;property&gt;\r\n      &lt;name&gt;fs.swift.service.sahara.username&lt;/name&gt;\r\n      &lt;value&gt;admin&lt;/value&gt;\r\n    &lt;/property&gt;\r\n  &lt;/configuration&gt;\r\n  &lt;script&gt;example.pig&lt;/script&gt;\r\n  &lt;param&gt;INPUT=swift://container.sahara/text&lt;/param&gt;\r\n  &lt;param&gt;OUTPUT=swift://container.sahara/output&lt;/param&gt;\r\n&lt;/pig&gt;",
+                "type": "pig",
+                "trackerUri": "edp-master-001:8021",
+                "externalChildIDs": null,
+                "endTime": null,
+                "data": null,
+                "id": "0000000-131017135256789-oozie-hado-W@job-node",
+                "name": "job-node"
+            }
+        ],
+        "acl": null,
+        "consoleUrl": "http://edp-master-001.novalocal:11000/oozie?job=0000000-131017135256789-oozie-hado-W",
+        "appPath": "hdfs://edp-master-001:8020/user/hadoop/pig-job/9ceb6469-4d06-474d-995d-76fbc3b8c617/workflow.xml",
+        "toString": "Workflow id[0000000-131017135256789-oozie-hado-W] status[RUNNING]",
+        "user": "hadoop",
+        "conf": "&lt;configuration&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;user.name&lt;/name&gt;\r\n    &lt;value&gt;hadoop&lt;/value&gt;\r\n  &lt;/property&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;oozie.use.system.libpath&lt;/name&gt;\r\n    &lt;value&gt;true&lt;/value&gt;\r\n  &lt;/property&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;nameNode&lt;/name&gt;\r\n    &lt;value&gt;hdfs://edp-master-001:8020&lt;/value&gt;\r\n  &lt;/property&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;jobTracker&lt;/name&gt;\r\n    &lt;value&gt;edp-master-001:8021&lt;/value&gt;\r\n  &lt;/property&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;oozie.wf.application.path&lt;/name&gt;\r\n    &lt;value&gt;hdfs://edp-master-001:8020/user/hadoop/pig-job/9ceb6469-4d06-474d-995d-76fbc3b8c617/workflow.xml&lt;/value&gt;\r\n  &lt;/property&gt;\r\n&lt;/configuration&gt;",
+        "parentId": null,
+        "createdTime": "Thu, 17 Oct 2013 13:53:14 GMT",
+        "group": null,
+        "endTime": null,
+        "id": "0000000-131017135256789-oozie-hado-W"
+    },
+    "job_id": "65afed9c-dad7-4658-9554-b7b4e1ca908f",
+    "tenant_id": "11587919cc534bcbb1027a161c82cf58",
+    "start_time": "2013-10-17T17:53:14",
+    "updated_at": "2013-10-17 13:53:32.227919",
+    "return_code": null,
+    "oozie_job_id": "0000000-131017135256789-oozie-hado-W",
+    "input_id": "af7dc864-6331-4c30-80f5-63d74b667eaf",
+    "end_time": null,
+    "cluster_id": "eb85e8a0-510c-489f-b78e-ad1d29e957c8",
+    "id": "e63bdc21-0126-4fd2-90c6-5163d16f31df",
+    "progress": null,
+    "job_configs": {},
+    "created_at": "2013-10-17 13:51:11.671977"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+         <method name="DELETE" rax:id="job-executions-delete">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Delete job execution">
+               <para role="shortdesc">
+                Deletes a specified job execution.
+            </para>
+            </wadl:doc>
+            <response status="204"/>
+         </method>
+      </resource>
+                        
+                        
+                        
+                        <resource id="refresh-status"
+                path="/v1.1/{tenant_id}/job-executions/{job_execution_id}/refresh-status">
+         <param name="tenant_id" style="template" type="capi:UUID">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+                            The unique identifier of the tenant or account.
+                        </para>
+                    </wadl:doc>
+                </param>
+         <param name="job_execution_id" style="template" type="capi:UUID">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                                <para>The unique identifier of the job execution.</para>
+                            </wadl:doc>
+                        </param>
+         <method name="GET" rax:id="job-executions-refresh">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Refresh job execution status">
+               <para role="shortdesc">
+                Refreshes the status of and shows information for a specified
+                job execution.
+            </para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "output_id": "b63780f3-13d7-4286-b731-88270fb204de",
+    "info": {
+        "status": "RUNNING",
+        "externalId": null,
+        "run": 0,
+        "startTime": "Thu, 17 Oct 2013 13:53:14 GMT",
+        "appName": "job-wf",
+        "lastModTime": "Thu, 17 Oct 2013 13:53:17 GMT",
+        "actions": [
+            {
+                "status": "OK",
+                "retries": 0,
+                "transition": "job-node",
+                "stats": null,
+                "startTime": "Thu, 17 Oct 2013 13:53:14 GMT",
+                "cred": "null",
+                "errorMessage": null,
+                "externalId": "-",
+                "errorCode": null,
+                "consoleUrl": "-",
+                "toString": "Action name[:start:] status[OK]",
+                "externalStatus": "OK",
+                "conf": "",
+                "type": ":START:",
+                "trackerUri": "-",
+                "externalChildIDs": null,
+                "endTime": "Thu, 17 Oct 2013 13:53:15 GMT",
+                "data": null,
+                "id": "0000000-131017135256789-oozie-hado-W@:start:",
+                "name": ":start:"
+            },
+            {
+                "status": "RUNNING",
+                "retries": 0,
+                "transition": null,
+                "stats": null,
+                "startTime": "Thu, 17 Oct 2013 13:53:15 GMT",
+                "cred": "null",
+                "errorMessage": null,
+                "externalId": "job_201310171352_0001",
+                "errorCode": null,
+                "consoleUrl": "http://edp-master-001:50030/jobdetails.jsp?jobid=job_201310171352_0001",
+                "toString": "Action name[job-node] status[RUNNING]",
+                "externalStatus": "RUNNING",
+                "conf": "&lt;pig xmlns=\"uri:oozie:workflow:0.2\"&gt;\r\n  &lt;job-tracker&gt;edp-master-001:8021&lt;/job-tracker&gt;\r\n  &lt;name-node&gt;hdfs://edp-master-001:8020&lt;/name-node&gt;\r\n  &lt;configuration&gt;\r\n    &lt;property&gt;\r\n      &lt;name&gt;fs.swift.service.sahara.password&lt;/name&gt;\r\n      &lt;value&gt;swordfish&lt;/value&gt;\r\n    &lt;/property&gt;\r\n    &lt;property&gt;\r\n      &lt;name&gt;fs.swift.service.sahara.username&lt;/name&gt;\r\n      &lt;value&gt;admin&lt;/value&gt;\r\n    &lt;/property&gt;\r\n  &lt;/configuration&gt;\r\n  &lt;script&gt;example.pig&lt;/script&gt;\r\n  &lt;param&gt;INPUT=swift://container.sahara/text&lt;/param&gt;\r\n  &lt;param&gt;OUTPUT=swift://container.sahara/output&lt;/param&gt;\r\n&lt;/pig&gt;",
+                "type": "pig",
+                "trackerUri": "edp-master-001:8021",
+                "externalChildIDs": null,
+                "endTime": null,
+                "data": null,
+                "id": "0000000-131017135256789-oozie-hado-W@job-node",
+                "name": "job-node"
+            }
+        ],
+        "acl": null,
+        "consoleUrl": "http://edp-master-001.novalocal:11000/oozie?job=0000000-131017135256789-oozie-hado-W",
+        "appPath": "hdfs://edp-master-001:8020/user/hadoop/pig-job/9ceb6469-4d06-474d-995d-76fbc3b8c617/workflow.xml",
+        "toString": "Workflow id[0000000-131017135256789-oozie-hado-W] status[RUNNING]",
+        "user": "hadoop",
+        "conf": "&lt;configuration&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;user.name&lt;/name&gt;\r\n    &lt;value&gt;hadoop&lt;/value&gt;\r\n  &lt;/property&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;oozie.use.system.libpath&lt;/name&gt;\r\n    &lt;value&gt;true&lt;/value&gt;\r\n  &lt;/property&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;nameNode&lt;/name&gt;\r\n    &lt;value&gt;hdfs://edp-master-001:8020&lt;/value&gt;\r\n  &lt;/property&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;jobTracker&lt;/name&gt;\r\n    &lt;value&gt;edp-master-001:8021&lt;/value&gt;\r\n  &lt;/property&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;oozie.wf.application.path&lt;/name&gt;\r\n    &lt;value&gt;hdfs://edp-master-001:8020/user/hadoop/pig-job/9ceb6469-4d06-474d-995d-76fbc3b8c617/workflow.xml&lt;/value&gt;\r\n  &lt;/property&gt;\r\n&lt;/configuration&gt;",
+        "parentId": null,
+        "createdTime": "Thu, 17 Oct 2013 13:53:14 GMT",
+        "group": null,
+        "endTime": null,
+        "id": "0000000-131017135256789-oozie-hado-W"
+    },
+    "job_id": "65afed9c-dad7-4658-9554-b7b4e1ca908f",
+    "tenant_id": "11587919cc534bcbb1027a161c82cf58",
+    "start_time": "2013-10-17T17:53:14",
+    "updated_at": "2013-10-17 13:53:32.227919",
+    "return_code": null,
+    "oozie_job_id": "0000000-131017135256789-oozie-hado-W",
+    "input_id": "af7dc864-6331-4c30-80f5-63d74b667eaf",
+    "end_time": null,
+    "cluster_id": "eb85e8a0-510c-489f-b78e-ad1d29e957c8",
+    "id": "e63bdc21-0126-4fd2-90c6-5163d16f31df",
+    "progress": null,
+    "job_configs": {},
+    "created_at": "2013-10-17 13:51:11.671977"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                            
+                        
+                        <resource id="cancel"
+                path="/v1.1/{tenant_id}/job-executions/{job_execution_id}/cancel">
+         <param name="tenant_id" style="template" type="capi:UUID">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+                            The unique identifier of the tenant or account.
+                        </para>
+                    </wadl:doc>
+                </param>
+         <param name="job_execution_id" style="template" type="capi:UUID">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                                <para>The unique identifier of the job execution.</para>
+                            </wadl:doc>
+                        </param>
+         <method name="GET" rax:id="job-executions-cancel">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Cancel job execution">
+               <para role="shortdesc">
+                Cancels a specified job execution.
+            </para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "output_id": "b63780f3-13d7-4286-b731-88270fb204de",
+    "info": {
+        "status": "KILLED",
+        "externalId": null,
+        "run": 0,
+        "startTime": "Thu, 17 Oct 2013 13:53:14 GMT",
+        "appName": "job-wf",
+        "lastModTime": "Thu, 17 Oct 2013 13:53:17 GMT",
+        "actions": [
+            {
+                "status": "OK",
+                "retries": 0,
+                "transition": "job-node",
+                "stats": null,
+                "startTime": "Thu, 17 Oct 2013 13:53:14 GMT",
+                "cred": "null",
+                "errorMessage": null,
+                "externalId": "-",
+                "errorCode": null,
+                "consoleUrl": "-",
+                "toString": "Action name[:start:] status[OK]",
+                "externalStatus": "OK",
+                "conf": "",
+                "type": ":START:",
+                "trackerUri": "-",
+                "externalChildIDs": null,
+                "endTime": "Thu, 17 Oct 2013 13:53:15 GMT",
+                "data": null,
+                "id": "0000000-131017135256789-oozie-hado-W@:start:",
+                "name": ":start:"
+            },
+            {
+                "status": "RUNNING",
+                "retries": 0,
+                "transition": null,
+                "stats": null,
+                "startTime": "Thu, 17 Oct 2013 13:53:15 GMT",
+                "cred": "null",
+                "errorMessage": null,
+                "externalId": "job_201310171352_0001",
+                "errorCode": null,
+                "consoleUrl": "http://edp-master-001:50030/jobdetails.jsp?jobid=job_201310171352_0001",
+                "toString": "Action name[job-node] status[RUNNING]",
+                "externalStatus": "RUNNING",
+                "conf": "&lt;pig xmlns=\"uri:oozie:workflow:0.2\"&gt;\r\n  &lt;job-tracker&gt;edp-master-001:8021&lt;/job-tracker&gt;\r\n  &lt;name-node&gt;hdfs://edp-master-001:8020&lt;/name-node&gt;\r\n  &lt;configuration&gt;\r\n    &lt;property&gt;\r\n      &lt;name&gt;fs.swift.service.sahara.password&lt;/name&gt;\r\n      &lt;value&gt;swordfish&lt;/value&gt;\r\n    &lt;/property&gt;\r\n    &lt;property&gt;\r\n      &lt;name&gt;fs.swift.service.sahara.username&lt;/name&gt;\r\n      &lt;value&gt;admin&lt;/value&gt;\r\n    &lt;/property&gt;\r\n  &lt;/configuration&gt;\r\n  &lt;script&gt;example.pig&lt;/script&gt;\r\n  &lt;param&gt;INPUT=swift://container.sahara/text&lt;/param&gt;\r\n  &lt;param&gt;OUTPUT=swift://container.sahara/output&lt;/param&gt;\r\n&lt;/pig&gt;",
+                "type": "pig",
+                "trackerUri": "edp-master-001:8021",
+                "externalChildIDs": null,
+                "endTime": null,
+                "data": null,
+                "id": "0000000-131017135256789-oozie-hado-W@job-node",
+                "name": "job-node"
+            }
+        ],
+        "acl": null,
+        "consoleUrl": "http://edp-master-001.novalocal:11000/oozie?job=0000000-131017135256789-oozie-hado-W",
+        "appPath": "hdfs://edp-master-001:8020/user/hadoop/pig-job/9ceb6469-4d06-474d-995d-76fbc3b8c617/workflow.xml",
+        "toString": "Workflow id[0000000-131017135256789-oozie-hado-W] status[RUNNING]",
+        "user": "hadoop",
+        "conf": "&lt;configuration&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;user.name&lt;/name&gt;\r\n    &lt;value&gt;hadoop&lt;/value&gt;\r\n  &lt;/property&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;oozie.use.system.libpath&lt;/name&gt;\r\n    &lt;value&gt;true&lt;/value&gt;\r\n  &lt;/property&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;nameNode&lt;/name&gt;\r\n    &lt;value&gt;hdfs://edp-master-001:8020&lt;/value&gt;\r\n  &lt;/property&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;jobTracker&lt;/name&gt;\r\n    &lt;value&gt;edp-master-001:8021&lt;/value&gt;\r\n  &lt;/property&gt;\r\n  &lt;property&gt;\r\n    &lt;name&gt;oozie.wf.application.path&lt;/name&gt;\r\n    &lt;value&gt;hdfs://edp-master-001:8020/user/hadoop/pig-job/9ceb6469-4d06-474d-995d-76fbc3b8c617/workflow.xml&lt;/value&gt;\r\n  &lt;/property&gt;\r\n&lt;/configuration&gt;",
+        "parentId": null,
+        "createdTime": "Thu, 17 Oct 2013 13:53:14 GMT",
+        "group": null,
+        "endTime": null,
+        "id": "0000000-131017135256789-oozie-hado-W"
+    },
+    "job_id": "65afed9c-dad7-4658-9554-b7b4e1ca908f",
+    "tenant_id": "11587919cc534bcbb1027a161c82cf58",
+    "start_time": "2013-10-17T17:53:14",
+    "updated_at": "2013-10-17 13:53:32.227919",
+    "return_code": null,
+    "oozie_job_id": "0000000-131017135256789-oozie-hado-W",
+    "input_id": "af7dc864-6331-4c30-80f5-63d74b667eaf",
+    "end_time": null,
+    "cluster_id": "eb85e8a0-510c-489f-b78e-ad1d29e957c8",
+    "id": "e63bdc21-0126-4fd2-90c6-5163d16f31df",
+    "progress": null,
+    "job_configs": {},
+    "created_at": "2013-10-17 13:51:11.671977"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                            
+                        
+                    
+                
+    </resources>
+    <!-- *******************************************************-->
+    <!--             Job executions actions                     -->
+    <!--********************************************************-->
+    <method xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="job-executions-list">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="job-executions-show">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="job-executions-refresh">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="job-executions-cancel">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="DELETE"
+           id="job-executions-delete">
+        
+        <response status="204"/>
+    </method>
+</wadl:application>

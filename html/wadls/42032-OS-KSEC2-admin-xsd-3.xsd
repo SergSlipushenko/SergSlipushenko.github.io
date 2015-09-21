@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+                    Flattened from: file:/home/sslypushenko/projects/api-site/api-ref/src/wadls/identity-api/src/v2.0/xsd/OS-KSEC2-credentials.xsd-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:rax="http://docs.rackspace.com/api"
+            xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:identity="http://docs.openstack.org/identity/api/v2.0"
+            xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+            xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+            xmlns:atom="http://www.w3.org/2005/Atom"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+            xmlns:ext="http://docs.openstack.org/common/api/v1.0"
+            xmlns:html="http://www.w3.org/1999/xhtml"
+            xmlns:vers="http://docs.openstack.org/common/api/v1.0"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:OS-KSEC2="http://docs.openstack.org/identity/api/ext/OS-KSEC2/v1.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            targetNamespace="http://docs.openstack.org/identity/api/ext/OS-KSEC2/v1.0">
+   <import xmlns="http://www.w3.org/2001/XMLSchema"
+           namespace="http://docs.openstack.org/identity/api/v2.0"
+           schemaLocation="OS-KSEC2-admin-xsd-6.xsd"/>
+   <!--Import schema we are extending -->
+   <import xmlns="http://www.w3.org/2001/XMLSchema"
+           namespace="http://docs.openstack.org/identity/api/v2.0"
+           schemaLocation="OS-KSEC2-admin-xsd-6.xsd"/>
+   <!-- Elements -->
+   <!-- Complex Types -->
+   <element xmlns="http://www.w3.org/2001/XMLSchema"
+            name="ec2Credentials"
+            type="OS-KSEC2:ec2CredentialsType"
+            substitutionGroup="identity:credential"/>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema" name="ec2CredentialsType">
+        <complexContent>
+            <extension base="identity:CredentialType">
+                <attribute name="username" type="xsd:string" use="required"/>
+                  <attribute name="key" type="xsd:string" use="required"/>
+                  <attribute name="signature" type="xsd:string" use="required"/>
+            </extension>
+        </complexContent>
+    </complexType>
+</xsd:schema>

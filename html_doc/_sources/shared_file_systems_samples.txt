@@ -1,0 +1,226 @@
+.. _file_shares_samples:
+
+.. The draft file for collecting samples of the use cases.
+   Then the samples will be pasted in different files and
+   this file will be deleted.
+
+=======
+SAMPLES
+=======
+
+Admin actions (reset state and force-delete)
+--------------------------------------------
+
+As administrator, you can reset the state of a share, a share snapshot and
+a share instance. You also can force-delete a share, share snapshot, a share
+instance, a consistency group and a consistency group snapshot.
+Aforesaid objects cannot be deleted in transitional states. The transitional
+states are ``creating``, ``deleting`` for all and aforesaid objects and
+also ``managing``, ``unmanaging``, ``extending``, and ``shrinking`` statuses
+for the shares. Force-deletion deletes an object in any state. Use the
+:file:`/etc/manila/policy.json` file to grant permissions for this action to
+other roles.
+
+
+
+Try to delete the share using soft-deletion,
+**manila delete <share_name_or_ID>**, run:
+
+.. code:: console
+
+ $ manila delete b6b0617c-ea51-4450-848e-e7cff69238c7
+ Delete for share b6b0617c-ea51-4450-848e-e7cff69238c7 failed: Invalid share: Share status must be one of ('available', 'error', 'inactive'). (HTTP 403) (Request-ID: req-9a77b9a0-17d2-4d97-8a7a-b7e23c27f1fe)
+ ERROR: Unable to delete any of the specified shares.
+
+A share cannot be deleted in a ``deleting`` status or any other transitional
+status, so an error message from ``python-manilaclient`` appeared.
+
+Print the list of all shares for all tenants:
+
+.. code:: console
+
+ $ manila list --all-tenants
+ +------+-------+-----+------------+-------+-----------+------------------------------+-------------+
+ | ID   | Name  | Size| Share Proto| Status| Share Type| Export location              | Host        |
+ +------+-------+-----+------------+-------+-----------+------------------------------+-------------+
+ | aca..| Share1| 1   | NFS        | avai..| c008658...| 10.254.0.3:/shares/share-2d..| manila@gen..|
+ | b6b..| Share2| 1   | NFS        | dele..| c008658...| 10.254.0.3:/shares/share-1d..| manila@gen..|
+ +------+-------+-----+------------+-------+-----------+------------------------------+-------------+
+
+Force-delete Share2 and check that it is absent in the list of shares,
+run:
+
+.. code:: console
+
+ $ manila force-delete b6b0617c-ea51-4450-848e-e7cff69238c7
+
+ $ manila list
+ +------+-------+-----+------------+-------+-----------+------------------------------+-------------+
+ | ID   | Name  | Size| Share Proto| Status| Share Type| Export location              | Host        |
+ +------+-------+-----+------------+-------+-----------+------------------------------+-------------+
+ | aca..| Share1| 1   | NFS        | avai..| c008658...| 10.254.0.3:/shares/share-2d..| manila@gen..|
+ +------+-------+-----+------------+-------+-----------+------------------------------+-------------+
+
+The same actions can be performed with share snapshots, share instances,
+consistency groups and consistency group snapshots.
+
+Share servers
+-------------
+
+A share server is created by multi-tenant back-end drivers where shares are
+hosted. For example, with the generic driver, shares are hosted on Compute VMs.
+With the ``cluster_mode`` driver from NetApp, shares are hosted on virtual
+storage servers, also known as Vservers or SVMs.
+
+The status of a share server indicates its current state. After you
+successfully set up a share server, its status is active. If errors occur
+during set up such as when server data is not valid, its status is error.
+
+The possible share servers statuses are:
+
++------------------+----------------------------------------------------------+
+|     Status       |                     Description                          |
++------------------+----------------------------------------------------------+
+| ``active``       | Share server was successfully set up.                    |
++------------------+----------------------------------------------------------+
+| ``error``        | The set up or deletion of the share server failed.       |
++------------------+----------------------------------------------------------+
+| ``deleting``     | The share server has no dependent shares and is being    |
+|                  | deleted.                                                 |
++------------------+----------------------------------------------------------+
+| ``creating``     | The share server is being created on the back end with   |
+|                  | data from the database.                                  |
++------------------+----------------------------------------------------------+
+
+Administrators can perform read and delete actions for share servers.
+An administrator can use the policy.json file to grant permissions for share
+server actions to other roles.
+
+Print the list of share servers:
+
+.. code:: console
+
+ $ manila share-server-list
+ +-------------+-----------------+--------+---------------+-----------+----------------------------+
+ | Id          | Host            | Status | Share Network | Project Id| Updated_at                 |
+ +-------------+-----------------+--------+---------------+-----------+----------------------------+
+ | d399abf6-...| manila@generic1 | active | my_share_net  | 20787a7...| 2015-09-29T15:05:39.000000 |
+ +-------------+-----------------+--------+---------------+-----------+----------------------------+
+
+Get information about a specifieed share server:
+
+.. code:: console
+
+ $ manila share-server-show d399abf6-ab98-4784-a6e9-4a4a17004e13
+ +-------------------------+--------------------------------------+
+ | Property                | Value                                |
+ +-------------------------+--------------------------------------+
+ | status                  | active                               |
+ | details:service_ip      | 10.254.0.4                           |
+ | details:subnet_id       | 4f366100-5108-4fa2-b5b1-989a121c1403 |
+ | details:instance_id     | 7e6d6de3-83fe-4563-bc38-5f0871b7f88f |
+ | created_at              | 2015-09-29T15:01:12.000000           |
+ | details:username        | manila                               |
+ | updated_at              | 2015-09-29T15:05:39.000000           |
+ | share_network_name      | my_share_net                         |
+ | details:ip              | 10.254.0.5                           |
+ | details:pk_path         | /opt/stack/.ssh/id_rsa               |
+ | host                    | manila@generic1                      |
+ | share_network_id        | 5c3cbabb-f4da-465f-bc7f-fadbe047b85a |
+ | details:service_port_id | 21f01458-4a1c-4fcb-bb23-8d9ec8e76d35 |
+ | details:public_address  | 10.254.0.5                           |
+ | project_id              | 20787a7ba11946adad976463b57d8a2f     |
+ | details:router_id       | acad393a-b82e-4d67-847a-c691b304ee99 |
+ | id                      | d399abf6-ab98-4784-a6e9-4a4a17004e13 |
+ +-------------------------+--------------------------------------+
+
+In the table administrator can see ``details:`` prefix for some attributes:
+they are the back-end details for a server. Each back end can store any
+key-value information that it requires. For example, the generic back-end
+driver might store the router ID. To get share server details, run
+**manila share-server-details** command:
+
+.. code:: console
+
+ $ manila share-server-details d399abf6-ab98-4784-a6e9-4a4a17004e13
+ +-----------------+--------------------------------------+
+ | Property        | Value                                |
+ +-----------------+--------------------------------------+
+ | username        | manila                               |
+ | router_id       | acad393a-b82e-4d67-847a-c691b304ee99 |
+ | pk_path         | /opt/stack/.ssh/id_rsa               |
+ | subnet_id       | 4f366100-5108-4fa2-b5b1-989a121c1403 |
+ | ip              | 10.254.0.5                           |
+ | service_ip      | 10.254.0.4                           |
+ | instance_id     | 7e6d6de3-83fe-4563-bc38-5f0871b7f88f |
+ | public_address  | 10.254.0.5                           |
+ | service_port_id | 21f01458-4a1c-4fcb-bb23-8d9ec8e76d35 |
+ +-----------------+--------------------------------------+
+
+An administrator can delete an active share server only if it contains no
+dependent shares. You can delete a share server using
+**manila share-server-delete <id>**.
+
+Share instances
+---------------
+
+Administrators can list, show information for, explicitly set the state of,
+and force-delete share instances. Use the policy.json file to grant permissions
+for these actions to other roles.
+
+List share instances:
+
+.. code:: console
+
+ $ manila share-instance-list
+ +------+---------+--------------------------+----------------+-----------------+----------------+
+ | ID   | Share ID| Host                     | Status         | Share Network ID| Share Server ID|
+ +------+---------+--------------------------+----------------+-----------------+----------------+
+ | 0c4..| 6639c...| manila@cannes#CANNES     | unmanaged      | None            | None           |
+ | 0e7..| 5c1f6...| manila@new_york#NEW_YORK | inactive       | None            | None           |
+ | 204..| 5c1f6...| manila@new_york#NEW_YORK | inactive       | None            | None           |
+ | 2cf..| 5c1f6...| manila@new_york#NEW_YORK | inactive       | None            | None           |
+ | 47c..| ff061...| manila@cannes#CANNES     | unmanaged      | 5c3cbabb-f4da...| None           |
+ | 578..| 7bcd8...| manila@generic1#GENERIC1 | available      | 5c3cbabb-f4da...| d399abf6-ab9...|
+ | 5ac..| ba524...| manila@generic1#GENERIC1 | error_deleting | None            | None           |
+ | ba1..| 5c1f6...| manila@new_york#NEW_YORK | inactive       | None            | None           |
+ | d1a..| bb9f0...| manila@cannes#CANNES     | unmanaged      | None            | None           |
+ | fc0..| 5c1f6...| manila@cannes#CANNES     | available      | None            | None           |
+ +------+---------+--------------------------+----------------+-----------------+----------------+
+
+Administrator can see details for a specified share instance, where there are
+details of a status of share instance (which is ``available``, ``error``,
+``creating``, ``deleting``, and ``error_deleting``), the ID of the share from
+which the share instance was created, the availability zone, the share instance
+export location, the share network ID, the ID of the share server, the share
+instance host name, and so on.
+
+.. code:: console
+
+ $ manila share-instance-show 5789ddcf-35c9-4b64-a28a-7f6a4a574b6a
+ +-------------------+--------------------------------------------------------------------+
+ | Property          | Value                                                              |
+ +-------------------+--------------------------------------------------------------------+
+ | status            | available                                                          |
+ | share_id          | 7bcd888b-681b-4836-ac9c-c3add4e62537                               |
+ | availability_zone | nova                                                               |
+ | created_at        | 2015-09-29T15:09:24.000000                                         |
+ | export_location   | 10.254.0.5:/shares/share-5789ddcf-35c9-4b64-a28a-7f6a4a574b6a      |
+ | share_network_id  | 5c3cbabb-f4da-465f-bc7f-fadbe047b85a                               |
+ | export_locations  | [u'10.254.0.5:/shares/share-5789ddcf-35c9-4b64-a28a-7f6a4a574b6a'] |
+ | share_server_id   | d399abf6-ab98-4784-a6e9-4a4a17004e13                               |
+ | host              | manila@generic1#GENERIC1                                           |
+ | id                | 5789ddcf-35c9-4b64-a28a-7f6a4a574b6a                               |
+ +-------------------+--------------------------------------------------------------------+
+
+As an administrator, you can also reset the state of a share instance and
+force-delete a specified share instance in any state. Use the
+:file:`policy.json` file to grant permissions for these actions to other roles.
+
+To reset the state of a share instance, use
+**manila share-instance-reset-state [--state <state>] <instance>**. A valid
+value of a status are  ``available``, ``error``, ``creating``, ``deleting``,
+``error_deleting``. If no state is provided, available will be used.
+
+To force-delete one or more share instances, use
+**manila share-instance-force-delete <instance> [<instance> ...]**.

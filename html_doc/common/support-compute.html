@@ -1,0 +1,856 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+  <title>OpenStack Docs: Troubleshoot Compute</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+<!-- CSS references are in the css.html template -->
+    <!-- Bootstrap Core CSS -->
+    <link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Pygments css -->
+    <link href="../_static/css/native.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <!--<link href="font-awesome.min.css" rel="stylesheet">-->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+
+	<!-- BB: theme style sheets moved here so that theme rules aren't 
+	     overridden by awesome rules. Should they go after the scripts below? -->
+    <!-- Custom CSS -->
+    <link href="../_static/css/combined.css" rel="stylesheet">
+    <link href="../_static/css/styles.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Page-specific CSS -->
+  
+  
+ </head>
+ <body>
+    <!-- Header -->
+        <!-- Header Navigation -->
+        <nav class="navbar navbar-default inner" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+             <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+      <span class="sr-only">
+      Toggle navigation
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+      </button>
+                <div class="brand-wrapper">
+                    <a class="navbar-brand" href="/"></a>
+                </div>
+                <div class="search-icon show"><i class="fa fa-search"></i>
+Search</div>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling
+-->
+            <div class="collapse navbar-collapse"
+id="bs-example-navbar-collapse-1">
+                <div class="search-container tiny">
+
+
+
+  <div id="gcse">
+    <script type="text/javascript">
+      (function() {
+        var cx = '000108871792296872333:noj9nikm74i';
+        var gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = (document.location.protocol == 'https:' ? 'https:' :
+'http:') +
+            '//www.google.com/cse/cse.js?cx=' + cx;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+      })();
+    </script>
+    <gcse:search gname="standard"></gcse:search>
+  </div>
+
+
+                    <i class="fa fa-times close-search"></i>
+                </div>
+                    <ul class="nav navbar-nav navbar-main show">
+                        <li>
+
+
+
+  <div id="gcse-mobile">
+    <gcse:search gname="mobile"></gcse:search>
+  </div>
+
+
+                        </li>
+
+
+                        <li>
+
+                                <a href="http://www.openstack.org/software/" class="drop"
+id="dropdownMenuSoftware">Software <i class="fa fa-caret-down"></i></a>
+                                <ul class="dropdown-menu" role="menu"
+aria-labelledby="dropdownMenuSoftware">
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="http://www.openstack.org/software/">Overview</a></li>
+
+
+
+                                            <li role="presentation"
+class="divider"></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="http://www.openstack.org/software/openstack-compute/">Compute</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="http://www.openstack.org/software/openstack-storage/">Storage</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="http://www.openstack.org/software/openstack-networking/">Networking</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="http://www.openstack.org/software/openstack-dashboard/">Dashboard</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="http://www.openstack.org/software/openstack-shared-services/">Shared Services</a></li>
+
+
+
+                                            <li role="presentation"
+class="divider"></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="http://www.openstack.org/software/start/">Get
+Started</a></li>
+
+
+                                </ul>
+
+                        </li>
+
+                        <li>
+
+                                <a href="http://www.openstack.org/user-stories/" class="drop"
+id="dropdownMenuUsers">Users <i class="fa fa-caret-down"></i></a>
+                                <ul class="dropdown-menu" role="menu"
+aria-labelledby="dropdownMenuUsers">
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="http://www.openstack.org/user-stories/">Overview</a></li>
+
+
+
+                                            <li role="presentation"
+class="divider"></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="//superuser.openstack.org/">Superuser
+Magazine</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="http://www.openstack.org/enterprise/auto/">Featured:  Top 10
+Automaker</a></li>
+
+
+                                </ul>
+
+                        </li>
+
+                        <li>
+
+                                <a href="http://www.openstack.org/community/" class="drop"
+id="dropdownMenuCommunity">Community <i class="fa fa-caret-down"></i></a>
+                                <ul class="dropdown-menu" role="menu"
+aria-labelledby="dropdownMenuCommunity">
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="http://www.openstack.org/community/">Welcome! Start Here</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="//ask.openstack.org/">Ask A Technical
+Question</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//wiki.openstack.org/wiki/Main_Page">OpenStack Wiki</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//www.openstack.org/community/events/">Community Events</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//wiki.openstack.org/wiki/Getting_The_Code">Source Code</a></li>
+
+
+
+                                            <li role="presentation"
+class="divider"></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//www.openstack.org/foundation/companies/">Supporting Companies</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//www.openstack.org/community/jobs/">Jobs</a></li>
+
+
+
+                                            <li role="presentation"
+class="divider"></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="//www.openstack.org/join/">Join The
+Community</a></li>
+
+
+                                </ul>
+
+                        </li>
+
+                        <li>
+
+                                <a href="http://www.openstack.org/marketplace/">Marketplace</a>
+
+                        </li>
+
+                        <li>
+
+                                <a href="http://www.openstack.org/events/" class="drop"
+id="dropdownMenuEvents">Events <i class="fa fa-caret-down"></i></a>
+                                <ul class="dropdown-menu" role="menu"
+aria-labelledby="dropdownMenuEvents">
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//www.openstack.org/community/events/">Overview</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//www.openstack.org/summit/openstack-paris-summit-2014/">The OpenStack
+Summit</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="//www.openstack.org/community/events/">More
+OpenStack Events</a></li>
+
+
+                                </ul>
+
+                        </li>
+
+                        <li>
+
+                                <a href="http://www.openstack.org/blog/">Blog</a>
+
+                        </li>
+
+                        <li>
+
+                                <a href="http://docs.openstack.org/">Docs</a>
+
+                        </li>
+
+
+                        <li>
+                            <a href="http://openstack.org/Security/login/"
+class="sign-in-btn">Sign In</a>
+                        </li>
+                    </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Begin Page Content -->
+        <div class="container docs-book-wrapper">
+        <div class="row">
+            <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+<!-- Row with title and buttons-->
+            <div class="row">
+                <div class="col-lg-8">
+                <h2>Troubleshoot Compute</h2>
+                </div>
+<div class="docs-actions">
+                  
+                  <a href="../compute-node-down.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Recover from a failed compute node"></i></a>
+                  
+                  
+                  <a href="../objectstorage.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Object Storage"></i></a>
+                  
+                  <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+                </div>
+            </div>
+            <div class="row docs-byline">
+                <div class="docs-updated">
+                    updated: 2015-10-12 18:28 | release: 0.9
+                </div>
+                <a href="http://git.openstack.org/" class="docs-edit">
+                    <i class="fa fa-pencil"></i> suggest edits
+                </a>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="docs-top-contents">
+                    <h5>Contents</h5>
+                    <ul>
+<li><a class="reference internal" href="#">Troubleshoot Compute</a><ul>
+<li><a class="reference internal" href="#compute-service-logging">Compute service logging</a></li>
+<li><a class="reference internal" href="#guru-meditation-reports">Guru Meditation reports</a></li>
+<li><a class="reference internal" href="#common-errors-and-fixes-for-compute">Common errors and fixes for Compute</a></li>
+<li><a class="reference internal" href="#reset-the-state-of-an-instance">Reset the state of an instance</a></li>
+<li><a class="reference internal" href="#injection-problems">Injection problems</a></li>
+<li><a class="reference internal" href="#disable-live-snapshotting">Disable live snapshotting</a></li>
+</ul>
+</li>
+</ul>
+
+                    </div>
+                <div class="docs-body">
+
+  <div class="section" id="troubleshoot-compute">
+<span id="support-compute"></span><h1>Troubleshoot Compute<a class="headerlink" href="#troubleshoot-compute" title="Permalink to this headline">¶</a></h1>
+<p>Common problems for Compute typically involve misconfigured
+networking or credentials that are not sourced properly in the
+environment. Also, most flat networking configurations do not
+enable <strong class="command">ping</strong> or <strong class="command">ssh</strong> from a compute node
+to the instances that run on that node. Another common problem
+is trying to run 32-bit images on a 64-bit compute node.
+This section shows you how to troubleshoot Compute.</p>
+<div class="section" id="compute-service-logging">
+<span id="log-files-for-openstack-compute"></span><h2>Compute service logging<a class="headerlink" href="#compute-service-logging" title="Permalink to this headline">¶</a></h2>
+<p>Compute stores a log file for each service in
+<tt class="file docutils literal"><span class="pre">/var/log/nova</span></tt>. For example, <tt class="file docutils literal"><span class="pre">nova-compute.log</span></tt>
+is the log for the <tt class="docutils literal"><span class="pre">nova-compute</span></tt> service. You can set the
+following options to format log strings for the <tt class="docutils literal"><span class="pre">nova.log</span></tt>
+module in the <tt class="file docutils literal"><span class="pre">nova.conf</span></tt> file:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">logging_context_format_string</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">logging_default_format_string</span></tt></li>
+</ul>
+<p>If the log level is set to <tt class="docutils literal"><span class="pre">debug</span></tt>, you can also specify
+<tt class="docutils literal"><span class="pre">logging_debug_format_suffix</span></tt> to append extra formatting.
+For information about what variables are available for the
+formatter see <a class="reference external" href="http://docs.python.org/library/logging.html#formatter-objects">http://docs.python.org/library/logging.html#formatter-objects</a>.</p>
+<p>You have two options for logging for OpenStack Compute based on
+configuration settings. In <tt class="file docutils literal"><span class="pre">nova.conf</span></tt>, include the
+<tt class="docutils literal"><span class="pre">logfile</span></tt> option to enable logging. Alternatively you can set
+<tt class="docutils literal"><span class="pre">use_syslog</span> <span class="pre">=</span> <span class="pre">1</span></tt> so that the nova daemon logs to syslog.</p>
+</div>
+<div class="section" id="guru-meditation-reports">
+<span id="section-compute-gurumed-reports"></span><h2>Guru Meditation reports<a class="headerlink" href="#guru-meditation-reports" title="Permalink to this headline">¶</a></h2>
+<p>A Guru Meditation report is sent by the Compute service upon receipt of the
+<tt class="docutils literal"><span class="pre">SIGUSR1</span></tt> signal. This report is a general-purpose error report,
+including a complete report of the service&#8217;s current state, and is sent to
+<tt class="docutils literal"><span class="pre">stderr</span></tt>.</p>
+<p>For example, if you redirect error output to <tt class="docutils literal"><span class="pre">nova-api-err.log</span></tt>
+using <strong class="command">nova-api 2&gt;/var/log/nova/nova-api-err.log</strong>,
+resulting in the process ID 8675, you can then run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># kill -USR1 8675</span>
+</pre></div>
+</div>
+<p>This command triggers the Guru Meditation report to be printed to
+<tt class="file docutils literal"><span class="pre">/var/log/nova/nova-api-err.log</span></tt>.</p>
+<p>The report has the following sections:</p>
+<ul class="simple">
+<li>Package: Displays information about the package to which the process
+belongs, including version information.</li>
+<li>Threads: Displays stack traces and thread IDs for each of the threads
+within the process.</li>
+<li>Green Threads: Displays stack traces for each of the green threads
+within the process (green threads do not have thread IDs).</li>
+<li>Configuration: Lists all configuration options currently accessible
+through the CONF object for the current process.</li>
+</ul>
+<p>For more information, see <a class="reference external" href="http://docs.openstack.org/developer/nova/devref/gmr.html">Guru Meditation Reports</a>.</p>
+</div>
+<div class="section" id="common-errors-and-fixes-for-compute">
+<span id="compute-common-errors-and-fixes"></span><h2>Common errors and fixes for Compute<a class="headerlink" href="#common-errors-and-fixes-for-compute" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="http://ask.openstack.org">ask.openstack.org</a> site offers a place to ask
+and answer questions, and you can also mark questions as frequently asked
+questions. This section describes some errors people have posted previously.
+Bugs are constantly being fixed, so online resources are a great way to get
+the most up-to-date errors and fixes.</p>
+<p><strong>Credential errors, 401, and 403 forbidden errors</strong></p>
+<p>Missing credentials cause a <tt class="docutils literal"><span class="pre">403</span> <span class="pre">forbidden</span></tt> error. To resolve
+this issue, use one of these methods:</p>
+<ol class="arabic">
+<li><dl class="first docutils">
+<dt>Manual method</dt>
+<dd><p class="first last">Gets the <tt class="file docutils literal"><span class="pre">novarc</span></tt> file from the project ZIP file, saves existing
+credentials in case of override, and manually sources the <tt class="file docutils literal"><span class="pre">novarc</span></tt>
+file.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Script method</dt>
+<dd><p class="first last">Generates <tt class="file docutils literal"><span class="pre">novarc</span></tt> from the project ZIP file and sources it for you.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>When you run <tt class="docutils literal"><span class="pre">nova-api</span></tt> the first time, it generates the certificate
+authority information, including <tt class="file docutils literal"><span class="pre">openssl.cnf</span></tt>. If you
+start the CA services before this, you might not be
+able to create your ZIP file. Restart the services.
+When your CA information is available, create your ZIP file.</p>
+<p>Also, check your HTTP proxy settings to see whether they cause problems with
+<tt class="file docutils literal"><span class="pre">novarc</span></tt> creation.</p>
+<p><strong>Instance errors</strong></p>
+<p>Sometimes a particular instance shows <tt class="docutils literal"><span class="pre">pending</span></tt> or you cannot SSH to
+it. Sometimes the image itself is the problem. For example, when you
+use flat manager networking, you do not have a DHCP server and certain
+images do not support interface injection; you cannot connect to
+them. The fix for this problem is to use an image that does support
+this method, such as Ubuntu, which obtains an IP address correctly
+with FlatManager network settings.</p>
+<p>To troubleshoot other possible problems with an instance, such as
+an instance that stays in a spawning state, check the directory for
+the particular instance under <tt class="file docutils literal"><span class="pre">/var/lib/nova/instances</span></tt> on
+the <tt class="docutils literal"><span class="pre">nova-compute</span></tt> host and make sure that these files are present:</p>
+<ul class="simple">
+<li><tt class="file docutils literal"><span class="pre">libvirt.xml</span></tt></li>
+<li><tt class="file docutils literal"><span class="pre">disk</span></tt></li>
+<li><tt class="file docutils literal"><span class="pre">disk-raw</span></tt></li>
+<li><tt class="file docutils literal"><span class="pre">kernel</span></tt></li>
+<li><tt class="file docutils literal"><span class="pre">ramdisk</span></tt></li>
+<li><tt class="file docutils literal"><span class="pre">console.log</span></tt>, after the instance starts.</li>
+</ul>
+<p>If any files are missing, empty, or very small, the <tt class="docutils literal"><span class="pre">nova-compute</span></tt>
+service did not successfully download the images from the Image service.</p>
+<p>Also check <tt class="file docutils literal"><span class="pre">nova-compute.log</span></tt> for exceptions. Sometimes they do not
+appear in the console output.</p>
+<p>Next, check the log file for the instance in the <tt class="file docutils literal"><span class="pre">/var/log/libvirt/qemu</span></tt>
+directory to see if it exists and has any useful error messages in it.</p>
+<p>Finally, from the <tt class="file docutils literal"><span class="pre">/var/lib/nova/instances</span></tt> directory for the instance,
+see if this command returns an error:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># virsh create libvirt.xml</span>
+</pre></div>
+</div>
+<p><strong>Empty log output for Linux instances</strong></p>
+<p>You can view the log output of running instances
+from either the <em class="guilabel">Log</em> tab of the dashboard or the output of
+<strong class="command">nova console-log</strong>. In some cases, the log output of a running
+Linux instance will be empty or only display a single character (for example,
+the <cite>?</cite> character).</p>
+<p>This occurs when the Compute service attempts to retrieve the log output
+of the instance via a serial console while the instance itself is not
+configured to send output to the console. To rectify this, append the
+following parameters to kernel arguments specified in the instance&#8217;s boot
+loader:</p>
+<div class="highlight-python"><div class="highlight"><pre>console=tty0 console=ttyS0,115200n8
+</pre></div>
+</div>
+<p>Upon rebooting, the instance will be configured to send output to the Compute
+service.</p>
+</div>
+<div class="section" id="reset-the-state-of-an-instance">
+<span id="reset-state"></span><h2>Reset the state of an instance<a class="headerlink" href="#reset-the-state-of-an-instance" title="Permalink to this headline">¶</a></h2>
+<p>If an instance remains in an intermediate state, such as <tt class="docutils literal"><span class="pre">deleting</span></tt>, you
+can use the <strong class="command">nova reset-state</strong> command to manually reset the state
+of an instance to an error state. You can then delete the instance. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ nova reset-state c6bbbf26-b40a-47e7-8d5c-eb17bf65c485
+$ nova delete c6bbbf26-b40a-47e7-8d5c-eb17bf65c485
+</pre></div>
+</div>
+<p>You can also use the <em class="xref std std-option">--active</em> parameter to force the instance back
+to an active state instead of an error state. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ nova reset-state --active c6bbbf26-b40a-47e7-8d5c-eb17bf65c485
+</pre></div>
+</div>
+</div>
+<div class="section" id="injection-problems">
+<span id="problems-with-injection"></span><h2>Injection problems<a class="headerlink" href="#injection-problems" title="Permalink to this headline">¶</a></h2>
+<p>If instances do not boot or boot slowly, investigate file injection as a cause.</p>
+<p>To disable injection in libvirt, set the following in <tt class="file docutils literal"><span class="pre">nova.conf</span></tt>:</p>
+<div class="highlight-ini"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">[libvirt]</span>
+<span class="na">inject_partition</span> <span class="o">=</span> <span class="s">-2</span>
+</pre></div>
+</td></tr></table></div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you have not enabled the configuration drive and
+you want to make user-specified files available from
+the metadata server for to improve performance and
+avoid boot failure if injection fails, you must
+disable injection.</p>
+</div>
+</div>
+<div class="section" id="disable-live-snapshotting">
+<span id="live-snapshotting-fail"></span><h2>Disable live snapshotting<a class="headerlink" href="#disable-live-snapshotting" title="Permalink to this headline">¶</a></h2>
+<p>If you use libvirt version <tt class="docutils literal"><span class="pre">1.2.2</span></tt>, you may experience problems with live
+snapshots creation. Occasionally, libvirt of the specified version fails
+to perform the live snapshotting under load that presupposes a concurrent
+creation of multiple snapshots.</p>
+<p>To effectively disable the libvirt live snapshotting, until the problem
+is resolved, configure the <tt class="docutils literal"><span class="pre">disable_libvirt_livesnapshot</span></tt> option.
+You can turn off the live snapshotting mechanism by setting up its value to
+<tt class="docutils literal"><span class="pre">True</span></tt> in the <tt class="docutils literal"><span class="pre">[workarounds]</span></tt> section of the <tt class="file docutils literal"><span class="pre">nova.conf</span></tt> file:</p>
+<div class="highlight-ini"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">[workarounds]</span>
+<span class="na">disable_libvirt_livesnapshot</span> <span class="o">=</span> <span class="s">True</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+
+
+              </div>
+          </div>
+          </div>
+          <!-- <div class="docs-tags">
+                <a href="#" class="docs-tag">Network Time Protocol (NTP)</a>
+                <a href="#" class="docs-tag">Security</a>
+                <a href="#" class="docs-tag">Conceptual architecture</a>
+            </div> -->
+<div class="docs-actions">
+                  
+                  <a href="../compute-node-down.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Recover from a failed compute node"></i></a>
+                  
+                  
+                  <a href="../objectstorage.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Object Storage"></i></a>
+                  
+                  <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+                </div>
+                <div class="row docs-byline bottom">
+                <div class="docs-updated">
+                updated: 2015-10-12 18:28 | release: 0.9
+                </div>
+                <a href="http://git.openstack.org/" class="docs-edit">
+                    <i class="fa fa-pencil"></i> suggest edits
+                </a>
+</div>
+    <div class="row">
+         <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+           <img src="../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+<p>
+ Except where otherwise noted, this document is licensed under Creative Commons
+ Attribution 3.0 License
+ <a href="#">http://creativecommons.org/licenses/by/3.0/legalcode</a>.
+</p>
+<p>
+ <a href="http://www.openstack.org/legal">See All Legal Notices</a>
+</p>
+         </div>
+         <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+                    <!-- ID buglinkbottom added so that pre-filled doc bugs
+                    are sent to Launchpad projects related to the document -->
+                    <a href="#" id="logABugLink2" class="docs-footer-actions">
+                        <i class="fa fa-bug"></i>found an error? report a bug
+                    </a>
+                    <a href="http://ask.openstack.org" class="docs-footer-actions">
+                        <i class="fa fa-question-circle"></i>questions? <a href="http://ask.openstack.org/">ask.openstack.org</a>
+                    </a>
+                </div>
+     </div>
+     </div>
+            <!-- Docs Sidebar -->
+                <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+            <div class="search-icon show"><i class="fa fa-search"></i>
+Search</div>
+            <div class="btn-group docs-sidebar-releases">
+                <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+                <button href="#" type="button" data-toggle="dropdown" class="btn docs-sidebar-release-select">Release: Kilo (April 2015)<i class="fa fa-caret-down"></i></button>
+                <ul class="dropdown-menu docs-sidebar-dropdown" role="menu" aria-labelledby="dLabel">
+                    <li role="presentation" class="dropdown-header">Releases</li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/kilo/">Kilo (current release)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/juno/">Juno (October 2014)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/icehouse/">Icehouse (May 2014)</a></li>
+                    <li role="presentation" class="dropdown-header">Languages</li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/ja/">日本語 (Japanese)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/de/">Deutsch (German)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/fr/">Français (French)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/pt_BR/">Português (Portuguese)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/ko_KR/">한국어 (Korean)</a></li>
+                </ul>
+            </div>
+                <div class="docs-sidebar-toc">
+                    <div class="docs-sidebar-section" id="install-guides">
+                        <a class="docs-sidebar-section-title" href="http://docs.openstack.org/index.html#install-guides"><h4>Install Guides</h4></a>
+                    </div>
+                    <div class="docs-sidebar-section" id="user-guides">
+                        <a class="docs-sidebar-section-title" href="http://docs.openstack.org/index.html#user-guides"><h4>User Guides</h4></a>
+                    </div>
+                    <div class="docs-sidebar-section" id="configuration-guides">
+                        <a class="docs-sidebar-section-title" href="http://docs.openstack.org/index.html#configuration-guides"><h4>Configuration Guides</h4></a>
+                    </div>
+                    <div class="docs-sidebar-section" id="operations-guides">
+                        <a class="docs-sidebar-section-title" href="http://docs.openstack.org/openstack-ops/content/"><h4>Operations Guide</h4></a>
+                    </div>
+                    <div class="docs-sidebar-section" id="api-guides">
+                        <a class="docs-sidebar-section-title" href="http://docs.openstack.org/index.html#api-guides"><h4>API Guides</h4></a>
+                    </div>
+                    <div class="docs-sidebar-section" id="contributor-guides">
+                        <a class="docs-sidebar-section-title" href="http://docs.openstack.org/index.html#contributor-guides"><h4>Contributor Guides</h4></a>
+                    </div>
+                    <div class="docs-sidebar-section" id="table-of-contents">
+                        <a class="docs-sidebar-section-title"><h4>Contents</h4></a>
+                        <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="conventions.html">Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_started_with_openstack.html">Get started with OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../identity_management.html">Identity management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dashboard.html">Dashboard</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../compute.html">Compute</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../compute_arch.html">System architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../compute-images-instances.html">Images and instances</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../compute-networking-nova.html">Networking with nova-network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../compute-system-admin.html">System administration</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Troubleshoot Compute</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../objectstorage.html">Object Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../blockstorage.html">Block Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shared_file_systems.html">Shared File Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking.html">Networking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../telemetry.html">Telemetry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../orchestration.html">Orchestration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cross_project.html">Cross-project features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app_support.html">Community support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+                    </div>
+                </div>
+                </div>
+
+</div>
+</div>
+    <!-- End Page Content -->
+
+    <!-- Footer -->
+    <!-- Footer -->
+        <footer>
+        <div class="container">
+            <div class="row footer-links">
+                <div class="col-lg-2 col-sm-2">
+                    <h3>OpenStack</h3>
+                    <ul>
+                        <li><a href="/foundation">About the Foundation</a></li>
+                        <li><a
+href="http://openstack.org/projects/">Projects</a></li>
+                        <li><a
+href="http://openstack.org/projects/openstack-security/">OpenStack
+Security</a></li>
+                        <li><a
+href="http://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+                        <li><a href="http://openstack.org/blog/">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-sm-2">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="http://openstack.org/community/">User
+Groups</a></li>
+                        <li><a
+href="http://openstack.org/community/events/">Events</a></li>
+                        <li><a
+href="http://openstack.org/community/jobs/">Jobs</a></li>
+                        <li><a
+href="http://openstack.org/foundation/companies/">Companies</a></li>
+                        <li><a
+href="https://wiki.openstack.org/wiki/How_To_Contribute">Contribute</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-sm-2">
+                    <h3>Documentation</h3>
+                    <ul>
+                        <li><a href="http://docs.openstack.org">OpenStack
+Manuals</a></li>
+                        <li><a
+href="http://openstack.org/software/start/">Getting Started</a></li>
+                        <li><a href="http://developer.openstack.org">API
+Documentation</a></li>
+                        <li><a href="https://wiki.openstack.org">Wiki</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-sm-2">
+                    <h3>Branding & Legal</h3>
+                    <ul>
+                        <li><a href="http://openstack.org/brand/">Logos &
+Guidelines</a></li>
+                        <li><a
+href="http://openstack.org/brand/openstack-trademark-policy/">Trademark
+Policy</a></li>
+                        <li><a href="http://openstack.org/privacy/">Privacy
+Policy</a></li>
+                        <li><a
+href="https://wiki.openstack.org/wiki/How_To_Contribute#Contributors_License_Agreement">OpenStack
+CLA</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-sm-4">
+                    <h3>Stay In Touch</h3>
+                    <a href="https://twitter.com/OpenStack" target="_blank"
+class="social-icons footer-twitter"></a>
+                    <a href="https://www.facebook.com/openstack"
+target="_blank" class="social-icons footer-facebook"></a>
+                    <a href="https://www.linkedin.com/company/openstack"
+target="_blank" class="social-icons footer-linkedin"></a>
+                    <a href="https://www.youtube.com/user/OpenStackFoundation"
+target="_blank" class="social-icons footer-youtube"></a>
+                    <!-- <form class="form-inline">
+                        <div class="form-group newsletter-form">
+                            <label>Join Our Newsletter</label>
+                            <input class="newsletter-input" type="input"
+placeholder="Email">
+                            <button type="submit"
+class="newsletter-btn">Join</button>
+                        </div>
+                    </form> -->
+                    <p class="fine-print">
+                        The OpenStack project is provided under the Apache 2.0
+license. Openstack.org is powered by <a href="http://rackspace.com"
+target="_blank">Rackspace Cloud Computing</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="footer-bottom">
+        <div class="container">
+            <form class="form-inline" id="FeedbackForm_FeedbackForm" action="/home/FeedbackForm" method="post" enctype="application/x-www-form-urlencoded">
+              <div class="form-group">
+                <div>
+                  <input class="feedback-input" type="input" placeholder="Give Us Your Feedback On This Page">
+                  <button type="submit" class="feedback-btn">Submit</button>
+                </div>
+              </div>
+            </form>
+        </div>
+    </div>
+
+<!-- Scripts in: static directory-->
+    <!-- jQuery Version 1.11.0 -->
+    <script type="text/javascript" src="../_static/js/jquery-1.11.3.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script type="text/javascript" src="../_static/js/bootstrap.min.js"></script>
+
+    <!-- The rest of the JS -->
+    <script type="text/javascript" src="../_static/js/navigation.js"></script>
+
+    <!-- Docs JS -->
+    <script type="text/javascript" src="../_static/js/docs.js"></script>
+
+    <!-- Popovers -->
+    <script type="text/javascript" src="../_static/js/webui-popover.js"></script>
+
+    <!-- Javascript for page -->
+    <script language="JavaScript">
+    /* build a description of this page including SHA, source location on git repo and
+       build time, the project's launchpad bug tag and set the HREF of the bug buttons */
+
+        var lineFeed = "%0A";
+
+            /* "pagename" is the path to the source file, relative to conf.py's
+               directory. However, "pagename" is missing the rst extension. */
+            var sourceFile = "common/support-compute" + ".rst"
+
+            /* Using the current working directory, figure out
+               in which book we are and use that information to
+               build a link to the source file on git.openstack.ort */
+            var pwd = "/home/sslypushenko/projects/openstack-manuals/doc/admin-guide-cloud/source"
+            var gitlink = "Source: http://git.openstack.org/cgit/openstack/openstack-manuals/tree"
+            gitlink += pwd.slice(pwd.lastIndexOf("/doc/")) + "/" + sourceFile
+
+        /* gitsha, project and bug_tag rely on variables in conf.py */
+        var gitSha = "SHA: 8ebff076eaaaefdb986e268bfeeee0938e272ecb"
+        var bugTitle = "Troubleshoot Compute in Cloud Administrator Guide"
+        var fieldTags = "admin-guide-cloud"
+
+        /* "last_updated" is the build date and time. It relies on the
+           conf.py variable "html_last_updated_fmt", which should include
+           year/month/day as well as hours and minutes                   */
+        var buildstring = "Release: 0.9 on 2015-10-12 18:28"
+
+        var fieldComment = encodeURI(buildstring) +
+                           lineFeed + encodeURI(gitSha) +
+                           lineFeed + encodeURI(gitlink)
+
+        logABug(bugTitle, fieldComment, fieldTags)
+    </script>
+    <!-- Javascript for search boxes (both sidebar and top nav) -->
+<script type="text/javascript">
+        (function() {
+        var cx = '000108871792296872333:noj9nikm74i';
+        var gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = (document.location.protocol == 'https:' ? 'https:' :
+'http:') +
+            '//www.google.com/cse/cse.js?cx=' + cx;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+      })();
+       </script>
+
+ </body>
+</html>

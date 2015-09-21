@@ -1,0 +1,9 @@
+.. _shared_file_systems_resize:
+
+=================
+Resize File Share
+=================
+
+To change file share size, use :command:`manila extend` and
+:command:`manila shrink`. For most drivers it is safe operation. In case of
+using generic driver it is better to create share snapshot for backup.

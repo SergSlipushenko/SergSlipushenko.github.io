@@ -1,0 +1,731 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2015 OpenStack Foundation, All Rights Reserved -->
+<!--*******************************************************-->
+<!--         Import Common XML Entities                    -->
+<!--                                                       -->
+<!--     You can resolve the entities with xmllint          -->
+<!--                                                       -->
+<!--        xmllint -noent os-image-2.2.wadl               -->
+<!--*******************************************************-->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <wadl:grammars xmlns:db="http://docbook.org/ns/docbook"
+                  xmlns="http://wadl.dev.java.net/2009/02">
+      <wadl:include href="37208-os-metadef-tag-v2-xsd-1.xsd"/>
+      <wadl:include href="37208-os-metadef-tag-v2-xsd-2.xsd"/>
+   </wadl:grammars>
+    <!--*******************************************************-->
+    <!--             All Resources                             -->
+    <!--*******************************************************-->
+    <resources xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:db="http://docbook.org/ns/docbook"
+              xmlns:common="http://docs.openstack.org/common/api/v1.0"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+              xmlns:csapi="http://docs.openstack.org/image/api/v2"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://glance.example.com/"
+              xml:id="os-metadef-tag-v2">
+        <resource id="tags" path="/v2/metadefs/namespaces/{namespace}/tags">
+         <method name="POST" rax:id="createTags-v2">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Create tags">
+               <para role="shortdesc">
+                Creates one or more tag definitions in a specified namespace.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "tags": [
+        {
+            "name": "sample-tag1"
+        },
+        {
+            "name": "sample-tag2"
+        },
+        {
+            "name": "sample-tag3"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                
+                  <param name="namespace"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The <code>namespace</code> is unique across all users.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="tags" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>A list of <code>tag</code> dictionary objects.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="name" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Name of the <code>tag</code>.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="201">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "tags": [
+        {
+            "name": "sample-tag1"
+        },
+        {
+            "name": "sample-tag2"
+        },
+        {
+            "name": "sample-tag3"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                
+                  <param name="tags" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>A list of <code>tag</code> dictionary objects.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="name" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Name of the <code>tag</code>.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="GET" rax:id="listTags-v2">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="List tags">
+               <para role="shortdesc">Lists the tag definitions within
+                a namespace.</para>
+               <para>To manually paginate through the list of tags, use
+                the <code>limit</code> and <code>marker</code>
+                parameters.</para>
+               <para>To sort the results of this operation use the
+                <code>sort_key</code> and <code>sort_dir</code> parameters.
+                The API uses the natural sort order of the tag attribute
+                of the specified <code>sort_key</code> parameter.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                
+                  <param name="namespace"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The <code>namespace</code> is unique across all users.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="limit" style="query" required="false" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            Requests a specified page size of returned items from the query.
+            Returns a number of items up to the specified limit value. Use the
+            <code>limit</code> parameter to make an initial limited request
+            and use the ID of the last-seen item from the response as the
+            <code>marker</code> parameter value in a subsequent limited request.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="marker" style="query" required="false" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            Specifies the ID of the last-seen item. Use the <code>limit</code>
+            parameter to make an initial limited request and use the ID of the
+            last-seen item from the response as the <code>marker</code>
+            parameter value in a subsequent limited request.
+        </para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="sort_key"
+                         style="query"
+                         required="false"
+                         type="xsd:string"
+                         default="ALL">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Sort key. A valid value is an attribute, such as <code>name</code>. for
+      sorting. Default is <code>created_at</code>.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="sort_dir"
+                         style="query"
+                         required="false"
+                         type="xsd:string"
+                         default="ALL">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Sort direction. A valid value is <code>asc</code>
+      (ascending) or <code>desc</code> (descending). Default is
+      <code>desc</code>.
+   </para>
+                     </wadl:doc>
+                  </param> 
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "tags": [
+        {
+            "name": "sample-tag1"
+        },
+        {
+            "name": "sample-tag2"
+        },
+        {
+            "name": "sample-tag3"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                
+                  <param name="tags" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>A list of <code>tag</code> dictionary objects.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="name" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Name of the <code>tag</code>.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="DELETE" rax:id="deleteAllTags-v2">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Delete all tag definitions">
+               <para role="shortdesc">
+                Deletes all tag definitions within a namespace.
+            </para>
+               <para>
+                You cannot delete tags in a namespace with the 'protected'
+                attribute set to true (boolean); the response returns
+                the HTTP 403 status code.
+            </para>
+               <para>
+                You must first set the <code>protected</code> attribute to
+                false (boolean) on the namespace and then perform the delete.
+                The response is empty and returns the HTTP 204 status code.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                
+                  <param name="namespace"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The <code>namespace</code> is unique across all users.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="204"/>
+            <response status="403"/>
+         </method>
+      </resource>
+      <resource path="/v2/metadefs/namespaces/{namespace}/tags/{name}" id="tag_name">
+         <method name="POST" rax:id="addTag-v2">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Add tag definition">
+               <para role="shortdesc">
+                Adds a specified tag to the list of namespace tag definitions.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                    
+                  <param name="namespace"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The <code>namespace</code> is unique across all users.</para>
+                     </wadl:doc>
+                  </param>
+                    
+                  <param name="name" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Name of the <code>tag</code>.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "created_at": "2015-05-09T01:12:31Z",
+    "name": "added-sample-tag",
+    "updated_at": "2015-05-09T01:12:31Z"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="name" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Name of the <code>tag</code>.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="GET" rax:id="getTag-v2">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Get tag definition">
+               <para role="shortdesc">Gets a definition for the specified tag.
+                </para>
+               <para>The response body shows a single tag entity.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                
+                  <param name="namespace"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The <code>namespace</code> is unique across all users.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="name" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Name of the <code>tag</code>.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "created_at": "2015-05-06T23:16:12Z",
+    "name": "sample-tag2",
+    "updated_at": "2015-05-06T23:16:12Z"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="name" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Name of the <code>tag</code>.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="PUT" rax:id="updateTag-v2">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Update tag definition">
+               <para role="shortdesc">
+                Renames a specified tag definition.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "name": "new-tag-name"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                    
+                  <param name="namespace"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The <code>namespace</code> is unique across all users.</para>
+                     </wadl:doc>
+                  </param>
+                    
+                  <param name="name" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Name of the <code>tag</code>.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "name": "new-tag-name"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                
+                  <param name="name" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Name of the <code>tag</code>.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="DELETE" rax:id="deleteTag-v2">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Delete tag definition">
+               <para role="shortdesc">
+                Deletes a specified tag definition within a namespace.
+            </para>
+               <para>
+                You cannot delete tags in a namespace with the 'protected'
+                attribute set to true (boolean); the response returns
+                the HTTP 403 status code.
+            </para>
+               <para>
+                You must first set the <code>protected</code> attribute to
+                false (boolean) on the namespace and then perform the delete.
+                The response is empty and returns the HTTP 204 status code.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                
+                  <param name="namespace"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The <code>namespace</code> is unique across all users.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="name" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Name of the <code>tag</code>.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="204"/>
+            <response status="403"/>
+         </method>
+      </resource>
+                                
+                                
+                                
+                                
+                            
+    </resources>
+    <!--*******************************************************-->
+    <!--               All Methods                             -->
+    <!--*******************************************************-->
+    <!-- Property methods -->
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+           xmlns:csapi="http://docs.openstack.org/image/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="createTags-v2">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+                
+            <param name="namespace"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="tags" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="name" style="plain" required="true" type="xsd:string">
+
+</param>
+            </representation>
+        </request>
+        <response status="201">
+            <representation mediaType="application/json">
+                
+                
+            <param name="tags" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="name" style="plain" required="true" type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+           xmlns:csapi="http://docs.openstack.org/image/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="listTags-v2">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            <param name="namespace"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="limit" style="query" required="false" type="xsd:int">
+    
+</param>
+            <param name="marker" style="query" required="false" type="xsd:string">
+    
+</param>
+                
+            <param name="sort_key"
+                   style="query"
+                   required="false"
+                   type="xsd:string"
+                   default="ALL">
+
+</param>
+            <param name="sort_dir"
+                   style="query"
+                   required="false"
+                   type="xsd:string"
+                   default="ALL">
+
+</param> 
+         </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                
+                
+            <param name="tags" style="plain" required="true" type="xsd:string">
+
+</param>
+                
+            <param name="name" style="plain" required="true" type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+           xmlns:csapi="http://docs.openstack.org/image/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="DELETE"
+           id="deleteAllTags-v2">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            <param name="namespace"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </request>
+        <response status="204"/>
+        <response status="403"/>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+           xmlns:csapi="http://docs.openstack.org/image/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="addTag-v2">
+        
+        <request>
+            <representation mediaType="application/json">
+                    
+            <param name="namespace"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                    
+            <param name="name" style="plain" required="true" type="xsd:string">
+
+</param>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                 
+            <param name="name" style="plain" required="true" type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+           xmlns:csapi="http://docs.openstack.org/image/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="getTag-v2">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            <param name="namespace"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="name" style="plain" required="true" type="xsd:string">
+
+</param>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                 
+            <param name="name" style="plain" required="true" type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+           xmlns:csapi="http://docs.openstack.org/image/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="PUT"
+           id="updateTag-v2">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+                    
+            <param name="namespace"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                    
+            <param name="name" style="plain" required="true" type="xsd:string">
+
+</param>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                
+                
+            <param name="name" style="plain" required="true" type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+           xmlns:csapi="http://docs.openstack.org/image/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="DELETE"
+           id="deleteTag-v2">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            <param name="namespace"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="name" style="plain" required="true" type="xsd:string">
+
+</param>
+            </representation>
+        </request>
+        <response status="204"/>
+        <response status="403"/>
+    </method>
+</wadl:application>

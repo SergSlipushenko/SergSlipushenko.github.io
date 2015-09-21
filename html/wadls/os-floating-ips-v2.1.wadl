@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2014-2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+              xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-floating-ips-v2.1">
+        <resource id="os-floating-ips" path="/v2.1/{tenant_id}/os-floating-ips">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="ListFloatingIPs">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List floating IPs">
+               <para role="shortdesc">Lists floating IP addresses
+                associated with the tenant or account.
+            </para>
+               <para>
+              Policy defaults enable only users with the administrative role
+              or the owner of the server to perform this operation. Cloud
+              providers can change these permissions through the
+              <code>policy.json</code> file.
+            </para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "floating_ips": [
+        {
+            "fixed_ip": null,
+            "id": 1,
+            "instance_id": null,
+            "ip": "10.10.10.1",
+            "pool": "nova"
+        },
+        {
+            "fixed_ip": null,
+            "id": 2,
+            "instance_id": null,
+            "ip": "10.10.10.2",
+            "pool": "nova"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+         <method name="POST" rax:id="AllocateFloatingIP">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Allocate floating IP">
+               <para role="shortdesc">Allocates a new floating IP address
+                to a tenant or account.</para>
+               <para>
+              Policy defaults enable only users with the administrative role
+              or the owner of the server to perform this operation. Cloud providers can change
+              these permissions through the <code>policy.json</code> file.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "pool": "nova"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="pool" style="plain">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Pool to allocate IP address from. Default pool is used, if not specified.</para>
+                        <para>
+                          Policy defaults enable only users with the administrative role
+                          or the owner of the server to perform this operation. Cloud providers can change
+                          these permissions through the <code>policy.json</code> file.
+                        </para>
+                    </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "floating_ip": {
+        "fixed_ip": null,
+        "id": 1,
+        "instance_id": null,
+        "ip": "10.10.10.1",
+        "pool": "nova"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+            <response status="400">
+               <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                  <p xmlns="http://www.w3.org/1999/xhtml">If there are no floating IPs available, the
+                    extension returns an error code 400 with a message
+                    indicating that no more floating IPs are
+                    available.</p>
+               </wadl:doc>
+            </response>
+         </method>
+      </resource>
+                    
+                    
+                    <resource path="/v2.1/{tenant_id}/os-floating-ips/{id}"
+                id="rax-v2.1-_tenant_id_-os-floating-ips-_id_-0">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <param name="id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The ID of the floating IP address.</para>
+            </wadl:doc>
+         </param>
+         <method name="DELETE" rax:id="DeallocateFloatingIP">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Deallocate floating IP">
+               <para role="shortdesc">Deallocates a specified floating IP address.
+            </para>
+               <para>
+              You can use this call to deallocate and delete only manually-allocated
+              floating IP addresses. You must manually deallocate
+              auto-allocated floating IP addresses before you can delete them.
+            </para>
+               <para>
+              Policy defaults enable only users with the administrative role
+              or the owner of the server to perform this operation. Cloud providers can change
+              these permissions through the <code>policy.json</code> file.
+            </para>
+            </wadl:doc>
+            <response status="202"/>
+         </method>
+      </resource>
+                        
+
+                        
+                    
+                
+    </resources>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="ListFloatingIPs">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="AllocateFloatingIP">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+                <param name="pool" style="plain">
+                    
+                </param>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+        <response status="400">
+            
+        </response>
+    </method>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="DELETE"
+           id="DeallocateFloatingIP">
+        
+        <response status="202"/>
+    </method>
+</wadl:application>

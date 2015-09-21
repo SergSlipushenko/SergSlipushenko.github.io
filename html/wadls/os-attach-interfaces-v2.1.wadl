@@ -1,0 +1,866 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2012-2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:db="http://docbook.org/ns/docbook"
+              xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+              xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:common="http://docs.openstack.org/common/api/v1.0"
+              xmlns:atom="http://www.w3.org/2005/Atom"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-attach-interfaces-v2.1">
+        <resource path="/v2.1/{tenant_id}/servers/{server_id}/os-attach-interfaces"
+                id="os-attach-interfaces">
+         <param name="tenant_id" style="template" type="xsd:string">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+                            The ID for the tenant or account in a multi-tenancy cloud.
+                        </para>
+                    </wadl:doc>
+                </param>
+         <param name="server_id" style="template" type="csapi:UUID">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                                <para>
+                                    The UUID for the server of interest to you.
+                                </para>
+                            </wadl:doc>
+                        </param>
+         <method name="POST" rax:id="createAttachInterface">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Create interface">
+               <para role="shortdesc">
+                Creates a port interface and
+                uses it to attach a port to a server instance.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "interfaceAttachment": {
+        "port_id": "ce531f90-199f-48c0-816c-13e38010b442"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="interfaceAttachment"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+                            Specify the <code>interfaceAttachment</code>
+                            action in the request body.
+                        </para>
+                    </wadl:doc>
+                  </param>
+                  <param name="port_id" style="plain" type="csapi:uuid" required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+                            The ID of the port for which you want to create an
+                            interface.
+                        </para>
+                        <para>
+                            The <code>net_id</code> and <code>port_id</code>
+                            parameters are mutually exclusive.
+                        </para>
+                        <para>
+                            If you do not specify the <code>port_id</code>
+                            parameter, the OpenStack Networking API v2.0
+                            allocates a port and
+                            creates an interface for it
+                            on the specified network.
+                        </para>
+                    </wadl:doc>
+                  </param>
+                  <param name="net_id" style="plain" type="csapi:uuid" required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+                            The ID of the network for which you want to create
+                            a port interface.
+                        </para>
+                        <para>
+                            The <code>net_id</code> and <code>port_id</code>
+                            parameters are mutually exclusive.
+                        </para>
+                        <para>
+                            If you do not specify the <code>net_id</code>
+                            parameter, the OpenStack Networking API v2.0 uses
+                            the network information cache that is associated
+                            with the instance.
+                        </para>
+                    </wadl:doc>
+                  </param>
+                  <param name="fixed_ips"
+                         style="plain"
+                         type="xsd:string"
+                         required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Fixed IP addresses with subnet IDs.</para>
+                        <para>
+                            If you request a specific fixed IP address without
+                            a <code>net_id</code>, the request returns a
+                            <code>400 BadRequest</code> error code.
+                        </para>
+                    </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "interfaceAttachment": {
+        "fixed_ips": [
+            {
+                "ip_address": "192.168.1.3",
+                "subnet_id": "f8a6e8f8-c2ec-497c-9f23-da9616de54ef"
+            }
+        ],
+        "mac_addr": "fa:16:3e:4c:2c:30",
+        "net_id": "3cb9bc59-5699-4588-a4b1-b87f96708bc6",
+        "port_id": "ce531f90-199f-48c0-816c-13e38010b442",
+        "port_state": "ACTIVE"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="fixed_ips"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Fixed IP addresses with subnet IDs.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="mac_addr" style="plain" type="xsd:string" required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The MAC address.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="net_id" style="plain" type="csapi:uuid" required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The network ID.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="port_id" style="plain" type="csapi:uuid" required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The port ID.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="port_state"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Port state">
+                        <para>The port state.</para>
+                    </wadl:doc>
+                  </param>
+               </representation>
+            </response> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+ 
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response>
+        
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+ 
+            <response status="415">
+               <representation mediaType="application/xml" element="csapi:badMediaType"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+         <method name="GET" rax:id="listAttachedInterfaces">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List interfaces">
+               <para role="shortdesc">Lists port interfaces
+                that are attached to a specified server.
+            </para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "interfaceAttachments": [
+        {
+            "fixed_ips": [
+                {
+                    "ip_address": "192.168.1.3",
+                    "subnet_id": "f8a6e8f8-c2ec-497c-9f23-da9616de54ef"
+                }
+            ],
+            "mac_addr": "fa:16:3e:4c:2c:30",
+            "net_id": "3cb9bc59-5699-4588-a4b1-b87f96708bc6",
+            "port_id": "ce531f90-199f-48c0-816c-13e38010b442",
+            "port_state": "ACTIVE"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="port_state"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The port state.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="fixed_ips"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Fixed IP addresses with subnet IDs.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="mac_addr" style="plain" type="xsd:string" required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The MAC address.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="net_id" style="plain" type="csapi:uuid" required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The network ID.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="port_id" style="plain" type="csapi:uuid" required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The port ID.</para>
+                    </wadl:doc>
+                  </param>
+               </representation>
+            </response> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+ 
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response>
+        
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+ 
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+      </resource>
+                            
+                            
+                            <resource path="/v2.1/{tenant_id}/servers/{server_id}/os-attach-interfaces/{attachment_id}"
+                id="attachment_id">
+         <param name="tenant_id" style="template" type="xsd:string">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+                            The ID for the tenant or account in a multi-tenancy cloud.
+                        </para>
+                    </wadl:doc>
+                </param>
+         <param name="server_id" style="template" type="csapi:UUID">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                                <para>
+                                    The UUID for the server of interest to you.
+                                </para>
+                            </wadl:doc>
+                        </param>
+         <param name="attachment_id" style="template" type="csapi:UUID">
+                                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                                        <para>The interface ID.</para>
+                                    </wadl:doc>
+                                </param>
+         <method name="GET" rax:id="showAttachedInterface">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show port interface information">
+               <para role="shortdesc">Shows information about
+                a specified port interface
+                that is attached to a specified server.
+            </para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "interfaceAttachment": {
+        "fixed_ips": [
+            {
+                "ip_address": "192.168.1.3",
+                "subnet_id": "f8a6e8f8-c2ec-497c-9f23-da9616de54ef"
+            }
+        ],
+        "mac_addr": "fa:16:3e:4c:2c:30",
+        "net_id": "3cb9bc59-5699-4588-a4b1-b87f96708bc6",
+        "port_id": "ce531f90-199f-48c0-816c-13e38010b442",
+        "port_state": "ACTIVE"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+ 
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response>
+        
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+ 
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+         <method name="DELETE" rax:id="deleteAttachedInterface">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Detach interface">
+               <para role="shortdesc">Detaches a specified port interface.</para>
+            </wadl:doc>
+            <response status="202"/> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+ 
+            <response status="415">
+               <representation mediaType="application/xml" element="csapi:badMediaType"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+      </resource>
+                                
+                                
+                                
+                            
+                        
+    </resources>
+    <method xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:atom="http://www.w3.org/2005/Atom"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="createAttachInterface">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+                <param name="interfaceAttachment"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+                    
+                </param>
+                <param name="port_id" style="plain" type="csapi:uuid" required="false">
+                    
+                </param>
+                <param name="net_id" style="plain" type="csapi:uuid" required="false">
+                    
+                </param>
+                <param name="fixed_ips"
+                   style="plain"
+                   type="xsd:string"
+                   required="false">
+                    
+                </param>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                
+                <param name="fixed_ips"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+                    
+                </param>
+                <param name="mac_addr" style="plain" type="xsd:string" required="true">
+                    
+                </param>
+                <param name="net_id" style="plain" type="csapi:uuid" required="true">
+                    
+                </param>
+                <param name="port_id" style="plain" type="csapi:uuid" required="true">
+                    
+                </param>
+                <param name="port_state"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+                    
+                </param>
+            </representation>
+        </response> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+ 
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response>
+        
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+ 
+      <response status="415">
+         <representation mediaType="application/xml" element="csapi:badMediaType"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+         <representation mediaType="application/json"/>
+      </response>
+    </method>
+    <method xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:atom="http://www.w3.org/2005/Atom"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="listAttachedInterfaces">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+                <param name="port_state"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+                    
+                </param>
+                <param name="fixed_ips"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+                    
+                </param>
+                <param name="mac_addr" style="plain" type="xsd:string" required="true">
+                    
+                </param>
+                <param name="net_id" style="plain" type="csapi:uuid" required="true">
+                    
+                </param>
+                <param name="port_id" style="plain" type="csapi:uuid" required="true">
+                    
+                </param>
+            </representation>
+        </response> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+ 
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response>
+        
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+ 
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response>
+    </method>
+    <method xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:atom="http://www.w3.org/2005/Atom"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="showAttachedInterface">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+ 
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response>
+        
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+ 
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response>
+    </method>
+    <method xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:atom="http://www.w3.org/2005/Atom"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="DELETE"
+           id="deleteAttachedInterface">
+        
+        <response status="202"/> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+ 
+      <response status="415">
+         <representation mediaType="application/xml" element="csapi:badMediaType"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+         <representation mediaType="application/json"/>
+      </response>
+    </method>
+</wadl:application>

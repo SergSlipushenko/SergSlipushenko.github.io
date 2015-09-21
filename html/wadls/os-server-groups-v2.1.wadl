@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2014-2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:db="http://docbook.org/ns/docbook"
+              xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-server-groups-v2.1">
+        <resource id="os-server-groups" path="/v2.1/{tenant_id}/os-server-groups">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="listServerGroups">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List server groups">
+               <para role="shortdesc">Lists server groups.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "server_groups": [
+        {
+            "id": "616fb98f-46ca-475e-917e-2563e5a8cd19",
+            "name": "test",
+            "policies": [
+                "anti-affinity"
+            ],
+            "members": [],
+            "metadata": {}
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+        
+                  <param style="plain"
+                         name="server_groups"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>A <code>server_groups</code> object.</para>
+                     </wadl:doc>
+                  </param>
+                  <param style="plain" name="id" required="true" type="csapi:uuid">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The ID for the server group.</para>
+                     </wadl:doc>
+                  </param>
+                  <param style="plain" name="name" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The name of the server group.</para>
+                     </wadl:doc>
+                  </param>
+                  <param style="plain" name="policies" required="true" type="xsd:dict">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>A list of policies associated with the server group.</para>
+                     </wadl:doc>
+                  </param>
+                  <param style="plain" name="members" required="true" type="xsd:dict">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>A list of members in the server group.</para>
+                     </wadl:doc>
+                  </param>
+                  <param style="plain" name="metadata" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Associated metadata key-and-value pairs.</para>
+                     </wadl:doc>
+                  </param> 
+               </representation>
+            </response>
+         </method>
+         <method name="POST" rax:id="createServerGroup">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Create server group">
+               <para role="shortdesc">Creates a server group.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "server_group": {
+        "name": "test",
+        "policies": [
+            "anti-affinity"
+        ]
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="name" style="plain" type="xsd:string" required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The server group name. A non-empty
+                            string with no leading or trailing spaces.
+                            Maximum length is 255
+                        characters.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="policies" style="plain" type="xsd:dict" required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>A list of one or more policy names to
+                            associate with the server group. The list
+                            must contain at least one policy
+                            name.</para>
+                        <para>Each policy name must be a non-empty
+                            string with no leading or trailing spaces.
+                            Maximum length is 255
+                        characters.</para>
+                    </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "server_group": {
+        "id": "5bbcc3c4-1da2-4437-a48a-66f15b1b13f9",
+        "name": "test",
+        "policies": [
+            "anti-affinity"
+        ],
+        "members": [],
+        "metadata": {}
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+             
+                  <param name="security_groups"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security groups object">
+                        <para>Security groups object.</para>
+                     </wadl:doc>
+                  </param>
+                  <param name="description"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group description">
+                        <para>Security group description.</para>
+                     </wadl:doc>
+                  </param>
+                  <param name="id" style="plain" type="xsd:int" required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group ID">
+                        <para>The security group ID.</para>
+                     </wadl:doc>
+                  </param>
+                  <param name="name" style="plain" type="xsd:string" required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group name">
+                        <para>The security group name.</para>
+                     </wadl:doc>
+                  </param>
+                  <param name="rules" style="plain" type="xsd:string" required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Rules object">
+                        <para>A rules object.</para>
+                     </wadl:doc>
+                  </param> 
+               </representation>
+            </response>
+         </method>
+      </resource>
+                    
+                    
+                    <resource path="/v2.1/{tenant_id}/os-server-groups/{ServerGroup_id}"
+                id="ServerGroup_id">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <param name="ServerGroup_id" style="template">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                                <para>The server group
+                                ID.</para>
+            </wadl:doc>
+                        </param>
+         <method name="GET" rax:id="showServerGroup">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show server group details">
+               <para role="shortdesc">Shows details for a specified
+                server group.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "server_group": {
+        "id": "5bbcc3c4-1da2-4437-a48a-66f15b1b13f9",
+        "name": "test",
+        "policies": [
+            "anti-affinity"
+        ],
+        "members": [],
+        "metadata": {}
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+        
+                  <param name="security_groups"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security groups object">
+                        <para>Security groups object.</para>
+                     </wadl:doc>
+                  </param>
+                  <param name="description"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group description">
+                        <para>Security group description.</para>
+                     </wadl:doc>
+                  </param>
+                  <param name="id" style="plain" type="xsd:int" required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group ID">
+                        <para>The security group ID.</para>
+                     </wadl:doc>
+                  </param>
+                  <param name="name" style="plain" type="xsd:string" required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Security group name">
+                        <para>The security group name.</para>
+                     </wadl:doc>
+                  </param>
+                  <param name="rules" style="plain" type="xsd:string" required="true">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Rules object">
+                        <para>A rules object.</para>
+                     </wadl:doc>
+                  </param> 
+               </representation>
+            </response>
+         </method>
+         <method name="DELETE" rax:id="deleteServerGroup">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Delete server group">
+               <para role="shortdesc">Deletes a specified server
+                group.</para>
+            </wadl:doc>
+            <response status="204"/>
+            <!-- Common and GET Faults --> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+ 
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+      </resource>
+                        
+                        
+                        
+                    
+                
+    </resources>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="createServerGroup">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+                <param name="name" style="plain" type="xsd:string" required="true">
+                    
+                </param>
+                <param name="policies" style="plain" type="xsd:dict" required="false">
+                    
+                </param>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                
+             
+            <param name="security_groups"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+   
+</param>
+            <param name="description"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+   
+</param>
+            <param name="id" style="plain" type="xsd:int" required="true">
+   
+</param>
+            <param name="name" style="plain" type="xsd:string" required="true">
+   
+</param>
+            <param name="rules" style="plain" type="xsd:string" required="true">
+   
+</param> 
+         </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="listServerGroups">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+        
+            <param style="plain"
+                   name="server_groups"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param style="plain" name="id" required="true" type="csapi:uuid">
+
+</param>
+            <param style="plain" name="name" required="true" type="xsd:string">
+
+</param>
+            <param style="plain" name="policies" required="true" type="xsd:dict">
+
+</param>
+            <param style="plain" name="members" required="true" type="xsd:dict">
+
+</param>
+            <param style="plain" name="metadata" required="true" type="xsd:string">
+
+</param> 
+         </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="showServerGroup">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+        
+            <param name="security_groups"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+   
+</param>
+            <param name="description"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+   
+</param>
+            <param name="id" style="plain" type="xsd:int" required="true">
+   
+</param>
+            <param name="name" style="plain" type="xsd:string" required="true">
+   
+</param>
+            <param name="rules" style="plain" type="xsd:string" required="true">
+   
+</param> 
+         </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="DELETE"
+           id="deleteServerGroup">
+        
+        <response status="204"/>
+        <!-- Common and GET Faults --> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+ 
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response>
+    </method>
+</wadl:application>

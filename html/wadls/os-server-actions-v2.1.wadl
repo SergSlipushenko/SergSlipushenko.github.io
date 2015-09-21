@@ -1,0 +1,1826 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2013-2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-server-actions-v2.1">
+        <resource id="action" path="/v2.1/{tenant_id}/servers/{server_id}/action">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <param name="server_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The UUID for the server.</para>
+            </wadl:doc>
+         </param>
+         <method name="POST" rax:id="rebootServer">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Reboot server">
+               <para role="shortdesc">
+                Reboots the specified server. Specify the <code>reboot</code>
+                action in the request body.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "reboot": {
+        "type": "HARD"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </request>
+            <response status="202"/>
+            <!-- Common, GET, postput, inProgress Faults--> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+ 
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="415">
+               <representation mediaType="application/xml" element="csapi:badMediaType"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+               <representation mediaType="application/json"/>
+            </response>
+        
+            <response status="422">
+               <representation mediaType="application/xml" element="csapi:HTTPUnprocessableEntity"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="409">
+               <representation mediaType="application/xml" element="csapi:buildInProgress"/>
+               <representation mediaType="application/json"/>
+            </response> 
+         </method>
+         <method name="POST" rax:id="rebuildServer">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Rebuild server">
+               <para role="shortdesc">
+                Rebuilds the specified server. Specify the
+                <code>rebuild</code> action in the request body.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "rebuild": {
+        "accessIPv4": "1.2.3.4",
+        "accessIPv6": "80fe::",
+        "imageRef": "http://glance.openstack.example.com/images/70a599e0-31e7-49b7-b260-868f441e862b",
+        "name": "foobar",
+        "adminPass": "seekr3t",
+        "metadata": {
+            "meta_var": "meta_val"
+        }
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </request>
+            <response status="202">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "server": {
+        "accessIPv4": "1.2.3.4",
+        "accessIPv6": "80fe::",
+        "addresses": {
+            "private": [
+                {
+                    "addr": "192.168.0.3",
+                    "version": 4
+                }
+            ]
+        },
+        "adminPass": "seekr3t",
+        "created": "2013-11-14T06:29:00Z",
+        "flavor": {
+            "id": "1",
+            "links": [
+                {
+                    "href": "http://openstack.example.com/openstack/flavors/1",
+                    "rel": "bookmark"
+                }
+            ]
+        },
+        "hostId": "28d8d56f0e3a77e20891f455721cbb68032e017045e20aa5dfc6cb66",
+        "id": "a0a80a94-3d81-4a10-822a-daa0cf9e870b",
+        "image": {
+            "id": "70a599e0-31e7-49b7-b260-868f441e862b",
+            "links": [
+                {
+                    "href": "http://openstack.example.com/openstack/images/70a599e0-31e7-49b7-b260-868f441e862b",
+                    "rel": "bookmark"
+                }
+            ]
+        },
+        "links": [
+            {
+                "href": "http://openstack.example.com/v2.1/servers/a0a80a94-3d81-4a10-822a-daa0cf9e870b",
+                "rel": "self"
+            },
+            {
+                "href": "http://openstack.example.com/openstack/servers/a0a80a94-3d81-4a10-822a-daa0cf9e870b",
+                "rel": "bookmark"
+            }
+        ],
+        "metadata": {
+            "meta_var": "meta_val"
+        },
+        "name": "foobar",
+        "progress": 0,
+        "status": "ACTIVE",
+        "tenant_id": "openstack",
+        "updated": "2013-11-14T06:29:02Z",
+        "user_id": "fake"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+            <!-- All other faults, build, common, get, post/put, and inProgress --> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+
+        
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="415">
+               <representation mediaType="application/xml" element="csapi:badMediaType"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serverCapacityUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="409">
+               <representation mediaType="application/xml" element="csapi:buildInProgress"/>
+               <representation mediaType="application/json"/>
+            </response> 
+         </method>
+         <method name="POST" rax:id="rebuildServer-preserve-ephemeral">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Rebuild server with preserve ephemeral">
+               <para role="shortdesc">
+                Rebuilds the specified server with preserve ephemeral option. Specify the
+                <code>rebuild</code> action in the request body.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "rebuild": {
+        "imageRef": "http://glance.openstack.example.com/images/70a599e0-31e7-49b7-b260-868f441e862b",
+        "name": "foobar",
+        "adminPass": "seekr3t",
+        "metadata": {
+            "meta_var": "meta_val"
+        },
+        "personality": [
+            {
+                "path": "/etc/banner.txt",
+                "contents": "ICAgICAgDQoiQSBjbG91ZCBkb2VzIG5vdCBrbm93IHdoeSBp dCBtb3ZlcyBpbiBqdXN0IHN1Y2ggYSBkaXJlY3Rpb24gYW5k IGF0IHN1Y2ggYSBzcGVlZC4uLkl0IGZlZWxzIGFuIGltcHVs c2lvbi4uLnRoaXMgaXMgdGhlIHBsYWNlIHRvIGdvIG5vdy4g QnV0IHRoZSBza3kga25vd3MgdGhlIHJlYXNvbnMgYW5kIHRo ZSBwYXR0ZXJucyBiZWhpbmQgYWxsIGNsb3VkcywgYW5kIHlv dSB3aWxsIGtub3csIHRvbywgd2hlbiB5b3UgbGlmdCB5b3Vy c2VsZiBoaWdoIGVub3VnaCB0byBzZWUgYmV5b25kIGhvcml6 b25zLiINCg0KLVJpY2hhcmQgQmFjaA=="
+            }
+        ],
+        "preserve_ephemeral": true
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </request>
+            <response status="202">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "server": {
+        "accessIPv4": "1.2.3.4",
+        "accessIPv6": "80fe::",
+        "addresses": {
+            "private": [
+                {
+                    "addr": "192.168.0.3",
+                    "version": 4
+                }
+            ]
+        },
+        "adminPass": "seekr3t",
+        "created": "2013-11-14T06:29:00Z",
+        "flavor": {
+            "id": "1",
+            "links": [
+                {
+                    "href": "http://openstack.example.com/openstack/flavors/1",
+                    "rel": "bookmark"
+                }
+            ]
+        },
+        "hostId": "28d8d56f0e3a77e20891f455721cbb68032e017045e20aa5dfc6cb66",
+        "id": "a0a80a94-3d81-4a10-822a-daa0cf9e870b",
+        "image": {
+            "id": "70a599e0-31e7-49b7-b260-868f441e862b",
+            "links": [
+                {
+                    "href": "http://openstack.example.com/openstack/images/70a599e0-31e7-49b7-b260-868f441e862b",
+                    "rel": "bookmark"
+                }
+            ]
+        },
+        "links": [
+            {
+                "href": "http://openstack.example.com/v2.1/servers/a0a80a94-3d81-4a10-822a-daa0cf9e870b",
+                "rel": "self"
+            },
+            {
+                "href": "http://openstack.example.com/openstack/servers/a0a80a94-3d81-4a10-822a-daa0cf9e870b",
+                "rel": "bookmark"
+            }
+        ],
+        "metadata": {
+            "meta_var": "meta_val"
+        },
+        "name": "foobar",
+        "progress": 0,
+        "status": "ACTIVE",
+        "tenant_id": "openstack",
+        "updated": "2013-11-14T06:29:02Z",
+        "user_id": "fake"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+            <!-- All other faults, build, common, get, post/put, and inProgress --> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+
+        
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="415">
+               <representation mediaType="application/xml" element="csapi:badMediaType"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serverCapacityUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="409">
+               <representation mediaType="application/xml" element="csapi:buildInProgress"/>
+               <representation mediaType="application/json"/>
+            </response> 
+         </method>
+         <method name="POST" rax:id="resizeServer">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Resize server">
+               <para role="shortdesc">
+                Resizes the specified server. Specify the <code>resize</code>
+                action in the request body.
+            </para>
+               <para>
+                A successfully resized server shows a status of
+                <code>VERIFY_RESIZE</code>, a vm_status of
+                <code>RESIZED</code>, and a migration_status of
+                <code>finished</code>. If you set the auto_confirm option of
+                the Compute service to <code>True</code>, the Compute service
+                automatically confirms the resize operation.
+            </para>
+               <para>Preconditions</para>
+                <itemizedlist>
+                  <listitem>
+                     <para>You can only resize a server when its status is
+                  <code>ACTIVE</code> or <code>SHUTOFF</code>.</para>
+                  </listitem>
+                  <listitem>
+                     <para>If the specified server is locked, you must have
+                administrator privileges to resize the server.</para>
+                  </listitem>
+               </itemizedlist>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "resize": {
+        "flavorRef": "2"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </request>
+            <response status="202"/>
+            <!-- All other faults, build, common, get, post/put, and inProgress --> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+
+        
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="415">
+               <representation mediaType="application/xml" element="csapi:badMediaType"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serverCapacityUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="409">
+               <representation mediaType="application/xml" element="csapi:buildInProgress"/>
+               <representation mediaType="application/json"/>
+            </response> 
+         </method>
+         <method name="POST" rax:id="confirmServer">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Confirm resized server">
+               <para role="shortdesc">
+                Confirms a pending resize action. Specify the
+                <code>confirmResize</code> action in the request body.
+            </para>
+               <para>
+                After you make this request, you typically must keep
+                polling the server status to determine whether the request
+                succeeded. A successfully confirming resize operation shows
+                a status of <code>ACTIVE</code> or <code>SHUTOFF</code> and
+                a migration_status of <code>confirmed</code>. You can also
+                see the resized server in the compute node that OpenStack
+                Compute manages.
+            </para>
+               <para>Preconditions</para>
+               <itemizedlist>
+                  <listitem>
+                     <para>You can only confirm the resized server where the status
+                is <code>VERIFY_RESIZED</code>, the vm_status is <code>RESIZED</code>,
+                and the migration_status is <code>finished</code> or
+                <code>confirming</code>.</para>
+                  </listitem>
+                  <listitem>
+                     <para>If the specified server is locked, you must have
+                administrator privileges to confirm the server.</para>
+                  </listitem>
+               </itemizedlist>
+               <para>Troubleshooting</para>
+               <itemizedlist>
+                  <listitem>
+                     <para>If the specified server status remains
+                <code>RESIZED</code>, the request failed. Ensure you meet the
+                preconditions and run the request again. If the request fails again,
+                investigate the compute back end or ask your cloud provider.
+                </para>
+                  </listitem>
+               </itemizedlist>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "confirmResize": null
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </request>
+            <response status="204"/>
+            <!-- All other faults, build, common, get, post/put, and inProgress --> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+
+        
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="415">
+               <representation mediaType="application/xml" element="csapi:badMediaType"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serverCapacityUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="409">
+               <representation mediaType="application/xml" element="csapi:buildInProgress"/>
+               <representation mediaType="application/json"/>
+            </response> 
+         </method>
+         <method name="POST" rax:id="revertServer">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Revert resized server">
+               <para role="shortdesc">
+                Cancels and reverts a pending resize action. Specify the
+                <code>revertResize</code> action in the request body.
+            </para>
+               <para>
+                After you make this request, you typically must keep
+                polling the server status to determine whether the request
+                succeeded. A successfully reverting resize operation shows
+                a status of <code>ACTIVE</code> or <code>SHUTOFF</code>
+                and a migration_status of <code>reverted</code>. You can
+                also see the reverted server in the compute node that
+                OpenStack Compute manages.
+            </para>
+               <para>Preconditions</para>
+               <itemizedlist>
+                  <listitem>
+                     <para>You can only confirm the resized server where the status
+                is <code>VERIFY_RESIZE</code> and the vm_status is <code>RESIZED</code>.
+                </para>
+                  </listitem>
+                  <listitem>
+                     <para>If the specified server is locked, you must have
+                administrator privileges to revert the resizing.</para>
+                  </listitem>
+               </itemizedlist>
+               <para>Troubleshooting</para>
+               <itemizedlist>
+                  <listitem>
+                     <para>If the specified server status remains
+                <code>RESIZED</code>, the request failed. Ensure you meet the
+                preconditions and run the request again. If the request fails again,
+                investigate the compute back end.</para>
+                  </listitem>
+                  <listitem>
+                     <para>The specified server is not reverted in the compute
+                node that OpenStack Compute manages.</para>
+                  </listitem>
+               </itemizedlist>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "revertResize": null
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </request>
+            <response status="202"/>
+            <!-- All other faults, build, common, get, post/put, and inProgress --> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+
+        
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="415">
+               <representation mediaType="application/xml" element="csapi:badMediaType"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serverCapacityUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="409">
+               <representation mediaType="application/xml" element="csapi:buildInProgress"/>
+               <representation mediaType="application/json"/>
+            </response> 
+         </method>
+         <method name="POST" rax:id="createImage">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Create image">
+               <para role="shortdesc">
+                Creates an image. Specify the <code>createImage</code>
+                action in the request body.
+            </para>
+               <para>
+                After you make this request, you typically must keep polling
+                the status of the created image to determine whether the
+                request succeeded.
+            </para>
+               <para>
+                If the operation succeeds, the created image has a status of
+                <code>available</code> and the server status returns to the
+                original status. You can also see the new image in the image
+                back end that OpenStack Image service manages.
+            </para>
+               <para>Preconditions</para>
+               <itemizedlist>
+                  <listitem>
+                     <para>The specified server must exist.</para>
+                  </listitem>
+                  <listitem>
+                     <para>You can only create a new image from the server
+                when its status is <code>ACTIVE</code>, <code>SHUTOFF</code>,
+                <code>PAUSED</code>, or <code>SUSPENDED</code>.</para>
+                  </listitem>
+                  <listitem>
+                     <para>The connection to the Image service is valid.
+                </para>
+                  </listitem>
+               </itemizedlist>
+               <para>Troubleshooting</para>
+               <itemizedlist>
+                  <listitem>
+                     <para>If the image status remains uploading or shows
+                another error status, the request failed. Ensure you meet the
+                preconditions and run the request again. If the request fails
+                again, investigate the image back end.
+            </para>
+                  </listitem>
+                  <listitem>
+                     <para>If the server status does not go back to an original
+                server's status, the request failed. Ensure you meet the preconditions,
+                or check if there is another operation that causes race conditions
+                for the server, then run the request again. If the request fails
+                again, investigate the compute back end or ask your cloud provider.
+            </para>
+                  </listitem>
+                  <listitem>
+                     <para>If the request fails due to an error on OpenStack
+                Compute service, the image is purged from the image store that
+                OpenStack Image service manages. Ensure you meet the preconditions
+                and run the request again. If the request fails again, investigate
+                OpenStack Compute service or ask your cloud provider.
+            </para>
+                  </listitem>
+               </itemizedlist>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "createImage": {
+        "name": "foo-image",
+        "metadata": {
+            "meta_var": "meta_val"
+        }
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </request>
+            <response status="202">
+        </response>
+            <response status="409">
+               <representation mediaType="application/json"/>
+            </response>
+            <!-- All other faults, build, common, get, post/put, and inProgress --> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+
+        
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="415">
+               <representation mediaType="application/xml" element="csapi:badMediaType"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serverCapacityUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="409">
+               <representation mediaType="application/xml" element="csapi:buildInProgress"/>
+               <representation mediaType="application/json"/>
+            </response> 
+         </method>
+         <method name="POST" rax:id="start">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Start server">
+               <para role="shortdesc">Starts a stopped server and changes
+                its status to <code>ACTIVE</code>.</para>
+               <para>Preconditions</para>
+               <itemizedlist>
+                  <listitem>
+                     <para>The server status must be <code>SHUTOFF</code>.
+                  </para>
+                  </listitem>
+                  <listitem>
+                     <para>If the specified server is locked, you
+                must have administrator privileges to start the server.
+                </para>
+                  </listitem>
+               </itemizedlist>
+               <para>Asynchronous Postconditions</para>
+               <itemizedlist>
+                  <listitem>
+                     <para>After you successfully start a server,
+                its status changes to <code>ACTIVE</code>. The server appears on the compute
+                node that the Compute service manages.</para>
+                  </listitem>
+               </itemizedlist>
+               <para>Troubleshooting</para>
+               <itemizedlist>
+                  <listitem>
+                     <para>If the server status does not change
+                  to <code>ACTIVE</code>, the start operation failed. Ensure
+                  that you meet the preconditions and run the request again.
+                  If the request fails again, investigate whether another
+                  operation is running that causes a race condition.
+                  </para>
+                  </listitem>
+               </itemizedlist>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/wadl:docbook"
+                            xml:lang="EN"
+                            title="Start server: JSON request">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting xmlns="http://docbook.org/ns/docbook" language="javascript">{
+    "os-start": null
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="os-start"
+                         style="plain"
+                         type="xsd:string"
+                         required="true"
+                         rax:id="os-start">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Specify the
+                                <code>os-start</code> action in the
+                            request body.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="202"/>
+         </method>
+         <method name="POST" rax:id="stop">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Stop server">
+               <para role="shortdesc">Stops a running server and changes
+                its status to <code>SHUTOFF</code>.</para>
+               <para>Preconditions</para>
+               <itemizedlist>
+                  <listitem>
+                     <para>The server status must be
+                  <code>ACTIVE</code> or <code>ERROR</code>.
+                  </para>
+                  </listitem>
+                  <listitem>
+                     <para>If the specified server is locked,
+                you must have administrator privileges to stop
+                the server.</para>
+                  </listitem>
+               </itemizedlist>
+               <para>Asynchronous Postconditions</para>
+               <itemizedlist>
+                  <listitem>
+                     <para>After you successfully stop a server,
+                    its status changes to <code>SHUTOFF</code>. The server instance data appears
+                    only on the compute node that Compute service manages.
+                    </para>
+                  </listitem>
+               </itemizedlist>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/wadl:docbook"
+                            xml:lang="EN"
+                            title="Stop server: JSON request">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting xmlns="http://docbook.org/ns/docbook" language="javascript">{
+    "os-stop": null
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="os-stop"
+                         style="plain"
+                         type="xsd:string"
+                         required="true"
+                         rax:id="os-stop">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Specify the
+                                <code>os-stop</code> action in the
+                            request body.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="202"/>
+         </method>
+         <method name="POST" rax:id="attachVolume">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Attach volume">
+               <para role="shortdesc">
+                Attaches a specified volume. Specify the <code>attach</code>
+                action in the request body.
+            </para>
+               <para>
+                If the attach operation succeeds, the volume status
+                is <code>in-use</code>.
+            </para>
+               <para>Preconditions</para>
+               <itemizedlist>
+                  <listitem>
+                     <para>The specified server must exist.</para>
+                  </listitem>
+                  <listitem>
+                     <para>You can only attach a volume to the server
+                when its status is <code>available</code>.</para>
+                  </listitem>
+                  <listitem>
+                     <para>The connection to the Block storage service is valid.
+                </para>
+                  </listitem>
+               </itemizedlist>
+               <para>Troubleshooting</para>
+               <itemizedlist>
+                  <listitem>
+                     <para>If the request fails due to an OpenStack
+                Compute service error, ensure you meet the preconditions
+                and run the request again. If the request fails again,
+                investigate OpenStack Compute service
+                or ask your cloud provider.
+            </para>
+                  </listitem>
+               </itemizedlist>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "attach": {
+        "volume_id": "15e59938-07d5-11e1-90e3-e3dffe0c5983",
+        "device": "/dev/vdb",
+        "disk_bus": "ide",
+        "device_type": "cdrom"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="volume_id"
+                         style="plain"
+                         type="csapi:UUID"
+                         required="true"
+                         rax:id="volume_id">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The volume ID.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="device"
+                         style="plain"
+                         type="xsd:string"
+                         required="false"
+                         rax:id="device">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The device name.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="disk_bus"
+                         style="plain"
+                         type="xsd:string"
+                         required="false"
+                         rax:id="disk_bus">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The disk bus name.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="device_type"
+                         style="plain"
+                         type="xsd:string"
+                         required="false"
+                         rax:id="device_type">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The device type name.</para>
+                    </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="202">
+        </response>
+            <response status="409">
+               <representation mediaType="application/json"/>
+            </response>
+            <!-- All other faults, build, common, get, post/put, and inProgress --> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+
+        
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="415">
+               <representation mediaType="application/xml" element="csapi:badMediaType"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serverCapacityUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="409">
+               <representation mediaType="application/xml" element="csapi:buildInProgress"/>
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+         <method name="POST" rax:id="rescue">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Rescue server">
+               <para role="shortdesc">
+                Puts a server in rescue mode and changes its status to
+                <code>RESCUE</code>.
+            </para>
+               <para>
+                If you specify the <code>rescue_image_ref</code> extended
+                attribute, the specified image is used to rescue the instance.
+                If you omit an image reference, the base image reference is
+                used by default.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Rescue server: JSON request">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "rescue": {
+        "adminPass": "MySecretPass",
+        "rescue_image_ref": "70a599e0-31e7-49b7-b260-868f441e862b"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="rescue" style="plain" type="xsd:string" required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Rescue action">
+                        <para>Specify the <code>rescue</code>
+                            action in the request
+                        body.</para>
+                     </wadl:doc>
+                  </param>
+                  <param name="adminPass" style="plain" type="csapi:string">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Admin password">
+                        <para>
+                            The password for the rescued instance. If you omit
+                            this parameter, the operation generates a new
+                            password.
+                        </para>
+                    </wadl:doc>
+                  </param>
+                  <param name="rescue_image_ref" style="plain" type="csapi:string">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                               xml:lang="EN"
+                               title="Image reference for rescue">
+                        <para>
+                            The image reference to use to rescue your server
+                            instance. Specify the image reference by ID or
+                            full URL.
+                        </para>
+                        <para>
+                            If you omit an image reference, default is the
+                            base image reference.
+                        </para>
+                    </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="202">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Extended rescue server: JSON response">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "server": {
+        "accessIPv4": "",
+        "accessIPv6": "",
+        "addresses": {
+            "private": [
+                {
+                    "addr": "192.168.0.3",
+                    "version": 4
+                }
+            ]
+        },
+        "created": "2012-09-19T09:22:27Z",
+        "flavor": {
+            "id": "1",
+            "links": [
+                {
+                    "href": "http://openstack.example.com/openstack/flavors/1",
+                    "rel": "bookmark"
+                }
+            ]
+        },
+        "hostId": "c02c15d17499304e9893d9fc41c415f5096f8aa880bc651cac092650",
+        "id": "7e21a264-6cc1-4d90-b7b5-f9f49cec3a85",
+        "image": {
+            "id": "70a599e0-31e7-49b7-b260-868f441e862b",
+            "links": [
+                {
+                    "href": "http://openstack.example.com/openstack/images/70a599e0-31e7-49b7-b260-868f441e862b",
+                    "rel": "bookmark"
+                }
+            ]
+        },
+        "links": [
+            {
+                "href": "http://openstack.example.com/v2/openstack/servers/7e21a264-6cc1-4d90-b7b5-f9f49cec3a85",
+                "rel": "self"
+            },
+            {
+                "href": "http://openstack.example.com/openstack/servers/7e21a264-6cc1-4d90-b7b5-f9f49cec3a85",
+                "rel": "bookmark"
+            }
+        ],
+        "metadata": {
+            "My Server Name": "Apache1"
+        },
+        "name": "new-server-test",
+        "status": "RESCUE",
+        "tenant_id": "openstack",
+        "updated": "2012-09-19T09:22:27Z",
+        "user_id": "fake"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                        
+    </resources>
+    <!-- *******************************************************-->
+    <!--             Server Actions                             -->
+    <!--********************************************************-->
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="rebootServer">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            </representation>
+        </request>
+        <response status="202"/>
+        <!-- Common, GET, postput, inProgress Faults--> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+ 
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="415">
+         <representation mediaType="application/xml" element="csapi:badMediaType"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+         <representation mediaType="application/json"/>
+      </response>
+        
+      <response status="422">
+         <representation mediaType="application/xml" element="csapi:HTTPUnprocessableEntity"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="409">
+         <representation mediaType="application/xml" element="csapi:buildInProgress"/>
+         <representation mediaType="application/json"/>
+      </response> 
+   </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="rebuildServer">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            </representation>
+        </request>
+        <response status="202">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+        <!-- All other faults, build, common, get, post/put, and inProgress --> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+
+        
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="415">
+         <representation mediaType="application/xml" element="csapi:badMediaType"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serverCapacityUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="409">
+         <representation mediaType="application/xml" element="csapi:buildInProgress"/>
+         <representation mediaType="application/json"/>
+      </response> 
+   </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="rebuildServer-preserve-ephemeral">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            </representation>
+        </request>
+        <response status="202">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+        <!-- All other faults, build, common, get, post/put, and inProgress --> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+
+        
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="415">
+         <representation mediaType="application/xml" element="csapi:badMediaType"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serverCapacityUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="409">
+         <representation mediaType="application/xml" element="csapi:buildInProgress"/>
+         <representation mediaType="application/json"/>
+      </response> 
+   </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="resizeServer">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            </representation>
+        </request>
+        <response status="202"/>
+        <!-- All other faults, build, common, get, post/put, and inProgress --> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+
+        
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="415">
+         <representation mediaType="application/xml" element="csapi:badMediaType"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serverCapacityUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="409">
+         <representation mediaType="application/xml" element="csapi:buildInProgress"/>
+         <representation mediaType="application/json"/>
+      </response> 
+   </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="confirmServer">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            </representation>
+        </request>
+        <response status="204"/>
+        <!-- All other faults, build, common, get, post/put, and inProgress --> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+
+        
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="415">
+         <representation mediaType="application/xml" element="csapi:badMediaType"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serverCapacityUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="409">
+         <representation mediaType="application/xml" element="csapi:buildInProgress"/>
+         <representation mediaType="application/json"/>
+      </response> 
+   </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="revertServer">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            </representation>
+        </request>
+        <response status="202"/>
+        <!-- All other faults, build, common, get, post/put, and inProgress --> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+
+        
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="415">
+         <representation mediaType="application/xml" element="csapi:badMediaType"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serverCapacityUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="409">
+         <representation mediaType="application/xml" element="csapi:buildInProgress"/>
+         <representation mediaType="application/json"/>
+      </response> 
+   </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="createImage">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            </representation>
+        </request>
+        <response status="202">
+        </response>
+        <response status="409">
+            <representation mediaType="application/json"/>
+        </response>
+        <!-- All other faults, build, common, get, post/put, and inProgress --> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+
+        
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="415">
+         <representation mediaType="application/xml" element="csapi:badMediaType"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serverCapacityUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="409">
+         <representation mediaType="application/xml" element="csapi:buildInProgress"/>
+         <representation mediaType="application/json"/>
+      </response> 
+   </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="start">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+                <param name="os-start"
+                   style="plain"
+                   type="xsd:string"
+                   required="true"
+                   rax:id="os-start">
+                    
+                </param>
+            </representation>
+        </request>
+        <response status="202"/>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="stop">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+                <param name="os-stop"
+                   style="plain"
+                   type="xsd:string"
+                   required="true"
+                   rax:id="os-stop">
+                    
+                </param>
+            </representation>
+        </request>
+        <response status="202"/>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="attachVolume">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+                <param name="volume_id"
+                   style="plain"
+                   type="csapi:UUID"
+                   required="true"
+                   rax:id="volume_id">
+                    
+                </param>
+                <param name="device"
+                   style="plain"
+                   type="xsd:string"
+                   required="false"
+                   rax:id="device">
+                    
+                </param>
+                <param name="disk_bus"
+                   style="plain"
+                   type="xsd:string"
+                   required="false"
+                   rax:id="disk_bus">
+                    
+                </param>
+                <param name="device_type"
+                   style="plain"
+                   type="xsd:string"
+                   required="false"
+                   rax:id="device_type">
+                    
+                </param>
+            </representation>
+        </request>
+        <response status="202">
+        </response>
+        <response status="409">
+            <representation mediaType="application/json"/>
+        </response>
+        <!-- All other faults, build, common, get, post/put, and inProgress --> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+
+        
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="415">
+         <representation mediaType="application/xml" element="csapi:badMediaType"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:NetworkNotFound"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serverCapacityUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="409">
+         <representation mediaType="application/xml" element="csapi:buildInProgress"/>
+         <representation mediaType="application/json"/>
+      </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="rescue">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+                <param name="rescue" style="plain" type="xsd:string" required="true">
+                    
+                </param>
+                <param name="adminPass" style="plain" type="csapi:string">
+                    
+                </param>
+                <param name="rescue_image_ref" style="plain" type="csapi:string">
+                    
+                </param>
+            </representation>
+        </request>
+        <response status="202">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+</wadl:application>

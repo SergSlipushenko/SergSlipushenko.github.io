@@ -1,0 +1,47 @@
+.. _shared_file_systems_shares_management:
+
+=================
+Shares management
+=================
+
+The default configuration of the Shared File Systems service uses the OpenStack
+Block Storage based back end. In that case, the Shared File Systems service
+cares about everything (VMs, networking, keypairs, security groups) by itself.
+It is not production solution, but can help you to understand how the Shared
+File Systems service works.
+
+.. note::
+
+   The Shared File Systems service provides set of drivers that enable you to
+   use various network file storage devices, instead of the base
+   implementation. That is the real purpose of the Shared File Systems service
+   service in production.
+
+**To create file share using generic driver with default configuration**
+
+#. Configure the Shared File Systems service through the :file:`manila.conf`
+   file.
+#. Use the :command:`manila share-network-create` to create share network.
+   It points to the Shared File Systems service from what network new share
+   will be used. This command creates service network and configure router to
+   provide connectivity between it and share network.
+#. Use the :command:`manila create` command to create a share. This
+   command do the following things:
+
+   * If there is no available share servers, the Shared File Systems service
+     service will launch new instance from service image, attach it to service
+     network and register it as a new share server.
+   * Creates new volume of required size and attaches it to service instance.
+   * The NFS service on service instance is configured to use attached volume
+     and expose NFS share.
+#. After share becomes available, use the nova :command:`manila show` command
+   to get NFS share endpoint.
+#. Use :command:`manila access-allow` command to grant access to the new share.
+
+.. toctree::
+    shared_file_systems_networking.rst
+    shared_file_systems_resize.rst
+    shared_file_systems_backup.rst
+    shared_file_systems_types.rst
+    shared_file_systems_cgroups.rst
+    shared_file_systems_quotas.rst

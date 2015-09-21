@@ -1,0 +1,2068 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <resources xmlns:common="http://docs.openstack.org/common/api/v1.0"
+              xmlns:csapi="http://docs.openstack.org/share/api/v1.0"
+              xmlns:db="http://docbook.org/ns/docbook"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://share_server_id.example.com/"
+              xml:id="os-share-v1.0">
+      <resource id="os-services" path="/v2/{tenant_id}/os-services">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <para>The tenant ID in a multi-tenancy cloud.</para>
+                  </wadl:doc>
+               </param>
+         <method name="GET" rax:id="getServices">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List services">
+               <para role="shortdesc">Lists services.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <xsdxt:code>
+                        <programlisting language="javascript">{
+    "services": [
+        {
+            "status": "enabled",
+            "binary": "manila-share",
+            "zone": "nova",
+            "host": "manila2@generic1",
+            "updated_at": "2015-09-07T13:03:57.000000",
+            "state": "up",
+            "id": 1
+        },
+        {
+            "status": "enabled",
+            "binary": "manila-scheduler",
+            "zone": "nova",
+            "host": "manila2",
+            "updated_at": "2015-09-07T13:03:57.000000",
+            "state": "up",
+            "id": 2
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param name="id" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The service ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="status" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The service status, which is <code>enabled</code>
+      or <code>disabled</code>.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="binary" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The service binary. Default is the base name of the executable.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="zone" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The availability zone.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="host" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The host name.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="state" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The current state of the service. A valid value is <code>up</code> or
+      <code>down</code>.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="updated_at"
+                         style="plain"
+                         required="true"
+                         type="xsd:dateTime">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The date and time stamp when the service was updated.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                  
+                  <resource id="enable-service" path="/v2/{tenant_id}/os-services/enable">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <para>The tenant ID in a multi-tenancy cloud.</para>
+                  </wadl:doc>
+               </param>
+         <method name="PUT" rax:id="enableService">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Enable service">
+               <para role="shortdesc">Enables a specified service.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <xsdxt:code>
+                        <programlisting language="javascript">{
+    "binary": "manila-share",
+    "host": "openstack@cmode"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param name="binary" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The binary (the base name of the executable) of the service that you want
+      to enable.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="host" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The host name of the service that you want to enable.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <xsdxt:code>
+                        <programlisting language="javascript">{
+    "disabled": false,
+    "binary": "manila-share",
+    "host": "openstack@cmode"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param name="binary" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The binary (the base name of the executable) of enabled service.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="host" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The host name of enabled service.
+   </para>
+                     </wadl:doc>
+                  </param>
+
+                  <param name="disabled" style="plain" required="true" type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Indicates whether the service is disabled.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                     
+                  
+                  <resource id="disable-service" path="/v2/{tenant_id}/os-services/disable">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <para>The tenant ID in a multi-tenancy cloud.</para>
+                  </wadl:doc>
+               </param>
+         <method name="PUT" rax:id="disableService">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Disable service">
+               <para role="shortdesc">Disables a specified service.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <xsdxt:code>
+                        <programlisting language="javascript">{
+    "binary": "manila-share",
+    "host": "openstack@cmode"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param name="binary" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The binary (the base name of the executable) of the service that you want
+      to disable.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="host" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The host name of the service that you want to disable.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <xsdxt:code>
+                        <programlisting language="javascript">{
+    "disabled": true,
+    "binary": "manila-share",
+    "host": "openstack@cmode"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param name="binary" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The binary (the base name of the executable) of disabled service.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="host" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The host name of disabled service.
+   </para>
+                     </wadl:doc>
+                  </param>
+
+                  <param name="disabled" style="plain" required="true" type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Indicates whether the service is disabled.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                     
+                  
+               <resource id="os-share-manage" path="/v2/{tenant_id}/os-share-manage">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <para>The tenant ID in a multi-tenancy cloud.</para>
+                  </wadl:doc>
+               </param>
+         <method name="POST" rax:id="manageShare">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Manage share">
+               <para role="shortdesc">Configures Shared File Systems to manage a specified share.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <xsdxt:code>
+                        <programlisting language="javascript">{
+    "share": {
+        "protocol": "nfs",
+        "name": "share_texas1",
+        "share_type": "d",
+        "driver_options": {
+            "opt1": "opt1",
+            "opt2": "opt2"
+        },
+        "export_path": "10.254.0.5:/shares/share-42033c24-0261-424f-abda-4fef2f6dbfd5",
+        "service_host": "manila2@unmanage1#UNMANAGE1",
+        "description": "Lets manage share."
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param name="protocol" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The Shared File Systems protocol of the share to manage.
+      A valid value is <code>NFS</code>, <code>CIFS</code>,
+      <code>GlusterFS</code>, or <code>HDFS</code>.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="export_path"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The share export path in the format appropriate for the protocol:
+   </para>
+                        <itemizedlist>
+                           <listitem>
+                              <para>
+      NFS protocol. <code>10.0.0.1:/foo_path</code>. For example,
+      <code>10.254.0.5:/shares/share-42033c24-0261-424f-abda
+      -4fef2f6dbfd5</code>.
+   </para>
+                           </listitem>
+                           <listitem>
+                              <para>
+      CIFS protocol. <code>\\10.0.0.1\foo_name_of_cifs_share</code>.
+   </para>
+                           </listitem>
+                        </itemizedlist>
+                     </wadl:doc>
+                  </param>
+                  <param name="service_host"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The manage-share service host in this format: <code>host@backend#POOL</code>.
+   </para>
+                        <itemizedlist>
+                           <listitem>
+                              <para>
+                                 <code>host</code>. The host name for the back end.</para>
+                           </listitem>
+                           <listitem>
+                              <para>
+                                 <code>backend</code>. The name of the back end.</para>
+                           </listitem>
+                           <listitem>
+                              <para>
+                                 <code>POOL</code>. The pool name for the back end.</para>
+                           </listitem>
+                        </itemizedlist>
+                     </wadl:doc>
+                  </param>
+
+                  <param name="name" style="plain" required="false" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The share name.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="share_type"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The share type name.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="driver_options"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      A set of one or more key and value pairs, as a dictionary of strings,
+      that describe driver options.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <xsdxt:code>
+                        <programlisting language="javascript">{
+    "share": {
+        "links": [
+            {
+                "href": "http://172.18.198.54:8786/v2/16e1ab15c35a457e9c2b2aa189f544e1/shares/00137b40-ca06-4ae8-83a3-2c5989eebcce",
+                "rel": "self"
+            },
+            {
+                "href": "http://172.18.198.54:8786/16e1ab15c35a457e9c2b2aa189f544e1/shares/00137b40-ca06-4ae8-83a3-2c5989eebcce",
+                "rel": "bookmark"
+            }
+        ],
+        "availability_zone": null,
+        "share_network_id": null,
+        "export_locations": [],
+        "share_server_id": null,
+        "snapshot_id": null,
+        "id": "00137b40-ca06-4ae8-83a3-2c5989eebcce",
+        "size": null,
+        "share_type": "14747856-08e5-494f-ab40-a64b9d20d8f7",
+        "share_type_name": "d",
+        "export_location": "10.254.0.5:/shares/share-42033c24-0261-424f-abda-4fef2f6dbfd5",
+        "consistency_group_id": null,
+        "project_id": "16e1ab15c35a457e9c2b2aa189f544e1",
+        "metadata": {},
+        "status": "manage_starting",
+        "description": "Lets manage share.",
+        "host": "manila2@unmanage1#UNMANAGE1",
+        "is_public": false,
+        "snapshot_support": true,
+        "name": "share_texas1",
+        "created_at": "2015-09-17T16:21:12.000000",
+        "share_proto": "NFS",
+        "volume_type": "d",
+        "source_cgsnapshot_member_id": null
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param name="id" style="plain" required="true" type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The share ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="status" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The share status, which is <code>creating</code>,
+      <code>error</code>, <code>available</code>, <code>deleting</code>,
+      <code>error_deleting</code>, <code>manage_starting</code>,
+      <code>manage_error</code>, <code>unmanage_starting</code>,
+      <code>unmanage_error</code>, <code>unmanaged</code>,
+      <code>extending</code>, <code>extending_error</code>,
+      <code>shrinking</code>, <code>shrinking_error</code>, or
+      <code>shrinking_possible_data_loss_error</code>.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="size" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The share size, in GBs.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="project_id"
+                         style="plain"
+                         required="true"
+                         type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The ID of the project in which the share was created.
+   </para>
+                     </wadl:doc>
+                  </param>
+
+                  <param name="name" style="plain" required="false" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The share name.
+   </para>
+                     </wadl:doc>
+                  </param>
+
+                  <param name="description"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The share description.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="share_type"
+                         style="plain"
+                         required="true"
+                         type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      (Since API v2.6.) The share type ID.
+   </para>
+                        <para>
+      In minor versions, this parameter is a share type name, as a string.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="share_type_name"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      (Since API v2.6.) The share type name.
+   </para>
+                        <para>
+      Minor versions support only the <code>share_type</code> parameter
+      where the share type name is expected.
+   </para>
+                     </wadl:doc>
+                  </param>
+
+                  <param name="availability_zone"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The availability zone.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="created_at"
+                         style="plain"
+                         required="true"
+                         type="xsd:dateTime">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The date and time stamp when the share was created.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="export_location"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The export location.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="export_locations"
+                         style="plain"
+                         required="false"
+                         type="xsd:list">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      A list of export locations. For example, when a share server has more
+      than one network interface, it can have multiple export locations.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="share_network_id"
+                         style="plain"
+                         required="false"
+                         type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The share network ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+
+                  <param name="share_proto"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The Shared File Systems protocol. A valid value is <code>NFS</code>,
+      <code>CIFS</code>, <code>GlusterFS</code>, or <code>HDFS</code>.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="host" style="plain" required="false" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The share host name.
+   </para>
+                     </wadl:doc>
+                  </param>
+
+                  <param name="volume_type"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The volume type. The use of the <code>volume_type</code> object is
+      deprecated but supported. It is recommended that you use the
+      <code>share_type</code> object when you create a share type. When you
+      issue a create a share type request, you can submit a request body with
+      either a <code>share_type</code> or <code>volume_type</code> object. No
+      matter which object type you include in the request, the API creates
+      both a <code>volume_type</code> object and a <code>share_type</code>
+      object. Both objects have the same ID. When you issue a list share types
+      request, the response shows both <code>share_types</code> and
+      <code>volume_types</code> objects.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshot_id"
+                         style="plain"
+                         required="false"
+                         type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The snapshot ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+
+                  <param name="task_state"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      (Since API v2.5.) For the share migration, the migration task state.
+   </para>
+                        <para>
+      A valid value is <code>null</code>, <code>migration_starting</code>,
+      <code>migration_error</code>, <code>migration_success</code>,
+      <code>migration_completing</code>, or <code>migrating</code>. The
+      <code>task_state</code> is <code>null</code> unless the share is
+      migrated from one back-end to another. For details,
+      see <code>os-migrate_share</code> extension request.
+   </para>
+                     </wadl:doc>
+                  </param>
+
+                  <param name="share_server_id"
+                         style="plain"
+                         required="true"
+                         type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The ID of the share server.
+   </para>
+                     </wadl:doc>
+                  </param>
+
+                  <param name="consistency_group_id"
+                         style="plain"
+                         required="true"
+                         type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      (Since API v2.4.) The ID of a consistency group in which the share was created.
+   </para>
+                     </wadl:doc>
+                  </param>
+
+                  <param name="snapshot_support"
+                         style="plain"
+                         required="true"
+                         type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      (Since API v2.2.) An extra specification that filters back ends by
+      whether they do or do not support share snapshots.
+   </para>
+                     </wadl:doc>
+                  </param>
+
+                  <param name="source_cgsnapshot_member_id"
+                         style="plain"
+                         required="true"
+                         type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      (Since API v2.4.) If the share was created with
+      <code>consistency_group_id</code> attribute, the snapshot member ID.
+   </para>
+                        <para>
+      The corresponding consistency group must be created from a snapshot with
+      the current share as a member.
+   </para>
+                        <para>
+      Consistency groups and snapshots are the part of the Shared File Systems
+      experimental API. For details, see <link xlink:type="simple"
+                                 xlink:href="api-ref-share-v2.html#consistency-groups">
+      Consistency groups</link> and <link xlink:type="simple"
+                                 xlink:href="api-ref-share-v2.html#consistency-group-snapshots">Consistency
+      group snapshots</link>.
+   </para>
+                     </wadl:doc>
+                  </param>
+
+                  <param name="is_public" style="plain" required="false" type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The level of visibility for the share. Defines whether other tenants can or
+      cannot see the share.
+   </para>
+                     </wadl:doc>
+                  </param>
+
+                  <param name="metadata"
+                         style="plain"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      One or more metadata key-value pairs, as a dictionary of strings.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                  
+               <resource id="unmanage"
+                path="/v2/{tenant_id}/os-share-unmanage/{share_id}/unmanage">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <para>The tenant ID in a multi-tenancy cloud.</para>
+                  </wadl:doc>
+               </param>
+         <param name="share_id" style="template" type="csapi:UUID">
+                        <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                           <para>The ID of an existing share.</para>
+                        </wadl:doc>
+                     </param>
+         <method name="POST" rax:id="unmanageShare">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Unmanage share">
+               <para role="shortdesc">Configures Shared File Systems to stop managing a specified share.</para>
+            </wadl:doc>
+            <response status="202"/>
+         </method>
+      </resource>
+                        
+                     <resource path="/v2/{tenant_id}/os-quota-sets/{tenant_id}" id="tenant_id_quota">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <para>The tenant ID in a multi-tenancy cloud.</para>
+                  </wadl:doc>
+               </param>
+         <param name="tenant_id"
+                style="template"
+                type="csapi:UUID"
+                required="true">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Project ID">
+                                <para>The ID for the tenant for which
+                                   you want to show, update, or delete
+                                   quotas. This ID is different from
+                                   the first tenant ID that you
+                                   specify in the URI: That ID is for
+                                   the admin tenant.</para>
+                            </wadl:doc>
+                        </param>
+         <param name="user_id" style="query" type="csapi:UUID" required="false">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Project ID">
+                                <para>The user ID. If you specify this query
+                                   parameter, you update the quotas for this
+                                   user in the specified tenant. If you omit
+                                   this parameter, you update the quotas for
+                                   the specified project.</para>
+                            </wadl:doc>
+                        </param>
+         <method name="GET" rax:id="getQuota">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Show quotas">
+               <para role="shortdesc">Shows quotas for a specified tenant.</para>
+               <para>
+            If you specify the optional <code>user_id</code> query parameter,
+            you get the quotas for this user in the specified tenant. If you
+            omit this parameter, you get the quotas for the specified project.
+         </para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <xsdxt:code>
+                        <programlisting language="javascript">{
+    "quota_set": {
+        "gigabytes": 1000,
+        "shares": 50,
+        "snapshot_gigabytes": 1000,
+        "snapshots": 50,
+        "id": "16e1ab15c35a457e9c2b2aa189f544e1",
+        "share_networks": 10
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param name="id" style="plain" required="true" type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The ID of the tenant for which you manage quotas.
+        </para>
+                     </wadl:doc>
+                  </param>
+
+                  <param name="gigabytes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshots" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of snapshots allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="shares" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of shares allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshot_gigabytes"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes for the snapshots allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="share_networks"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of share networks allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="PUT" rax:id="updateQuota">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Update quotas">
+               <para role="shortdesc">Updates quotas for a specified tenant.</para>
+               <para>
+            If you specify the optional <code>user_id</code> query parameter,
+            you update the quotas for this user in the specified tenant. If you
+            omit this parameter, you update the quotas for the specified project.
+         </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <xsdxt:code>
+                        <programlisting language="javascript">{
+    "quota_set": {
+        "tenant_id": "16e1ab15c35a457e9c2b2aa189f544e1",
+        "snapshot_gigabytes": 999,
+        "snapshots": 49,
+        "share_networks": 9
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param name="gigabytes" style="plain" required="false" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes for the tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshots" style="plain" required="false" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of snapshots for the tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="shares" style="plain" required="false" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of shares for the tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshot_gigabytes"
+                         style="plain"
+                         required="false"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes for the snapshots for the tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="share_networks"
+                         style="plain"
+                         required="false"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of share networks for the tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="force" style="plain" required="false" type="xsd:bool">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            Indicates whether to permit or deny the force-update of a quota
+            that is already used and the requested value exceeds the configured
+            quota.
+       </para>
+                        <para>
+            Set to <code>True</code> to permit the force-update of the quota.
+       </para>
+                        <para>
+            Set to <code>False</code> to deny the force-update of the quota.
+       </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <xsdxt:code>
+                        <programlisting language="javascript">{
+    "quota_set": {
+        "gigabytes": 1000,
+        "snapshot_gigabytes": 999,
+        "shares": 50,
+        "snapshots": 49,
+        "share_networks": 9
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param name="gigabytes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshots" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of snapshots allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="shares" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of shares allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshot_gigabytes"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes for the snapshots allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="share_networks"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of share networks allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="DELETE" rax:id="deleteQuotas">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Delete quotas">
+               <para role="shortdesc">
+            Deletes quotas for a specified tenant.
+            The quota will revert back to default.
+         </para>
+               <para>
+            If you specify the optional <code>user_id</code> query parameter,
+            you delete the quotas for this user in the specified tenant. If you
+            omit this parameter, you delete the quotas for the specified project.
+         </para>
+            </wadl:doc>
+            <response status="202"/>
+         </method>
+      </resource>
+                        
+                        
+                        
+                        
+                        
+                        <resource path="/v2/{tenant_id}/os-quota-sets/{tenant_id}/defaults"
+                id="quota-defaults">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <para>The tenant ID in a multi-tenancy cloud.</para>
+                  </wadl:doc>
+               </param>
+         <param name="tenant_id"
+                style="template"
+                type="csapi:UUID"
+                required="true">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Project ID">
+                                <para>The ID for the tenant for which
+                                   you want to show, update, or delete
+                                   quotas. This ID is different from
+                                   the first tenant ID that you
+                                   specify in the URI: That ID is for
+                                   the admin tenant.</para>
+                            </wadl:doc>
+                        </param>
+         <method name="GET" rax:id="getDefaultQuotas">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show default quotas">
+               <para role="shortdesc">Shows default quotas for a specified tenant.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <xsdxt:code>
+                        <programlisting language="javascript">{
+    "quota_set": {
+        "gigabytes": 1000,
+        "shares": 50,
+        "snapshot_gigabytes": 1000,
+        "snapshots": 50,
+        "id": "16e1ab15c35a457e9c2b2aa189f544e1",
+        "share_networks": 10
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param name="id" style="plain" required="true" type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The ID of the tenant for which you manage quotas.
+        </para>
+                     </wadl:doc>
+                  </param>
+
+                  <param name="gigabytes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshots" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of snapshots allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="shares" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of shares allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshot_gigabytes"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes for the snapshots allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="share_networks"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of share networks allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                           
+                        
+                    <resource path="/v2/{tenant_id}/os-quota-class-sets/{class_name}"
+                id="quota-class_name">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <para>The tenant ID in a multi-tenancy cloud.</para>
+                  </wadl:doc>
+               </param>
+         <param name="class_name"
+                style="template"
+                type="xsd:string"
+                required="true">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Project ID">
+                                <para>The name of the quota class for which you
+                                   want to manage quotas.</para>
+                            </wadl:doc>
+                     </param>
+         <method name="GET" rax:id="getQuotaClassQuotas">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show quotas for a quota class">
+               <para role="shortdesc">Shows the quotas for a specified quota class.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <xsdxt:code>
+                        <programlisting language="javascript">{
+    "quota_class_set": {
+        "gigabytes": 1000,
+        "shares": 50,
+        "snapshot_gigabytes": 1000,
+        "snapshots": 50,
+        "id": "abc",
+        "share_networks": 10
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param name="id" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The quota class ID.
+        </para>
+                     </wadl:doc>
+                  </param>
+
+                  <param name="gigabytes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshots" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of snapshots allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="shares" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of shares allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshot_gigabytes"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes for the snapshots allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="share_networks"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of share networks allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="PUT" rax:id="updateQuotaClassQuotas">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Update quotas for a quota class">
+               <para role="shortdesc">Updates the quotas for a specified for a quota class.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <xsdxt:code>
+                        <programlisting language="javascript">{
+    "quota_class_set": {
+        "class_name": "abc",
+        "shares": 49
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param name="class_name"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The name of a quota class for which you
+            want to update the quotas.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="gigabytes" style="plain" required="false" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes for the tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshots" style="plain" required="false" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of snapshots for the tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="shares" style="plain" required="false" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of shares for the tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshot_gigabytes"
+                         style="plain"
+                         required="false"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes for the snapshots for the tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="share_networks"
+                         style="plain"
+                         required="false"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of share networks for the tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <xsdxt:code>
+                        <programlisting language="javascript">{
+    "quota_class_set": {
+        "gigabytes": 1000,
+        "snapshot_gigabytes": 1000,
+        "snapshots": 50,
+        "shares": 49,
+        "share_networks": 10
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param name="gigabytes" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshots" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of snapshots allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="shares" style="plain" required="true" type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of shares allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="snapshot_gigabytes"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of gigabytes for the snapshots allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="share_networks"
+                         style="plain"
+                         required="true"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+            The number of share networks allowed for each tenant.
+        </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                     
+                     
+                     
+                  <resource id="os-availability-zone" path="/v2/{tenant_id}/os-availability-zone">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <para>The tenant ID in a multi-tenancy cloud.</para>
+                  </wadl:doc>
+               </param>
+         <method name="GET" rax:id="getAvailabilityZones">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List availability zones">
+               <para role="shortdesc">Lists all availability zones.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                     <xsdxt:code>
+                        <programlisting language="javascript">{
+    "availability_zones": [
+        {
+            "name": "nova",
+            "created_at": "2015-09-18T09:50:55.000000",
+            "updated_at": null,
+            "id": "388c983d-258e-4a0e-b1ba-10da37d766db"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+            
+                  <param name="name" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The name of the availability zone.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="id" style="plain" required="true" type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The availability zone ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="created_at"
+                         style="plain"
+                         required="true"
+                         type="xsd:dateTime">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The date and time stamp when the availability zone was created.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="updated_at"
+                         style="plain"
+                         required="true"
+                         type="xsd:dateTime">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      The date and time stamp when the availability zone was updated.
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                  
+               
+   </resources>
+   <method xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:csapi="http://docs.openstack.org/share/api/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="getServices">
+      
+      <response status="200">
+         <representation mediaType="application/json">
+            
+            
+            <param name="id" style="plain" required="true" type="xsd:int">
+
+</param>
+            <param name="status" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="binary" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="zone" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="host" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="state" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="updated_at"
+                   style="plain"
+                   required="true"
+                   type="xsd:dateTime">
+
+</param>
+         </representation>
+      </response>
+   </method>
+   <method xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:csapi="http://docs.openstack.org/share/api/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="PUT"
+           id="enableService">
+      
+      <request>
+         <representation mediaType="application/json">
+            
+            
+            <param name="binary" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="host" style="plain" required="true" type="xsd:string">
+
+</param>
+         </representation>
+      </request>
+      <response status="200">
+         <representation mediaType="application/json">
+            
+            
+            <param name="binary" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="host" style="plain" required="true" type="xsd:string">
+
+</param>
+
+            <param name="disabled" style="plain" required="true" type="xsd:bool">
+
+</param>
+         </representation>
+      </response>
+   </method>
+   <method xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:csapi="http://docs.openstack.org/share/api/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="PUT"
+           id="disableService">
+      
+      <request>
+         <representation mediaType="application/json">
+            
+            
+            <param name="binary" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="host" style="plain" required="true" type="xsd:string">
+
+</param>
+         </representation>
+      </request>
+      <response status="200">
+         <representation mediaType="application/json">
+            
+            
+            <param name="binary" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="host" style="plain" required="true" type="xsd:string">
+
+</param>
+
+            <param name="disabled" style="plain" required="true" type="xsd:bool">
+
+</param>
+         </representation>
+      </response>
+   </method>
+   <method xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:csapi="http://docs.openstack.org/share/api/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="getAvailabilityZones">
+      
+      <response status="200">
+         <representation mediaType="application/json">
+            
+            
+            <param name="name" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="id" style="plain" required="true" type="csapi:UUID">
+
+</param>
+            <param name="created_at"
+                   style="plain"
+                   required="true"
+                   type="xsd:dateTime">
+
+</param>
+            <param name="updated_at"
+                   style="plain"
+                   required="true"
+                   type="xsd:dateTime">
+
+</param>
+         </representation>
+      </response>
+   </method>
+   <method xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:csapi="http://docs.openstack.org/share/api/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="manageShare">
+      
+      <request>
+         <representation mediaType="application/json">
+            
+            
+            <param name="protocol" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="export_path"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="service_host"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+
+            <param name="name" style="plain" required="false" type="xsd:string">
+
+</param>
+            <param name="share_type"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            <param name="driver_options"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+         </representation>
+      </request>
+      <response status="200">
+         <representation mediaType="application/json">
+            
+            
+            <param name="id" style="plain" required="true" type="csapi:UUID">
+
+</param>
+            <param name="status" style="plain" required="true" type="xsd:string">
+
+</param>
+            <param name="size" style="plain" required="true" type="xsd:int">
+
+</param>
+            <param name="project_id"
+                   style="plain"
+                   required="true"
+                   type="csapi:UUID">
+
+</param>
+
+            <param name="name" style="plain" required="false" type="xsd:string">
+
+</param>
+
+            <param name="description"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            <param name="share_type"
+                   style="plain"
+                   required="true"
+                   type="csapi:UUID">
+
+</param>
+            <param name="share_type_name"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+
+            <param name="availability_zone"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="created_at"
+                   style="plain"
+                   required="true"
+                   type="xsd:dateTime">
+
+</param>
+            <param name="export_location"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            <param name="export_locations"
+                   style="plain"
+                   required="false"
+                   type="xsd:list">
+
+</param>
+            <param name="share_network_id"
+                   style="plain"
+                   required="false"
+                   type="csapi:UUID">
+
+</param>
+
+            <param name="share_proto"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            <param name="host" style="plain" required="false" type="xsd:string">
+
+</param>
+
+            <param name="volume_type"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+            <param name="snapshot_id"
+                   style="plain"
+                   required="false"
+                   type="csapi:UUID">
+
+</param>
+
+            <param name="task_state"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+
+            <param name="share_server_id"
+                   style="plain"
+                   required="true"
+                   type="csapi:UUID">
+
+</param>
+
+            <param name="consistency_group_id"
+                   style="plain"
+                   required="true"
+                   type="csapi:UUID">
+
+</param>
+
+            <param name="snapshot_support"
+                   style="plain"
+                   required="true"
+                   type="xsd:bool">
+
+</param>
+
+            <param name="source_cgsnapshot_member_id"
+                   style="plain"
+                   required="true"
+                   type="csapi:UUID">
+
+</param>
+
+            <param name="is_public" style="plain" required="false" type="xsd:bool">
+
+</param>
+
+            <param name="metadata"
+                   style="plain"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+         </representation>
+      </response>
+   </method>
+   <method xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:csapi="http://docs.openstack.org/share/api/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="unmanageShare">
+      
+      <response status="202"/>
+   </method>
+   <method xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:csapi="http://docs.openstack.org/share/api/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="getQuota">
+      
+      <response status="200">
+         <representation mediaType="application/json">
+            
+            
+            <param name="id" style="plain" required="true" type="csapi:UUID">
+    
+</param>
+
+            <param name="gigabytes" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="snapshots" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="shares" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="snapshot_gigabytes"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="share_networks"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+         </representation>
+      </response>
+   </method>
+   <method xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:csapi="http://docs.openstack.org/share/api/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="getDefaultQuotas">
+      
+      <response status="200">
+         <representation mediaType="application/json">
+            
+            
+            <param name="id" style="plain" required="true" type="csapi:UUID">
+    
+</param>
+
+            <param name="gigabytes" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="snapshots" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="shares" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="snapshot_gigabytes"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="share_networks"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+         </representation>
+      </response>
+   </method>
+   <method xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:csapi="http://docs.openstack.org/share/api/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="PUT"
+           id="updateQuota">
+      
+      <request>
+         <representation mediaType="application/json">
+            
+            
+            <param name="gigabytes" style="plain" required="false" type="xsd:int">
+    
+</param>
+            <param name="snapshots" style="plain" required="false" type="xsd:int">
+    
+</param>
+            <param name="shares" style="plain" required="false" type="xsd:int">
+    
+</param>
+            <param name="snapshot_gigabytes"
+                   style="plain"
+                   required="false"
+                   type="xsd:int">
+    
+</param>
+            <param name="share_networks"
+                   style="plain"
+                   required="false"
+                   type="xsd:int">
+    
+</param>
+            <param name="force" style="plain" required="false" type="xsd:bool">
+    
+</param>
+         </representation>
+      </request>
+      <response status="200">
+         <representation mediaType="application/json">
+            
+            
+            <param name="gigabytes" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="snapshots" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="shares" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="snapshot_gigabytes"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="share_networks"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+         </representation>
+      </response>
+   </method>
+   <method xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:csapi="http://docs.openstack.org/share/api/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="DELETE"
+           id="deleteQuotas">
+      
+      <response status="202"/>
+   </method>
+   <method xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:csapi="http://docs.openstack.org/share/api/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="getQuotaClassQuotas">
+      
+      <response status="200">
+         <representation mediaType="application/json">
+            
+            
+            <param name="id" style="plain" required="true" type="xsd:string">
+    
+</param>
+
+            <param name="gigabytes" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="snapshots" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="shares" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="snapshot_gigabytes"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="share_networks"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+         </representation>
+      </response>
+   </method>
+   <method xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:csapi="http://docs.openstack.org/share/api/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="PUT"
+           id="updateQuotaClassQuotas">
+      
+      <request>
+         <representation mediaType="application/json">
+            
+            
+            <param name="class_name"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+    
+</param>
+            <param name="gigabytes" style="plain" required="false" type="xsd:int">
+    
+</param>
+            <param name="snapshots" style="plain" required="false" type="xsd:int">
+    
+</param>
+            <param name="shares" style="plain" required="false" type="xsd:int">
+    
+</param>
+            <param name="snapshot_gigabytes"
+                   style="plain"
+                   required="false"
+                   type="xsd:int">
+    
+</param>
+            <param name="share_networks"
+                   style="plain"
+                   required="false"
+                   type="xsd:int">
+    
+</param>
+         </representation>
+      </request>
+      <response status="200">
+         <representation mediaType="application/json">
+            
+            
+            <param name="gigabytes" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="snapshots" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="shares" style="plain" required="true" type="xsd:int">
+    
+</param>
+            <param name="snapshot_gigabytes"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+            <param name="share_networks"
+                   style="plain"
+                   required="true"
+                   type="xsd:int">
+    
+</param>
+         </representation>
+      </response>
+   </method>
+</wadl:application>

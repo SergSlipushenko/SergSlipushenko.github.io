@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns:db="http://docbook.org/ns/docbook"
+              xmlns:common="http://docs.openstack.org/common/api/v1.0"
+              xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="data-sources-v1.1">
+        <resource id="data-sources" path="/v1.1/{tenant_id}/data-sources">
+         <param name="tenant_id" style="template" type="capi:UUID">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The unique identifier of the tenant or account.</para>
+                    </wadl:doc>
+                </param>
+         <method name="GET" rax:id="dataSourcesList">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List data sources">
+               <para role="shortdesc">Lists all data sources.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "data_sources": [
+        {
+            "tenant_id": "9cd1314a0a31493282b6712b76a8fcda",
+            "created_at": "2015-03-26 11:18:10",
+            "id": "953831f2-0852-49d8-ac71-af5805e25256",
+            "name": "swift_input",
+            "updated_at": null,
+            "description": "This is input",
+            "url": "swift://container/text",
+            "type": "swift"
+        },
+        {
+            "tenant_id": "9cd1314a0a31493282b6712b76a8fcda",
+            "created_at": "2015-03-26 11:09:36",
+            "id": "d7fffe9c-3b42-46a9-8be8-e98f586fa7a9",
+            "name": "hdfs_input",
+            "updated_at": null,
+            "description": "This is hdfs input",
+            "url": "hdfs://test-master-node:8020/user/hadoop/input",
+            "type": "hdfs"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+         <method name="POST" rax:id="dataSourcesCreate">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Create data source">
+               <para role="shortdesc">Creates a data source.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "description": "This is input",
+    "url": "swift://container/text",
+    "credentials": {
+        "password": "swordfish",
+        "user": "dev"
+    },
+    "type": "swift",
+    "name": "swift_input"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "description": "This is hdfs input",
+    "url": "hdfs://test-master-node:8020/user/hadoop/input",
+    "type": "hdfs",
+    "name": "hdfs_input"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </request>
+            <response status="202">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "data_source": {
+        "tenant_id": "9cd1314a0a31493282b6712b76a8fcda",
+        "created_at": "2015-03-26 11:18:10.691493",
+        "id": "953831f2-0852-49d8-ac71-af5805e25256",
+        "name": "swift_input",
+        "description": "This is input",
+        "url": "swift://container/text",
+        "type": "swift"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "data_source": {
+        "tenant_id": "9cd1314a0a31493282b6712b76a8fcda",
+        "created_at": "2015-03-26 11:09:36.148464",
+        "id": "d7fffe9c-3b42-46a9-8be8-e98f586fa7a9",
+        "name": "hdfs_input",
+        "description": "This is hdfs input",
+        "url": "hdfs://test-master-node:8020/user/hadoop/input",
+        "type": "hdfs"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                    
+                    
+                    <resource id="dataSourceId"
+                path="/v1.1/{tenant_id}/data-sources/{data_source_id}">
+         <param name="tenant_id" style="template" type="capi:UUID">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The unique identifier of the tenant or account.</para>
+                    </wadl:doc>
+                </param>
+         <param name="data_source_id" style="template" type="capi:UUID">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                                <para>The unique identifier of the data source.</para>
+                            </wadl:doc>
+                        </param>
+         <method name="GET" rax:id="dataSourceInfo">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show data source details">
+               <para role="shortdesc">Shows details for a specified data source.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "data_source": {
+        "tenant_id": "9cd1314a0a31493282b6712b76a8fcda",
+        "created_at": "2015-03-26 11:18:10",
+        "id": "953831f2-0852-49d8-ac71-af5805e25256",
+        "name": "swift_input",
+        "updated_at": null,
+        "description": "This is input",
+        "url": "swift://container/text",
+        "type": "swift"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+         <method name="DELETE" rax:id="dataSourceDelete">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Delete data source">
+               <para role="shortdesc">Deletes a specified data source.</para>
+            </wadl:doc>
+            <response status="204"/>
+         </method>
+      </resource>
+                        
+                        
+                        
+                    
+                
+    </resources>
+    <!-- *******************************************************-->
+    <!--      data sources            -->
+    <!--*******************************************************-->
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="dataSourcesList">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="dataSourceInfo">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="dataSourcesCreate">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            </representation>
+            <representation mediaType="application/json">
+                
+            </representation>
+        </request>
+        <response status="202">
+            <representation mediaType="application/json">
+                
+            </representation>
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="DELETE"
+           id="dataSourceDelete">
+        
+        <response status="204"/>
+    </method>
+</wadl:application>

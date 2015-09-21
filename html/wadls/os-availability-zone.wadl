@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2012-2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <resources xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:csapi="http://docs.openstack.org/compute/api/v1.1"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-availability-zone-v2">
+      <resource id="Servers" path="/v2/{tenant_id}/servers">
+         <param name="tenant_id" style="template" type="xsd:string">
+               <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Tenant ID">
+                  <para>
+                     The ID for the tenant or account in a multi-tenancy cloud.
+                  </para>
+               </wadl:doc>
+            </param>
+         <method name="POST" rax:id="addAvailabilityZone">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Create server with availability zone">
+               <para role="shortdesc">Creates a server with an availability zone.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Create server with availability zone: JSON request">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "server": {
+        "name": "new-server-test",
+        "imageRef": "http://openstack.example.com/openstack/images/70a599e0-31e7-49b7-b260-868f441e862b",
+        "flavorRef": "http://openstack.example.com/openstack/flavors/1",
+        "metadata": {
+            "My Server Name": "Apache1"
+        },
+        "availability_zone": "nova",
+        "personality": [
+            {
+                "path": "/etc/banner.txt",
+                "contents": "ICAgICAgDQoiQSBjbG91ZCBkb2VzIG5vdCBrbm93IHdoeSBpdCBtb3ZlcyBpbiBqdXN0IHN1Y2ggYSBkaXJlY3Rpb24gYW5kIGF0IHN1Y2ggYSBzcGVlZC4uLkl0IGZlZWxzIGFuIGltcHVsc2lvbi4uLnRoaXMgaXMgdGhlIHBsYWNlIHRvIGdvIG5vdy4gQnV0IHRoZSBza3kga25vd3MgdGhlIHJlYXNvbnMgYW5kIHRoZSBwYXR0ZXJucyBiZWhpbmQgYWxsIGNsb3VkcywgYW5kIHlvdSB3aWxsIGtub3csIHRvbywgd2hlbiB5b3UgbGlmdCB5b3Vyc2VsZiBoaWdoIGVub3VnaCB0byBzZWUgYmV5b25kIGhvcml6b25zLiINCg0KLVJpY2hhcmQgQmFjaA=="
+            }
+        ]
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Create server with availability zone: JSON response">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "server": {
+        "adminPass": "k4pKvTfcA4gY",
+        "id": "3e45fa2a-5204-466f-a684-c2a8e1c82d7f",
+        "links": [
+            {
+                "href": "http://openstack.example.com/v2/openstack/servers/3e45fa2a-5204-466f-a684-c2a8e1c82d7f",
+                "rel": "self"
+            },
+            {
+                "href": "http://openstack.example.com/openstack/servers/3e45fa2a-5204-466f-a684-c2a8e1c82d7f",
+                "rel": "bookmark"
+            }
+        ]
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="413">
+               <representation mediaType="application/xml" element="csapi:overLimit"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+      </resource>
+               
+            <resource id="os-availability-zone" path="/v2/{tenant_id}/os-availability-zone">
+         <param name="tenant_id" style="template" type="xsd:string">
+               <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Tenant ID">
+                  <para>
+                     The ID for the tenant or account in a multi-tenancy cloud.
+                  </para>
+               </wadl:doc>
+            </param>
+         <method name="GET" rax:id="listAvailabilityZones">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List availability zones">
+               <para role="shortdesc">Lists all availability zones.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="List availability zones: JSON response">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "availabilityZoneInfo": [
+        {
+            "hosts": null,
+            "zoneName": "nova",
+            "zoneState": {
+                "available": true
+            }
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="413">
+               <representation mediaType="application/xml" element="csapi:overLimit"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+      </resource>
+               
+               <resource path="/v2/{tenant_id}/os-availability-zone/detail" id="detail">
+         <param name="tenant_id" style="template" type="xsd:string">
+               <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Tenant ID">
+                  <para>
+                     The ID for the tenant or account in a multi-tenancy cloud.
+                  </para>
+               </wadl:doc>
+            </param>
+         <method name="GET" rax:id="listAvailabilityZonesDetailed">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List availability zones with details">
+               <para role="shortdesc">Lists all availability zones with details.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="List availability zones with details: JSON response">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "availabilityZoneInfo": [
+        {
+            "hosts": {
+                "cells": {
+                    "nova-cells": {
+                        "active": true,
+                        "available": true,
+                        "updated_at": null
+                    }
+                },
+                "cert": {
+                    "nova-cert": {
+                        "active": true,
+                        "available": true,
+                        "updated_at": null
+                    }
+                },
+                "conductor": {
+                    "nova-conductor": {
+                        "active": true,
+                        "available": true,
+                        "updated_at": null
+                    }
+                },
+                "consoleauth": {
+                    "nova-consoleauth": {
+                        "active": true,
+                        "available": true,
+                        "updated_at": null
+                    }
+                },
+                "network": {
+                    "nova-network": {
+                        "active": true,
+                        "available": true,
+                        "updated_at": null
+                    }
+                },
+                "scheduler": {
+                    "nova-scheduler": {
+                        "active": true,
+                        "available": true,
+                        "updated_at": null
+                    }
+                }
+            },
+            "zoneName": "internal",
+            "zoneState": {
+                "available": true
+            }
+        },
+        {
+            "hosts": {
+                "compute": {
+                    "nova-compute": {
+                        "active": true,
+                        "available": true,
+                        "updated_at": null
+                    }
+                }
+            },
+            "zoneName": "nova",
+            "zoneState": {
+                "available": true
+            }
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                  
+               
+               <resource path="/v2/{tenant_id}/os-availability-zone/{availability_zone_id}"
+                id="availability_zone_id">
+         <param name="tenant_id" style="template" type="xsd:string">
+               <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Tenant ID">
+                  <para>
+                     The ID for the tenant or account in a multi-tenancy cloud.
+                  </para>
+               </wadl:doc>
+            </param>
+         <param name="availability_zone_id" style="template" type="csapi:UUID">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+                           The ID associated with an availability zone.
+                        </para>
+                     </wadl:doc>
+                  </param>
+         <method name="GET" rax:id="showAvailabilityZone">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show availability zone information">
+               <para role="shortdesc">Shows information for a specified availability zone.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                            xml:lang="EN"
+                            title="Show availability zone information: JSON response">
+                     <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "availabilityZoneInfo": [
+        {
+            "zoneState": {
+                "available": true
+            },
+            "hosts": null,
+            "zoneName": "nova"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="413">
+               <representation mediaType="application/xml" element="csapi:overLimit"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+      </resource>
+                  
+                  
+               
+            
+   </resources>
+   <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/compute/api/v1.1"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="addAvailabilityZone">
+      
+      <request>
+         <representation mediaType="application/json">
+            
+         </representation>
+      </request>
+      <response status="200">
+         <representation mediaType="application/json">
+            
+         </representation>
+      </response> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="413">
+         <representation mediaType="application/xml" element="csapi:overLimit"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response>
+   </method>
+   <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/compute/api/v1.1"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="listAvailabilityZones">
+      
+      <response status="200">
+         <representation mediaType="application/json">
+            
+         </representation>
+      </response> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="413">
+         <representation mediaType="application/xml" element="csapi:overLimit"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response>
+   </method>
+   <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/compute/api/v1.1"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="listAvailabilityZonesDetailed">
+      
+      <response status="200">
+         <representation mediaType="application/json">
+            
+         </representation>
+      </response>
+   </method>
+   <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/compute/api/v1.1"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="showAvailabilityZone">
+      
+      <response status="200">
+         <representation mediaType="application/json">
+            
+         </representation>
+      </response> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="413">
+         <representation mediaType="application/xml" element="csapi:overLimit"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response>
+   </method>
+</wadl:application>

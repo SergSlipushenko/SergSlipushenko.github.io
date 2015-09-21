@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns:db="http://docbook.org/ns/docbook"
+              xmlns:common="http://docs.openstack.org/common/api/v1.0"
+              xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="image-registry-v1.1">
+        <resource id="images" path="/v1.1/{tenant_id}/images">
+         <param name="tenant_id" style="template" type="capi:UUID">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The unique identifier of the tenant or account.</para>
+                    </wadl:doc>
+                </param>
+         <method name="GET" rax:id="imageslist">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="List images">
+               <para role="shortdesc">Lists all images registered in the image registry.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <param name="tags" style="plain" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+                        Lists images only with specific tag. Can be used
+                        multiple times.
+                    </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "images": [
+        {
+            "updated": "2015-02-03T10:29:32Z",
+            "metadata": {
+                "_sahara_username": "ubuntu",
+                "_sahara_tag_vanilla": "True",
+                "_sahara_tag_2.6.0": "True"
+            },
+            "id": "bb8d12b5-f9bb-49f0-aecb-739b8a9bec89",
+            "minDisk": 0,
+            "status": "ACTIVE",
+            "tags": [
+                "vanilla",
+                "2.6.0"
+            ],
+            "minRam": 0,
+            "progress": 100,
+            "username": "ubuntu",
+            "created": "2015-02-03T10:28:39Z",
+            "name": "sahara-vanilla-2.6.0-ubuntu-14.04",
+            "description": null,
+            "OS-EXT-IMG-SIZE:size": 1101856768
+        },
+        {
+            "updated": "2015-01-30T11:10:59Z",
+            "metadata": {
+                "_sahara_tag_spark": "True",
+                "_sahara_tag_1.0.0": "True",
+                "_sahara_username": "ubuntu"
+            },
+            "id": "e6a6c5da-67be-4017-a7d2-81f466efe67e",
+            "minDisk": 0,
+            "status": "ACTIVE",
+            "tags": [
+                "spark",
+                "1.0.0"
+            ],
+            "minRam": 0,
+            "progress": 100,
+            "username": "ubuntu",
+            "created": "2015-01-30T11:04:15Z",
+            "name": "sahara-juno-spark-1.0.0-ubuntu-14.04",
+            "description": null,
+            "OS-EXT-IMG-SIZE:size": 761856000
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                    
+                    <resource id="imageId" path="/v1.1/{tenant_id}/images/{image_id}">
+         <param name="tenant_id" style="template" type="capi:UUID">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The unique identifier of the tenant or account.</para>
+                    </wadl:doc>
+                </param>
+         <param name="image_id" style="template" type="capi:UUID">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                                <para>The unique identifier of the image.</para>
+                            </wadl:doc>
+                        </param>
+         <method name="GET" rax:id="imageInfo">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show image details">
+               <para role="shortdesc">Shows details about a specified image.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "image": {
+        "updated": "2015-02-03T10:29:32Z",
+        "metadata": {
+            "_sahara_username": "ubuntu",
+            "_sahara_tag_vanilla": "True",
+            "_sahara_tag_2.6.0": "True"
+        },
+        "id": "bb8d12b5-f9bb-49f0-aecb-739b8a9bec89",
+        "minDisk": 0,
+        "status": "ACTIVE",
+        "tags": [
+            "vanilla",
+            "2.6.0"
+        ],
+        "minRam": 0,
+        "progress": 100,
+        "username": "ubuntu",
+        "created": "2015-02-03T10:28:39Z",
+        "name": "sahara-vanilla-2.6.0-ubuntu-14.04",
+        "description": null,
+        "OS-EXT-IMG-SIZE:size": 1101856768
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+         <method name="POST" rax:id="imageReg">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Register image">
+               <para role="shortdesc">Registers a specified image in the image registry.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "username": "ubuntu",
+    "description": "Ubuntu image for Hadoop 2.6.0"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="username" style="plain" type="xsd:string" required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Username to login into an instance’s OS for
+                        remote operations execution.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="description" style="plain" type="xsd:string">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Description of the image.</para>
+                    </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="202">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "image": {
+        "updated": "2015-03-24T10:05:10Z",
+        "metadata": {
+            "_sahara_description": "Ubuntu image for Hadoop 2.6.0",
+            "_sahara_username": "ubuntu",
+            "_sahara_tag_vanilla": "True",
+            "_sahara_tag_2.6.0": "True"
+        },
+        "id": "bb8d12b5-f9bb-49f0-aecb-739b8a9bec89",
+        "minDisk": 0,
+        "status": "ACTIVE",
+        "tags": [
+            "vanilla",
+            "2.6.0"
+        ],
+        "minRam": 0,
+        "progress": 100,
+        "username": "ubuntu",
+        "created": "2015-02-03T10:28:39Z",
+        "name": "sahara-vanilla-2.6.0-ubuntu-14.04",
+        "description": "Ubuntu image for Hadoop 2.6.0",
+        "OS-EXT-IMG-SIZE:size": 1101856768
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+         <method name="DELETE" rax:id="imageUnreg">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Unregister image">
+               <para role="shortdesc">Removes a specified image from the image registry.</para>
+            </wadl:doc>
+            <response status="204"/>
+         </method>
+      </resource>
+                        
+                        
+                        
+                        
+                        <resource id="imageTag" path="/v1.1/{tenant_id}/images/{image_id}/tag">
+         <param name="tenant_id" style="template" type="capi:UUID">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The unique identifier of the tenant or account.</para>
+                    </wadl:doc>
+                </param>
+         <param name="image_id" style="template" type="capi:UUID">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                                <para>The unique identifier of the image.</para>
+                            </wadl:doc>
+                        </param>
+         <method name="POST" rax:id="addTags">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Add tags to image">
+               <para role="shortdesc">Adds tags to a specified image.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "tags": [
+        "vanilla",
+        "2.6.0",
+        "some_other_tag"
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="tags" style="plain" type="xsd:string" required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>List of tags to add.</para>
+                    </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="202">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "image": {
+        "updated": "2015-03-24T10:18:33Z",
+        "metadata": {
+            "_sahara_tag_vanilla": "True",
+            "_sahara_description": "Ubuntu image for Hadoop 2.6.0",
+            "_sahara_username": "ubuntu",
+            "_sahara_tag_some_other_tag": "True",
+            "_sahara_tag_2.6.0": "True"
+        },
+        "id": "bb8d12b5-f9bb-49f0-aecb-739b8a9bec89",
+        "minDisk": 0,
+        "status": "ACTIVE",
+        "tags": [
+            "vanilla",
+            "some_other_tag",
+            "2.6.0"
+        ],
+        "minRam": 0,
+        "progress": 100,
+        "username": "ubuntu",
+        "created": "2015-02-03T10:28:39Z",
+        "name": "sahara-vanilla-2.6.0-ubuntu-14.04",
+        "description": "Ubuntu image for Hadoop 2.6.0",
+        "OS-EXT-IMG-SIZE:size": 1101856768
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                            
+                        
+                        <resource id="imageUntag" path="/v1.1/{tenant_id}/images/{image_id}/untag">
+         <param name="tenant_id" style="template" type="capi:UUID">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The unique identifier of the tenant or account.</para>
+                    </wadl:doc>
+                </param>
+         <param name="image_id" style="template" type="capi:UUID">
+                            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                                <para>The unique identifier of the image.</para>
+                            </wadl:doc>
+                        </param>
+         <method name="POST" rax:id="removeTags">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Remove tags from image">
+               <para role="shortdesc">Removes tags from a specified image.</para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "tags": [
+        "some_other_tag"
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="tags" style="plain" type="xsd:string" required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>List of tags to remove.</para>
+                    </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="202">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "image": {
+        "updated": "2015-03-24T10:18:33Z",
+        "metadata": {
+            "_sahara_tag_vanilla": "True",
+            "_sahara_description": "Ubuntu image for Hadoop 2.6.0",
+            "_sahara_username": "ubuntu",
+            "_sahara_tag_some_other_tag": "True",
+            "_sahara_tag_2.6.0": "True"
+        },
+        "id": "bb8d12b5-f9bb-49f0-aecb-739b8a9bec89",
+        "minDisk": 0,
+        "status": "ACTIVE",
+        "tags": [
+            "vanilla",
+            "some_other_tag",
+            "2.6.0"
+        ],
+        "minRam": 0,
+        "progress": 100,
+        "username": "ubuntu",
+        "created": "2015-02-03T10:28:39Z",
+        "name": "sahara-vanilla-2.6.0-ubuntu-14.04",
+        "description": "Ubuntu image for Hadoop 2.6.0",
+        "OS-EXT-IMG-SIZE:size": 1101856768
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                            
+                        
+                    
+                
+    </resources>
+    <!-- *******************************************************-->
+    <!--      Image Registry            -->
+    <!--*******************************************************-->
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="imageslist">
+        
+      <request>
+        <representation mediaType="application/json">
+            <param name="tags" style="plain" type="xsd:string">
+                
+            </param>
+        </representation>
+      </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="imageInfo">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="imageReg">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+                <param name="username" style="plain" type="xsd:string" required="true">
+                    
+                </param>
+                <param name="description" style="plain" type="xsd:string">
+                    
+                </param>
+            </representation>
+        </request>
+        <response status="202">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="DELETE"
+           id="imageUnreg">
+        
+        <response status="204"/>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="addTags">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+                <param name="tags" style="plain" type="xsd:string" required="true">
+                    
+                </param>
+            </representation>
+        </request>
+        <response status="202">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="removeTags">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+                <param name="tags" style="plain" type="xsd:string" required="true">
+                    
+                </param>
+            </representation>
+        </request>
+        <response status="202">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+</wadl:application>

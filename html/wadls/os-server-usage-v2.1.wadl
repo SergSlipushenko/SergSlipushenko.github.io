@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2014-2015 OpenStack Foundation, All Rights Reserved -->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <resources xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+              xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+              xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-server-usage-v2.1">
+        <resource id="detail" path="/v2.1/{tenant_id}/servers/detail">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="listServersWithDetails">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List servers with details">
+               <para role="shortdesc">
+                Lists servers. Includes server usage details.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                
+                  <param name="sort_key"
+                         style="query"
+                         required="false"
+                         type="xsd:string"
+                         default="ALL">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Sorts by the requested server attribute. Default is
+      <code>created</code>. You can specify multiple pairs of sort key and
+      sort direction query parameters. If you omit the sort direction in a
+      pair, the API uses the natural sorting direction of the server attribute
+      that is provided as the <code>sort_key</code>.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="sort_dir"
+                         style="query"
+                         required="false"
+                         type="xsd:string"
+                         default="ALL">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+    Sort direction. A valid value is <code>asc</code> (ascending) or
+    <code>desc</code> (descending). Default is <code>desc</code>. You can
+    specify multiple pairs of sort key and sort direction query parameters. If
+    you omit the sort direction in a pair, the API uses the natural sorting
+    direction of the server attribute that is provided as the
+    <code>sort_key</code>.
+  </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "servers": [
+        {
+            "accessIPv4": "1.2.3.4",
+            "accessIPv6": "80fe::",
+            "addresses": {
+                "private": [
+                    {
+                        "addr": "192.168.0.3",
+                        "OS-EXT-IPS-MAC:mac_addr": "aa:bb:cc:dd:ee:ff",
+                        "OS-EXT-IPS:type": "fixed",
+                        "version": 4
+                    }
+                ]
+            },
+            "created": "2013-08-15T12:04:04Z",
+            "flavor": {
+                "id": "1",
+                "links": [
+                    {
+                        "href": "http://openstack.example.com/openstack/flavors/1",
+                        "rel": "bookmark"
+                    }
+                ]
+            },
+            "hostId": "117535ce0eda7ee02ebffe2c976173629385481ae3f2bded5e14a66b",
+            "id": "ae114799-9164-48f5-a036-6ef9310acbc4",
+            "image": {
+                "id": "70a599e0-31e7-49b7-b260-868f441e862b",
+                "links": [
+                    {
+                        "href": "http://openstack.example.com/openstack/images/70a599e0-31e7-49b7-b260-868f441e862b",
+                        "rel": "bookmark"
+                    }
+                ]
+            },
+            "key_name": null,
+            "links": [
+                {
+                    "href": "http://openstack.example.com/v2/openstack/servers/ae114799-9164-48f5-a036-6ef9310acbc4",
+                    "rel": "self"
+                },
+                {
+                    "href": "http://openstack.example.com/openstack/servers/ae114799-9164-48f5-a036-6ef9310acbc4",
+                    "rel": "bookmark"
+                }
+            ],
+            "metadata": {
+                "My Server Name": "Apache1"
+            },
+            "name": "new-server-test",
+            "OS-SRV-USG:launched_at": "2013-08-15T12:04:05.368766",
+            "OS-SRV-USG:terminated_at": null,
+            "progress": 0,
+            "status": "ACTIVE",
+            "tenant_id": "openstack",
+            "updated": "2013-08-15T12:04:05Z",
+            "user_id": "fake"
+        }
+    ]
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                
+                  <param name="X-OpenStack-Request-ID"
+                         style="header"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Returns a unique request ID that provides tracking for the
+      request. Provider must configure middleware to provide the request
+      ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="locked"
+                         style="plain"
+                         required="true"
+                         type="xsd:boolean"
+                         default="ALL">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Indicates whether the server is locked (<code>true</code>) or unlocked
+      (<code>false</code>).
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                        
+                    <resource id="server_id" path="/v2.1/{tenant_id}/servers/{server_id}">
+         <param name="tenant_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The tenant ID in a multi-tenancy cloud.</para>
+            </wadl:doc>
+         </param>
+         <param name="server_id" style="template" type="csapi:UUID">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+               <para>The UUID for the server.</para>
+            </wadl:doc>
+         </param>
+         <method name="GET" rax:id="showServer">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Show server details">
+               <para role="shortdesc">Shows details for a specified
+                server. Includes server usage information.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "server": {
+        "accessIPv4": "1.2.3.4",
+        "accessIPv6": "80fe::",
+        "addresses": {
+            "private": [
+                {
+                    "addr": "192.168.0.3",
+                    "OS-EXT-IPS-MAC:mac_addr": "aa:bb:cc:dd:ee:ff",
+                    "OS-EXT-IPS:type": "fixed",
+                    "version": 4
+                }
+            ]
+        },
+        "created": "2013-08-15T08:12:40Z",
+        "flavor": {
+            "id": "1",
+            "links": [
+                {
+                    "href": "http://openstack.example.com/openstack/flavors/1",
+                    "rel": "bookmark"
+                }
+            ]
+        },
+        "hostId": "73cf3a40601b63f5992894be2daa3712dd599d1c919984951e21edda",
+        "id": "cee6d136-e378-4cfc-9eec-71797f025991",
+        "image": {
+            "id": "70a599e0-31e7-49b7-b260-868f441e862b",
+            "links": [
+                {
+                    "href": "http://openstack.example.com/openstack/images/70a599e0-31e7-49b7-b260-868f441e862b",
+                    "rel": "bookmark"
+                }
+            ]
+        },
+        "key_name": null,
+        "links": [
+            {
+                "href": "http://openstack.example.com/v2/openstack/servers/cee6d136-e378-4cfc-9eec-71797f025991",
+                "rel": "self"
+            },
+            {
+                "href": "http://openstack.example.com/openstack/servers/cee6d136-e378-4cfc-9eec-71797f025991",
+                "rel": "bookmark"
+            }
+        ],
+        "metadata": {
+            "My Server Name": "Apache1"
+        },
+        "name": "new-server-test",
+        "OS-SRV-USG:launched_at": "2013-08-15T08:12:40.108903",
+        "OS-SRV-USG:terminated_at": null,
+        "progress": 0,
+        "status": "ACTIVE",
+        "tenant_id": "openstack",
+        "updated": "2013-08-15T08:12:40Z",
+        "user_id": "fake"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                
+                  <param name="X-OpenStack-Request-ID"
+                         style="header"
+                         required="false"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Returns a unique request ID that provides tracking for the
+      request. Provider must configure middleware to provide the request
+      ID.
+   </para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="locked"
+                         style="plain"
+                         required="true"
+                         type="xsd:boolean"
+                         default="ALL">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Indicates whether the server is locked (<code>true</code>) or unlocked
+      (<code>false</code>).
+   </para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+      </resource>
+                        
+
+                        
+                    
+    </resources>
+    <!-- *******************************************************-->
+    <!--      OS Server Usage            -->
+    <!--*******************************************************-->
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="showServer">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+                
+            <param name="X-OpenStack-Request-ID"
+                   style="header"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="locked"
+                   style="plain"
+                   required="true"
+                   type="xsd:boolean"
+                   default="ALL">
+   
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsd="http://docs.rackspacecloud.com/xsd/v1.0"
+           xmlns:csapi="http://docs.openstack.org/identity/api/v3"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="listServersWithDetails">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            <param name="sort_key"
+                   style="query"
+                   required="false"
+                   type="xsd:string"
+                   default="ALL">
+
+</param>
+            <param name="sort_dir"
+                   style="query"
+                   required="false"
+                   type="xsd:string"
+                   default="ALL">
+
+</param>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                
+                
+            <param name="X-OpenStack-Request-ID"
+                   style="header"
+                   required="false"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="locked"
+                   style="plain"
+                   required="true"
+                   type="xsd:boolean"
+                   default="ALL">
+   
+</param>
+            </representation>
+        </response>
+    </method>
+</wadl:application>

@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2011-2015 OpenStack Foundation, All Rights Reserved -->
+<!--*******************************************************-->
+<!--         Import Common XML Entities                    -->
+<!--                                                       -->
+<!--     You can resolve the entities with xmllint         -->
+<!--                                                       -->
+<!--        xmllint -noent os-compute-1.1.wadl             -->
+<!--*******************************************************-->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <wadl:grammars xmlns:db="http://docbook.org/ns/docbook"
+                  xmlns="http://wadl.dev.java.net/2009/02">
+      <wadl:include href="14955-os-volume_boot-xsd-1.xsd"/>
+      <wadl:include href="14955-os-volume_boot-xsd-2.xsd"/>
+   </wadl:grammars>
+    <resources xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:csapi="http://docs.openstack.org/api/compute/2.0"
+              xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://servers.api.openstack.com"
+              xml:id="os-volume_boot-v2">
+        <resource path="/v2/{tenant_id}/os-volumes_boot" id="os-volume_boot">
+         <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                   xml:lang="EN"
+                   title="Volume attachment list">
+            <para>A list of volume attachments associated with a
+                server.</para>
+         </wadl:doc>
+         <param name="tenant_id" style="template" type="xsd:string">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The ID for the tenant or account in a
+                            multi-tenancy cloud.</para>
+                    </wadl:doc>
+                </param>
+         <method name="POST" rax:id="createServer">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Create server">
+               <para role="shortdesc">
+                Starts a new instance from a bootable volume.
+            </para>
+               <para>Preconditions</para>
+               <itemizedlist>
+                  <listitem>
+                    <para>
+                        You can attach a volume to a server with a status that
+                        is not locked.
+                    </para>
+                  </listitem>
+                  <listitem>
+                    <para>
+                        You can boot to a volume when its status is
+                        <code>available</code>.
+                    </para>
+                  </listitem>
+                  <listitem>
+                    <para>
+                        You can boot to a volume when the volume was created as
+                        a bootable volume.
+                    </para>
+                  </listitem>
+               </itemizedlist>
+               <para>Asynchronous Postconditions</para>
+               <itemizedlist>
+                  <listitem>
+                    <para>
+                        After successfully booting a server, the
+                        volume status changes to <code>in-use</code>.
+                    </para>
+                  </listitem>
+               </itemizedlist>
+               <para>Troubleshooting</para>
+               <itemizedlist>
+                  <listitem>
+                    <para>
+                        If the volume status remains in <code>available</code>
+                        state, the request failed. Ensure that you meet the
+                        preconditions and run the request again. If the
+                        request fails again, investigate the server and the
+                        volume status.
+                    </para>
+                  </listitem>
+               </itemizedlist>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "server": {
+        "name": "BFVServer",
+        "imageRef": "",
+        "block_device_mapping": [
+            {
+                "source_type": "volume",
+                "boot_index": 0,
+                "uuid": "7b4dc407-d515-4d96-9eba-cf86bd4a61f7",
+                "volume_id": "7b4dc407-d515-4d96-9eba-cf86bd4a61f7",
+                "device_name": "vda"
+            }
+        ],
+        "flavorRef": "1",
+        "max_count": 1,
+        "min_count": 1
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="imageRef" style="template" type="xsd:string">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>ID of the image to use to boot from volume.
+                       </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="display_name" style="template" type="xsd:string">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+                            Name of the bootable volume.
+                        </para>
+                    </wadl:doc>
+                  </param>
+                  <param name="volume_type" style="template" type="xsd:string">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>A type of volume such as SSD.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code xmlns:db="http://docbook.org/ns/docbook">
+                        <programlisting language="javascript">{
+    "server": {
+        "security_groups": [
+            {
+                "name": "default"
+            }
+        ],
+        "OS-DCF:diskConfig": "MANUAL",
+        "id": "2eb966e3-0511-4a71-a05a-ca3fcf09eea9",
+        "links": [
+            {
+                "href": "http://8.21.28.222:8774/v2/f9828a18c6484624b571e85728780ba8/servers/2eb966e3-0511-4a71-a05a-ca3fcf09eea9",
+                "rel": "self"
+            },
+            {
+                "href": "http://8.21.28.222:8774/f9828a18c6484624b571e85728780ba8/servers/2eb966e3-0511-4a71-a05a-ca3fcf09eea9",
+                "rel": "bookmark"
+            }
+        ],
+        "adminPass": "secretsecret"
+    }
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response> 
+            <response>
+               <representation mediaType="application/xml" element="csapi:computeFault"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="503">
+               <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="400">
+               <representation mediaType="application/xml" element="csapi:badRequest"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="401">
+               <representation mediaType="application/xml" element="csapi:unauthorized"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="403">
+               <representation mediaType="application/xml" element="csapi:forbidden"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="405">
+               <representation mediaType="application/xml" element="csapi:badMethod"/>
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="413">
+               <representation mediaType="application/xml" element="csapi:overLimit"/>
+               <representation mediaType="application/json"/>
+            </response> 
+            <response status="404">
+               <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+      </resource>
+    </resources>
+    <!--*******************************************************-->
+    <!--               Resource Types                          -->
+    <!--*******************************************************-->
+    
+    
+
+    <!--*******************************************************-->
+    <!--               All Methods                             -->
+    <!--****************************************************** -->
+    <!-- Volume Actions -->
+    <method xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/api/compute/2.0"
+           xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="createServer">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+                <param name="imageRef" style="template" type="xsd:string">
+                    
+                </param>
+                <param name="display_name" style="template" type="xsd:string">
+                    
+                </param>
+                <param name="volume_type" style="template" type="xsd:string">
+                    
+                </param>
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response> 
+      <response>
+         <representation mediaType="application/xml" element="csapi:computeFault"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="503">
+         <representation mediaType="application/xml" element="csapi:serviceUnavailable"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="400">
+         <representation mediaType="application/xml" element="csapi:badRequest"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="401">
+         <representation mediaType="application/xml" element="csapi:unauthorized"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="403">
+         <representation mediaType="application/xml" element="csapi:forbidden"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="405">
+         <representation mediaType="application/xml" element="csapi:badMethod"/>
+         <representation mediaType="application/json"/>
+      </response>
+      <response status="413">
+         <representation mediaType="application/xml" element="csapi:overLimit"/>
+         <representation mediaType="application/json"/>
+      </response> 
+      <response status="404">
+         <representation mediaType="application/xml" element="csapi:itemNotFound"/>
+         <representation mediaType="application/json"/>
+      </response>
+    </method>
+</wadl:application>

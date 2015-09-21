@@ -1,0 +1,970 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- (C) 2015 OpenStack Foundation, All Rights Reserved -->
+<!--*******************************************************-->
+<!--         Import Common XML Entities                    -->
+<!--                                                       -->
+<!--     You can resolve the entities with xmllint          -->
+<!--                                                       -->
+<!--        xmllint -noent os-image-2.2.wadl               -->
+<!--*******************************************************-->
+<wadl:application xmlns="http://docbook.org/ns/docbook"
+                  xmlns:wadl="http://wadl.dev.java.net/2009/02"
+                  xmlns:rax="http://docs.rackspace.com/api"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <wadl:grammars xmlns:db="http://docbook.org/ns/docbook"
+                  xmlns="http://wadl.dev.java.net/2009/02">
+      <wadl:include href="55956-os-metadef-object-v2-xsd-1.xsd"/>
+      <wadl:include href="55956-os-metadef-object-v2-xsd-2.xsd"/>
+   </wadl:grammars>
+    <!--*******************************************************-->
+    <!--             All Resources                             -->
+    <!--*******************************************************-->
+    <resources xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+              xmlns:db="http://docbook.org/ns/docbook"
+              xmlns:common="http://docs.openstack.org/common/api/v1.0"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+              xmlns:csapi="http://docs.openstack.org/image/api/v2"
+              xmlns="http://wadl.dev.java.net/2009/02"
+              base="https://glance.example.com/"
+              xml:id="os-metadef-object-v2">
+        <resource id="objects" path="/v2/metadefs/namespaces/{namespace}/objects">
+         <method name="POST" rax:id="createObject-v2">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Create object">
+               <para role="shortdesc">
+                Creates an object definition in a specified
+                namespace.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json" element="image">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "description": "You can configure the CPU limits with control parameters.",
+    "name": "CPU Limits",
+    "properties": {
+        "quota:cpu_period": {
+            "description": "Specifies the enforcement interval (unit: microseconds) for QEMU and LXC hypervisors. Within a period, each VCPU of the domain is not allowed to consume more than the quota worth of runtime. The value should be in range [1000, 1000000]. A period with value 0 means no value.",
+            "maximum": 1000000,
+            "minimum": 1000,
+            "title": "Quota: CPU Period",
+            "type": "integer"
+        },
+        "quota:cpu_quota": {
+            "description": "Specifies the maximum allowed bandwidth (unit: microseconds). A domain with a negative-value quota indicates that the domain has infinite bandwidth, which means that it is not bandwidth controlled. The value should be in range [1000, 18446744073709551] or less than 0. A quota with value 0 means no value. You can use this feature to ensure that all vCPUs run at the same speed.",
+            "title": "Quota: CPU Quota",
+            "type": "integer"
+        },
+        "quota:cpu_shares": {
+            "description": "Specifies the proportional weighted share for the domain. If this element is omitted, the service defaults to the OS provided defaults. There is no unit for the value; it is a relative measure based on the setting of other VMs. For example, a VM configured with value 2048 gets twice as much CPU time as a VM configured with value 1024.",
+            "title": "Quota: CPU Shares",
+            "type": "integer"
+        }
+    },
+    "required": []
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+                  <param name="namespace"
+                         style="plain"
+                         type="xsd:string"
+                         required="true">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The namespace is unique across all
+                        users.</para>
+                     </wadl:doc>
+                  </param>
+                  <param name="display_name"
+                         style="plain"
+                         type="xsd:string"
+                         required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>User-friendly name to use in a UI to display the namespace name.
+                        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="description"
+                         style="plain"
+                         type="xsd:string"
+                         required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Detailed description for the namespace.
+                        </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="visibility"
+                         style="plain"
+                         type="xsd:string"
+                         required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Namespace visibility. Public or private.
+                            Default is private.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="protected"
+                         style="plain"
+                         type="xsd:boolean"
+                         required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                         <para>Namespace protection for deletion. Valid value is true or false.
+                            Default is false.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="properties"
+                         style="plain"
+                         type="xsd:dict"
+                         required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                         <para>Property definitions, if any, for the namespace.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="objects" style="plain" type="xsd:dict" required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                         <para>Object definitions, if any, for the namespace.</para>
+                    </wadl:doc>
+                  </param>
+                  <param name="resource_type_associations"
+                         style="plain"
+                         type="xsd:dict"
+                         required="false">
+                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                         <para>Resource types, if any, that are associated with this namespace</para>
+                    </wadl:doc>
+                  </param>
+               </representation>
+            </request>
+            <response status="201">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "created_at": "2014-09-19T18:20:56Z",
+    "description": "You can configure the CPU limits with control parameters.",
+    "name": "CPU Limits",
+    "properties": {
+        "quota:cpu_period": {
+            "description": "Specifies the enforcement interval (unit: microseconds) for QEMU and LXC hypervisors. Within a period, each VCPU of the domain is not allowed to consume more than the quota worth of runtime. The value should be in range [1000, 1000000]. A period with value 0 means no value.",
+            "maximum": 1000000,
+            "minimum": 1000,
+            "title": "Quota: CPU Period",
+            "type": "integer"
+        },
+        "quota:cpu_quota": {
+            "description": "Specifies the maximum allowed bandwidth (unit: microseconds). A domain with a negative-value quota indicates that the domain has infinite bandwidth, which means that it is not bandwidth controlled. The value should be in range [1000, 18446744073709551] or less than 0. A quota with value 0 means no value. You can use this feature to ensure that all vCPUs run at the same speed.",
+            "title": "Quota: CPU Quota",
+            "type": "integer"
+        },
+        "quota:cpu_shares": {
+            "description": "Specifies the proportional weighted share for the domain. If this element is omitted, the service defaults to the OS provided defaults. There is no unit for the value; it is a relative measure based on the setting of other VMs. For example, a VM configured with value 2048 gets twice as much CPU time as a VM configured with value 1024.",
+            "title": "Quota: CPU Shares",
+            "type": "integer"
+        }
+    },
+    "required": [],
+    "schema": "/v2/schemas/metadefs/object",
+    "self": "/v2/metadefs/namespaces/OS::Compute::Quota/objects/CPU Limits",
+    "updated_at": "2014-09-19T18:20:56Z"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="namespace"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The <code>namespace</code> is unique across all users.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="display_name"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>User friendly name which could be used in UI for displaying namespace name.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="description"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Detailed description for the namespace.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="visibility"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Namespace visibility. A valid value is <code>public</code> or
+      <code>private</code>. Default is <code>private</code>.
+   </para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="protected"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Namespace protection for deletion. A valid value is <code>True</code> or
+      <code>False</code>. Default is <code>False</code>.
+   </para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="properties"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Property definition(s) of the namespace.</para>
+                     </wadl:doc>
+                  </param>
+                
+                  <param name="objects" style="plain" required="true" type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Object definition(s) of the namespace.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="resource_type_associations"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Resource type(s) which are associated with this namespace.</para>
+                     </wadl:doc>
+                  </param>
+               </representation>
+            </response>
+         </method>
+         <method name="GET" rax:id="listObjects-v2">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="List objects">
+               <para role="shortdesc">Lists object definitions within
+                a namespace.</para>
+               <para>
+                Returns a subset of the larger collection of namespaces and a
+                link that you can use to get the next set of namespaces. You
+                should always check for the presence of a <code>next</code>
+                link and use it as the URI in a subsequent HTTP GET request.
+                You should follow this pattern until a <code>next</code> link
+                is no longer provided. The next link preserves any query
+                parameters that you send in your initial request. You can use
+                the <code>first</code> link to jump back to the first page of
+                the collection. If you prefer to paginate through namespaces
+                manually, use the <code>limit</code> and <code>marker</code>
+                parameters.
+            </para>
+               <para>
+                The list operation accepts <code>resource_types</code> and
+                <code>visibility</code> as query parameters that let you
+                filter the results of the returned collection.
+            </para>
+               <para>
+                For example, sending a <code>resource_types</code> filter of
+                <code>OS::Glance::Image,OS::Nova::Flavor</code> filters the
+                namespaces to include only namespaces that are associated to
+                the given resource types.
+            </para>
+               <para>
+                You can sort the results of this operation by using the
+                <code>sort_key</code> and <code>sort_dir</code> parameters.
+                The API uses the natural sorting of whatever namespace
+                attribute is provided as the <code>sort_key</code>.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                
+                  <param name="visibility"
+                         style="query"
+                         required="false"
+                         type="imageapi:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Filter parameter.
+   </para>
+                        <para>
+      Shows only namespaces with the specified visibility value or values.
+   </para>
+                        <para>
+      Valid values are <code>public</code> and <code>private</code>. If you
+      omit this parameter, the response shows <code>public</code> and
+      <code>private</code> namespaces.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="resource_types"
+                         style="query"
+                         required="false"
+                         type="xsd:int">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Filter parameter.
+   </para>
+                        <para>
+      Shows only namespaces with the specified resource type or
+      types.
+   </para>
+                        <para>
+      Specify multiple values as a comma-separated list. For example, set the
+      <code>resource_types</code> filter to
+      <code>OS::Glance::Image,OS::Nova::Flavor</code> to include only
+      namespaces that are associated with the specified resource types.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="sort_key"
+                         style="query"
+                         required="false"
+                         type="xsd:string"
+                         default="ALL">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Sort key. A valid value is an attribute, such as <code>namespace</code>,
+      for sorting. Default is <code>created_at</code>.
+   </para>
+                     </wadl:doc>
+                  </param>
+                  <param name="sort_dir"
+                         style="query"
+                         required="false"
+                         type="xsd:string"
+                         default="ALL">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Sort direction. A valid value is <code>asc</code>
+      (ascending) or <code>desc</code> (descending). Default is
+      <code>desc</code>.
+   </para>
+                     </wadl:doc>
+                  </param> 
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "objects": [
+        {
+            "created_at": "2014-09-18T18:16:35Z",
+            "description": "You can configure the CPU limits with control parameters.",
+            "name": "CPU Limits",
+            "properties": {
+                "quota:cpu_period": {
+                    "description": "Specifies the enforcement interval (unit: microseconds) for QEMU and LXC hypervisors. Within a period, each VCPU of the domain is not allowed to consume more than the quota worth of runtime. The value should be in range [1000, 1000000]. A period with value 0 means no value.",
+                    "maximum": 1000000,
+                    "minimum": 1000,
+                    "title": "Quota: CPU Period",
+                    "type": "integer"
+                },
+                "quota:cpu_quota": {
+                    "description": "Specifies the maximum allowed bandwidth (unit: microseconds). A domain with a negative-value quota indicates that the domain has infinite bandwidth, which means that it is not bandwidth controlled. The value should be in range [1000, 18446744073709551] or less than 0. A quota with value 0 means no value. You can use this feature to ensure that all vCPUs run at the same speed.",
+                    "title": "Quota: CPU Quota",
+                    "type": "integer"
+                },
+                "quota:cpu_shares": {
+                    "description": "Specifies the proportional weighted share for the domain. If this element is omitted, the service defaults to the OS provided defaults. There is no unit for the value; it is a relative measure based on the setting of other VMs. For example, a VM configured with value 2048 gets twice as much CPU time as a VM configured with value 1024.",
+                    "title": "Quota: CPU Shares",
+                    "type": "integer"
+                }
+            },
+            "required": [],
+            "schema": "/v2/schemas/metadefs/object",
+            "self": "/v2/metadefs/namespaces/OS::Compute::Quota/objects/CPU Limits"
+        },
+        {
+            "created_at": "2014-09-18T18:16:35Z",
+            "description": "Using disk I/O quotas, you can set maximum disk write to 10 MB per second for a VM user.",
+            "name": "Disk QoS",
+            "properties": {
+                "quota:disk_read_bytes_sec": {
+                    "description": "Sets disk I/O quota for disk read bytes / sec.",
+                    "title": "Quota: Disk read bytes / sec",
+                    "type": "integer"
+                },
+                "quota:disk_read_iops_sec": {
+                    "description": "Sets disk I/O quota for disk read IOPS / sec.",
+                    "title": "Quota: Disk read IOPS / sec",
+                    "type": "integer"
+                },
+                "quota:disk_total_bytes_sec": {
+                    "description": "Sets disk I/O quota for total disk bytes / sec.",
+                    "title": "Quota: Disk Total Bytes / sec",
+                    "type": "integer"
+                },
+                "quota:disk_total_iops_sec": {
+                    "description": "Sets disk I/O quota for disk total IOPS / sec.",
+                    "title": "Quota: Disk Total IOPS / sec",
+                    "type": "integer"
+                },
+                "quota:disk_write_bytes_sec": {
+                    "description": "Sets disk I/O quota for disk write bytes / sec.",
+                    "title": "Quota: Disk Write Bytes / sec",
+                    "type": "integer"
+                },
+                "quota:disk_write_iops_sec": {
+                    "description": "Sets disk I/O quota for disk write IOPS / sec.",
+                    "title": "Quota: Disk Write IOPS / sec",
+                    "type": "integer"
+                }
+            },
+            "required": [],
+            "schema": "/v2/schemas/metadefs/object",
+            "self": "/v2/metadefs/namespaces/OS::Compute::Quota/objects/Disk QoS"
+        },
+        {
+            "created_at": "2014-09-18T18:16:35Z",
+            "description": "Bandwidth QoS tuning for instance virtual interfaces (VIFs) may be specified with these properties. Incoming and outgoing traffic can be shaped independently. If not specified, no quality of service (QoS) is applied on that traffic direction. So, if you want to shape only the network's incoming traffic, use inbound only (and vice versa). The OpenStack Networking service abstracts the physical implementation of the network, allowing plugins to configure and manage physical resources. Virtual Interfaces (VIF) in the logical model are analogous to physical network interface cards (NICs). VIFs are typically owned a managed by an external service; for instance when OpenStack Networking is used for building OpenStack networks, VIFs would be created, owned, and managed in Nova. VIFs are connected to OpenStack Networking networks via ports. A port is analogous to a port on a network switch, and it has an administrative state. When a VIF is attached to a port the OpenStack Networking API creates an attachment object, which specifies the fact that a VIF with a given identifier is plugged into the port.",
+            "name": "Virtual Interface QoS",
+            "properties": {
+                "quota:vif_inbound_average": {
+                    "description": "Network Virtual Interface (VIF) inbound average in kilobytes per second. Specifies average bit rate on the interface being shaped.",
+                    "title": "Quota: VIF Inbound Average",
+                    "type": "integer"
+                },
+                "quota:vif_inbound_burst": {
+                    "description": "Network Virtual Interface (VIF) inbound burst in total kilobytes. Specifies the amount of bytes that can be burst at peak speed.",
+                    "title": "Quota: VIF Inbound Burst",
+                    "type": "integer"
+                },
+                "quota:vif_inbound_peak": {
+                    "description": "Network Virtual Interface (VIF) inbound peak in kilobytes per second. Specifies maximum rate at which an interface can receive data.",
+                    "title": "Quota: VIF Inbound Peak",
+                    "type": "integer"
+                },
+                "quota:vif_outbound_average": {
+                    "description": "Network Virtual Interface (VIF) outbound average in kilobytes per second. Specifies average bit rate on the interface being shaped.",
+                    "title": "Quota: VIF Outbound Average",
+                    "type": "integer"
+                },
+                "quota:vif_outbound_burst": {
+                    "description": "Network Virtual Interface (VIF) outbound burst in total kilobytes. Specifies the amount of bytes that can be burst at peak speed.",
+                    "title": "Quota: VIF Outbound Burst",
+                    "type": "integer"
+                },
+                "quota:vif_outbound_peak": {
+                    "description": "Network Virtual Interface (VIF) outbound peak in kilobytes per second. Specifies maximum rate at which an interface can send data.",
+                    "title": "Quota: VIF Outbound Burst",
+                    "type": "integer"
+                }
+            },
+            "required": [],
+            "schema": "/v2/schemas/metadefs/object",
+            "self": "/v2/metadefs/namespaces/OS::Compute::Quota/objects/Virtual Interface QoS"
+        }
+    ],
+    "schema": "v2/schemas/metadefs/objects"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc> 
+                  <param name="namespaces"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>A <code>namespaces</code> object.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="namespace"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>The <code>namespace</code> is unique across all users.</para>
+                     </wadl:doc>
+                  </param>
+                 
+                  <param name="display_name"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>User friendly name which could be used in UI for displaying namespace name.</para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="description"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Detailed description for the namespace.</para>
+                     </wadl:doc>
+                  </param>
+                 
+                  <param name="visibility"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Namespace visibility. A valid value is <code>public</code> or
+      <code>private</code>. Default is <code>private</code>.
+   </para>
+                     </wadl:doc>
+                  </param> 
+                  <param name="protected"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>
+      Namespace protection for deletion. A valid value is <code>True</code> or
+      <code>False</code>. Default is <code>False</code>.
+   </para>
+                     </wadl:doc>
+                  </param>
+                 
+                  <param name="resource_type_associations"
+                         style="plain"
+                         required="true"
+                         type="xsd:string">
+                     <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                        <para>Resource type(s) which are associated with this namespace.</para>
+                     </wadl:doc>
+                  </param> 
+               </representation>
+            </response>
+         </method>
+      </resource>
+      <resource path="/v2/metadefs/namespaces/{namespace}/objects/{object_name}"
+                id="object_name">
+         <param name="namespace"
+                style="template"
+                type="csapi:uuid"
+                required="true">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN" title="Namespace">
+               <para>Unique namespace.</para>
+            </wadl:doc>
+         </param>
+         <param name="object_name"
+                style="template"
+                required="true"
+                type="xsd:string">
+                                    <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                                       <para>The name of the object.</para>
+                                    </wadl:doc>
+                                </param>
+         <method name="GET" rax:id="getObject-v2">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Get object definition">
+               <para role="shortdesc">Gets definition for a specified object.
+                </para>
+               <para>Response body is a single object entity.</para>
+            </wadl:doc>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "created_at": "2014-09-19T18:20:56Z",
+    "description": "You can configure the CPU limits with control parameters.",
+    "name": "CPU Limits",
+    "properties": {
+        "quota:cpu_period": {
+            "description": "Specifies the enforcement interval (unit: microseconds) for QEMU and LXC hypervisors. Within a period, each VCPU of the domain is not allowed to consume more than the quota worth of runtime. The value should be in range [1000, 1000000]. A period with value 0 means no value.",
+            "maximum": 1000000,
+            "minimum": 1000,
+            "title": "Quota: CPU Period",
+            "type": "integer"
+        },
+        "quota:cpu_quota": {
+            "description": "Specifies the maximum allowed bandwidth (unit: microseconds). A domain with a negative-value quota indicates that the domain has infinite bandwidth, which means that it is not bandwidth controlled. The value should be in range [1000, 18446744073709551] or less than 0. A quota with value 0 means no value. You can use this feature to ensure that all vCPUs run at the same speed.",
+            "title": "Quota: CPU Quota",
+            "type": "integer"
+        },
+        "quota:cpu_shares": {
+            "description": "Specifies the proportional weighted share for the domain. If this element is omitted, the service defaults to the OS provided defaults. There is no unit for the value; it is a relative measure based on the setting of other VMs. For example, a VM configured with value 2048 gets twice as much CPU time as a VM configured with value 1024.",
+            "title": "Quota: CPU Shares",
+            "type": "integer"
+        }
+    },
+    "required": [],
+    "schema": "/v2/schemas/metadefs/object",
+    "self": "/v2/metadefs/namespaces/OS::Compute::Quota/objects/CPU Limits",
+    "updated_at": "2014-09-19T18:20:56Z"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+         <method name="PUT" rax:id="updateObject-v2">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Update object definition">
+               <para role="shortdesc">
+                Updates a specified object definition in a specified
+                namespace.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json" element="image">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "description": "You can configure the CPU limits with control parameters.",
+    "name": "CPU Limits",
+    "properties": {
+        "quota:cpu_shares": {
+            "description": "Specifies the proportional weighted share for the domain. If this element is omitted, the service defaults to the OS provided defaults. There is no unit for the value; it is a relative measure based on the setting of other VMs. For example, a VM configured with value 2048 gets twice as much CPU time as a VM configured with value 1024.",
+            "title": "Quota: CPU Shares",
+            "type": "integer"
+        }
+    },
+    "required": []
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json">
+                  <wadl:doc xmlns="http://docbook.org/ns/docbook" xml:lang="EN">
+                    <xsdxt:code>
+                        <programlisting language="javascript">{
+    "created_at": "2014-09-19T19:20:56Z",
+    "description": "You can configure the CPU limits with control parameters.",
+    "name": "CPU Limits",
+    "properties": {
+        "quota:cpu_shares": {
+            "description": "Specifies the proportional weighted share for the domain. If this element is omitted, the service defaults to the OS provided defaults. There is no unit for the value; it is a relative measure based on the setting of other VMs. For example, a VM configured with value 2048 gets twice as much CPU time as a VM configured with value 1024.",
+            "title": "Quota: CPU Shares",
+            "type": "integer"
+        }
+    },
+    "required": [],
+    "schema": "/v2/schemas/metadefs/object",
+    "self": "/v2/metadefs/namespaces/OS::Compute::Quota/objects/CPU Limits",
+    "updated_at": "2014-09-19T19:20:56Z"
+}
+</programlisting>
+                     </xsdxt:code>
+                  </wadl:doc>
+               </representation>
+            </response>
+         </method>
+         <method name="DELETE" rax:id="deleteObject-v2">
+            <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                      xml:lang="EN"
+                      title="Delete property definition">
+               <para role="shortdesc">
+                Deletes a specified object definition within a namespace.
+            </para>
+               <para>
+                You cannot delete objects in a namespace with the 'protected'
+                attribute set to true (boolean); the response returns
+                the HTTP 403 status code.
+            </para>
+               <para>
+                You must first set the <code>protected</code> attribute to
+                false (boolean) on the namespace and then perform the delete.
+                The response is empty and returns the HTTP 204 status code.
+            </para>
+            </wadl:doc>
+            <request>
+               <representation mediaType="application/json">
+                 </representation>
+            </request>
+            <response status="204"/>
+            <response status="403"/>
+         </method>
+      </resource>
+                                
+
+                                
+                                
+                                
+                                
+                            
+    </resources>
+    <!--*******************************************************-->
+    <!--               All Methods                             -->
+    <!--*******************************************************-->
+    <!-- Property methods -->
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+           xmlns:csapi="http://docs.openstack.org/image/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="POST"
+           id="createObject-v2">
+        
+        <request>
+            <representation mediaType="application/json" element="image">
+                
+                <param name="namespace"
+                   style="plain"
+                   type="xsd:string"
+                   required="true">
+                    
+                </param>
+                <param name="display_name"
+                   style="plain"
+                   type="xsd:string"
+                   required="false">
+                    
+                </param>
+                <param name="description"
+                   style="plain"
+                   type="xsd:string"
+                   required="false">
+                    
+                </param>
+                <param name="visibility"
+                   style="plain"
+                   type="xsd:string"
+                   required="false">
+                    
+                </param>
+                <param name="protected"
+                   style="plain"
+                   type="xsd:boolean"
+                   required="false">
+                    
+                </param>
+                <param name="properties"
+                   style="plain"
+                   type="xsd:dict"
+                   required="false">
+                    
+                </param>
+                <param name="objects" style="plain" type="xsd:dict" required="false">
+                    
+                </param>
+                <param name="resource_type_associations"
+                   style="plain"
+                   type="xsd:dict"
+                   required="false">
+                    
+                </param>
+            </representation>
+        </request>
+        <response status="201">
+            <representation mediaType="application/json">
+                 
+            <param name="namespace"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param> 
+            <param name="display_name"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="description"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param> 
+            <param name="visibility"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="protected"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param> 
+            <param name="properties"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                
+            <param name="objects" style="plain" required="true" type="xsd:string">
+
+</param> 
+            <param name="resource_type_associations"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+           xmlns:csapi="http://docs.openstack.org/image/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="listObjects-v2">
+        
+        <request>
+            <representation mediaType="application/json">
+                
+            <param name="visibility"
+                   style="query"
+                   required="false"
+                   type="imageapi:string">
+
+</param>
+            <param name="resource_types"
+                   style="query"
+                   required="false"
+                   type="xsd:int">
+
+</param>
+            <param name="sort_key"
+                   style="query"
+                   required="false"
+                   type="xsd:string"
+                   default="ALL">
+
+</param>
+            <param name="sort_dir"
+                   style="query"
+                   required="false"
+                   type="xsd:string"
+                   default="ALL">
+
+</param> 
+         </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                 
+            <param name="namespaces"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param> 
+            <param name="namespace"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                 
+            <param name="display_name"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param> 
+            <param name="description"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                 
+            <param name="visibility"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param> 
+            <param name="protected"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param>
+                 
+            <param name="resource_type_associations"
+                   style="plain"
+                   required="true"
+                   type="xsd:string">
+
+</param> 
+         </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+           xmlns:csapi="http://docs.openstack.org/image/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="GET"
+           id="getObject-v2">
+        
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+           xmlns:csapi="http://docs.openstack.org/image/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="PUT"
+           id="updateObject-v2">
+        
+        <request>
+            <representation mediaType="application/json" element="image">
+                
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                
+            </representation>
+        </response>
+    </method>
+    <method xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+           xmlns:db="http://docbook.org/ns/docbook"
+           xmlns:common="http://docs.openstack.org/common/api/v1.0"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:imageapi="http://docs.openstack.org/image/api/v2"
+           xmlns:csapi="http://docs.openstack.org/image/api/v2"
+           xmlns="http://wadl.dev.java.net/2009/02"
+           name="DELETE"
+           id="deleteObject-v2">
+        
+        <request>
+            <representation mediaType="application/json">
+                 </representation>
+        </request>
+        <response status="204"/>
+        <response status="403"/>
+    </method>
+</wadl:application>

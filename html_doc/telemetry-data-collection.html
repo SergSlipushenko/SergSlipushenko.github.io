@@ -1,0 +1,1791 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+  <title>OpenStack Docs: Data collection</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+<!-- CSS references are in the css.html template -->
+    <!-- Bootstrap Core CSS -->
+    <link href="_static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Pygments css -->
+    <link href="_static/css/native.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <!--<link href="font-awesome.min.css" rel="stylesheet">-->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+
+	<!-- BB: theme style sheets moved here so that theme rules aren't 
+	     overridden by awesome rules. Should they go after the scripts below? -->
+    <!-- Custom CSS -->
+    <link href="_static/css/combined.css" rel="stylesheet">
+    <link href="_static/css/styles.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Page-specific CSS -->
+  
+  
+ </head>
+ <body>
+    <!-- Header -->
+        <!-- Header Navigation -->
+        <nav class="navbar navbar-default inner" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+             <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+      <span class="sr-only">
+      Toggle navigation
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+      </button>
+                <div class="brand-wrapper">
+                    <a class="navbar-brand" href="/"></a>
+                </div>
+                <div class="search-icon show"><i class="fa fa-search"></i>
+Search</div>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling
+-->
+            <div class="collapse navbar-collapse"
+id="bs-example-navbar-collapse-1">
+                <div class="search-container tiny">
+
+
+
+  <div id="gcse">
+    <script type="text/javascript">
+      (function() {
+        var cx = '000108871792296872333:noj9nikm74i';
+        var gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = (document.location.protocol == 'https:' ? 'https:' :
+'http:') +
+            '//www.google.com/cse/cse.js?cx=' + cx;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+      })();
+    </script>
+    <gcse:search gname="standard"></gcse:search>
+  </div>
+
+
+                    <i class="fa fa-times close-search"></i>
+                </div>
+                    <ul class="nav navbar-nav navbar-main show">
+                        <li>
+
+
+
+  <div id="gcse-mobile">
+    <gcse:search gname="mobile"></gcse:search>
+  </div>
+
+
+                        </li>
+
+
+                        <li>
+
+                                <a href="http://www.openstack.org/software/" class="drop"
+id="dropdownMenuSoftware">Software <i class="fa fa-caret-down"></i></a>
+                                <ul class="dropdown-menu" role="menu"
+aria-labelledby="dropdownMenuSoftware">
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="http://www.openstack.org/software/">Overview</a></li>
+
+
+
+                                            <li role="presentation"
+class="divider"></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="http://www.openstack.org/software/openstack-compute/">Compute</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="http://www.openstack.org/software/openstack-storage/">Storage</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="http://www.openstack.org/software/openstack-networking/">Networking</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="http://www.openstack.org/software/openstack-dashboard/">Dashboard</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="http://www.openstack.org/software/openstack-shared-services/">Shared Services</a></li>
+
+
+
+                                            <li role="presentation"
+class="divider"></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="http://www.openstack.org/software/start/">Get
+Started</a></li>
+
+
+                                </ul>
+
+                        </li>
+
+                        <li>
+
+                                <a href="http://www.openstack.org/user-stories/" class="drop"
+id="dropdownMenuUsers">Users <i class="fa fa-caret-down"></i></a>
+                                <ul class="dropdown-menu" role="menu"
+aria-labelledby="dropdownMenuUsers">
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="http://www.openstack.org/user-stories/">Overview</a></li>
+
+
+
+                                            <li role="presentation"
+class="divider"></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="//superuser.openstack.org/">Superuser
+Magazine</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="http://www.openstack.org/enterprise/auto/">Featured:  Top 10
+Automaker</a></li>
+
+
+                                </ul>
+
+                        </li>
+
+                        <li>
+
+                                <a href="http://www.openstack.org/community/" class="drop"
+id="dropdownMenuCommunity">Community <i class="fa fa-caret-down"></i></a>
+                                <ul class="dropdown-menu" role="menu"
+aria-labelledby="dropdownMenuCommunity">
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="http://www.openstack.org/community/">Welcome! Start Here</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="//ask.openstack.org/">Ask A Technical
+Question</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//wiki.openstack.org/wiki/Main_Page">OpenStack Wiki</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//www.openstack.org/community/events/">Community Events</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//wiki.openstack.org/wiki/Getting_The_Code">Source Code</a></li>
+
+
+
+                                            <li role="presentation"
+class="divider"></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//www.openstack.org/foundation/companies/">Supporting Companies</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//www.openstack.org/community/jobs/">Jobs</a></li>
+
+
+
+                                            <li role="presentation"
+class="divider"></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="//www.openstack.org/join/">Join The
+Community</a></li>
+
+
+                                </ul>
+
+                        </li>
+
+                        <li>
+
+                                <a href="http://www.openstack.org/marketplace/">Marketplace</a>
+
+                        </li>
+
+                        <li>
+
+                                <a href="http://www.openstack.org/events/" class="drop"
+id="dropdownMenuEvents">Events <i class="fa fa-caret-down"></i></a>
+                                <ul class="dropdown-menu" role="menu"
+aria-labelledby="dropdownMenuEvents">
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//www.openstack.org/community/events/">Overview</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1"
+href="//www.openstack.org/summit/openstack-paris-summit-2014/">The OpenStack
+Summit</a></li>
+
+
+
+                                            <li role="presentation"><a
+role="menuitem" tabindex="-1" href="//www.openstack.org/community/events/">More
+OpenStack Events</a></li>
+
+
+                                </ul>
+
+                        </li>
+
+                        <li>
+
+                                <a href="http://www.openstack.org/blog/">Blog</a>
+
+                        </li>
+
+                        <li>
+
+                                <a href="http://docs.openstack.org/">Docs</a>
+
+                        </li>
+
+
+                        <li>
+                            <a href="http://openstack.org/Security/login/"
+class="sign-in-btn">Sign In</a>
+                        </li>
+                    </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Begin Page Content -->
+        <div class="container docs-book-wrapper">
+        <div class="row">
+            <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+<!-- Row with title and buttons-->
+            <div class="row">
+                <div class="col-lg-8">
+                <h2>Data collection</h2>
+                </div>
+<div class="docs-actions">
+                  
+                  <a href="telemetry-system-architecture.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: System architecture"></i></a>
+                  
+                  
+                  <a href="telemetry-data-retrieval.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Data retrieval"></i></a>
+                  
+                  <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+                </div>
+            </div>
+            <div class="row docs-byline">
+                <div class="docs-updated">
+                    updated: 2015-10-12 18:28 | release: 0.9
+                </div>
+                <a href="http://git.openstack.org/" class="docs-edit">
+                    <i class="fa fa-pencil"></i> suggest edits
+                </a>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="docs-top-contents">
+                    <h5>Contents</h5>
+                    <ul>
+<li><a class="reference internal" href="#">Data collection</a><ul>
+<li><a class="reference internal" href="#notifications">Notifications</a><ul>
+<li><a class="reference internal" href="#middleware-for-the-openstack-object-storage-service">Middleware for the OpenStack Object Storage service</a></li>
+<li><a class="reference internal" href="#telemetry-middleware">Telemetry middleware</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#polling">Polling</a><ul>
+<li><a class="reference internal" href="#central-agent">Central agent</a></li>
+<li><a class="reference internal" href="#compute-agent">Compute agent</a></li>
+<li><a class="reference internal" href="#support-for-ha-deployment-of-the-central-and-compute-agent-services">Support for HA deployment of the central and compute agent services</a></li>
+<li><a class="reference internal" href="#ipmi-agent">IPMI agent</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#send-samples-to-telemetry">Send samples to Telemetry</a></li>
+<li><a class="reference internal" href="#data-collection-and-processing">Data collection and processing</a><ul>
+<li><a class="reference internal" href="#pipeline-configuration">Pipeline configuration</a><ul>
+<li><a class="reference internal" href="#transformers">Transformers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#meter-definitions">Meter definitions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#block-storage-audit-script-setup-to-get-notifications">Block Storage audit script setup to get notifications</a></li>
+<li><a class="reference internal" href="#storing-samples">Storing samples</a><ul>
+<li><a class="reference internal" href="#database-dispatcher">Database dispatcher</a></li>
+<li><a class="reference internal" href="#http-dispatcher">HTTP dispatcher</a></li>
+<li><a class="reference internal" href="#file-dispatcher">File dispatcher</a></li>
+<li><a class="reference internal" href="#gnocchi-dispatcher">Gnocchi dispatcher</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+                    </div>
+                <div class="docs-body">
+
+  <div class="section" id="data-collection">
+<span id="telemetry-data-collection"></span><h1>Data collection<a class="headerlink" href="#data-collection" title="Permalink to this headline">¶</a></h1>
+<p>The main responsibility of Telemetry in OpenStack is to collect
+information about the system that can be used by billing systems or
+interpreted by analytic tooling. The original focus, regarding to the
+collected data, was on the counters that can be used for billing, but
+the range is getting wider continuously.</p>
+<p>Collected data can be stored in the form of samples or events in the
+supported databases, listed in <a class="reference internal" href="telemetry-system-architecture.html#telemetry-supported-databases"><em>Supported databases</em></a>.</p>
+<p>Samples can have various sources regarding to the needs and
+configuration of Telemetry, which requires multiple methods to collect
+data.</p>
+<p>The available data collection mechanisms are:</p>
+<dl class="docutils">
+<dt>Notifications</dt>
+<dd>Processing notifications from other OpenStack services, by consuming
+messages from the configured message queue system.</dd>
+<dt>Polling</dt>
+<dd>Retrieve information directly from the hypervisor or from the host
+machine using SNMP, or by using the APIs of other OpenStack
+services.</dd>
+<dt>RESTful API</dt>
+<dd>Pushing samples via the RESTful API of Telemetry.</dd>
+</dl>
+<div class="section" id="notifications">
+<h2>Notifications<a class="headerlink" href="#notifications" title="Permalink to this headline">¶</a></h2>
+<p>All the services send notifications about the executed operations or
+system state in OpenStack. Several notifications carry information that
+can be metered, like the CPU time of a VM instance created by OpenStack
+Compute service.</p>
+<p>The Telemetry module has a separate agent that is responsible for
+consuming notifications, namely the notification agent. This component
+is responsible for consuming from the message bus and transforming
+notifications into events and measurement samples.</p>
+<p>The different OpenStack services emit several notifications about the
+various types of events that happen in the system during normal
+operation. Not all these notifications are consumed by the Telemetry
+module, as the intention is only to capture the billable events and
+notifications that can be used for monitoring or profiling purposes. The
+notification agent filters by the event type, that is contained by each
+notification message. The following table contains the event types by
+each OpenStack service that are transformed to samples by Telemetry.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="32%" />
+<col width="41%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">OpenStack service</th>
+<th class="head">Event types</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>OpenStack Compute</td>
+<td><p class="first">scheduler.run_instance.scheduled</p>
+<p>scheduler.select_destinations</p>
+<p class="last">compute.instance.*</p>
+</td>
+<td>For a more detailed list of
+Compute notifications please
+check the <a class="reference external" href="https://wiki.openstack.org/wiki/SystemUsageData">System Usage Data
+Data wiki page</a>.</td>
+</tr>
+<tr class="row-odd"><td>Bare metal service</td>
+<td>hardware.ipmi.*</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>OpenStack Image
+service</td>
+<td><p class="first">image.update</p>
+<p>image.upload</p>
+<p>image.delete</p>
+<p class="last">image.send</p>
+</td>
+<td>The required configuration
+for Image service can be
+found in <a class="reference external" href="http://docs.openstack.org/kilo/install-guide/install/apt/content/ceilometer-glance.html">Configure the Image
+service for Telemetry section</a> section in
+the OpenStack Installation
+Guide.</td>
+</tr>
+<tr class="row-odd"><td>OpenStack
+Networking</td>
+<td><p class="first">floatingip.create.end</p>
+<p>floatingip.update.*</p>
+<p>floatingip.exists</p>
+<p>network.create.end</p>
+<p>network.update.*</p>
+<p>network.exists</p>
+<p>port.create.end</p>
+<p>port.update.*</p>
+<p>port.exists</p>
+<p>router.create.end</p>
+<p>router.update.*</p>
+<p>router.exists</p>
+<p>subnet.create.end</p>
+<p>subnet.update.*</p>
+<p>subnet.exists</p>
+<p class="last">l3.meter</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>Orchestration
+module</td>
+<td><p class="first">orchestration.stack.create.end</p>
+<p>orchestration.stack.update.end</p>
+<p>orchestration.stack.delete.end</p>
+<p>orchestration.stack.resume.end</p>
+<p class="last">orchestration.stack.suspend.end</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>OpenStack Block
+Storage</td>
+<td><p class="first">volume.exists</p>
+<p>volume.create.*</p>
+<p>volume.delete.*</p>
+<p>volume.update.*</p>
+<p>volume.resize.*</p>
+<p>volume.attach.*</p>
+<p>volume.detach.*</p>
+<p>snapshot.exists</p>
+<p>snapshot.create.*</p>
+<p>snapshot.delete.*</p>
+<p class="last">snapshot.update.*</p>
+</td>
+<td>The required configuration
+for Block Storage service can
+be found in the <a class="reference external" href="http://docs.openstack.org/kilo/install-guide/install/apt/content/ceilometer-cinder.html">Add the
+Block Storage service agent
+for Telemetry section</a> section in the
+OpenStack Installation Guide.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Some services require additional configuration to emit the
+notifications using the correct control exchange on the message
+queue and so forth. These configuration needs are referred in the
+above table for each OpenStack service that needs it.</p>
+</div>
+<p>Specific notifications from the Compute service are important for
+administrators and users. Configuring nova_notifications in the
+<tt class="file docutils literal"><span class="pre">nova.conf</span></tt> file allows administrators to respond to events
+rapidly. For more information on configuring notifications for the
+compute service, see
+<a class="reference external" href="http://docs.openstack.org/kilo/install-guide/install/apt/content/ceilometer-nova.html">Chapter 11 on Telemetry services</a> in the
+OpenStack Installation Guide.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When the <tt class="docutils literal"><span class="pre">store_events</span></tt> option is set to True in
+<tt class="file docutils literal"><span class="pre">ceilometer.conf</span></tt>, the notification agent needs database access in
+order to work properly.</p>
+</div>
+<div class="section" id="middleware-for-the-openstack-object-storage-service">
+<h3>Middleware for the OpenStack Object Storage service<a class="headerlink" href="#middleware-for-the-openstack-object-storage-service" title="Permalink to this headline">¶</a></h3>
+<p>A subset of Object Store statistics requires additional middleware to
+be installed behind the proxy of Object Store. This additional component
+emits notifications containing data-flow-oriented meters, namely the
+<tt class="docutils literal"><span class="pre">storage.objects.(incoming|outgoing).bytes</span> <span class="pre">values</span></tt>. The list of these
+meters are listed in <a class="reference internal" href="telemetry-measurements.html#telemetry-object-storage-meter"><em>OpenStack Object Storage</em></a>, marked with
+<tt class="docutils literal"><span class="pre">notification</span></tt> as origin.</p>
+<p>The instructions on how to install this middleware can be found in
+<a class="reference external" href="http://docs.openstack.org/kilo/install-guide/install/apt/content/ceilometer-swift.html">Configure the Object Storage service for Telemetry</a>
+section in the OpenStack Installation Guide.</p>
+</div>
+<div class="section" id="telemetry-middleware">
+<h3>Telemetry middleware<a class="headerlink" href="#telemetry-middleware" title="Permalink to this headline">¶</a></h3>
+<p>Telemetry provides the capability of counting the HTTP requests and
+responses for each API endpoint in OpenStack. This is achieved by
+storing a sample for each event marked as <tt class="docutils literal"><span class="pre">audit.http.request</span></tt>,
+<tt class="docutils literal"><span class="pre">audit.http.response</span></tt>, <tt class="docutils literal"><span class="pre">http.request</span></tt> or <tt class="docutils literal"><span class="pre">http.response</span></tt>.</p>
+<p>It is recommended that these notifications be consumed as events rather
+than samples to better index the appropriate values and avoid massive
+load on the Metering database. If preferred, Telemetry can consume these
+events as samples if the services are configured to emit <tt class="docutils literal"><span class="pre">http.*</span></tt>
+notifications.</p>
+</div>
+</div>
+<div class="section" id="polling">
+<h2>Polling<a class="headerlink" href="#polling" title="Permalink to this headline">¶</a></h2>
+<p>The Telemetry module is intended to store a complex picture of the
+infrastructure. This goal requires additional information than what is
+provided by the events and notifications published by each service. Some
+information is not emitted directly, like resource usage of the VM
+instances.</p>
+<p>Therefore Telemetry uses another method to gather this data by polling
+the infrastructure including the APIs of the different OpenStack
+services and other assets, like hypervisors. The latter case requires
+closer interaction with the compute hosts. To solve this issue,
+Telemetry uses an agent based architecture to fulfill the requirements
+against the data collection.</p>
+<p>There are three types of agents supporting the polling mechanism, the
+compute agent, the central agent, and the IPMI agent. Under the hood,
+all the types of polling agents are the same <tt class="docutils literal"><span class="pre">ceilometer-polling</span></tt> agent,
+except that they load different polling plug-ins (pollsters) from
+different namespaces to gather data. The following subsections give
+further information regarding the architectural and configuration
+details of these components.</p>
+<p>Running ceilometer-agent-compute is exactly the same as:</p>
+<div class="highlight-guess"><div class="highlight"><pre><span class="nv">$ </span>ceilometer-polling --polling-namespaces compute
+</pre></div>
+</div>
+<p>Running ceilometer-agent-central is exactly the same as:</p>
+<div class="highlight-guess"><div class="highlight"><pre><span class="nv">$ </span>ceilometer-polling --polling-namespaces central
+</pre></div>
+</div>
+<p>Running ceilometer-agent-ipmi is exactly the same as:</p>
+<div class="highlight-guess"><div class="highlight"><pre><span class="nv">$ </span>ceilometer-polling --polling-namespaces ipmi
+</pre></div>
+</div>
+<p>In addition to loading all the polling plug-ins registered in the
+specified namespaces, the ceilometer-polling agent can also specify the
+polling plug-ins to be loaded by using the <tt class="docutils literal"><span class="pre">pollster-list</span></tt> option:</p>
+<div class="highlight-guess"><div class="highlight"><pre><span class="nv">$ </span>ceilometer-polling --polling-namespaces central <span class="se">\</span>
+        --pollster-list image image.size storage.*
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">HA deployment is NOT supported if the <tt class="docutils literal"><span class="pre">pollster-list</span></tt> option is
+used.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The ceilometer-polling service is available since Kilo release.</p>
+</div>
+<div class="section" id="central-agent">
+<h3>Central agent<a class="headerlink" href="#central-agent" title="Permalink to this headline">¶</a></h3>
+<p>As the name of this agent shows, it is a central component in the
+Telemetry architecture. This agent is responsible for polling public
+REST APIs to retrieve additional information on OpenStack resources not
+already surfaced via notifications, and also for polling hardware
+resources over SNMP.</p>
+<p>The following services can be polled with this agent:</p>
+<ul class="simple">
+<li>OpenStack Networking</li>
+<li>OpenStack Object Storage</li>
+<li>OpenStack Block Storage</li>
+<li>Hardware resources via SNMP</li>
+<li>Energy consumption meters via <a class="reference external" href="https://launchpad.net/kwapi">Kwapi</a>
+framework</li>
+</ul>
+<p>To install and configure this service use the <a class="reference external" href="http://docs.openstack.org/kilo/install-guide/install/apt/content/ch_ceilometer.html">Install the Telemetry module</a>
+section in the OpenStack Installation Guide.</p>
+<p>The central agent does not need direct database connection. The samples
+collected by this agent are sent via AMQP to the collector service or
+any external service, which is responsible for persisting the data into
+the configured database back end.</p>
+</div>
+<div class="section" id="compute-agent">
+<h3>Compute agent<a class="headerlink" href="#compute-agent" title="Permalink to this headline">¶</a></h3>
+<p>This agent is responsible for collecting resource usage data of VM
+instances on individual compute nodes within an OpenStack deployment.
+This mechanism requires a closer interaction with the hypervisor,
+therefore a separate agent type fulfills the collection of the related
+meters, which is placed on the host machines to locally retrieve this
+information.</p>
+<p>A compute agent instance has to be installed on each and every compute
+node, installation instructions can be found in the <a class="reference external" href="http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-telemetry.html">Install the Compute
+agent for Telemetry</a>
+section in the OpenStack Installation Guide.</p>
+<p>Just like the central agent, this component also does not need a direct
+database connection. The samples are sent via AMQP to the collector.</p>
+<p>The list of supported hypervisors can be found in
+<a class="reference internal" href="telemetry-system-architecture.html#telemetry-supported-hypervisors"><em>Supported hypervisors</em></a>. The compute agent uses the API of the
+hypervisor installed on the compute hosts. Therefore the supported meters may
+be different in case of each virtualization back end, as each inspection tool
+provides a different set of meters.</p>
+<p>The list of collected meters can be found in <a class="reference internal" href="telemetry-measurements.html#telemetry-compute-meters"><em>OpenStack Compute</em></a>.
+The support column provides the information that which meter is available for
+each hypervisor supported by the Telemetry module.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Telemetry supports Libvirt, which hides the hypervisor under it.</p>
+</div>
+</div>
+<div class="section" id="support-for-ha-deployment-of-the-central-and-compute-agent-services">
+<span id="ha-deploy-services"></span><h3>Support for HA deployment of the central and compute agent services<a class="headerlink" href="#support-for-ha-deployment-of-the-central-and-compute-agent-services" title="Permalink to this headline">¶</a></h3>
+<p>Both the central and the compute agent can run in an HA deployment,
+which means that multiple instances of these services can run in
+parallel with workload partitioning among these running instances.</p>
+<p>The <a class="reference external" href="https://pypi.python.org/pypi/tooz">Tooz</a> library provides the
+coordination within the groups of service instances. It provides an API
+above several back ends that can be used for building distributed
+applications.</p>
+<p>Tooz supports <a class="reference external" href="http://docs.openstack.org/developer/tooz/drivers.html">various
+drivers</a>
+including the following back end solutions:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://zookeeper.apache.org/">Zookeeper</a>. Recommended solution by
+the Tooz project.</li>
+<li><a class="reference external" href="http://redis.io/">Redis</a>. Recommended solution by the Tooz
+project.</li>
+<li><a class="reference external" href="http://memcached.org/">Memcached</a>. Recommended for testing.</li>
+</ul>
+<p>You must configure a supported Tooz driver for the HA deployment of the
+Telemetry services.</p>
+<p>For information about the required configuration options that have to be
+set in the <tt class="file docutils literal"><span class="pre">ceilometer.conf</span></tt> configuration file for both the central
+and compute agents, see the <a class="reference external" href="http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-telemetry.html">Coordination section</a>
+in the OpenStack Configuration Reference.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Without the <tt class="docutils literal"><span class="pre">backend_url</span></tt> option being set only one instance of
+both the central and compute agent service is able to run and
+function correctly.</p>
+</div>
+<p>The availability check of the instances is provided by heartbeat
+messages. When the connection with an instance is lost, the workload
+will be reassigned within the remained instances in the next polling
+cycle.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><tt class="docutils literal"><span class="pre">Memcached</span></tt> uses a <tt class="docutils literal"><span class="pre">timeout</span></tt> value, which should always be set
+to a value that is higher than the <tt class="docutils literal"><span class="pre">heartbeat</span></tt> value set for
+Telemetry.</p>
+</div>
+<p>For backward compatibility and supporting existing deployments, the
+central agent configuration also supports using different configuration
+files for groups of service instances of this type that are running in
+parallel. For enabling this configuration set a value for the
+<tt class="docutils literal"><span class="pre">partitioning_group_prefix</span></tt> option in the <a class="reference external" href="http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-telemetry.html">Central section</a>
+in the OpenStack Configuration Reference.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">For each sub-group of the central agent pool with the same
+<tt class="docutils literal"><span class="pre">partitioning_group_prefix</span></tt> a disjoint subset of meters must be
+polled, otherwise samples may be missing or duplicated. The list of
+meters to poll can be set in the <tt class="file docutils literal"><span class="pre">/etc/ceilometer/pipeline.yaml</span></tt>
+configuration file. For more information about pipelines see
+<a class="reference internal" href="#data-collection-and-processing"><em>Data collection and processing</em></a>.</p>
+</div>
+<p>To enable the compute agent to run multiple instances simultaneously
+with workload partitioning, the <tt class="docutils literal"><span class="pre">workload_partitioning</span></tt> option has to
+be set to <tt class="docutils literal"><span class="pre">True</span></tt> under the <a class="reference external" href="http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-telemetry.html">Compute section</a>
+in the <tt class="file docutils literal"><span class="pre">ceilometer.conf</span></tt> configuration file.</p>
+</div>
+<div class="section" id="ipmi-agent">
+<span id="telemetry-ipmi-agent"></span><h3>IPMI agent<a class="headerlink" href="#ipmi-agent" title="Permalink to this headline">¶</a></h3>
+<p>This agent is responsible for collecting IPMI sensor data and Intel Node
+Manager data on individual compute nodes within an OpenStack deployment.
+This agent requires an IPMI capable node with the ipmitool utility installed,
+which is commonly used for IPMI control on various Linux distributions.</p>
+<p>An IPMI agent instance could be installed on each and every compute node
+with IPMI support, except when the node is managed by the Bare metal
+service and the <tt class="docutils literal"><span class="pre">conductor.send_sensor_data</span></tt> option is set to <tt class="docutils literal"><span class="pre">true</span></tt>
+in the Bare metal service. It is no harm to install this agent on a
+compute node without IPMI or Intel Node Manager support, as the agent
+checks for the hardware and if none is available, returns empty data. It
+is suggested that you install the IPMI agent only on an IPMI capable
+node for performance reasons.</p>
+<p>Just like the central agent, this component also does not need direct
+database access. The samples are sent via AMQP to the collector.</p>
+<p>The list of collected meters can be found in
+<a class="reference internal" href="telemetry-measurements.html#telemetry-bare-metal-service"><em>Bare metal service</em></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Do not deploy both the IPMI agent and the Bare metal service on one
+compute node. If <tt class="docutils literal"><span class="pre">conductor.send_sensor_data</span></tt> is set, this
+misconfiguration causes duplicated IPMI sensor samples.</p>
+</div>
+</div>
+</div>
+<div class="section" id="send-samples-to-telemetry">
+<h2>Send samples to Telemetry<a class="headerlink" href="#send-samples-to-telemetry" title="Permalink to this headline">¶</a></h2>
+<p>While most parts of the data collection in the Telemetry module are
+automated, Telemetry provides the possibility to submit samples via the
+REST API to allow users to send custom samples into this module.</p>
+<p>This option makes it possible to send any kind of samples without the
+need of writing extra code lines or making configuration changes.</p>
+<p>The samples that can be sent to Telemetry are not limited to the actual
+existing meters. There is a possibility to provide data for any new,
+customer defined counter by filling out all the required fields of the
+POST request.</p>
+<p>If the sample corresponds to an existing meter, then the fields like
+<tt class="docutils literal"><span class="pre">meter-type</span></tt> and meter name should be matched accordingly.</p>
+<p>The required fields for sending a sample using the command line client
+are:</p>
+<ul>
+<li><p class="first">ID of the corresponding resource. (<tt class="docutils literal"><span class="pre">--resource-id</span></tt>)</p>
+</li>
+<li><p class="first">Name of meter. (<tt class="docutils literal"><span class="pre">--meter-name</span></tt>)</p>
+</li>
+<li><p class="first">Type of meter. (<tt class="docutils literal"><span class="pre">--meter-type</span></tt>)</p>
+<p>Predefined meter types:</p>
+<ul class="simple">
+<li>Gauge</li>
+<li>Delta</li>
+<li>Cumulative</li>
+</ul>
+</li>
+<li><p class="first">Unit of meter. (<tt class="docutils literal"><span class="pre">--meter-unit</span></tt>)</p>
+</li>
+<li><p class="first">Volume of sample. (<tt class="docutils literal"><span class="pre">--sample-volume</span></tt>)</p>
+</li>
+</ul>
+<p>To send samples to Telemetry using the command line client, the
+following command should be invoked:</p>
+<div class="highlight-guess"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span class="nv">$ </span>ceilometer sample-create -r 37128ad6-daaa-4d22-9509-b7e1c6b08697 <span class="se">\</span>
+  -m memory.usage --meter-type gauge --meter-unit MB --sample-volume 48
++-------------------+--------------------------------------------+
+<span class="p">|</span> Property          <span class="p">|</span> Value                                      <span class="p">|</span>
++-------------------+--------------------------------------------+
+<span class="p">|</span> message_id        <span class="p">|</span> 6118820c-2137-11e4-a429-08002715c7fb       <span class="p">|</span>
+<span class="p">|</span> name              <span class="p">|</span> memory.usage                               <span class="p">|</span>
+<span class="p">|</span> project_id        <span class="p">|</span> e34eaa91d52a4402b4cb8bc9bbd308c1           <span class="p">|</span>
+<span class="p">|</span> resource_id       <span class="p">|</span> 37128ad6-daaa-4d22-9509-b7e1c6b08697       <span class="p">|</span>
+<span class="p">|</span> resource_metadata <span class="p">|</span> <span class="o">{}</span>                                         <span class="p">|</span>
+<span class="p">|</span> <span class="nb">source</span>            <span class="p">|</span> e34eaa91d52a4402b4cb8bc9bbd308c1:openstack <span class="p">|</span>
+<span class="p">|</span> timestamp         <span class="p">|</span> 2014-08-11T09:10:46.358926                 <span class="p">|</span>
+<span class="p">|</span> <span class="nb">type</span>              <span class="p">|</span> gauge                                      <span class="p">|</span>
+<span class="p">|</span> unit              <span class="p">|</span> MB                                         <span class="p">|</span>
+<span class="p">|</span> user_id           <span class="p">|</span> 679b0499e7a34ccb9d90b64208401f8e           <span class="p">|</span>
+<span class="p">|</span> volume            <span class="p">|</span> 48.0                                       <span class="p">|</span>
++-------------------+--------------------------------------------+
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="data-collection-and-processing">
+<span id="id1"></span><h2>Data collection and processing<a class="headerlink" href="#data-collection-and-processing" title="Permalink to this headline">¶</a></h2>
+<p>The mechanism by which data is collected and processed is called a
+pipeline. Pipelines, at the configuration level, describe a coupling
+between sources of data and the corresponding sinks for transformation
+and publication of data.</p>
+<p>A source is a producer of data: samples or events. In effect, it is a
+set of pollsters or notification handlers emitting datapoints for a set
+of matching meters and event types.</p>
+<p>Each source configuration encapsulates name matching, polling interval
+determination, optional resource enumeration or discovery, and mapping
+to one or more sinks for publication.</p>
+<p>Data gathered can be used for different purposes, which can impact how
+frequently it needs to be published. Typically, a meter published for
+billing purposes needs to be updated every 30 minutes while the same
+meter may be needed for performance tuning every minute.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Rapid polling cadences should be avoided, as it results in a huge
+amount of data in a short time frame, which may negatively affect
+the performance of both Telemetry and the underlying database back
+end. We therefore strongly recommend you do not use small
+granularity values like 10 seconds.</p>
+</div>
+<p>A sink, on the other hand, is a consumer of data, providing logic for
+the transformation and publication of data emitted from related sources.</p>
+<p>In effect, a sink describes a chain of handlers. The chain starts with
+zero or more transformers and ends with one or more publishers. The
+first transformer in the chain is passed data from the corresponding
+source, takes some action such as deriving rate of change, performing
+unit conversion, or aggregating, before passing the modified data to the
+next step that is described in <a class="reference internal" href="telemetry-data-retrieval.html#telemetry-publishers"><em>Publishers</em></a>.</p>
+<div class="section" id="pipeline-configuration">
+<span id="telemetry-pipeline-configuration"></span><h3>Pipeline configuration<a class="headerlink" href="#pipeline-configuration" title="Permalink to this headline">¶</a></h3>
+<p>Pipeline configuration by default, is stored in separate configuration
+files, called <tt class="file docutils literal"><span class="pre">pipeline.yaml</span></tt> and <tt class="file docutils literal"><span class="pre">event_pipeline.yaml</span></tt>, next to
+the <tt class="file docutils literal"><span class="pre">ceilometer.conf</span></tt> file. The meter pipeline and event pipeline
+configuration files can be set by the <tt class="docutils literal"><span class="pre">pipeline_cfg_file</span></tt> and
+<tt class="docutils literal"><span class="pre">event_pipeline_cfg_file</span></tt> options listed in the <a class="reference external" href="http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-telemetry.html">Description of
+configuration options for api table</a>
+section in the OpenStack Configuration Reference respectively. Multiple
+pipelines can be defined in one pipeline configuration file.</p>
+<p>The meter pipeline definition looks like the following:</p>
+<div class="highlight-guess"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre>---
+sources:
+  - name: &#39;source name&#39;
+    interval: &#39;how often should the samples be injected into the pipeline&#39;
+    meters:
+      - &#39;meter filter&#39;
+    resources:
+      - &#39;list of resource URLs&#39;
+    sinks
+      - &#39;sink name&#39;
+sinks:
+  - name: &#39;sink name&#39;
+    transformers: &#39;definition of transformers&#39;
+    publishers:
+      - &#39;list of publishers&#39;
+</pre></div>
+</td></tr></table></div>
+<p>The interval parameter in the sources section should be defined in
+seconds. It determines the polling cadence of sample injection into the
+pipeline, where samples are produced under the direct control of an
+agent.</p>
+<p>There are several ways to define the list of meters for a pipeline
+source. The list of valid meters can be found in <a class="reference internal" href="telemetry-measurements.html#telemetry-measurements"><em>Measurements</em></a>.
+There is a possibility to define all the meters, or just included or excluded
+meters, with which a source should operate:</p>
+<ul class="simple">
+<li>To include all meters, use the <tt class="docutils literal"><span class="pre">*</span></tt> wildcard symbol. It is highly
+advisable to select only the meters that you intend on using to avoid
+flooding the metering database with unused data.</li>
+<li>To define the list of meters, use either of the following:<ul>
+<li>To define the list of included meters, use the <tt class="docutils literal"><span class="pre">meter_name</span></tt>
+syntax.</li>
+<li>To define the list of excluded meters, use the <tt class="docutils literal"><span class="pre">!meter_name</span></tt>
+syntax.</li>
+<li>For meters, which have variants identified by a complex name
+field, use the wildcard symbol to select all, e.g. for
+&#8220;instance:m1.tiny&#8221;, use &#8220;instance:*&#8221;.</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Please be aware that we do not have any duplication check between
+pipelines and if you add a meter to multiple pipelines then it is
+assumed the duplication is intentional and may be stored multiple
+times according to the specified sinks.</p>
+</div>
+<p>The above definition methods can be used in the following combinations:</p>
+<ul class="simple">
+<li>Use only the wildcard symbol.</li>
+<li>Use the list of included meters.</li>
+<li>Use the list of excluded meters.</li>
+<li>Use wildcard symbol with the list of excluded meters.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">At least one of the above variations should be included in the
+meters section. Included and excluded meters cannot co-exist in the
+same pipeline. Wildcard and included meters cannot co-exist in the
+same pipeline definition section.</p>
+</div>
+<p>The optional resources section of a pipeline source allows a static list
+of resource URLs to be configured for polling.</p>
+<p>The transformers section of a pipeline sink provides the possibility to
+add a list of transformer definitions. The available transformers are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="39%" />
+<col width="61%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name of transformer</th>
+<th class="head">Reference name for configuration</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Accumulator</td>
+<td>accumulator</td>
+</tr>
+<tr class="row-odd"><td>Aggregator</td>
+<td>aggregator</td>
+</tr>
+<tr class="row-even"><td>Arithmetic</td>
+<td>arithmetic</td>
+</tr>
+<tr class="row-odd"><td>Rate of change</td>
+<td>rate_of_change</td>
+</tr>
+<tr class="row-even"><td>Unit conversion</td>
+<td>unit_conversion</td>
+</tr>
+</tbody>
+</table>
+<p>The publishers section contains the list of publishers, where the
+samples data should be sent after the possible transformations.</p>
+<p>Similarly, the event pipeline definition looks like the following:</p>
+<div class="highlight-guess"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre>---
+sources:
+  - name: &#39;source name&#39;
+    events:
+      - &#39;event filter&#39;
+    sinks
+      - &#39;sink name&#39;
+sinks:
+  - name: &#39;sink name&#39;
+    publishers:
+      - &#39;list of publishers&#39;
+</pre></div>
+</td></tr></table></div>
+<p>The event filter uses the same filtering logic as the meter pipeline.</p>
+<div class="section" id="transformers">
+<span id="telemetry-transformers"></span><h4>Transformers<a class="headerlink" href="#transformers" title="Permalink to this headline">¶</a></h4>
+<p>The definition of transformers can contain the following fields:</p>
+<dl class="docutils">
+<dt>name</dt>
+<dd>Name of the transformer.</dd>
+<dt>parameters</dt>
+<dd>Parameters of the transformer.</dd>
+</dl>
+<p>The parameters section can contain transformer specific fields, like
+source and target fields with different subfields in case of the rate of
+change, which depends on the implementation of the transformer.</p>
+<p>In the case of the transformer that creates the <tt class="docutils literal"><span class="pre">cpu_util</span></tt> meter, the
+definition looks like the following:</p>
+<div class="highlight-guess"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre>transformers:
+    - name: &quot;rate_of_change&quot;
+      parameters:
+          target:
+              name: &quot;cpu_util&quot;
+              unit: &quot;%&quot;
+              type: &quot;gauge&quot;
+              scale: &quot;100.0 / (10**9 * (resource_metadata.cpu_number or 1))&quot;
+</pre></div>
+</td></tr></table></div>
+<p>The rate of change the transformer generates is the <tt class="docutils literal"><span class="pre">cpu_util</span></tt> meter
+from the sample values of the <tt class="docutils literal"><span class="pre">cpu</span></tt> counter, which represents
+cumulative CPU time in nanoseconds. The transformer definition above
+defines a scale factor (for nanoseconds and multiple CPUs), which is
+applied before the transformation derives a sequence of gauge samples
+with unit &#8216;%&#8217;, from sequential values of the <tt class="docutils literal"><span class="pre">cpu</span></tt> meter.</p>
+<p>The definition for the disk I/O rate, which is also generated by the
+rate of change transformer:</p>
+<div class="highlight-guess"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre>transformers:
+    - name: &quot;rate_of_change&quot;
+      parameters:
+          source:
+              map_from:
+                  name: &quot;disk\\.(read|write)\\.(bytes|requests)&quot;
+                  unit: &quot;(B|request)&quot;
+          target:
+              map_to:
+                  name: &quot;disk.\\1.\\2.rate&quot;
+                  unit: &quot;\\1/s&quot;
+              type: &quot;gauge&quot;
+</pre></div>
+</td></tr></table></div>
+<p><strong>Unit conversion transformer</strong></p>
+<p>Transformer to apply a unit conversion. It takes the volume of the meter
+and multiplies it with the given <tt class="docutils literal"><span class="pre">scale</span></tt> expression. Also supports
+<tt class="docutils literal"><span class="pre">map_from</span></tt> and <tt class="docutils literal"><span class="pre">map_to</span></tt> like the rate of change transformer.</p>
+<p>Sample configuration:</p>
+<div class="highlight-guess"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre>transformers:
+    - name: &quot;unit_conversion&quot;
+      parameters:
+          target:
+              name: &quot;disk.kilobytes&quot;
+              unit: &quot;KB&quot;
+              scale: &quot;1.0 / 1024.0&quot;
+</pre></div>
+</td></tr></table></div>
+<p>With <tt class="docutils literal"><span class="pre">map_from</span></tt> and <tt class="docutils literal"><span class="pre">map_to</span></tt></p>
+<div class="highlight-guess"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre>transformers:
+    - name: &quot;unit_conversion&quot;
+      parameters:
+          source:
+              map_from:
+                  name: &quot;disk\\.(read|write)\\.bytes&quot;
+          target:
+              map_to:
+                  name: &quot;disk.\\1.kilobytes&quot;
+              scale: &quot;1.0 / 1024.0&quot;
+              unit: &quot;KB&quot;
+</pre></div>
+</td></tr></table></div>
+<p><strong>Aggregator transformer</strong></p>
+<p>A transformer that sums up the incoming samples until enough samples
+have come in or a timeout has been reached.</p>
+<p>Timeout can be specified with the <tt class="docutils literal"><span class="pre">retention_time</span></tt> option. If we want
+to flush the aggregation after a set number of samples have been
+aggregated, we can specify the size parameter.</p>
+<p>The volume of the created sample is the sum of the volumes of samples
+that came into the transformer. Samples can be aggregated by the
+attributes <tt class="docutils literal"><span class="pre">project_id</span></tt>, <tt class="docutils literal"><span class="pre">user_id</span></tt> and <tt class="docutils literal"><span class="pre">resource_metadata</span></tt>. To aggregate
+by the chosen attributes, specify them in the configuration and set which
+value of the attribute to take for the new sample (first to take the
+first sample&#8217;s attribute, last to take the last sample&#8217;s attribute, and
+drop to discard the attribute).</p>
+<p>To aggregate 60s worth of samples by <tt class="docutils literal"><span class="pre">resource_metadata</span></tt> and keep the
+<tt class="docutils literal"><span class="pre">resource_metadata</span></tt> of the latest received sample:</p>
+<div class="highlight-guess"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre>transformers:
+    - name: &quot;aggregator&quot;
+      parameters:
+          retention_time: 60
+          resource_metadata: last
+</pre></div>
+</td></tr></table></div>
+<p>To aggregate each 15 samples by <tt class="docutils literal"><span class="pre">user_id</span></tt> and <tt class="docutils literal"><span class="pre">resource_metadata</span></tt> and keep
+the <tt class="docutils literal"><span class="pre">user_id</span></tt> of the first received sample and drop the
+<tt class="docutils literal"><span class="pre">resource_metadata</span></tt>:</p>
+<div class="highlight-guess"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre>transformers:
+    - name: &quot;aggregator&quot;
+      parameters:
+          size: 15
+          user_id: first
+          resource_metadata: drop
+</pre></div>
+</td></tr></table></div>
+<p><strong>Accumulator transformer</strong></p>
+<p>This transformer simply caches the samples until enough samples have
+arrived and then flushes them all down the pipeline at once:</p>
+<div class="highlight-guess"><div class="highlight"><pre>transformers:
+    - name: &quot;accumulator&quot;
+      parameters:
+          size: 15
+</pre></div>
+</div>
+<p><strong>Muli meter arithmetic transformer</strong></p>
+<p>This transformer enables us to perform arithmetic calculations over one
+or more meters and/or their metadata, for example:</p>
+<div class="highlight-guess"><div class="highlight"><pre>memory_util = 100 * memory.usage / memory
+</pre></div>
+</div>
+<p>A new sample is created with the properties described in the <tt class="docutils literal"><span class="pre">target</span></tt>
+section of the transformer&#8217;s configuration. The sample&#8217;s
+volume is the result of the provided expression. The calculation is
+performed on samples from the same resource.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The calculation is limited to meters with the same interval.</p>
+</div>
+<p>Example configuration:</p>
+<div class="highlight-guess"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre>transformers:
+    - name: &quot;arithmetic&quot;
+      parameters:
+        target:
+          name: &quot;memory_util&quot;
+          unit: &quot;%&quot;
+          type: &quot;gauge&quot;
+          expr: &quot;100 * $(memory.usage) / $(memory)&quot;
+</pre></div>
+</td></tr></table></div>
+<p>To demonstrate the use of metadata, here is the implementation of a
+silly meter that shows average CPU time per core:</p>
+<div class="highlight-guess"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre>transformers:
+    - name: &quot;arithmetic&quot;
+      parameters:
+        target:
+          name: &quot;avg_cpu_per_core&quot;
+          unit: &quot;ns&quot;
+          type: &quot;cumulative&quot;
+          expr: &quot;$(cpu) / ($(cpu).resource_metadata.cpu_number or 1)&quot;
+</pre></div>
+</td></tr></table></div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Expression evaluation gracefully handles NaNs and exceptions. In
+such a case it does not create a new sample but only logs a warning.</p>
+</div>
+</div>
+</div>
+<div class="section" id="meter-definitions">
+<span id="telemetry-meter-definitions"></span><h3>Meter definitions<a class="headerlink" href="#meter-definitions" title="Permalink to this headline">¶</a></h3>
+<p>The Telemetry module collects a subset of the meters by filtering notifications
+emitted by other OpenStack services. Starting with the Liberty release, you can
+find the meter definitions in a separate configuration file, called
+<tt class="file docutils literal"><span class="pre">ceilometer/meter/data/meter.yaml</span></tt>. This enables operators/administrators
+to add new meters to Telemetry project by updating the <tt class="file docutils literal"><span class="pre">meter.yaml</span></tt>
+file without any need for additional code changes.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <tt class="file docutils literal"><span class="pre">meter.yaml</span></tt> file should be modified with care. Unless intended
+do not remove any existing meter definitions from the file. Also, the
+collected meters can differ in some cases from what is referenced in the
+documentation.</p>
+</div>
+<p>A standard meter definition looks like the following:</p>
+<div class="highlight-guess"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre>---
+metric:
+  - name: &#39;meter name&#39;
+    event_type: &#39;event name&#39;
+    type: &#39;type of meter eg: gauge, cumulative or delta&#39;
+    unit: &#39;name of unit eg: MB&#39;
+    volume: &#39;path to a measurable value eg: $.payload.size&#39;
+    resource_id: &#39;path to resouce id eg: $.payload.id&#39;
+    project_id: &#39;path to project id eg: $.payload.owner&#39;
+</pre></div>
+</td></tr></table></div>
+<p>The definition above shows a simple meter definition with some fields,
+from which <tt class="docutils literal"><span class="pre">name</span></tt>, <tt class="docutils literal"><span class="pre">event_type</span></tt>, <tt class="docutils literal"><span class="pre">type</span></tt>, <tt class="docutils literal"><span class="pre">unit</span></tt>, and <tt class="docutils literal"><span class="pre">volume</span></tt>
+are required. If there is a match on the event type, samples are generated
+for the meter.</p>
+<p>If you take a look at the <tt class="file docutils literal"><span class="pre">meter.yaml</span></tt> file, it contains the sample
+definitions for all the meters that Telemetry is collecting from
+notifications. The value of each field is specified by using json path in
+order to find the right value from the notification message. In order to be
+able to specify the right field you need to be aware of the format of the
+consumed notification. The values that need to be searched in the notification
+message are set with a json path starting with <tt class="docutils literal"><span class="pre">$.</span></tt> For instance, if you need
+the <tt class="docutils literal"><span class="pre">size</span></tt> information from the payload you can define it like
+<tt class="docutils literal"><span class="pre">$.payload.size</span></tt>.</p>
+<p>A notification message may contain multiple meters. You can use <tt class="docutils literal"><span class="pre">*</span></tt> in
+the meter definition to capture all the meters and generate samples
+respectively. You can use wild cards as shown in the following example:</p>
+<div class="highlight-guess"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre>---
+metric:
+  - name: $.payload.measurements.[*].metric.[*].name
+    event_type: &#39;event_name.*&#39;
+    type: &#39;delta&#39;
+    unit: $.payload.measurements.[*].metric.[*].unit
+    volume: payload.measurements.[*].result
+    resource_id: $.payload.target
+    user_id: $.payload.initiator.id
+    project_id: $.payload.initiator.project_id
+</pre></div>
+</td></tr></table></div>
+<p>In the above example, the <tt class="docutils literal"><span class="pre">name</span></tt> field is a json path with matching
+a list of meter names defined in the notification message.</p>
+<p>You can even use complex operations on json paths. In the following example,
+<tt class="docutils literal"><span class="pre">volume</span></tt> and <tt class="docutils literal"><span class="pre">resource_id</span></tt> fields perform an arithmetic
+and string concatenation:</p>
+<div class="highlight-guess"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre>---
+metric:
+- name: &#39;compute.node.cpu.idle.percent&#39;
+  event_type: &#39;compute.metrics.update&#39;
+  type: &#39;gauge&#39;
+  unit: &#39;percent&#39;
+  volume: payload.metrics[?(@.name=&#39;cpu.idle.percent&#39;)].value * 100
+  resource_id: $.payload.host + &quot;_&quot; + $.payload.nodename
+</pre></div>
+</td></tr></table></div>
+<p>You will find some existence meters in the <tt class="file docutils literal"><span class="pre">meter.yaml</span></tt>. These
+meters have a <tt class="docutils literal"><span class="pre">volume</span></tt> as <tt class="docutils literal"><span class="pre">1</span></tt> and are at the bottom of the yaml file
+with a note suggesting that these will be removed in Mitaka release.</p>
+<p>For example, the meter definition for existence meters is as follows:</p>
+<div class="highlight-guess"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre>---
+metric:
+  - name: &#39;meter name&#39;
+    type: &#39;delta&#39;
+    unit: &#39;volume&#39;
+    volume: 1
+    event_type:
+        - &#39;event type&#39;
+    resource_id: $.payload.volume_id
+    user_id: $.payload.user_id
+    project_id: $.payload.tenant_id
+</pre></div>
+</td></tr></table></div>
+<p>These meters are not loaded by default. To load these meters, flip
+the <cite>disable_non_metric_meters</cite> option in the <tt class="file docutils literal"><span class="pre">ceilometer.conf</span></tt>
+file.</p>
+</div>
+</div>
+<div class="section" id="block-storage-audit-script-setup-to-get-notifications">
+<h2>Block Storage audit script setup to get notifications<a class="headerlink" href="#block-storage-audit-script-setup-to-get-notifications" title="Permalink to this headline">¶</a></h2>
+<p>If you want to collect OpenStack Block Storage notification on demand,
+you can use <tt class="docutils literal"><span class="pre">cinder-volume-usage-audit</span></tt> from OpenStack Block Storage.
+This script becomes available when you install OpenStack Block Storage,
+so you can use it without any specific settings and you don&#8217;t need to
+authenticate to access the data. To use it, you must run this command in
+the following format:</p>
+<div class="highlight-guess"><div class="highlight"><pre><span class="nv">$ </span>cinder-volume-usage-audit <span class="se">\</span>
+  --start_time<span class="o">=</span><span class="s1">&#39;YYYY-MM-DD HH:MM:SS&#39;</span> --end_time<span class="o">=</span><span class="s1">&#39;YYYY-MM-DD HH:MM:SS&#39;</span> --send_actions
+</pre></div>
+</div>
+<p>This script outputs what volumes or snapshots were created, deleted, or
+exists in a given period of time and some information about these
+volumes or snapshots. Information about the existence and size of
+volumes and snapshots is store in the Telemetry module. This data is
+also stored as an event which is the recommended usage as it provides
+better indexing of data.</p>
+<p>Using this script via cron you can get notifications periodically, for
+example, every 5 minutes:</p>
+<div class="highlight-guess"><div class="highlight"><pre>*/5 * * * * /path/to/cinder-volume-usage-audit --send_actions
+</pre></div>
+</div>
+</div>
+<div class="section" id="storing-samples">
+<span id="telemetry-storing-samples"></span><h2>Storing samples<a class="headerlink" href="#storing-samples" title="Permalink to this headline">¶</a></h2>
+<p>The Telemetry module has a separate service that is responsible for
+persisting the data that comes from the pollsters or is received as
+notifications. The data can be stored in a file or a database back end,
+for which the list of supported databases can be found in
+<a class="reference internal" href="telemetry-system-architecture.html#telemetry-supported-databases"><em>Supported databases</em></a>. The data can also be sent to an external
+data store by using an HTTP dispatcher.</p>
+<p>The <tt class="docutils literal"><span class="pre">ceilometer-collector</span></tt> service receives the data as messages from the
+message bus of the configured AMQP service. It sends these datapoints
+without any modification to the configured target. The service has to
+run on a host machine from which it has access to the configured
+dispatcher.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Multiple dispatchers can be configured for Telemetry at one time.</p>
+</div>
+<p>Multiple <tt class="docutils literal"><span class="pre">ceilometer-collector</span></tt> processes can be run at a time. It is also
+supported to start multiple worker threads per collector process. The
+<tt class="docutils literal"><span class="pre">collector_workers</span></tt> configuration option has to be modified in the
+<a class="reference external" href="http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-telemetry.html">Collector section</a>
+of the <tt class="file docutils literal"><span class="pre">ceilometer.conf</span></tt> configuration file.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Prior to the Juno release, it is not recommended to use multiple
+workers per collector process when using PostgreSQL as the database
+back end.</p>
+</div>
+<div class="section" id="database-dispatcher">
+<h3>Database dispatcher<a class="headerlink" href="#database-dispatcher" title="Permalink to this headline">¶</a></h3>
+<p>When the database dispatcher is configured as data store, you have the
+option to set a <tt class="docutils literal"><span class="pre">time_to_live</span></tt> option (ttl) for samples. By default
+the time to live value for samples is set to -1, which means that they
+are kept in the database forever.</p>
+<p>The time to live value is specified in seconds. Each sample has a time
+stamp, and the <tt class="docutils literal"><span class="pre">ttl</span></tt> value indicates that a sample will be deleted
+from the database when the number of seconds has elapsed since that
+sample reading was stamped. For example, if the time to live is set to
+600, all samples older than 600 seconds will be purged from the
+database.</p>
+<p>Certain databases support native TTL expiration. In cases where this is
+not possible, a command-line script, which you can use for this purpose
+is ceilometer-expirer. You can run it in a cron job, which helps to keep
+your database in a consistent state.</p>
+<p>The level of support differs in case of the configured back end:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="25%" />
+<col width="48%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Database</th>
+<th class="head">TTL value support</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>MongoDB</td>
+<td>Yes</td>
+<td>MongoDB has native TTL support for
+deleting samples that are older
+than the configured ttl value.</td>
+</tr>
+<tr class="row-odd"><td>SQL-based back
+ends</td>
+<td>Yes</td>
+<td>ceilometer-expirer has to be used
+for deleting samples and its
+related data from the database.</td>
+</tr>
+<tr class="row-even"><td>HBase</td>
+<td>No</td>
+<td>Telemetry&#8217;s HBase support does not
+include native TTL nor
+ceilometer-expirer support.</td>
+</tr>
+<tr class="row-odd"><td>DB2 NoSQL</td>
+<td>No</td>
+<td>DB2 NoSQL does not have native TTL
+nor ceilometer-expirer support.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="http-dispatcher">
+<h3>HTTP dispatcher<a class="headerlink" href="#http-dispatcher" title="Permalink to this headline">¶</a></h3>
+<p>The Telemetry module supports sending samples to an external HTTP
+target. The samples are sent without any modification. To set this
+option as the collector&#8217;s target, the <tt class="docutils literal"><span class="pre">dispatcher</span></tt> has to be changed
+to <tt class="docutils literal"><span class="pre">http</span></tt> in the <tt class="file docutils literal"><span class="pre">ceilometer.conf</span></tt> configuration file. For the list
+of options that you need to set, see the see the <a class="reference external" href="http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-telemetry.html">dispatcher_http
+section</a>
+in the OpenStack Configuration Reference.</p>
+</div>
+<div class="section" id="file-dispatcher">
+<h3>File dispatcher<a class="headerlink" href="#file-dispatcher" title="Permalink to this headline">¶</a></h3>
+<p>You can store samples in a file by setting the <tt class="docutils literal"><span class="pre">dispatcher</span></tt> option in the
+<tt class="file docutils literal"><span class="pre">ceilometer.conf</span></tt> file. For the list of configuration options,
+see the <a class="reference external" href="http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-telemetry.html">dispatcher_file section</a>
+in the OpenStack Configuration Reference.</p>
+</div>
+<div class="section" id="gnocchi-dispatcher">
+<h3>Gnocchi dispatcher<a class="headerlink" href="#gnocchi-dispatcher" title="Permalink to this headline">¶</a></h3>
+<p>The Telemetry module supports sending the metering data to Gnocchi back end
+through the gnocchi dispatcher. To set this option as the target, change the
+<tt class="docutils literal"><span class="pre">dispatcher</span></tt> to <tt class="docutils literal"><span class="pre">gnocchi</span></tt> in the <tt class="file docutils literal"><span class="pre">ceilometer.conf</span></tt>
+configuration file.</p>
+<p>For the list of options that you need to set, see the
+<a class="reference external" href="http://docs.openstack.org/draft/config-reference/content/ch_configuring-openstack-telemetry.html">dispatcher_gnocchi section</a>
+in the OpenStack Configuration Reference.</p>
+</div>
+</div>
+</div>
+
+
+              </div>
+          </div>
+          </div>
+          <!-- <div class="docs-tags">
+                <a href="#" class="docs-tag">Network Time Protocol (NTP)</a>
+                <a href="#" class="docs-tag">Security</a>
+                <a href="#" class="docs-tag">Conceptual architecture</a>
+            </div> -->
+<div class="docs-actions">
+                  
+                  <a href="telemetry-system-architecture.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: System architecture"></i></a>
+                  
+                  
+                  <a href="telemetry-data-retrieval.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Data retrieval"></i></a>
+                  
+                  <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+                </div>
+                <div class="row docs-byline bottom">
+                <div class="docs-updated">
+                updated: 2015-10-12 18:28 | release: 0.9
+                </div>
+                <a href="http://git.openstack.org/" class="docs-edit">
+                    <i class="fa fa-pencil"></i> suggest edits
+                </a>
+</div>
+    <div class="row">
+         <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+           <img src="_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+<p>
+ Except where otherwise noted, this document is licensed under Creative Commons
+ Attribution 3.0 License
+ <a href="#">http://creativecommons.org/licenses/by/3.0/legalcode</a>.
+</p>
+<p>
+ <a href="http://www.openstack.org/legal">See All Legal Notices</a>
+</p>
+         </div>
+         <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+                    <!-- ID buglinkbottom added so that pre-filled doc bugs
+                    are sent to Launchpad projects related to the document -->
+                    <a href="#" id="logABugLink2" class="docs-footer-actions">
+                        <i class="fa fa-bug"></i>found an error? report a bug
+                    </a>
+                    <a href="http://ask.openstack.org" class="docs-footer-actions">
+                        <i class="fa fa-question-circle"></i>questions? <a href="http://ask.openstack.org/">ask.openstack.org</a>
+                    </a>
+                </div>
+     </div>
+     </div>
+            <!-- Docs Sidebar -->
+                <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+            <div class="search-icon show"><i class="fa fa-search"></i>
+Search</div>
+            <div class="btn-group docs-sidebar-releases">
+                <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+                <button href="#" type="button" data-toggle="dropdown" class="btn docs-sidebar-release-select">Release: Kilo (April 2015)<i class="fa fa-caret-down"></i></button>
+                <ul class="dropdown-menu docs-sidebar-dropdown" role="menu" aria-labelledby="dLabel">
+                    <li role="presentation" class="dropdown-header">Releases</li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/kilo/">Kilo (current release)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/juno/">Juno (October 2014)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/icehouse/">Icehouse (May 2014)</a></li>
+                    <li role="presentation" class="dropdown-header">Languages</li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/ja/">日本語 (Japanese)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/de/">Deutsch (German)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/fr/">Français (French)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/pt_BR/">Português (Portuguese)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/ko_KR/">한국어 (Korean)</a></li>
+                </ul>
+            </div>
+                <div class="docs-sidebar-toc">
+                    <div class="docs-sidebar-section" id="install-guides">
+                        <a class="docs-sidebar-section-title" href="http://docs.openstack.org/index.html#install-guides"><h4>Install Guides</h4></a>
+                    </div>
+                    <div class="docs-sidebar-section" id="user-guides">
+                        <a class="docs-sidebar-section-title" href="http://docs.openstack.org/index.html#user-guides"><h4>User Guides</h4></a>
+                    </div>
+                    <div class="docs-sidebar-section" id="configuration-guides">
+                        <a class="docs-sidebar-section-title" href="http://docs.openstack.org/index.html#configuration-guides"><h4>Configuration Guides</h4></a>
+                    </div>
+                    <div class="docs-sidebar-section" id="operations-guides">
+                        <a class="docs-sidebar-section-title" href="http://docs.openstack.org/openstack-ops/content/"><h4>Operations Guide</h4></a>
+                    </div>
+                    <div class="docs-sidebar-section" id="api-guides">
+                        <a class="docs-sidebar-section-title" href="http://docs.openstack.org/index.html#api-guides"><h4>API Guides</h4></a>
+                    </div>
+                    <div class="docs-sidebar-section" id="contributor-guides">
+                        <a class="docs-sidebar-section-title" href="http://docs.openstack.org/index.html#contributor-guides"><h4>Contributor Guides</h4></a>
+                    </div>
+                    <div class="docs-sidebar-section" id="table-of-contents">
+                        <a class="docs-sidebar-section-title"><h4>Contents</h4></a>
+                        <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="common/conventions.html">Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common/get_started_with_openstack.html">Get started with OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="identity_management.html">Identity management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dashboard.html">Dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compute.html">Compute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objectstorage.html">Object Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="blockstorage.html">Block Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shared_file_systems.html">Shared File Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="networking.html">Networking</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="telemetry.html">Telemetry</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="telemetry-system-architecture.html">System architecture</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Data collection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telemetry-data-retrieval.html">Data retrieval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telemetry-alarms.html">Alarms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telemetry-measurements.html">Measurements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telemetry-events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telemetry-troubleshooting-guide.html">Troubleshoot Telemetry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telemetry-best-practices.html">Telemetry best practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="orchestration.html">Orchestration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cross_project.html">Cross-project features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common/app_support.html">Community support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common/glossary.html">Glossary</a></li>
+</ul>
+
+                    </div>
+                </div>
+                </div>
+
+</div>
+</div>
+    <!-- End Page Content -->
+
+    <!-- Footer -->
+    <!-- Footer -->
+        <footer>
+        <div class="container">
+            <div class="row footer-links">
+                <div class="col-lg-2 col-sm-2">
+                    <h3>OpenStack</h3>
+                    <ul>
+                        <li><a href="/foundation">About the Foundation</a></li>
+                        <li><a
+href="http://openstack.org/projects/">Projects</a></li>
+                        <li><a
+href="http://openstack.org/projects/openstack-security/">OpenStack
+Security</a></li>
+                        <li><a
+href="http://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+                        <li><a href="http://openstack.org/blog/">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-sm-2">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="http://openstack.org/community/">User
+Groups</a></li>
+                        <li><a
+href="http://openstack.org/community/events/">Events</a></li>
+                        <li><a
+href="http://openstack.org/community/jobs/">Jobs</a></li>
+                        <li><a
+href="http://openstack.org/foundation/companies/">Companies</a></li>
+                        <li><a
+href="https://wiki.openstack.org/wiki/How_To_Contribute">Contribute</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-sm-2">
+                    <h3>Documentation</h3>
+                    <ul>
+                        <li><a href="http://docs.openstack.org">OpenStack
+Manuals</a></li>
+                        <li><a
+href="http://openstack.org/software/start/">Getting Started</a></li>
+                        <li><a href="http://developer.openstack.org">API
+Documentation</a></li>
+                        <li><a href="https://wiki.openstack.org">Wiki</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-sm-2">
+                    <h3>Branding & Legal</h3>
+                    <ul>
+                        <li><a href="http://openstack.org/brand/">Logos &
+Guidelines</a></li>
+                        <li><a
+href="http://openstack.org/brand/openstack-trademark-policy/">Trademark
+Policy</a></li>
+                        <li><a href="http://openstack.org/privacy/">Privacy
+Policy</a></li>
+                        <li><a
+href="https://wiki.openstack.org/wiki/How_To_Contribute#Contributors_License_Agreement">OpenStack
+CLA</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-sm-4">
+                    <h3>Stay In Touch</h3>
+                    <a href="https://twitter.com/OpenStack" target="_blank"
+class="social-icons footer-twitter"></a>
+                    <a href="https://www.facebook.com/openstack"
+target="_blank" class="social-icons footer-facebook"></a>
+                    <a href="https://www.linkedin.com/company/openstack"
+target="_blank" class="social-icons footer-linkedin"></a>
+                    <a href="https://www.youtube.com/user/OpenStackFoundation"
+target="_blank" class="social-icons footer-youtube"></a>
+                    <!-- <form class="form-inline">
+                        <div class="form-group newsletter-form">
+                            <label>Join Our Newsletter</label>
+                            <input class="newsletter-input" type="input"
+placeholder="Email">
+                            <button type="submit"
+class="newsletter-btn">Join</button>
+                        </div>
+                    </form> -->
+                    <p class="fine-print">
+                        The OpenStack project is provided under the Apache 2.0
+license. Openstack.org is powered by <a href="http://rackspace.com"
+target="_blank">Rackspace Cloud Computing</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="footer-bottom">
+        <div class="container">
+            <form class="form-inline" id="FeedbackForm_FeedbackForm" action="/home/FeedbackForm" method="post" enctype="application/x-www-form-urlencoded">
+              <div class="form-group">
+                <div>
+                  <input class="feedback-input" type="input" placeholder="Give Us Your Feedback On This Page">
+                  <button type="submit" class="feedback-btn">Submit</button>
+                </div>
+              </div>
+            </form>
+        </div>
+    </div>
+
+<!-- Scripts in: static directory-->
+    <!-- jQuery Version 1.11.0 -->
+    <script type="text/javascript" src="_static/js/jquery-1.11.3.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script type="text/javascript" src="_static/js/bootstrap.min.js"></script>
+
+    <!-- The rest of the JS -->
+    <script type="text/javascript" src="_static/js/navigation.js"></script>
+
+    <!-- Docs JS -->
+    <script type="text/javascript" src="_static/js/docs.js"></script>
+
+    <!-- Popovers -->
+    <script type="text/javascript" src="_static/js/webui-popover.js"></script>
+
+    <!-- Javascript for page -->
+    <script language="JavaScript">
+    /* build a description of this page including SHA, source location on git repo and
+       build time, the project's launchpad bug tag and set the HREF of the bug buttons */
+
+        var lineFeed = "%0A";
+
+            /* "pagename" is the path to the source file, relative to conf.py's
+               directory. However, "pagename" is missing the rst extension. */
+            var sourceFile = "telemetry-data-collection" + ".rst"
+
+            /* Using the current working directory, figure out
+               in which book we are and use that information to
+               build a link to the source file on git.openstack.ort */
+            var pwd = "/home/sslypushenko/projects/openstack-manuals/doc/admin-guide-cloud/source"
+            var gitlink = "Source: http://git.openstack.org/cgit/openstack/openstack-manuals/tree"
+            gitlink += pwd.slice(pwd.lastIndexOf("/doc/")) + "/" + sourceFile
+
+        /* gitsha, project and bug_tag rely on variables in conf.py */
+        var gitSha = "SHA: 8ebff076eaaaefdb986e268bfeeee0938e272ecb"
+        var bugTitle = "Data collection in Cloud Administrator Guide"
+        var fieldTags = "admin-guide-cloud"
+
+        /* "last_updated" is the build date and time. It relies on the
+           conf.py variable "html_last_updated_fmt", which should include
+           year/month/day as well as hours and minutes                   */
+        var buildstring = "Release: 0.9 on 2015-10-12 18:28"
+
+        var fieldComment = encodeURI(buildstring) +
+                           lineFeed + encodeURI(gitSha) +
+                           lineFeed + encodeURI(gitlink)
+
+        logABug(bugTitle, fieldComment, fieldTags)
+    </script>
+    <!-- Javascript for search boxes (both sidebar and top nav) -->
+<script type="text/javascript">
+        (function() {
+        var cx = '000108871792296872333:noj9nikm74i';
+        var gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = (document.location.protocol == 'https:' ? 'https:' :
+'http:') +
+            '//www.google.com/cse/cse.js?cx=' + cx;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+      })();
+       </script>
+
+ </body>
+</html>

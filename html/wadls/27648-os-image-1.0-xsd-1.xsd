@@ -1,0 +1,1111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+                    Flattened from: file:/home/sslypushenko/projects/api-site/api-ref/src/wadls/image-api/src/v2/xsd/api.xsd-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:rax="http://docs.rackspace.com/api"
+            xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:csapi="http://docs.openstack.org/compute/api/v2"
+            xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+            xmlns:atom="http://www.w3.org/2005/Atom"
+            xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+            xmlns:capi="http://docs.openstack.org/common/api/v1.0"
+            xmlns:html="http://www.w3.org/1999/xhtml"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            targetNamespace="http://docs.openstack.org/image/api/v2.0">
+   <import xmlns="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+           namespace="http://www.w3.org/2005/Atom"
+           schemaLocation="os-image-1.0-xsd-3.xsd"/>
+   <annotation xmlns="http://www.w3.org/2001/XMLSchema">
+      <xsd:appinfo xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+         <xsdxt:title>Open Stack Compute™ API Schema Types 1.1</xsdxt:title>
+         <xsdxt:link rev="index" href="actions.xsd"/>
+         <xsdxt:link rev="index" href="common.xsd"/>
+         <xsdxt:link rev="index" href="faults.xsd"/>
+         <xsdxt:link rev="index" href="flavor.xsd"/>
+         <xsdxt:link rev="index" href="image.xsd"/>
+         <xsdxt:link rev="index" href="server.xsd"/>
+      </xsd:appinfo>
+      <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+         <p>
+        The main index XML schema document
+        for the OpenStack Compute API Version 1.1.
+      </p>
+      </xsd:documentation>
+  </annotation>
+   <!-- (C) 2013 OpenStack Foundation, All Rights Reserved -->
+   <annotation xmlns="http://www.w3.org/2001/XMLSchema"
+               xmlns:csapi="http://docs.openstack.org/image/api/v2.0">
+      <xsd:appinfo xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+         <xsdxt:title>Images</xsdxt:title>
+         <xsdxt:link rel="index" href="api.xsd"/>
+      </xsd:appinfo>
+      <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+         <p>
+        This schema file defines all entity related to <a href="#type_Image" title="See definition of Image">Images</a>.
+      </p>
+      </xsd:documentation>
+  </annotation>
+   <!-- Import ATOM specific schema definitions -->
+   <import xmlns="http://www.w3.org/2001/XMLSchema"
+           xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+           namespace="http://www.w3.org/2005/Atom"
+           schemaLocation="os-image-1.0-xsd-3.xsd"/>
+   <!-- Complex Types -->
+   <!-- Simple Types -->
+   <!-- (C) 2011-2013 OpenStack Foundation, All Rights Reserved -->
+   <annotation xmlns="http://www.w3.org/2001/XMLSchema"
+               xmlns:csapi="http://docs.openstack.org/image/api/v2.0">
+      <xsd:appinfo xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+         <xsdxt:title>Common Types</xsdxt:title>
+         <xsdxt:link rel="index" href="api.xsd"/>
+      </xsd:appinfo>
+      <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+         <p>
+        This schema file defines common types used by multiple
+        entities and possibly spanning several types of requests.
+      </p>
+      </xsd:documentation>
+  </annotation>
+   <!-- Import ATOM specific schema definitions -->
+   <!-- Simple types that span multiple requests -->
+   <!-- (C) 2011-2013 OpenStack Foundation, All Rights Reserved -->
+   <annotation xmlns="http://www.w3.org/2001/XMLSchema"
+               xmlns:csapi="http://docs.openstack.org/image/api/v2.0">
+      <xsd:appinfo xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+         <xsdxt:title>Faults</xsdxt:title>
+         <xsdxt:link rel="index" href="api.xsd"/>
+      </xsd:appinfo>
+      <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+         <p>
+        This schema file defines faults that may be raised by the
+        OpenStack Compute API.  These faults are derived from the <a href="#type_ComputeAPIFault"
+               title="See definition of         ComputeAPIFault">ComputeAPIFault</a>.  Most faults extend this
+        type without adding any additional attributes or elements.
+        The only exceptions is the <a href="#type_OverLimitAPIFault"
+               title="See definition of         OverLimitAPIFault">OverLimitAPIFault</a> which adds a
+        <strong>retryAt</strong> attribute and the <a href="#type_AsyncAPIFault"
+               title="See definition of         AsyncAPIFault">AsyncAPIFault</a> which adds a
+        <strong>created</strong> timestamp.  Because all faults extend
+        a standard base type, it should be possible to capture all API
+        faults with a single <code>catch</code> statement.
+      </p>
+         <p>
+        Faults are associated with a default HTTP status code that
+        corresponds to the particular fault type.  For example an <a href="#element_itemNotFound"
+               title="see definition of         itemNotFound">&lt;itemNotFound&gt;</a> element is associated
+        with the HTTP status code 404.  Some elements, the <a href="#element_computeFault"
+               title="see definition of         computeFault">&lt;computeFault&gt;</a> element for
+        example, may be associated with multiple status codes.  It is
+        also possible for multiple fault elements to be associated
+        with the same default code.  The examples below showcase the
+        default status codes for each element type. Note that these
+        default codes are not part of the formal schema. In practice,
+        however, an element type will likely be associated with its
+        corresponding default status code.
+      </p>
+      </xsd:documentation>
+  </annotation>
+   <!-- Faults -->
+   <!-- Complex Types -->
+   <!-- (C) 2011-2013 OpenStack Foundation, All Rights Reserved -->
+   <annotation xmlns="http://www.w3.org/2001/XMLSchema"
+               xmlns:csapi="http://docs.openstack.org/image/api/v2.0">
+        <xsd:appinfo xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <xsdxt:title>Metadata</xsdxt:title>
+            <xsdxt:link rel="index" href="api.xsd"/>
+        </xsd:appinfo>
+        <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p>
+                This schema file defines metadata for servers and images.
+            </p>
+        </xsd:documentation>
+    </annotation>
+   <element xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+            name="image"
+            type="csapi:Image">
+      <annotation>
+         <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p>
+          The element defines a collection of files used to create or
+          rebuild a server.
+        </p>
+         </xsd:documentation>
+         <xsd:appinfo>
+            <xsdxt:samples>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/xml" href="../samples/image.xml"/>
+               </xsdxt:sample>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/json" href="../samples/image.json"/>
+               </xsdxt:sample>
+            </xsdxt:samples>
+         </xsd:appinfo>
+      </annotation>
+  </element>
+   <element xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+            name="images"
+            type="csapi:Images">
+      <annotation>
+         <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p>
+          A collection of images.
+        </p>
+         </xsd:documentation>
+         <xsd:appinfo>
+            <xsdxt:samples>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/xml" href="../samples/images.xml"/>
+               </xsdxt:sample>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/json" href="../samples/images.json"/>
+               </xsdxt:sample>
+            </xsdxt:samples>
+         </xsd:appinfo>
+      </annotation>
+  </element>
+   <element xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+            name="computeFault"
+            type="csapi:ComputeAPIFault">
+      <annotation>
+         <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p>
+          A generic Cloud Servers API fault.
+        </p>
+         </xsd:documentation>
+         <xsd:appinfo>
+            <xsdxt:samples>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/xml" href="../samples/fault.xml"/>
+               </xsdxt:sample>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/json" href="../samples/fault.json"/>
+               </xsdxt:sample>
+            </xsdxt:samples>
+         </xsd:appinfo>
+      </annotation>
+  </element>
+   <element xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+            name="itemNotFound"
+            type="csapi:ItemNotFoundAPIFault">
+      <annotation>
+         <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p>
+          The item or resource could not be found.
+        </p>
+         </xsd:documentation>
+         <xsd:appinfo>
+            <xsdxt:samples>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/xml" href="../samples/notfound.xml"/>
+               </xsdxt:sample>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/json" href="../samples/notfound.json"/>
+               </xsdxt:sample>
+            </xsdxt:samples>
+         </xsd:appinfo>
+      </annotation>
+  </element>
+   <element xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+            name="buildInProgress"
+            type="csapi:BuildInProgressAPIFault">
+      <annotation>
+         <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p>
+          The operation is not allowed because the corresponding
+          server is in a build state.
+        </p>
+         </xsd:documentation>
+         <xsd:appinfo>
+            <xsdxt:samples>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/xml" href="../samples/build.xml"/>
+               </xsdxt:sample>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/json" href="../samples/build.json"/>
+               </xsdxt:sample>
+            </xsdxt:samples>
+         </xsd:appinfo>
+      </annotation>
+  </element>
+   <element xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+            name="serverCapacityUnavailable"
+            type="csapi:ServerCapacityUnavailableAPIFault">
+      <annotation>
+         <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p>
+          There is not enough capacity to honor the request.
+        </p>
+         </xsd:documentation>
+         <xsd:appinfo>
+            <xsdxt:samples>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/xml" href="../samples/serverCap.xml"/>
+               </xsdxt:sample>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/json" href="../samples/serverCap.json"/>
+               </xsdxt:sample>
+            </xsdxt:samples>
+         </xsd:appinfo>
+      </annotation>
+  </element>
+   <element xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+            name="backupOrResizeInProgress"
+            type="csapi:BackupOrResizeInProgressAPIFault">
+      <annotation>
+         <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p>
+          The operation is not allowed because the corresponding
+          server is being re-sized or backed up.
+        </p>
+         </xsd:documentation>
+         <xsd:appinfo>
+            <xsdxt:samples>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/xml" href="../samples/backupInProgress.xml"/>
+               </xsdxt:sample>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/json" href="../samples/backupInProgress.json"/>
+               </xsdxt:sample>
+            </xsdxt:samples>
+         </xsd:appinfo>
+      </annotation>
+  </element>
+   <element xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+            name="serviceUnavailable"
+            type="csapi:ServiceUnavailableAPIFault">
+      <annotation>
+         <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p>
+          The API service is currently unavailable.
+        </p>
+         </xsd:documentation>
+         <xsd:appinfo>
+            <xsdxt:samples>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/xml" href="../samples/serviceNotAvailable.xml"/>
+               </xsdxt:sample>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/json" href="../samples/serviceNotAvailable.json"/>
+               </xsdxt:sample>
+            </xsdxt:samples>
+         </xsd:appinfo>
+      </annotation>
+  </element>
+   <element xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+            name="unauthorized"
+            type="csapi:UnauthorizedAPIFault">
+      <annotation>
+         <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p>
+          Insufficient privileges to honor the request, perhaps an
+          authentication token needs to be obtained or renewed.
+        </p>
+         </xsd:documentation>
+         <xsd:appinfo>
+            <xsdxt:samples>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/xml" href="../samples/unauth.xml"/>
+               </xsdxt:sample>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/json" href="../samples/unauth.json"/>
+               </xsdxt:sample>
+            </xsdxt:samples>
+         </xsd:appinfo>
+      </annotation>
+  </element>
+   <element xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+            name="forbidden"
+            type="csapi:ForbiddenAPIFault">
+      <annotation>
+         <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p>
+            Authentication has been validated, however the operation is unauthorized.
+        </p>
+         </xsd:documentation>
+         <xsd:appinfo>
+            <xsdxt:samples>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/xml" href="../samples/forbidden.xml"/>
+               </xsdxt:sample>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/json" href="../samples/forbidden.json"/>
+               </xsdxt:sample>
+            </xsdxt:samples>
+         </xsd:appinfo>
+      </annotation>
+  </element>
+   <element xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+            name="overLimit"
+            type="csapi:OverLimitAPIFault">
+      <annotation>
+         <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p>
+          An <a href="limits.xsd#type_AbsoluteLimit"
+                  title="See           definition of AbsoluteLimit">absolute</a> or <a href="limits.xsd#type_RateLimit"
+                  title="See definition of           RateLimit">rate</a> limit has been exceeded.
+        </p>
+         </xsd:documentation>
+         <xsd:appinfo>
+            <xsdxt:samples>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/xml" href="../samples/overlimit.xml"/>
+               </xsdxt:sample>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/json" href="../samples/overlimit.json"/>
+               </xsdxt:sample>
+            </xsdxt:samples>
+         </xsd:appinfo>
+      </annotation>
+  </element>
+   <element xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+            name="badRequest"
+            type="csapi:BadRequestAPIFault">
+      <annotation>
+         <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p>
+          The request is malformed.
+        </p>
+         </xsd:documentation>
+         <xsd:appinfo>
+            <xsdxt:samples>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/xml" href="../samples/badrequest.xml"/>
+               </xsdxt:sample>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/json" href="../samples/badrequest.json"/>
+               </xsdxt:sample>
+            </xsdxt:samples>
+         </xsd:appinfo>
+      </annotation>
+  </element>
+   <element xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+            name="badMediaType"
+            type="csapi:BadMediaTypeAPIFault">
+      <annotation>
+         <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p>
+          The Content Type of the request is not supported.
+        </p>
+         </xsd:documentation>
+         <xsd:appinfo>
+            <xsdxt:samples>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/xml" href="../samples/badmediatype.xml"/>
+               </xsdxt:sample>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/json" href="../samples/badmediatype.json"/>
+               </xsdxt:sample>
+            </xsdxt:samples>
+         </xsd:appinfo>
+      </annotation>
+  </element>
+   <element xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+            name="badMethod"
+            type="csapi:BadMethodAPIFault">
+      <annotation>
+         <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p>
+          The HTTP method (or <a href="limits.xsd#type_HTTPVerb" title="See definition of HTTPVerb">verb</a>) is not
+          supported by the corresponding resource.
+        </p>
+         </xsd:documentation>
+         <xsd:appinfo>
+            <xsdxt:samples>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/xml" href="../samples/badmethod.xml"/>
+               </xsdxt:sample>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/json" href="../samples/badmethod.json"/>
+               </xsdxt:sample>
+            </xsdxt:samples>
+         </xsd:appinfo>
+      </annotation>
+  </element>
+   <element xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+            name="notImplemented"
+            type="csapi:NotImplementedAPIFault">
+      <annotation>
+         <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p>
+          The operation is currently not implemented.
+        </p>
+         </xsd:documentation>
+         <xsd:appinfo>
+            <xsdxt:samples>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/xml" href="../samples/notimplemented.xml"/>
+               </xsdxt:sample>
+               <xsdxt:sample>
+                  <xsdxt:code type="application/json" href="../samples/notimplemented.json"/>
+               </xsdxt:sample>
+            </xsdxt:samples>
+         </xsd:appinfo>
+      </annotation>
+  </element>
+   <element xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+            name="metadata"
+            type="csapi:Metadata">
+        <annotation>
+            <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+                <p>
+                    The element defines a Metadata.
+                </p>
+            </xsd:documentation>
+            <xsd:appinfo>
+                <xsdxt:samples>
+                    <xsdxt:sample>
+                        <xsdxt:code type="application/xml" href="../samples/metadata.xml"/>
+                    </xsdxt:sample>
+                    <xsdxt:sample>
+                        <xsdxt:code type="application/json" href="../samples/metadata.json"/>
+                    </xsdxt:sample>
+                </xsdxt:samples>
+            </xsd:appinfo>
+        </annotation>
+    </element>
+   <element xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+            name="meta"
+            type="csapi:MetadataItem">
+        <annotation>
+            <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+                <p>
+                    The element defines a metadata item.
+                </p>
+            </xsd:documentation>
+            <xsd:appinfo>
+                <xsdxt:samples>
+                    <xsdxt:sample>
+                        <xsdxt:code type="application/xml" href="../samples/metadata_item.xml"/>
+                    </xsdxt:sample>
+                    <xsdxt:sample>
+                        <xsdxt:code type="application/json" href="../samples/metadata_item.json"/>
+                    </xsdxt:sample>
+                </xsdxt:samples>
+            </xsd:appinfo>
+        </annotation>
+    </element>
+   <simpleType xmlns="http://www.w3.org/2001/XMLSchema"
+               xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+               name="ExtensibleImageStatus">
+      <annotation>
+          <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+              <p>
+                  An extensible image status type allows all of the
+                  strings defined in <a href="#type_ImageStatus"
+                  title="See definition of                   ImageStatus">ImageStatus</a> or an
+                  alias prefixed status.
+              </p>
+          </xsd:documentation>
+      </annotation>
+      <union memberTypes="csapi:ImageStatus csapi:ExtendedStatus"/>
+  </simpleType>
+   <simpleType xmlns="http://www.w3.org/2001/XMLSchema"
+               xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+               name="ImageStatus">
+      <restriction base="xsd:string">
+         <enumeration value="UNKNOWN">
+            <annotation>
+               <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+                  <p>
+              The image is in an unknown state.
+            </p>
+               </xsd:documentation>
+            </annotation>
+         </enumeration>
+         <enumeration value="ACTIVE">
+            <annotation>
+               <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+                  <p>
+              All operations have completed successfully, the image is
+              available for install.
+            </p>
+               </xsd:documentation>
+            </annotation>
+         </enumeration>
+         <enumeration value="SAVING">
+            <annotation>
+               <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+                  <p>
+              The image is being created (or saved).
+            </p>
+               </xsd:documentation>
+            </annotation>
+         </enumeration>
+         <enumeration value="DELETED">
+            <annotation>
+               <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+                  <p>
+              The image has been deleted.
+            </p>
+               </xsd:documentation>
+            </annotation>
+         </enumeration>
+         <enumeration value="ERROR">
+            <annotation>
+               <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+                  <p>
+              The requested operation has failed.
+            </p>
+               </xsd:documentation>
+            </annotation>
+         </enumeration>
+      </restriction>
+  </simpleType>
+   <simpleType xmlns="http://www.w3.org/2001/XMLSchema"
+               xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+               name="Progress">
+      <annotation>
+         <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p>
+          An integer between 0 and 100 that denotes the progress of an
+          operation.
+        </p>
+         </xsd:documentation>
+      </annotation>
+      <restriction base="xsd:int">
+         <minInclusive value="0"/>
+         <maxInclusive value="100"/>
+      </restriction>
+  </simpleType>
+   <simpleType xmlns="http://www.w3.org/2001/XMLSchema"
+               xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+               name="UUID">
+      <annotation>
+          <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+              <p>
+                  A universally unique identifier.
+              </p>
+          </xsd:documentation>
+      </annotation>
+      <restriction base="xsd:string">
+          <length value="36" fixed="true"/>
+          <pattern value="[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"/>
+      </restriction>
+  </simpleType>
+   <simpleType xmlns="http://www.w3.org/2001/XMLSchema"
+               xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+               name="ExtendedStatus">
+      <annotation>
+          <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+              <p>
+                  An extended status must contain a prefix.
+              </p>
+          </xsd:documentation>
+      </annotation>
+      <restriction base="xsd:string">
+          <pattern value="(\w|-)+:\w+"/>
+      </restriction>
+  </simpleType>
+   <simpleType xmlns="http://www.w3.org/2001/XMLSchema"
+               xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+               name="MetadataKey">
+      <restriction base="xsd:string">
+         <maxLength value="255"/>
+      </restriction>
+  </simpleType>
+   <simpleType xmlns="http://www.w3.org/2001/XMLSchema"
+               xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+               name="MetadataValue">
+      <restriction base="xsd:string">
+         <maxLength value="255"/>
+      </restriction>
+  </simpleType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="Image">
+      <sequence>
+        <element name="server" type="csapi:Server" minOccurs="0">
+            <annotation>
+                <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+                    <p>
+                        The server associated with the image. This may
+                        not contain full server details but will
+                        always contain an ID, a name, as well as self
+                        and bookmark links.
+                    </p>
+                </xsd:documentation>
+            </annotation>
+        </element>
+        <element name="metadata" type="csapi:Metadata" minOccurs="0">
+            <annotation>
+                <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+                    <p>
+                        A collection of meta data items associated with the image.
+                    </p>
+                </xsd:documentation>
+            </annotation>
+        </element>
+        <element name="fault" type="csapi:AsyncAPIFault" minOccurs="0">
+            <annotation>
+                <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+                    <p>
+                        The details of a fault that may have occurred
+                        while creating an image.
+                    </p>
+                </xsd:documentation>
+            </annotation>
+        </element>
+        <element vc:minVersion="1.1"
+                  ref="atom:link"
+                  minOccurs="0"
+                  maxOccurs="unbounded"/>
+        <any namespace="##other"
+              processContents="lax"
+              minOccurs="0"
+              maxOccurs="unbounded"/>
+      </sequence>
+      <attribute type="csapi:UUID" name="id" use="optional">
+         <annotation>
+            <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+               <p>
+            The ID of the image.
+          </p>
+            </xsd:documentation>
+         </annotation>
+      </attribute>
+      <attribute type="xsd:string" name="name" use="optional">
+         <annotation>
+            <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+               <p>
+            The name of the image.
+          </p>
+            </xsd:documentation>
+         </annotation>
+      </attribute>
+      <attribute type="xsd:string" name="tenant_id" use="optional">
+         <annotation>
+            <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+               <p>
+            A unique ID that identifies the tenant that contains
+            the image.
+          </p>
+            </xsd:documentation>
+         </annotation>
+      </attribute>
+      <attribute type="xsd:string" name="user_id" use="optional">
+         <annotation>
+            <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+               <p>
+            A unique ID that identifies the user who created
+            the image.
+          </p>
+            </xsd:documentation>
+         </annotation>
+      </attribute>
+      <attribute type="xsd:dateTime" name="updated" use="optional">
+         <annotation>
+            <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+               <p>
+            A time-stamp identifying the modification time of the
+            image.
+          </p>
+            </xsd:documentation>
+         </annotation>
+      </attribute>
+      <attribute type="xsd:dateTime" name="created" use="optional">
+         <annotation>
+            <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+               <p>
+            A creation time-stamp for the image.
+          </p>
+            </xsd:documentation>
+         </annotation>
+      </attribute>
+      <attribute type="csapi:Progress" name="progress" use="optional">
+         <annotation>
+            <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+               <p>
+            The progress of the current image operation.
+          </p>
+            </xsd:documentation>
+         </annotation>
+      </attribute>
+      <attribute type="csapi:ExtensibleImageStatus" name="status" use="optional">
+         <annotation>
+            <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+               <p>
+            The current state (or <a href="#type_ExtensibleImageStatus"
+                     title="See definition of ExtensibleImageStatus">status</a>) of the
+            image.
+          </p>
+            </xsd:documentation>
+         </annotation>
+      </attribute>
+      <attribute type="xsd:int" name="minDisk" use="optional">
+         <annotation>
+            <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+               <p>
+              Minimum disk space required for the image in gigabytes.
+          </p>
+            </xsd:documentation>
+         </annotation>
+      </attribute>
+      <attribute type="xsd:int" name="minRam" use="optional">
+         <annotation>
+            <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+               <p>
+            The minimum amount of RAM required for the image in
+            megabytes.
+          </p>
+            </xsd:documentation>
+         </annotation>
+      </attribute>
+      <anyAttribute namespace="##other" processContents="lax"/>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="ImageWithOnlyIDNameLinks">
+      <annotation>
+          <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+              <p>
+                  The only allowed attribute for this Image type is
+                  the name, ID, and links.  This is used for
+                  non-detailed list of images.
+              </p>
+          </xsd:documentation>
+      </annotation>
+      <complexContent>
+          <restriction base="csapi:Image">
+              <sequence>
+                  <element ref="atom:link" minOccurs="1" maxOccurs="unbounded"/>
+                  <any vc:minVersion="1.1"
+                    namespace="##other"
+                    processContents="lax"
+                    minOccurs="0"
+                    maxOccurs="unbounded"/>
+              </sequence>
+              <attribute type="csapi:UUID" name="id" use="required"/>
+              <attribute type="xsd:string" name="name" use="required"/>
+              <attribute type="xsd:dateTime" name="updated" use="prohibited"/>
+              <attribute type="xsd:dateTime" name="created" use="prohibited"/>
+              <attribute type="csapi:Progress" name="progress" use="prohibited"/>
+              <attribute type="csapi:ExtensibleImageStatus" name="status" use="prohibited"/>
+              <anyAttribute namespace="##other" processContents="lax"/>
+              <assert vc:minVersion="1.1"
+                    test="atom:link[@rel='self']/@href and atom:link[@rel='bookmark']/@href">
+                  <annotation>
+                      <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+                          <p>
+                              Here the image <strong>MUST</strong>
+                              contain a name, an ID, a bookmark link,
+                              and a self link.
+                          </p>
+                      </xsd:documentation>
+                  </annotation>
+              </assert>
+          </restriction>
+      </complexContent>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="Images">
+      <sequence>
+         <element name="image" type="csapi:Image" minOccurs="0" maxOccurs="1000">
+            <annotation>
+               <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+                  <p>
+            A collection of images (all details).
+          </p>
+               </xsd:documentation>
+            </annotation>
+         </element>
+         <element vc:minVersion="1.1"
+                  ref="atom:link"
+                  minOccurs="0"
+                  maxOccurs="unbounded"/>
+         <any namespace="##other"
+              processContents="lax"
+              minOccurs="0"
+              maxOccurs="unbounded"/>
+      </sequence>
+      <anyAttribute namespace="##other" processContents="lax"/>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="ImagesWithOnlyIDsNamesLinks">
+      <annotation>
+          <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+              <p>
+                  A collection of images with only IDs, names, and
+                  links. This is used for the non-detailed list of
+                  images.
+              </p>
+          </xsd:documentation>
+      </annotation>
+      <complexContent>
+          <restriction base="csapi:Images">
+              <sequence>
+                  <element name="image"
+                        type="csapi:ImageWithOnlyIDNameLinks"
+                        minOccurs="0"
+                        maxOccurs="1000"/>
+                  <element vc:minVersion="1.1"
+                        ref="atom:link"
+                        minOccurs="0"
+                        maxOccurs="unbounded"/>
+                  <any namespace="##other"
+                    processContents="lax"
+                    minOccurs="0"
+                    maxOccurs="unbounded"/>
+              </sequence>
+              <anyAttribute namespace="##other" processContents="lax"/>
+          </restriction>
+      </complexContent>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="Metadata">
+      <sequence>
+         <element name="meta"
+                  type="csapi:MetadataItem"
+                  minOccurs="0"
+                  maxOccurs="1000">
+            <annotation>
+               <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+                  <p>
+              A collection of metadata items.  There may be an
+              absolute limit that imposes additional constraints on
+              the number of metadata items.
+            </p>
+               </xsd:documentation>
+            </annotation>
+         </element>
+         <element vc:minVersion="1.1"
+                  ref="atom:link"
+                  minOccurs="0"
+                  maxOccurs="unbounded"/>
+         <any namespace="##other"
+              processContents="lax"
+              minOccurs="0"
+              maxOccurs="unbounded"/>
+      </sequence>
+      <anyAttribute namespace="##other" processContents="lax"/>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="MetadataItem">
+      <annotation>
+         <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+            <p>
+          A MetadataItem is simply a name-value pair. The name is
+          specified in the key attribute and the <a href="#type_MetadataValue"
+                  title="See definition of           MetadataValue">value</a> is included inline.
+        </p>
+            <xsdxt:code type="application/xml">
+          
+            &lt;meta xmlns="http://docs.openstack.org/compute/api/v1.0"
+                  key="Server Label"&gt;Web Head 1&lt;/meta&gt;
+          
+        </xsdxt:code>
+         </xsd:documentation>
+      </annotation>
+      <simpleContent>
+         <extension base="csapi:MetadataValue">
+            <attribute name="key" type="csapi:MetadataKey" use="required">
+               <annotation>
+                  <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+                     <p>
+                A meta data name-value pair.
+              </p>
+                  </xsd:documentation>
+               </annotation>
+            </attribute>
+            <anyAttribute namespace="##other" processContents="lax"/>
+         </extension>
+      </simpleContent>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="ComputeAPIFault">
+      <sequence>
+         <element name="message" type="xsd:string">
+            <annotation>
+               <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+                  <p>
+              A human readable message that is appropriate for display
+              to the end user.
+            </p>
+               </xsd:documentation>
+            </annotation>
+         </element>
+         <element name="details" type="xsd:string" minOccurs="0">
+            <annotation>
+               <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+                  <p>
+              The optional &lt;details&gt; element may contain useful
+              information for tracking down errors (e.g a stack
+              trace).  This information may or may not be appropriate
+              for display to an end user.
+            </p>
+               </xsd:documentation>
+            </annotation>
+         </element>
+         <any namespace="##other"
+              processContents="lax"
+              minOccurs="0"
+              maxOccurs="unbounded"/>
+      </sequence>
+      <attribute name="code" type="xsd:int" use="required">
+         <annotation>
+            <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+               <p>
+            The HTTP status code associated with the current fault.
+          </p>
+            </xsd:documentation>
+         </annotation>
+      </attribute>
+      <anyAttribute namespace="##other" processContents="lax"/>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="ItemNotFoundAPIFault">
+      <complexContent>
+         <extension base="csapi:ComputeAPIFault">
+      </extension>
+      </complexContent>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="BuildInProgressAPIFault">
+      <complexContent>
+         <extension base="csapi:ComputeAPIFault">
+      </extension>
+      </complexContent>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="ServerCapacityUnavailableAPIFault">
+      <complexContent>
+         <extension base="csapi:ComputeAPIFault">
+      </extension>
+      </complexContent>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="BackupOrResizeInProgressAPIFault">
+      <complexContent>
+         <extension base="csapi:ComputeAPIFault">
+      </extension>
+      </complexContent>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="ResizeNotAllowedAPIFault">
+      <complexContent>
+         <extension base="csapi:ComputeAPIFault">
+      </extension>
+      </complexContent>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="ServiceUnavailableAPIFault">
+      <complexContent>
+         <extension base="csapi:ComputeAPIFault">
+      </extension>
+      </complexContent>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="UnauthorizedAPIFault">
+      <complexContent>
+         <extension base="csapi:ComputeAPIFault">
+      </extension>
+      </complexContent>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="ForbiddenAPIFault">
+      <complexContent>
+         <extension base="csapi:ComputeAPIFault">
+      </extension>
+      </complexContent>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="OverLimitAPIFault">
+      <complexContent>
+         <extension base="csapi:ComputeAPIFault">
+            <attribute name="retryAt" type="xsd:dateTime" use="optional">
+               <annotation>
+                  <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+                     <p>
+                An optional dateTime denoting when an operation should
+                be retried.
+              </p>
+                  </xsd:documentation>
+               </annotation>
+            </attribute>
+         </extension>
+      </complexContent>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="AsyncAPIFault">
+      <complexContent>
+         <extension base="csapi:ComputeAPIFault">
+            <attribute name="created" type="xsd:dateTime" use="optional">
+              <annotation>
+                  <xsd:documentation xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN">
+                      <p>
+                          An optional dateTime denoting when the fault
+                          was created.
+                      </p>
+                  </xsd:documentation>
+              </annotation>
+            </attribute>
+         </extension>
+      </complexContent>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="BadRequestAPIFault">
+      <complexContent>
+         <extension base="csapi:ComputeAPIFault">
+      </extension>
+      </complexContent>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="BadMediaTypeAPIFault">
+      <complexContent>
+         <extension base="csapi:ComputeAPIFault">
+      </extension>
+      </complexContent>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="BadMethodAPIFault">
+      <complexContent>
+         <extension base="csapi:ComputeAPIFault">
+      </extension>
+      </complexContent>
+  </complexType>
+   <complexType xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:csapi="http://docs.openstack.org/image/api/v2.0"
+                name="NotImplementedAPIFault">
+      <complexContent>
+         <extension base="csapi:ComputeAPIFault">
+      </extension>
+      </complexContent>
+  </complexType>
+</xsd:schema>
